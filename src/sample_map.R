@@ -1,4 +1,11 @@
 # This script plots the site map with NLCD urbanized area data types
+# 
+# The U.S. Geological Survey (USGS), in partnership with several federal agencies, 
+# has developed and released four National Land Cover Database (NLCD) products over 
+# the past two decades: NLCD 1992, 2001, 2006, and 2011. This one is for data from
+# 2016 and describes urban imperviousness.
+# 
+# https://www.mrlc.gov/data/nlcd-2016-developed-imperviousness-descriptor-conus
 ###########################################################################################
 library(raster)
 library(ggplot2)
