@@ -12,7 +12,7 @@ library(ggplot2)
 library(cowplot)
 
 
-NLCD_impervious_color_key <-
+NLCD_impervious_roads_color_key <-
   function() {
     return(data.frame(
       value = as.factor(c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 127)),
@@ -53,13 +53,13 @@ NLCD_impervious_color_key <-
 
 
 trim_raster <- 
-  function(city = "BA") {
+  function(city = "BA", data_source) {
   # This function trims the giant NLCD spatial data to make it more manageable for plotting
   # Args:
   # city: string denoting the desired city. possible values: c("BA","BO","LA","MN","PX")
   
   r <-
-    raster::raster(urbanization_cover_data)
+    raster::raster(data_source)
   # Determine projection and dimensions of the spatial data
   # crs(r)
   # raster::extent(r)
@@ -139,78 +139,74 @@ trim_site_data <-
 }
 
 
-basic_urban_site_plot <- 
+crop_raster_data <-
   function(urban_data, sites) {
+    # This function..
+    # 
+    
+    city <- as.character(as.factor(sites@data$city_abbv[1]))
+    
+    spdf_transformed <-
+      spTransform(sites, crs(urban_data))
+    
+    # Need to have different figure buffers if the x values are negative
+    # (both PX and LA are negative on the AEA projection)
+    if (city != "PX" & city != "LA") {
+      figure_margins <-
+        raster::extent(
+          xmin(spdf_transformed) * 0.999,
+          xmax(spdf_transformed) * 1.001,
+          ymin(spdf_transformed) * 0.999,
+          ymax(spdf_transformed) * 1.001
+        )
+    } else {
+      figure_margins <-
+        raster::extent(
+          xmin(spdf_transformed) * 1.001,
+          xmax(spdf_transformed) * 0.999,
+          ymin(spdf_transformed) * 0.999,
+          ymax(spdf_transformed) * 1.001
+        )
+    }
+  
+    return(
+      list(
+      "raster_" = crop(urban_data, figure_margins),
+      "vector_" = spdf_transformed
+      )
+      )
+  }
+
+
+basic_urban_site_plot <-
+  function(urban_data, sites) {
+    # This function
+    #
+    city <- as.character(as.factor(sites@data$city_abbv[1]))
+    
+    cr <- crop_raster_data(urban_data, sites)$raster_
+    site_points <- crop_raster_data(urban_data, sites)$vector_
+    
+    pdf(paste("figures/", city, "_basic.pdf", sep = ""))
+    plot(cr)
+    plot(site_points,
+         add = TRUE,
+         col = 'green',
+         lwd = 5)
+    dev.off()
+    dev.off()
+    
+  }
+
+
+ggplot_urban_roads_plot <- 
+  function(urban_data, sites, col_pal, file_suffix) {
   # This function
   #
   city <- as.character(as.factor(sites@data$city_abbv[1]))
   
-  spdf_transformed <-
-    spTransform(sites, crs(urban_data))
-  
-  # Need to have different figure buffers if the x values are negative
-  # (both PX and LA are negative on the AEA projection)
-  if (city != "PX" & city != "LA") {
-    figure_margins <-
-      raster::extent(
-        xmin(spdf_transformed) * 0.999,
-        xmax(spdf_transformed) * 1.001,
-        ymin(spdf_transformed) * 0.999,
-        ymax(spdf_transformed) * 1.001
-      )
-  } else {
-    figure_margins <-
-      raster::extent(
-        xmin(spdf_transformed) * 1.001,
-        xmax(spdf_transformed) * 0.999,
-        ymin(spdf_transformed) * 0.999,
-        ymax(spdf_transformed) * 1.001
-      )
-  }
-  
-  cr <- crop(urban_data, figure_margins)
-  
-  pdf(paste("figures/", city, "_basic.pdf", sep = ""))
-  plot(cr)
-  plot(spdf_transformed,
-       add = TRUE,
-       col = 'green',
-       lwd = 5)
-  dev.off()
-  
-}
-
-
-ggplot_urban_site_plot <- 
-  function(urban_data, sites) {
-  # This function
-  #
-  city <- as.character(as.factor(sites@data$city_abbv[1]))
-  
-  spdf_transformed <-
-    spTransform(sites, crs(urban_data))
-  
-  # Need to have different figure buffers if the x values are negative
-  # (both PX and LA are negative on the AEA projection)
-  if (city != "PX" & city != "LA") {
-    figure_margins <-
-      raster::extent(
-        xmin(spdf_transformed) * 0.999,
-        xmax(spdf_transformed) * 1.001,
-        ymin(spdf_transformed) * 0.999,
-        ymax(spdf_transformed) * 1.001
-      )
-  } else {
-    figure_margins <-
-      raster::extent(
-        xmin(spdf_transformed) * 1.001,
-        xmax(spdf_transformed) * 0.999,
-        ymin(spdf_transformed) * 0.999,
-        ymax(spdf_transformed) * 1.001
-      )
-  }
-  
-  cr <- crop(urban_data, figure_margins)
+  cr <- crop_raster_data(urban_data, sites)$raster_
+  site_points <- crop_raster_data(urban_data, sites)$vector_
   
   coords <- xyFromCell(cr, seq_len(ncell(cr)))
   urban_df <- stack(as.data.frame(getValues(cr)))
@@ -219,11 +215,11 @@ ggplot_urban_site_plot <-
   urban_df$value <- as.factor(urban_df$value)
   
   urban_df <-
-    dplyr::left_join(urban_df, NLCD_impervious_color_key())
+    dplyr::left_join(urban_df, col_pal)
   
-  colz <-
-    setNames(as.character(NLCD_impervious_color_key()$hex),
-             NLCD_impervious_color_key()$lab)
+  color_key <-
+    setNames(as.character(col_pal$hex),
+             col_pal$lab)
   
   gg <-
     ggplot() +
@@ -233,10 +229,10 @@ ggplot_urban_site_plot <-
       fill = lab,
       color = lab
     )) +
-    scale_fill_manual(values = colz) +
-    scale_color_manual(values = colz) +
+    scale_fill_manual(values = color_key) +
+    scale_color_manual(values = color_key) + #prevents white borders on tile
     geom_point(
-      data = as.data.frame(spdf_transformed@coords),
+      data = as.data.frame(site_points@coords),
       aes(x = long, y = lat),
       color = "green",
       size = 7,
@@ -244,7 +240,6 @@ ggplot_urban_site_plot <-
     ) +
     theme_map() +
     ggtitle(label = as.character(as.factor(sites@data$city[1]))) +
-    
     guides(fill = guide_legend(title = "Land type"),
            color = guide_legend(title = "Land type")) +
     theme(plot.title = element_text(
@@ -254,32 +249,53 @@ ggplot_urban_site_plot <-
     ))
   
   gg
-  ggsave(paste("figures/", city, "_ggplot.png", sep = ""),
+  ggsave(paste("figures/", city, file_suffix, sep = ""),
   dpi = "print")
 }
 
 
-r_BA <- trim_raster(city = "BA")
-s_BA <- trim_site_data(city = "BA")
-#basic_urban_site_plot(r_BA, s_BA)
-ggplot_urban_site_plot(r_BA, s_BA)
+ggplot_urban_pct_cover_plot <- 
+  function(urban_data, sites, file_suffix, guide_title = NA) {
+    # This function
+    #
+    city <- as.character(as.factor(sites@data$city_abbv[1]))
+    
+    cr <- crop_raster_data(urban_data, sites)$raster_
+    site_points <- crop_raster_data(urban_data, sites)$vector_
+    
+    coords <- xyFromCell(cr, seq_len(ncell(cr)))
+    urban_df <- stack(as.data.frame(getValues(cr)))
+    names(urban_df) <- c('value', 'variable')
+    urban_df <- cbind(coords, urban_df)
 
-r_BO <- trim_raster(city = "BO")
-s_BO <- trim_site_data(city = "BO")
-#basic_urban_site_plot(r_BO, s_BO)
-ggplot_urban_site_plot(r_BO, s_BO)
-
-r_MN <- trim_raster(city = "MN")
-s_MN <- trim_site_data(city = "MN")
-#basic_urban_site_plot(r_MN, s_MN)
-ggplot_urban_site_plot(r_MN, s_MN)
-
-r_PX <- trim_raster(city = "PX")
-s_PX <- trim_site_data(city = "PX")
-#basic_urban_site_plot(r_PX, s_PX)
-ggplot_urban_site_plot(r_PX, s_PX)
-
-r_LA <- trim_raster(city = "LA")
-s_LA <- trim_site_data(city = "LA")
-#basic_urban_site_plot(r_LA, s_LA)
-ggplot_urban_site_plot(r_LA, s_LA)
+    gg <-
+      ggplot() +
+      geom_tile(data = urban_df, aes(
+        x = x,
+        y = y,
+        fill = value,
+        color = value
+      )) +
+      scale_fill_viridis(option = "A") +
+      scale_color_viridis(option = "A") + #prevents white borders on tile
+      geom_point(
+        data = as.data.frame(site_points@coords),
+        aes(x = long, y = lat),
+        color = "green",
+        size = 7,
+        shape = '+'
+      ) +
+      theme_map() +
+      ggtitle(label = as.character(as.factor(sites@data$city[1]))) +
+      guides(fill = guide_legend(title = guide_title),
+             color = guide_legend(title = guide_title)) +
+      theme(plot.title = element_text(
+        hjust = 0.5,
+        size = 30,
+        vjust = 0
+      ))
+    
+    gg
+    ggsave(paste("figures/", city, file_suffix, sep = ""),
+           dpi = "print")
+  }
