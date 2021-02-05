@@ -267,6 +267,9 @@ ggplot_urban_pct_cover_plot <-
     urban_df <- stack(as.data.frame(getValues(cr)))
     names(urban_df) <- c('value', 'variable')
     urban_df <- cbind(coords, urban_df)
+    
+    # The "off map" area is coded as >100 %, so reset it to zero
+    urban_df$value[(urban_df$value > 100)] <- 0
 
     gg <-
       ggplot() +
