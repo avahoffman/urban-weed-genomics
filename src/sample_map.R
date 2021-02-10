@@ -1,12 +1,23 @@
 # This script plots the site map with NLCD urbanized area data types
-# 
-# The U.S. Geological Survey (USGS), in partnership with several federal agencies, 
-# has developed and released four National Land Cover Database (NLCD) products over 
+#
+# The U.S. Geological Survey (USGS), in partnership with several federal agencies,
+# has developed and released four National Land Cover Database (NLCD) products over
 # the past two decades: NLCD 1992, 2001, 2006, and 2011. This one is for data from
 # 2016 and describes urban imperviousness.
-# 
+#
+# https://www.mrlc.gov/data/type/urban-imperviousness
+#
+# NLCD imperviousness products represent urban impervious surfaces as a percentage of
+# developed surface over every 30-meter pixel in the United States. NLCD 2016 updates all
+# previously released versions of impervious products for CONUS (NLCD 2001, NLCD 2006,
+# NLCD 2011) along with a new date of impervious surface for 2016. New for NLCD 2016 is
+# an impervious surface descriptor layer. This descriptor layer identifies types of roads,
+# core urban areas, and energy production sites for each impervious pixel to allow deeper
+# analysis of developed features.
+#
 # https://www.mrlc.gov/data/nlcd-2016-developed-imperviousness-descriptor-conus
 ###########################################################################################
+library(tidyverse)
 library(raster)
 library(ggplot2)
 library(cowplot)
@@ -52,97 +63,95 @@ NLCD_impervious_roads_color_key <-
   }
 
 
-trim_raster <- 
+trim_raster <-
   function(city = "BA", data_source) {
-  # This function trims the giant NLCD spatial data to make it more manageable for plotting
-  # Args:
-  # city: string denoting the desired city. possible values: c("BA","BO","LA","MN","PX")
-  
-  r <-
-    raster::raster(data_source)
-  # Determine projection and dimensions of the spatial data
-  # crs(r)
-  # raster::extent(r)
-  
-  BA_crop <-
-    raster::extent(1610000,
-                   1680000,
-                   1950005,
-                   2000005)
-  
-  BO_crop <-
-    raster::extent(1910000,
-                   2080000,
-                   2350005,
-                   2500005)
-  
-  MN_crop <-
-    raster::extent(130000,
-                   290000,
-                   2400005,
-                   2500005)
-  
-  PX_crop <-
-    raster::extent(-1570000,
-                   -1400000,
-                   1220005,
-                   1350005)
-  
-  LA_crop <-
-    raster::extent(-2070000,
-                   -1900000,
-                   1340005,
-                   1520005)
-  
-  if (city == "BA") {
-    city_raster <- crop(r, BA_crop)
-  } else if (city == "BO") {
-    city_raster <- crop(r, BO_crop)
-  } else if (city == "MN") {
-    city_raster <- crop(r, MN_crop)
-  } else if (city == "PX") {
-    city_raster <- crop(r, PX_crop)
-  } else {
-    city_raster <- crop(r, LA_crop)
+    # This function trims the giant NLCD spatial data to make it more manageable for plotting
+    # Args:
+    # city: string denoting the desired city. possible values: c("BA","BO","LA","MN","PX")
+    
+    r <-
+      raster::raster(data_source)
+    # Determine projection and dimensions of the spatial data
+    # crs(r)
+    # raster::extent(r)
+    
+    BA_crop <-
+      raster::extent(1610000,
+                     1680000,
+                     1950005,
+                     2000005)
+    
+    BO_crop <-
+      raster::extent(1910000,
+                     2080000,
+                     2350005,
+                     2500005)
+    
+    MN_crop <-
+      raster::extent(130000,
+                     290000,
+                     2400005,
+                     2500005)
+    
+    PX_crop <-
+      raster::extent(-1570000, -1400000,
+                     1220005,
+                     1350005)
+    
+    LA_crop <-
+      raster::extent(-2070000, -1900000,
+                     1340005,
+                     1520005)
+    
+    if (city == "BA") {
+      city_raster <- crop(r, BA_crop)
+    } else if (city == "BO") {
+      city_raster <- crop(r, BO_crop)
+    } else if (city == "MN") {
+      city_raster <- crop(r, MN_crop)
+    } else if (city == "PX") {
+      city_raster <- crop(r, PX_crop)
+    } else {
+      city_raster <- crop(r, LA_crop)
+    }
+    
+    plot(city_raster)
+    
+    return(city_raster)
+    
   }
-  
-  plot(city_raster)
-  
-  return(city_raster)
-  
-}
 
 
-trim_site_data <- 
+trim_site_data <-
   function(city = "BA") {
-  # This function
-  #
-  sitedata <-
-    as.data.frame(read.csv(file = field_site_data,
-                           header = T))
-  
-  sd <-
-    sitedata[(sitedata$city_abbv == city),]
-  xy <-
-    sd[, c("long", "lat")]
-  
-  spdf <-
-    SpatialPointsDataFrame(
-      coords = xy,
-      data = sd,
-      proj4string = CRS(
-        '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'
+    # This function
+    #
+    sitedata <-
+      as.data.frame(read.csv(file = field_site_data,
+                             header = T))
+    
+    sd <-
+      sitedata[(sitedata$city_abbv == city),]
+    xy <-
+      sd[, c("long", "lat")]
+    
+    spdf <-
+      SpatialPointsDataFrame(
+        coords = xy,
+        data = sd,
+        proj4string = CRS(
+          '+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'
+        )
       )
-    )
-  
-  return(spdf)
-}
+    
+    return(spdf)
+  }
 
 
 crop_raster_data <-
   function(urban_data, sites) {
     # This function..
-    # 
+    #
     
     city <- as.character(as.factor(sites@data$city_abbv[1]))
     
@@ -168,13 +177,11 @@ crop_raster_data <-
           ymax(spdf_transformed) * 1.001
         )
     }
-  
-    return(
-      list(
+    
+    return(list(
       "raster_" = crop(urban_data, figure_margins),
       "vector_" = spdf_transformed
-      )
-      )
+    ))
   }
 
 
@@ -199,63 +206,66 @@ basic_urban_site_plot <-
   }
 
 
-ggplot_urban_roads_plot <- 
+ggplot_urban_roads_plot <-
   function(urban_data, sites, col_pal, file_suffix) {
-  # This function
-  #
-  city <- as.character(as.factor(sites@data$city_abbv[1]))
-  
-  cr <- crop_raster_data(urban_data, sites)$raster_
-  site_points <- crop_raster_data(urban_data, sites)$vector_
-  
-  coords <- xyFromCell(cr, seq_len(ncell(cr)))
-  urban_df <- stack(as.data.frame(getValues(cr)))
-  names(urban_df) <- c('value', 'variable')
-  urban_df <- cbind(coords, urban_df)
-  urban_df$value <- as.factor(urban_df$value)
-  
-  urban_df <-
-    dplyr::left_join(urban_df, col_pal)
-  
-  color_key <-
-    setNames(as.character(col_pal$hex),
-             col_pal$lab)
-  
-  gg <-
-    ggplot() +
-    geom_tile(data = urban_df, aes(
-      x = x,
-      y = y,
-      fill = lab,
-      color = lab
-    )) +
-    scale_fill_manual(values = color_key) +
-    scale_color_manual(values = color_key) + #prevents white borders on tile
-    geom_point(
-      data = as.data.frame(site_points@coords),
-      aes(x = long, y = lat),
-      color = "green",
-      size = 7,
-      shape = '+'
-    ) +
-    theme_map() +
-    ggtitle(label = as.character(as.factor(sites@data$city[1]))) +
-    guides(fill = guide_legend(title = "Land type"),
-           color = guide_legend(title = "Land type")) +
-    theme(plot.title = element_text(
-      hjust = 0.5,
-      size = 30,
-      vjust = 0
-    ))
-  
-  gg
-  ggsave(paste("figures/", city, file_suffix, sep = ""),
-  dpi = "print")
-}
+    # This function
+    #
+    city <- as.character(as.factor(sites@data$city_abbv[1]))
+    
+    cr <- crop_raster_data(urban_data, sites)$raster_
+    site_points <- crop_raster_data(urban_data, sites)$vector_
+    
+    coords <- xyFromCell(cr, seq_len(ncell(cr)))
+    urban_df <- stack(as.data.frame(getValues(cr)))
+    names(urban_df) <- c('value', 'variable')
+    urban_df <- cbind(coords, urban_df)
+    urban_df$value <- as.factor(urban_df$value)
+    
+    urban_df <-
+      dplyr::left_join(urban_df, col_pal)
+    
+    color_key <-
+      setNames(as.character(col_pal$hex),
+               col_pal$lab)
+    
+    gg <-
+      ggplot() +
+      geom_tile(data = urban_df, aes(
+        x = x,
+        y = y,
+        fill = lab,
+        color = lab
+      )) +
+      scale_fill_manual(values = color_key) +
+      scale_color_manual(values = color_key) + #prevents white borders on tile
+      geom_point(
+        data = as.data.frame(site_points@coords),
+        aes(x = long, y = lat),
+        color = "green",
+        size = 7,
+        shape = '+'
+      ) +
+      theme_map() +
+      ggtitle(label = as.character(as.factor(sites@data$city[1]))) +
+      guides(fill = guide_legend(title = "Land type"),
+             color = guide_legend(title = "Land type")) +
+      theme(plot.title = element_text(
+        hjust = 0.5,
+        size = 30,
+        vjust = 0
+      ))
+    
+    gg
+    ggsave(paste("figures/", city, file_suffix, sep = ""),
+           dpi = "print")
+  }
 
 
-ggplot_urban_pct_cover_plot <- 
-  function(urban_data, sites, file_suffix, guide_title = NA) {
+ggplot_urban_pct_cover_plot <-
+  function(urban_data,
+           sites,
+           file_suffix,
+           guide_title = NA) {
     # This function
     #
     city <- as.character(as.factor(sites@data$city_abbv[1]))
@@ -270,15 +280,18 @@ ggplot_urban_pct_cover_plot <-
     
     # The "off map" area is coded as >100 %, so reset it to zero
     urban_df$value[(urban_df$value > 100)] <- 0
-
+    
     gg <-
       ggplot() +
-      geom_tile(data = urban_df, aes(
-        x = x,
-        y = y,
-        fill = value,
-        color = value
-      )) +
+      geom_tile(
+        data = urban_df %>% filter(y < 2447220) %>% filter(y > 2447150) %>% filter(x > 221500) %>% filter(x < 221600),
+        aes(
+          x = x,
+          y = y,
+          fill = value,
+          color = value
+        )
+      ) +
       scale_fill_viridis(option = "A") +
       scale_color_viridis(option = "A") + #prevents white borders on tile
       geom_point(
@@ -301,4 +314,38 @@ ggplot_urban_pct_cover_plot <-
     gg
     ggsave(paste("figures/", city, file_suffix, sep = ""),
            dpi = "print")
+  }
+
+get_envt_data_from_site <-
+  function() {
+    #       long     lat
+    # 89  221544.2 2447188
+    # 
+    # WORK IN PROGRESS
+    
+    city <- as.character(as.factor(sites@data$city_abbv[1]))
+    
+    cr <- crop_raster_data(urban_data, sites)$raster_
+    site_points <- crop_raster_data(urban_data, sites)$vector_
+    
+    coords <- xyFromCell(cr, seq_len(ncell(cr)))
+    urban_df <- stack(as.data.frame(getValues(cr)))
+    names(urban_df) <- c('value', 'variable')
+    urban_df <- cbind(coords, urban_df)
+    
+    # The "off map" area is coded as >100 %, so reset it to zero
+    urban_df$value[(urban_df$value > 100)] <- 0
+    
+    
+    sites@data
+    
+    aea_site_points <- as.data.frame(site_points@coords)
+    for (i in 1:nrow(aea_site_points)) {
+      n <- urban_df %>%
+        filter(abs(x - aea_site_points$long[i]) == min(abs(x - aea_site_points$long[i]))) %>%
+        filter(abs(y - aea_site_points$lat[i]) == min(abs(y - aea_site_points$lat[i]))) %>%
+        select(value)
+      sites@data$urban[i] <- n
+      
+    }
   }
