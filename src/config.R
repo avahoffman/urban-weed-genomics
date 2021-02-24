@@ -7,3 +7,6 @@ urbanization_cover_data <-
 
 field_site_data <- 
   "data/macrosystems_urban_site_data.csv"
+
+samples_data <- 
+  "data/macrosystems_urban_leaf_samples_FINAL.xlsx"
