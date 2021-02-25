@@ -316,8 +316,68 @@ ggplot_urban_pct_cover_plot <-
            dpi = "print")
   }
 
+
+make_all_urban_cover_plots <- 
+  function(){
+    # This function serves as a wrapper to execute all of the cover plots
+    # 
+    
+    s_BA <- trim_site_data(city = "BA")t
+    
+    # r_BA <- trim_raster(city = "BA", data_source = urbanization_roads_data)
+    # basic_urban_site_plot(urban_data = r_BA, sites = s_BA)
+    # ggplot_urban_roads_plot(urban_data = r_BA, sites = s_BA, col_pal = NLCD_impervious_roads_color_key(), file_suffix = "urbanroads_ggplot.jpg")
+    
+    r_BA <- trim_raster(city = "BA", data_source = urbanization_cover_data)
+    # basic_urban_site_plot(urban_data = r_BA, sites = s_BA)
+    # ggplot_urban_pct_cover_plot(urban_data = r_BA, sites = s_BA, file_suffix = "urban_zone.jpg", guide_title = "% Urban")
+    
+    s_BO <- trim_site_data(city = "BO")
+    
+    # r_BO <- trim_raster(city = "BO", data_source = urbanization_roads_data)
+    # basic_urban_site_plot(urban_data = r_BO, sites = s_BO)
+    # ggplot_urban_roads_plot(urban_data = r_BO, sites = s_BO, col_pal = NLCD_impervious_roads_color_key(), file_suffix = "urbanroads_ggplot.jpg")
+    
+    r_BO <- trim_raster(city = "BO", data_source = urbanization_cover_data)
+    # basic_urban_site_plot(urban_data = r_BO, sites = s_BO)
+    # ggplot_urban_pct_cover_plot(urban_data = r_BO, sites = s_BO, file_suffix = "urban_zone.jpg", guide_title = "% Urban")
+    
+    s_MN <- trim_site_data(city = "MN")
+    
+    # r_MN <- trim_raster(city = "MN", data_source = urbanization_roads_data)
+    # basic_urban_site_plot(urban_data = r_MN, sites = s_MN)
+    # ggplot_urban_roads_plot(urban_data = r_MN, sites = s_MN, col_pal = NLCD_impervious_roads_color_key(), file_suffix = "urbanroads_ggplot.jpg")
+    
+    r_MN <- trim_raster(city = "MN", data_source = urbanization_cover_data)
+    # basic_urban_site_plot(urban_data = r_MN, sites = s_MN)
+    # ggplot_urban_pct_cover_plot(urban_data = r_MN, sites = s_MN, file_suffix = "urban_zone.jpg", guide_title = "% Urban")
+    
+    s_PX <- trim_site_data(city = "PX")
+    
+    # r_PX <- trim_raster(city = "PX", data_source = urbanization_roads_data)
+    # basic_urban_site_plot(urban_data = r_PX, sites = s_PX)
+    # ggplot_urban_roads_plot(urban_data = r_PX, sites = s_PX, col_pal = NLCD_impervious_roads_color_key(), file_suffix = "urbanroads_ggplot.jpg")
+    
+    r_PX <- trim_raster(city = "PX", data_source = urbanization_cover_data)
+    # basic_urban_site_plot(urban_data = r_PX, sites = s_PX)
+    # ggplot_urban_pct_cover_plot(urban_data = r_PX, sites = s_PX, file_suffix = "urban_zone.jpg", guide_title = "% Urban")
+    
+    s_LA <- trim_site_data(city = "LA")
+    
+    # r_LA <- trim_raster(city = "LA", data_source = urbanization_roads_data)
+    # basic_urban_site_plot(urban_data = r_LA, sites = s_LA)
+    # ggplot_urban_roads_plot(urban_data = r_LA, sites = s_LA, col_pal = NLCD_impervious_roads_color_key(), file_suffix = "urbanroads_ggplot.jpg")
+    
+    r_LA <- trim_raster(city = "LA", data_source = urbanization_cover_data)
+    # basic_urban_site_plot(urban_data = r_LA, sites = s_LA)
+    # ggplot_urban_pct_cover_plot(urban_data = r_LA, sites = s_LA, file_suffix = "urban_zone.jpg", guide_title = "% Urban")
+    
+  }
+
+
 get_envt_data_from_site <-
-  function() {
+  function(urban_data,
+           sites) {
     #       long     lat
     # 89  221544.2 2447188
     # 
@@ -336,16 +396,18 @@ get_envt_data_from_site <-
     # The "off map" area is coded as >100 %, so reset it to zero
     urban_df$value[(urban_df$value > 100)] <- 0
     
-    
     sites@data
     
     aea_site_points <- as.data.frame(site_points@coords)
+    urban_cov <- data.frame()
     for (i in 1:nrow(aea_site_points)) {
       n <- urban_df %>%
         filter(abs(x - aea_site_points$long[i]) == min(abs(x - aea_site_points$long[i]))) %>%
         filter(abs(y - aea_site_points$lat[i]) == min(abs(y - aea_site_points$lat[i]))) %>%
-        select(value)
-      sites@data$urban[i] <- n
-      
+        dplyr::select(value)
+      urban_cov[i,1] <- n
     }
+    colnames(urban_cov) <- "urban_pct"
+    
+    return(cbind(sites@data,urban_cov))
   }
