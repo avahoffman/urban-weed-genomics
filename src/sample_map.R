@@ -25,6 +25,16 @@ library(cowplot)
 
 NLCD_impervious_roads_color_key <-
   function() {
+    # This function provides a hexidecimal color key for the urban roads data from NLCD.
+    # I thought the colors were too bright so I made this one.
+    # 
+    # Returns: data.frame
+    # 
+    # Usage:
+    # An argument to col_pal in ggplot_urban_roads_plot(), eg:
+    # ggplot_urban_roads_plot(urban_data = r_BA, sites = s_BA, 
+    #    col_pal = NLCD_impervious_roads_color_key(), file_suffix = "urbanroads_ggplot.jpg")
+    
     return(data.frame(
       value = as.factor(c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 127)),
       hex = c(
@@ -63,78 +73,98 @@ NLCD_impervious_roads_color_key <-
   }
 
 
+
 trim_raster <-
   function(city = "BA", data_source) {
     # This function trims the giant NLCD spatial data to make it more manageable for plotting
     # Args:
     # city: string denoting the desired city. possible values: c("BA","BO","LA","MN","PX")
+    # data_source: file path containing an .img file
+    #
+    # Returns: RasterLayer
+    #
+    # Useage:
+    # Output of trim_raster is a trimmed spatial dataset. It should be used as input urban_data
+    # in plotting functions, eg:
+    # r_BA <- trim_raster(city = "BA", data_source = urbanization_cover_data)
+    # ggplot_urban_pct_cover_plot(urban_data = r_BA, sites = s_BA,
+    #    file_suffix = "urban_zone.jpg", guide_title = "% Urban")
     
+    # Read raster data
     r <-
       raster::raster(data_source)
+    
     # Determine projection and dimensions of the spatial data
     # crs(r)
     # raster::extent(r)
     
-    BA_crop <-
-      raster::extent(1610000,
-                     1680000,
-                     1950005,
-                     2000005)
-    
-    BO_crop <-
-      raster::extent(1910000,
-                     2080000,
-                     2350005,
-                     2500005)
-    
-    MN_crop <-
-      raster::extent(130000,
-                     290000,
-                     2400005,
-                     2500005)
-    
-    PX_crop <-
-      raster::extent(-1570000, -1400000,
-                     1220005,
-                     1350005)
-    
-    LA_crop <-
-      raster::extent(-2070000, -1900000,
-                     1340005,
-                     1520005)
-    
+    # The following narrow down the coordinates to the approximate area around each city
+    # (to make data processing more manageable)
+    # Return only the city that is specified by the args
     if (city == "BA") {
+      BA_crop <-
+        raster::extent(1610000,
+                       1680000,
+                       1950005,
+                       2000005)
       city_raster <- crop(r, BA_crop)
     } else if (city == "BO") {
+      BO_crop <-
+        raster::extent(1910000,
+                       2080000,
+                       2350005,
+                       2500005)
       city_raster <- crop(r, BO_crop)
     } else if (city == "MN") {
+      MN_crop <-
+        raster::extent(130000,
+                       290000,
+                       2400005,
+                       2500005)
       city_raster <- crop(r, MN_crop)
     } else if (city == "PX") {
+      PX_crop <-
+        raster::extent(-1570000,-1400000,
+                       1220005,
+                       1350005)
       city_raster <- crop(r, PX_crop)
     } else {
+      LA_crop <-
+        raster::extent(-2070000,-1900000,
+                       1340005,
+                       1520005)
       city_raster <- crop(r, LA_crop)
     }
     
-    plot(city_raster)
-    
     return(city_raster)
-    
   }
 
 
 trim_site_data <-
   function(city = "BA") {
-    # This function
-    #
+    # This function imports and prepares sampling site data
+    # Args:
+    # city: string denoting the desired city. possible values: c("BA","BO","LA","MN","PX")
+    # 
+    # Returns: SpatialPointsDataFrame 
+    # 
+    # Usage:
+    # s_BA <- trim_site_data(city = "BA")
+    
+    # Read in site data (sampling points on the map)
     sitedata <-
       as.data.frame(read.csv(file = field_site_data,
                              header = T))
     
+    # Filter and keep only the city specified in the args
     sd <-
       sitedata[(sitedata$city_abbv == city),]
+    
+    # Long (x) and lat (y) only
     xy <-
       sd[, c("long", "lat")]
     
+    # Format points to be in spatial format (so they can be plotted together!)
     spdf <-
       SpatialPointsDataFrame(
         coords = xy,
@@ -150,11 +180,23 @@ trim_site_data <-
 
 crop_raster_data <-
   function(urban_data, sites) {
-    # This function..
-    #
+    # This function crops the raster data according to the sampling sites, plus a 
+    # little buffer for mapping purposes. Also transforms the sites so they can be
+    # mapped together
+    # 
+    # Args:
+    # urban_data: output from trim_raster()
+    # sites: output from trim_site_data(); used to narrow down spatial data for plotting
+    # 
+    # Returns: list of ( raster_ = RasterLayer, vector_ = SpatialPointsDataFrame )
+    # 
+    # Useage:
+    # cr <- crop_raster_data(urban_data, sites)
     
+    # Automatically determine city from the input (sites)
     city <- as.character(as.factor(sites@data$city_abbv[1]))
     
+    # Transform sites to the same projection as 
     spdf_transformed <-
       spTransform(sites, crs(urban_data))
     
@@ -187,8 +229,19 @@ crop_raster_data <-
 
 basic_urban_site_plot <-
   function(urban_data, sites) {
-    # This function
-    #
+    # This function takes an urban environment raster layer and spatial data points and
+    # makes a simple plot (can be used for debugging but doesn't look great)
+    # 
+    # Args:
+    # urban_data: output from trim_raster()
+    # sites: output from trim_site_data(); used to narrow down spatial data for plotting
+    # 
+    # Returns: plot to file
+    # 
+    # Useage:
+    # basic_urban_site_plot(urban_data = r_BA, sites = s_BA)
+    
+    # Automatically determine city from the input (sites)
     city <- as.character(as.factor(sites@data$city_abbv[1]))
     
     cr <- crop_raster_data(urban_data, sites)$raster_
@@ -208,8 +261,23 @@ basic_urban_site_plot <-
 
 ggplot_urban_roads_plot <-
   function(urban_data, sites, col_pal, file_suffix) {
-    # This function
-    #
+    # This function takes an urban roads raster layer and spatial data points and
+    # makes a nice ggplot
+    # 
+    # Args:
+    # urban_data: output from trim_raster()
+    # sites: output from trim_site_data(); used to narrow down spatial data for plotting
+    # col_pal: output from NLCD_impervious_roads_color_key() -- can be tweaked if desired
+    # file_suffix: suffix to add to any plot made -- to help flag what you plotted and also 
+    # allows you to change the file type (.jpg, .png, etc) created by ggsave()
+    # 
+    # Returns: plot to file with file suffix
+    # 
+    # Useage:
+    # ggplot_urban_roads_plot(urban_data = r_BA, sites = s_BA, 
+    #   col_pal = NLCD_impervious_roads_color_key(), file_suffix = "urbanroads_ggplot.jpg")
+    
+    # Automatically determine city from the input (sites)
     city <- as.character(as.factor(sites@data$city_abbv[1]))
     
     cr <- crop_raster_data(urban_data, sites)$raster_
@@ -266,8 +334,23 @@ ggplot_urban_pct_cover_plot <-
            sites,
            file_suffix,
            guide_title = NA) {
-    # This function
-    #
+    # This function takes an urban pct cover raster layer and spatial data points and
+    # makes a nice ggplot
+    # 
+    # Args:
+    # urban_data: output from trim_raster()
+    # sites: output from trim_site_data(); used to narrow down spatial data for plotting
+    # file_suffix: suffix to add to any plot made -- to help flag what you plotted and also 
+    # allows you to change the file type (.jpg, .png, etc) created by ggsave()
+    # guide_title: Optional title for legend
+    # 
+    # Returns: plot to file with file suffix
+    # 
+    # Useage:
+    # ggplot_urban_pct_cover_plot(urban_data = r_BA, sites = s_BA, 
+    # file_suffix = "urban_zone.jpg", guide_title = "% Urban")
+    
+    # Automatically determine city from the input (sites)
     city <- as.character(as.factor(sites@data$city_abbv[1]))
     
     cr <- crop_raster_data(urban_data, sites)$raster_
@@ -322,55 +405,25 @@ make_all_urban_cover_plots <-
     # This function serves as a wrapper to execute all of the cover plots
     # 
     
-    s_BA <- trim_site_data(city = "BA")t
-    
-    # r_BA <- trim_raster(city = "BA", data_source = urbanization_roads_data)
-    # basic_urban_site_plot(urban_data = r_BA, sites = s_BA)
-    # ggplot_urban_roads_plot(urban_data = r_BA, sites = s_BA, col_pal = NLCD_impervious_roads_color_key(), file_suffix = "urbanroads_ggplot.jpg")
-    
+    s_BA <- trim_site_data(city = "BA")
     r_BA <- trim_raster(city = "BA", data_source = urbanization_cover_data)
-    # basic_urban_site_plot(urban_data = r_BA, sites = s_BA)
-    # ggplot_urban_pct_cover_plot(urban_data = r_BA, sites = s_BA, file_suffix = "urban_zone.jpg", guide_title = "% Urban")
+    ggplot_urban_pct_cover_plot(urban_data = r_BA, sites = s_BA, file_suffix = "urban_zone.jpg", guide_title = "% Urban")
     
     s_BO <- trim_site_data(city = "BO")
-    
-    # r_BO <- trim_raster(city = "BO", data_source = urbanization_roads_data)
-    # basic_urban_site_plot(urban_data = r_BO, sites = s_BO)
-    # ggplot_urban_roads_plot(urban_data = r_BO, sites = s_BO, col_pal = NLCD_impervious_roads_color_key(), file_suffix = "urbanroads_ggplot.jpg")
-    
     r_BO <- trim_raster(city = "BO", data_source = urbanization_cover_data)
-    # basic_urban_site_plot(urban_data = r_BO, sites = s_BO)
-    # ggplot_urban_pct_cover_plot(urban_data = r_BO, sites = s_BO, file_suffix = "urban_zone.jpg", guide_title = "% Urban")
+    ggplot_urban_pct_cover_plot(urban_data = r_BO, sites = s_BO, file_suffix = "urban_zone.jpg", guide_title = "% Urban")
     
     s_MN <- trim_site_data(city = "MN")
-    
-    # r_MN <- trim_raster(city = "MN", data_source = urbanization_roads_data)
-    # basic_urban_site_plot(urban_data = r_MN, sites = s_MN)
-    # ggplot_urban_roads_plot(urban_data = r_MN, sites = s_MN, col_pal = NLCD_impervious_roads_color_key(), file_suffix = "urbanroads_ggplot.jpg")
-    
     r_MN <- trim_raster(city = "MN", data_source = urbanization_cover_data)
-    # basic_urban_site_plot(urban_data = r_MN, sites = s_MN)
-    # ggplot_urban_pct_cover_plot(urban_data = r_MN, sites = s_MN, file_suffix = "urban_zone.jpg", guide_title = "% Urban")
+    ggplot_urban_pct_cover_plot(urban_data = r_MN, sites = s_MN, file_suffix = "urban_zone.jpg", guide_title = "% Urban")
     
     s_PX <- trim_site_data(city = "PX")
-    
-    # r_PX <- trim_raster(city = "PX", data_source = urbanization_roads_data)
-    # basic_urban_site_plot(urban_data = r_PX, sites = s_PX)
-    # ggplot_urban_roads_plot(urban_data = r_PX, sites = s_PX, col_pal = NLCD_impervious_roads_color_key(), file_suffix = "urbanroads_ggplot.jpg")
-    
     r_PX <- trim_raster(city = "PX", data_source = urbanization_cover_data)
-    # basic_urban_site_plot(urban_data = r_PX, sites = s_PX)
-    # ggplot_urban_pct_cover_plot(urban_data = r_PX, sites = s_PX, file_suffix = "urban_zone.jpg", guide_title = "% Urban")
+    ggplot_urban_pct_cover_plot(urban_data = r_PX, sites = s_PX, file_suffix = "urban_zone.jpg", guide_title = "% Urban")
     
     s_LA <- trim_site_data(city = "LA")
-    
-    # r_LA <- trim_raster(city = "LA", data_source = urbanization_roads_data)
-    # basic_urban_site_plot(urban_data = r_LA, sites = s_LA)
-    # ggplot_urban_roads_plot(urban_data = r_LA, sites = s_LA, col_pal = NLCD_impervious_roads_color_key(), file_suffix = "urbanroads_ggplot.jpg")
-    
     r_LA <- trim_raster(city = "LA", data_source = urbanization_cover_data)
-    # basic_urban_site_plot(urban_data = r_LA, sites = s_LA)
-    # ggplot_urban_pct_cover_plot(urban_data = r_LA, sites = s_LA, file_suffix = "urban_zone.jpg", guide_title = "% Urban")
+    ggplot_urban_pct_cover_plot(urban_data = r_LA, sites = s_LA, file_suffix = "urban_zone.jpg", guide_title = "% Urban")
     
   }
 
