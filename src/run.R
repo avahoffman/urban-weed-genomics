@@ -15,3 +15,9 @@ setwd(
 # Load source code
 load("src/config.R")
 load("src/sample_map.R")
+
+# Generate urban percent cover by site (NLCD data)
+make_site_urban_pct_csv()
+
+# Make five plots containing urban cover and sampling sites by urban area
+make_all_urban_cover_plots()
