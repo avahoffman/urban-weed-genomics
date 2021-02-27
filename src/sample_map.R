@@ -543,6 +543,8 @@ make_site_urban_pct_csv <- function() {
     rbind(BA_urbancov, BO_urbancov, MN_urbancov, PX_urbancov, LA_urbancov)
   
   # Write combined data to file
-  write.csv(d, file = nlcd_pct_urban_by_site_out)
+  write.csv(d, 
+            file = nlcd_pct_urban_by_site_out,
+            row.names = FALSE)
   
 }
