@@ -10,3 +10,8 @@ field_site_data <-
 
 samples_data <- 
   "data/macrosystems_urban_leaf_samples_FINAL.xlsx"
+
+
+# outfile locations
+nlcd_pct_urban_by_site_out <- 
+  "data/macrosystems_urban_site_data_nlcd_pct_urban_by_site.csv"
