@@ -27,12 +27,12 @@ NLCD_impervious_roads_color_key <-
   function() {
     # This function provides a hexidecimal color key for the urban roads data from NLCD.
     # I thought the colors were too bright so I made this one.
-    # 
+    #
     # Returns: data.frame
-    # 
+    #
     # Usage:
     # An argument to col_pal in ggplot_urban_roads_plot(), eg:
-    # ggplot_urban_roads_plot(urban_data = r_BA, sites = s_BA, 
+    # ggplot_urban_roads_plot(urban_data = r_BA, sites = s_BA,
     #    col_pal = NLCD_impervious_roads_color_key(), file_suffix = "urbanroads_ggplot.jpg")
     
     return(data.frame(
@@ -145,9 +145,9 @@ trim_site_data <-
     # This function imports and prepares sampling site data
     # Args:
     # city: string denoting the desired city. possible values: c("BA","BO","LA","MN","PX")
-    # 
-    # Returns: SpatialPointsDataFrame 
-    # 
+    #
+    # Returns: SpatialPointsDataFrame
+    #
     # Usage:
     # s_BA <- trim_site_data(city = "BA")
     
@@ -180,23 +180,23 @@ trim_site_data <-
 
 crop_raster_data <-
   function(urban_data, sites) {
-    # This function crops the raster data according to the sampling sites, plus a 
+    # This function crops the raster data according to the sampling sites, plus a
     # little buffer for mapping purposes. Also transforms the sites so they can be
     # mapped together
-    # 
+    #
     # Args:
     # urban_data: output from trim_raster()
     # sites: output from trim_site_data(); used to narrow down spatial data for plotting
-    # 
+    #
     # Returns: list of ( raster_ = RasterLayer, vector_ = SpatialPointsDataFrame )
-    # 
+    #
     # Useage:
     # cr <- crop_raster_data(urban_data, sites)
     
     # Automatically determine city from the input (sites)
     city <- as.character(as.factor(sites@data$city_abbv[1]))
     
-    # Transform sites to the same projection as 
+    # Transform sites to the same projection as
     spdf_transformed <-
       spTransform(sites, crs(urban_data))
     
@@ -231,13 +231,13 @@ basic_urban_site_plot <-
   function(urban_data, sites) {
     # This function takes an urban environment raster layer and spatial data points and
     # makes a simple plot (can be used for debugging but doesn't look great)
-    # 
+    #
     # Args:
     # urban_data: output from trim_raster()
     # sites: output from trim_site_data(); used to narrow down spatial data for plotting
-    # 
+    #
     # Returns: plot to file
-    # 
+    #
     # Useage:
     # basic_urban_site_plot(urban_data = r_BA, sites = s_BA)
     
@@ -263,18 +263,18 @@ ggplot_urban_roads_plot <-
   function(urban_data, sites, col_pal, file_suffix) {
     # This function takes an urban roads raster layer and spatial data points and
     # makes a nice ggplot
-    # 
+    #
     # Args:
     # urban_data: output from trim_raster()
     # sites: output from trim_site_data(); used to narrow down spatial data for plotting
     # col_pal: output from NLCD_impervious_roads_color_key() -- can be tweaked if desired
-    # file_suffix: suffix to add to any plot made -- to help flag what you plotted and also 
+    # file_suffix: suffix to add to any plot made -- to help flag what you plotted and also
     # allows you to change the file type (.jpg, .png, etc) created by ggsave()
-    # 
+    #
     # Returns: plot to file with file suffix
-    # 
+    #
     # Useage:
-    # ggplot_urban_roads_plot(urban_data = r_BA, sites = s_BA, 
+    # ggplot_urban_roads_plot(urban_data = r_BA, sites = s_BA,
     #   col_pal = NLCD_impervious_roads_color_key(), file_suffix = "urbanroads_ggplot.jpg")
     
     # Automatically determine city from the input (sites)
@@ -336,18 +336,18 @@ ggplot_urban_pct_cover_plot <-
            guide_title = NA) {
     # This function takes an urban pct cover raster layer and spatial data points and
     # makes a nice ggplot
-    # 
+    #
     # Args:
     # urban_data: output from trim_raster()
     # sites: output from trim_site_data(); used to narrow down spatial data for plotting
-    # file_suffix: suffix to add to any plot made -- to help flag what you plotted and also 
+    # file_suffix: suffix to add to any plot made -- to help flag what you plotted and also
     # allows you to change the file type (.jpg, .png, etc) created by ggsave()
     # guide_title: Optional title for legend
-    # 
+    #
     # Returns: plot to file with file suffix
-    # 
+    #
     # Useage:
-    # ggplot_urban_pct_cover_plot(urban_data = r_BA, sites = s_BA, 
+    # ggplot_urban_pct_cover_plot(urban_data = r_BA, sites = s_BA,
     # file_suffix = "urban_zone.jpg", guide_title = "% Urban")
     
     # Automatically determine city from the input (sites)
@@ -400,30 +400,59 @@ ggplot_urban_pct_cover_plot <-
   }
 
 
-make_all_urban_cover_plots <- 
-  function(){
+make_all_urban_cover_plots <-
+  function() {
     # This function serves as a wrapper to execute all of the cover plots
-    # 
     
     s_BA <- trim_site_data(city = "BA")
-    r_BA <- trim_raster(city = "BA", data_source = urbanization_cover_data)
-    ggplot_urban_pct_cover_plot(urban_data = r_BA, sites = s_BA, file_suffix = "urban_zone.jpg", guide_title = "% Urban")
+    r_BA <-
+      trim_raster(city = "BA", data_source = urbanization_cover_data)
+    ggplot_urban_pct_cover_plot(
+      urban_data = r_BA,
+      sites = s_BA,
+      file_suffix = "urban_zone.jpg",
+      guide_title = "% Urban"
+    )
     
     s_BO <- trim_site_data(city = "BO")
-    r_BO <- trim_raster(city = "BO", data_source = urbanization_cover_data)
-    ggplot_urban_pct_cover_plot(urban_data = r_BO, sites = s_BO, file_suffix = "urban_zone.jpg", guide_title = "% Urban")
+    r_BO <-
+      trim_raster(city = "BO", data_source = urbanization_cover_data)
+    ggplot_urban_pct_cover_plot(
+      urban_data = r_BO,
+      sites = s_BO,
+      file_suffix = "urban_zone.jpg",
+      guide_title = "% Urban"
+    )
     
     s_MN <- trim_site_data(city = "MN")
-    r_MN <- trim_raster(city = "MN", data_source = urbanization_cover_data)
-    ggplot_urban_pct_cover_plot(urban_data = r_MN, sites = s_MN, file_suffix = "urban_zone.jpg", guide_title = "% Urban")
+    r_MN <-
+      trim_raster(city = "MN", data_source = urbanization_cover_data)
+    ggplot_urban_pct_cover_plot(
+      urban_data = r_MN,
+      sites = s_MN,
+      file_suffix = "urban_zone.jpg",
+      guide_title = "% Urban"
+    )
     
     s_PX <- trim_site_data(city = "PX")
-    r_PX <- trim_raster(city = "PX", data_source = urbanization_cover_data)
-    ggplot_urban_pct_cover_plot(urban_data = r_PX, sites = s_PX, file_suffix = "urban_zone.jpg", guide_title = "% Urban")
+    r_PX <-
+      trim_raster(city = "PX", data_source = urbanization_cover_data)
+    ggplot_urban_pct_cover_plot(
+      urban_data = r_PX,
+      sites = s_PX,
+      file_suffix = "urban_zone.jpg",
+      guide_title = "% Urban"
+    )
     
     s_LA <- trim_site_data(city = "LA")
-    r_LA <- trim_raster(city = "LA", data_source = urbanization_cover_data)
-    ggplot_urban_pct_cover_plot(urban_data = r_LA, sites = s_LA, file_suffix = "urban_zone.jpg", guide_title = "% Urban")
+    r_LA <-
+      trim_raster(city = "LA", data_source = urbanization_cover_data)
+    ggplot_urban_pct_cover_plot(
+      urban_data = r_LA,
+      sites = s_LA,
+      file_suffix = "urban_zone.jpg",
+      guide_title = "% Urban"
+    )
     
   }
 
@@ -431,11 +460,20 @@ make_all_urban_cover_plots <-
 get_envt_data_from_site <-
   function(urban_data,
            sites) {
-    #       long     lat
-    # 89  221544.2 2447188
-    # 
-    # WORK IN PROGRESS
+    # This function takes the NLCD percent cover data and finds the value for the
+    # pixel that the sampling site is located within.
+    #
+    # Args:
+    # urban_data: output from trim_raster()
+    # sites: output from trim_site_data(); used to narrow down spatial data for plotting
+    #
+    # Returns: site info dataframe with an additional column containing nlcd_urban_pct
+    # field, collected from the NLCD data
+    #
+    # Usage:
+    # get_envt_data_from_site(urban_data = r_BA, sites = s_BA)
     
+    # Automatically determine city from the input (sites)
     city <- as.character(as.factor(sites@data$city_abbv[1]))
     
     cr <- crop_raster_data(urban_data, sites)$raster_
@@ -446,10 +484,8 @@ get_envt_data_from_site <-
     names(urban_df) <- c('value', 'variable')
     urban_df <- cbind(coords, urban_df)
     
-    # The "off map" area is coded as >100 %, so reset it to zero
+    # The "off map" area (ocean, eg) is coded as >100 %, so reset it to zero
     urban_df$value[(urban_df$value > 100)] <- 0
-    
-    sites@data
     
     aea_site_points <- as.data.frame(site_points@coords)
     urban_cov <- data.frame()
@@ -458,9 +494,55 @@ get_envt_data_from_site <-
         filter(abs(x - aea_site_points$long[i]) == min(abs(x - aea_site_points$long[i]))) %>%
         filter(abs(y - aea_site_points$lat[i]) == min(abs(y - aea_site_points$lat[i]))) %>%
         dplyr::select(value)
-      urban_cov[i,1] <- n
+      urban_cov[i, 1] <- n
     }
-    colnames(urban_cov) <- "urban_pct"
+    colnames(urban_cov) <- "nlcd_urban_pct"
     
-    return(cbind(sites@data,urban_cov))
+    return(cbind(sites@data, urban_cov))
   }
+
+
+make_site_urban_pct_csv <- function() {
+  # Wrapper to make the .csv file containing the NLCD percent cover for each collection site
+
+  # Generate the site and spatial data
+  s_BA <- trim_site_data(city = "BA")
+  r_BA <-
+    trim_raster(city = "BA", data_source = urbanization_cover_data)
+  
+  s_BO <- trim_site_data(city = "BO")
+  r_BO <-
+    trim_raster(city = "BO", data_source = urbanization_cover_data)
+  
+  s_MN <- trim_site_data(city = "MN")
+  r_MN <-
+    trim_raster(city = "MN", data_source = urbanization_cover_data)
+  
+  s_PX <- trim_site_data(city = "PX")
+  r_PX <-
+    trim_raster(city = "PX", data_source = urbanization_cover_data)
+  
+  s_LA <- trim_site_data(city = "LA")
+  r_LA <-
+    trim_raster(city = "LA", data_source = urbanization_cover_data)
+  
+  # Scale both datasets to the same projection, and extract pixel data
+  BA_urbancov <-
+    get_envt_data_from_site(urban_data = r_BA, sites = s_BA)
+  BO_urbancov <-
+    get_envt_data_from_site(urban_data = r_BO, sites = s_BO)
+  MN_urbancov <-
+    get_envt_data_from_site(urban_data = r_MN, sites = s_MN)
+  PX_urbancov <-
+    get_envt_data_from_site(urban_data = r_PX, sites = s_PX)
+  LA_urbancov <-
+    get_envt_data_from_site(urban_data = r_LA, sites = s_LA)
+  
+  # Concatenate the dataset
+  d <- 
+    rbind(BA_urbancov, BO_urbancov, MN_urbancov, PX_urbancov, LA_urbancov)
+  
+  # Write combined data to file
+  write.csv(d, file = nlcd_pct_urban_by_site_out)
+  
+}
