@@ -6,7 +6,7 @@ urbanization_cover_data <-
   "data/NLCD_2016_Impervious/NLCD_2016_Impervious_L48_20190405.img"
 
 redlining_data <- 
-  "/data/Redline_data//holc_ad_data.shp"
+  "/data/Redline_data/holc_ad_data.shp"
 
 field_site_data <- 
   "data/macrosystems_urban_site_data.csv"
