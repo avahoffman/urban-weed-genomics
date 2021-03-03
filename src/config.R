@@ -20,3 +20,6 @@ data_projection_settings <-
 # outfile locations
 nlcd_pct_urban_by_site_out <- 
   "data/macrosystems_urban_site_data_nlcd_pct_urban_by_site.csv"
+
+redlining_by_site_out <- 
+  "data/macrosystems_urban_site_data_redlining_by_site.csv"
