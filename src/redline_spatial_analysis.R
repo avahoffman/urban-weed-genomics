@@ -16,7 +16,12 @@ ggplot_redlining_plot <-
            city,
            file_suffix) {
     # Plot redlining polygons with sampling sites
-    #
+    # Args:
+    # spatial_data: file path containing an .shp file
+    # city: string denoting the desired city. possible values: c("BA","BO","LA","MN","PX")
+    # file_suffix: suffix to add to any plot made -- to help flag what you plotted and also
+    # allows you to change the file type (.jpg, .png, etc) created by ggsave()
+    # 
     # Returns: map image to file
     
     spatial <-
@@ -65,14 +70,21 @@ ggplot_redlining_plot <-
 write_site_level_redlining_to_csv <- 
   function(spatial_data){
     # Collect redlining data from the sampling locations
+    # Args: file path containing an .shp file
+    # 
+    # Returns: Writes a .csv containing site info dataframe with additional 
+    # columns from redlining data
     
+    # Load data
     spatial <-
       trim_spatial(city = "None", data_source = spatial_data)
-    
     sites_ <- trim_site_data(city = "None")
+    
+    # Transform to fit spatial projection
     site_points <- spTransform(sites_, crs(spatial))
     
-    dat <- over(site_points, spatial)
+    # Find the polygon (if any) in which the site lies
+    dat <- sp::over(site_points, spatial)
     
     # Write combined data to file
     write.csv(cbind(site_points@data, dat),
@@ -83,8 +95,8 @@ write_site_level_redlining_to_csv <-
 
 make_all_redlining_plots <- 
   function(){
-    # Wrapper
-    # 
+    # Wrapper to run all redlining polygon plots
+    
     ggplot_redlining_plot(spatial_data = redlining_data, city = "BA", file_suffix = "_redlining.jpg")
     ggplot_redlining_plot(spatial_data = redlining_data, city = "BO", file_suffix = "_redlining.jpg")
     ggplot_redlining_plot(spatial_data = redlining_data, city = "LA", file_suffix = "_redlining.jpg")
