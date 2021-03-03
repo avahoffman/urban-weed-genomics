@@ -75,7 +75,7 @@ NLCD_impervious_roads_color_key <-
 
 
 trim_spatial <-
-  function(city = "BA", data_source) {
+  function(city = "None", data_source) {
     # This function trims the giant NLCD spatial data to make it more manageable for plotting.
     # Can also trim and transform shapefiles.
     # Args:
@@ -141,12 +141,14 @@ trim_spatial <-
                        1220005,
                        1350005)
       city_raster <- crop(r, PX_crop)
-    } else {
+    } else if (city == "LA") {
       LA_crop <-
         raster::extent(-2070000, -1900000,
                        1340005,
                        1520005)
       city_raster <- crop(r, LA_crop)
+    } else if (city == "None") {
+      city_raster <- r
     }
 
     return(city_raster)
@@ -154,7 +156,7 @@ trim_spatial <-
 
 
 trim_site_data <-
-  function(city = "BA") {
+  function(city = "None") {
     # This function imports and prepares sampling site data
     # Args:
     # city: string denoting the desired city. possible values: c("BA","BO","LA","MN","PX")
@@ -170,9 +172,13 @@ trim_site_data <-
                              header = T))
     
     # Filter and keep only the city specified in the args
-    sd <-
-      sitedata[(sitedata$city_abbv == city), ]
-    
+    if (city != "None") {
+      sd <-
+        sitedata[(sitedata$city_abbv == city), ]
+    } else {
+      sd <- sitedata
+    }
+
     # Long (x) and lat (y) only
     xy <-
       sd[, c("long", "lat")]
