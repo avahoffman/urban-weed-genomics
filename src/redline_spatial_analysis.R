@@ -4,6 +4,9 @@
 #
 # https://dsl.richmond.edu/panorama/redlining/#loc=4/39.069/-101.206&text=downloads
 #
+# Note that there is also data on population makeup of different ethnic groups in each city
+# (see website downloads)
+#
 ###########################################################################################
 library(raster)
 
@@ -56,6 +59,25 @@ ggplot_redlining_plot <-
     gg
     ggsave(paste("figures/", city, file_suffix, sep = ""),
            dpi = "print")
+  }
+
+
+write_site_level_redlining_to_csv <- 
+  function(spatial_data){
+    # Collect redlining data from the sampling locations
+    
+    spatial <-
+      trim_spatial(city = "None", data_source = spatial_data)
+    
+    sites_ <- trim_site_data(city = "None")
+    site_points <- spTransform(sites_, crs(spatial))
+    
+    dat <- over(site_points, spatial)
+    
+    # Write combined data to file
+    write.csv(cbind(site_points@data, dat),
+              file = redlining_by_site_out,
+              row.names = FALSE)
   }
 
 
