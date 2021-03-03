@@ -1,3 +1,4 @@
+##########
 # Data files
 urbanization_roads_data <- 
   "data/NLCD_2016_Impervious_descriptor/NLCD_2016_Impervious_descriptor_L48_20190405.img"
@@ -17,6 +18,7 @@ samples_data <-
 data_projection_settings <- 
   "data/aea_projection_crs_class.Rdata"
 
+##########
 # outfile locations
 nlcd_pct_urban_by_site_out <- 
   "data/macrosystems_urban_site_data_nlcd_pct_urban_by_site.csv"
