@@ -16,9 +16,13 @@ setwd(
 load("src/config.R")
 load("src/utils.R")
 load("src/sample_map.R")
+load("src/redline_spatial_analysis.R")
 
 # Generate urban percent cover by site (NLCD data)
 make_site_urban_pct_csv()
 
 # Make five plots containing urban cover and sampling sites by urban area
 make_all_urban_cover_plots()
+
+# Generate redlining data by site
+write_site_level_redlining_to_csv(spatial_data = redlining_data)
