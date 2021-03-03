@@ -14,6 +14,7 @@ setwd(
 
 # Load source code
 load("src/config.R")
+load("src/utils.R")
 load("src/sample_map.R")
 
 # Generate urban percent cover by site (NLCD data)
