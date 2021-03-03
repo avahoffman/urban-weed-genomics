@@ -74,9 +74,10 @@ NLCD_impervious_roads_color_key <-
 
 
 
-trim_raster <-
+trim_spatial <-
   function(city = "BA", data_source) {
-    # This function trims the giant NLCD spatial data to make it more manageable for plotting
+    # This function trims the giant NLCD spatial data to make it more manageable for plotting.
+    # Can also trim and transform shapefiles.
     # Args:
     # city: string denoting the desired city. possible values: c("BA","BO","LA","MN","PX")
     # data_source: file path containing an .img file
@@ -84,19 +85,31 @@ trim_raster <-
     # Returns: RasterLayer
     #
     # Useage:
-    # Output of trim_raster is a trimmed spatial dataset. It should be used as input urban_data
+    # Output of trim_spatial is a trimmed spatial dataset. It should be used as input urban_data
     # in plotting functions, eg:
-    # r_BA <- trim_raster(city = "BA", data_source = urbanization_cover_data)
+    # r_BA <- trim_spatial(city = "BA", data_source = urbanization_cover_data)
     # ggplot_urban_pct_cover_plot(urban_data = r_BA, sites = s_BA,
     #    file_suffix = "urban_zone.jpg", guide_title = "% Urban")
     
-    # Read raster data
-    r <-
-      raster::raster(data_source)
+    # Read spatial data - check for raster or shapefile
+    if (right_string(data_source, 4) == ".img") {
+      r <-
+        raster::raster(data_source)
+    } else if (right_string(data_source, 4) == ".shp") {
+      r <-
+        raster::shapefile(data_source)
+    }
     
     # Determine projection and dimensions of the spatial data
     # crs(r)
     # raster::extent(r)
+    # 
+    
+    # Ensure correct projection
+    load(data_projection_settings)
+    if (crs(r)@projargs != aea_project_crs@projargs) {
+      r <- spTransform(r, crs(aea_project_crs))
+    }
     
     # The following narrow down the coordinates to the approximate area around each city
     # (to make data processing more manageable)
@@ -124,18 +137,18 @@ trim_raster <-
       city_raster <- crop(r, MN_crop)
     } else if (city == "PX") {
       PX_crop <-
-        raster::extent(-1570000,-1400000,
+        raster::extent(-1570000, -1400000,
                        1220005,
                        1350005)
       city_raster <- crop(r, PX_crop)
     } else {
       LA_crop <-
-        raster::extent(-2070000,-1900000,
+        raster::extent(-2070000, -1900000,
                        1340005,
                        1520005)
       city_raster <- crop(r, LA_crop)
     }
-    
+
     return(city_raster)
   }
 
@@ -158,7 +171,7 @@ trim_site_data <-
     
     # Filter and keep only the city specified in the args
     sd <-
-      sitedata[(sitedata$city_abbv == city),]
+      sitedata[(sitedata$city_abbv == city), ]
     
     # Long (x) and lat (y) only
     xy <-
@@ -185,7 +198,7 @@ crop_raster_data <-
     # mapped together
     #
     # Args:
-    # urban_data: output from trim_raster()
+    # urban_data: output from trim_spatial()
     # sites: output from trim_site_data(); used to narrow down spatial data for plotting
     #
     # Returns: list of ( raster_ = RasterLayer, vector_ = SpatialPointsDataFrame )
@@ -233,7 +246,7 @@ basic_urban_site_plot <-
     # makes a simple plot (can be used for debugging but doesn't look great)
     #
     # Args:
-    # urban_data: output from trim_raster()
+    # urban_data: output from trim_spatial()
     # sites: output from trim_site_data(); used to narrow down spatial data for plotting
     #
     # Returns: plot to file
@@ -265,7 +278,7 @@ ggplot_urban_roads_plot <-
     # makes a nice ggplot
     #
     # Args:
-    # urban_data: output from trim_raster()
+    # urban_data: output from trim_spatial()
     # sites: output from trim_site_data(); used to narrow down spatial data for plotting
     # col_pal: output from NLCD_impervious_roads_color_key() -- can be tweaked if desired
     # file_suffix: suffix to add to any plot made -- to help flag what you plotted and also
@@ -338,7 +351,7 @@ ggplot_urban_pct_cover_plot <-
     # makes a nice ggplot
     #
     # Args:
-    # urban_data: output from trim_raster()
+    # urban_data: output from trim_spatial()
     # sites: output from trim_site_data(); used to narrow down spatial data for plotting
     # file_suffix: suffix to add to any plot made -- to help flag what you plotted and also
     # allows you to change the file type (.jpg, .png, etc) created by ggsave()
@@ -406,7 +419,7 @@ make_all_urban_cover_plots <-
     
     s_BA <- trim_site_data(city = "BA")
     r_BA <-
-      trim_raster(city = "BA", data_source = urbanization_cover_data)
+      trim_spatial(city = "BA", data_source = urbanization_cover_data)
     ggplot_urban_pct_cover_plot(
       urban_data = r_BA,
       sites = s_BA,
@@ -416,7 +429,7 @@ make_all_urban_cover_plots <-
     
     s_BO <- trim_site_data(city = "BO")
     r_BO <-
-      trim_raster(city = "BO", data_source = urbanization_cover_data)
+      trim_spatial(city = "BO", data_source = urbanization_cover_data)
     ggplot_urban_pct_cover_plot(
       urban_data = r_BO,
       sites = s_BO,
@@ -426,7 +439,7 @@ make_all_urban_cover_plots <-
     
     s_MN <- trim_site_data(city = "MN")
     r_MN <-
-      trim_raster(city = "MN", data_source = urbanization_cover_data)
+      trim_spatial(city = "MN", data_source = urbanization_cover_data)
     ggplot_urban_pct_cover_plot(
       urban_data = r_MN,
       sites = s_MN,
@@ -436,7 +449,7 @@ make_all_urban_cover_plots <-
     
     s_PX <- trim_site_data(city = "PX")
     r_PX <-
-      trim_raster(city = "PX", data_source = urbanization_cover_data)
+      trim_spatial(city = "PX", data_source = urbanization_cover_data)
     ggplot_urban_pct_cover_plot(
       urban_data = r_PX,
       sites = s_PX,
@@ -446,7 +459,7 @@ make_all_urban_cover_plots <-
     
     s_LA <- trim_site_data(city = "LA")
     r_LA <-
-      trim_raster(city = "LA", data_source = urbanization_cover_data)
+      trim_spatial(city = "LA", data_source = urbanization_cover_data)
     ggplot_urban_pct_cover_plot(
       urban_data = r_LA,
       sites = s_LA,
@@ -464,7 +477,7 @@ get_envt_data_from_site <-
     # pixel that the sampling site is located within.
     #
     # Args:
-    # urban_data: output from trim_raster()
+    # urban_data: output from trim_spatial()
     # sites: output from trim_site_data(); used to narrow down spatial data for plotting
     #
     # Returns: site info dataframe with an additional column containing nlcd_urban_pct
@@ -504,27 +517,27 @@ get_envt_data_from_site <-
 
 make_site_urban_pct_csv <- function() {
   # Wrapper to make the .csv file containing the NLCD percent cover for each collection site
-
+  
   # Generate the site and spatial data
   s_BA <- trim_site_data(city = "BA")
   r_BA <-
-    trim_raster(city = "BA", data_source = urbanization_cover_data)
+    trim_spatial(city = "BA", data_source = urbanization_cover_data)
   
   s_BO <- trim_site_data(city = "BO")
   r_BO <-
-    trim_raster(city = "BO", data_source = urbanization_cover_data)
+    trim_spatial(city = "BO", data_source = urbanization_cover_data)
   
   s_MN <- trim_site_data(city = "MN")
   r_MN <-
-    trim_raster(city = "MN", data_source = urbanization_cover_data)
+    trim_spatial(city = "MN", data_source = urbanization_cover_data)
   
   s_PX <- trim_site_data(city = "PX")
   r_PX <-
-    trim_raster(city = "PX", data_source = urbanization_cover_data)
+    trim_spatial(city = "PX", data_source = urbanization_cover_data)
   
   s_LA <- trim_site_data(city = "LA")
   r_LA <-
-    trim_raster(city = "LA", data_source = urbanization_cover_data)
+    trim_spatial(city = "LA", data_source = urbanization_cover_data)
   
   # Scale both datasets to the same projection, and extract pixel data
   BA_urbancov <-
@@ -539,11 +552,15 @@ make_site_urban_pct_csv <- function() {
     get_envt_data_from_site(urban_data = r_LA, sites = s_LA)
   
   # Concatenate the dataset
-  d <- 
-    rbind(BA_urbancov, BO_urbancov, MN_urbancov, PX_urbancov, LA_urbancov)
+  d <-
+    rbind(BA_urbancov,
+          BO_urbancov,
+          MN_urbancov,
+          PX_urbancov,
+          LA_urbancov)
   
   # Write combined data to file
-  write.csv(d, 
+  write.csv(d,
             file = nlcd_pct_urban_by_site_out,
             row.names = FALSE)
   
