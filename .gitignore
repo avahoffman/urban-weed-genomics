@@ -44,3 +44,4 @@ data/*
 figures/*.pdf
 figures/*.png
 key.md
+bash/Notes.Rmd
