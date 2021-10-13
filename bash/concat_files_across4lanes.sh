@@ -1,8 +1,8 @@
 #!/bin/bash
 
 
-# GIVE ABOUT A MINUTE FOR EACH SET OF 4 FILES
-#SBATCH --time=0:01:00
+# GIVE ABOUT 30 seconds FOR EACH SET OF 4 FILES
+#SBATCH --time=0:24:00
 #SBATCH --job-name=concat
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=avamariehoffman@gmail.com
