@@ -25,3 +25,7 @@ nlcd_pct_urban_by_site_out <-
 
 redlining_by_site_out <- 
   "data/macrosystems_urban_site_data_redlining_by_site.csv"
+
+##########
+data_projection_settings <- 
+  "+proj=longlat +datum=WGS84 +no_defs"
