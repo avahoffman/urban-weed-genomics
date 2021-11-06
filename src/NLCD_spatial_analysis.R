@@ -92,12 +92,14 @@ crop_raster_data <-
     city <- as.character(as.factor(sites@data$city_abbv[1]))
     
     # Transform sites to the same projection as
-    spdf_transformed <-
-      spTransform(sites, crs(urban_data))
+    # spdf_transformed <-
+    #   spTransform(sites, crs(urban_data))
+    
+    spdf_transformed <- sites
     
     # Need to have different figure buffers if the x values are negative
     # (both PX and LA are negative on the AEA projection)
-    if (city != "PX" & city != "LA") {
+    if (city != "PX" | city != "LA") {
       figure_margins <-
         raster::extent(
           xmin(spdf_transformed) * 0.999,
@@ -221,6 +223,8 @@ ggplot_urban_roads_plot <-
     gg
     ggsave(paste("figures/", city, file_suffix, sep = ""),
            dpi = "print")
+    
+    return(gg)
   }
 
 
@@ -248,8 +252,28 @@ ggplot_urban_pct_cover_plot <-
     # Automatically determine city from the input (sites)
     city <- as.character(as.factor(sites@data$city_abbv[1]))
     
-    cr <- crop_raster_data(urban_data, sites)$raster_
-    site_points <- crop_raster_data(urban_data, sites)$vector_
+    # Need to have different figure buffers if the x values are negative
+    # (both PX and LA are negative on the AEA projection)
+    if (city == "PX" | city == "LA") {
+      figure_margins <-
+        raster::extent(
+          xmin(sites) * 0.999,
+          xmax(sites) * 1.001,
+          ymin(sites) * 0.999,
+          ymax(sites) * 1.001
+        )
+    } else {
+      figure_margins <-
+        raster::extent(
+          xmin(sites) * 1.0001,
+          xmax(sites) * 0.9999,
+          ymin(sites) * 0.9999,
+          ymax(sites) * 1.0001
+        )
+    }
+    
+    cr <- crop(urban_data, figure_margins)
+    site_points <- sites
     
     coords <- xyFromCell(cr, seq_len(ncell(cr)))
     urban_df <- stack(as.data.frame(getValues(cr)))
@@ -262,7 +286,7 @@ ggplot_urban_pct_cover_plot <-
     gg <-
       ggplot() +
       geom_tile(
-        data = urban_df %>% filter(y < 2447220) %>% filter(y > 2447150) %>% filter(x > 221500) %>% filter(x < 221600),
+        data = urban_df,
         aes(
           x = x,
           y = y,
@@ -270,6 +294,7 @@ ggplot_urban_pct_cover_plot <-
           color = value
         )
       ) +
+      coord_fixed(1.4) + #prevents weird warping of map due to tile size
       scale_fill_viridis(option = "A") +
       scale_color_viridis(option = "A") + #prevents white borders on tile
       geom_point(
@@ -292,6 +317,7 @@ ggplot_urban_pct_cover_plot <-
     gg
     ggsave(paste("figures/", city, file_suffix, sep = ""),
            dpi = "print")
+    return(gg)
   }
 
 
