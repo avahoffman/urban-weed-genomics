@@ -1,0 +1,5 @@
+/Hoffman_macrosystems/AMH_macro_11_4_8px_S144_L003_R1_001.fastq.gz
+/Hoffman_macrosystems/AMH_macro_11_4_8px_S144_L003_R2_001.fastq.gz
+/Hoffman_macrosystems/AMH_macro_11_4_8px_S144_L004_R1_001.fastq.gz
+/Hoffman_macrosystems/AMH_macro_11_4_8px_S144_L004_R2_001.fastq.gz
+/Hoffman_macrosystems/AMH_macro_11_5_8px_S145_L001_R1_001.fastq.gz
