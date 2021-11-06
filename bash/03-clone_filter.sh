@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# ABOUT 1.5 hour for each set of reads per library
-#SBATCH --time=1:20:00
+# ABOUT 70 minutes for each sublibrary (R1 and R2)
+#SBATCH --time=15:00:00
 #SBATCH --job-name=clonefilter
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=avamariehoffman@gmail.com
@@ -10,7 +10,7 @@
 #SBATCH --partition=shared
 #SBATCH --nodes=1
 # 24 cores = a single node
-#SBATCH --ntasks-per-node=8
+#SBATCH --ntasks-per-node=5
 
 
 # Written by: Ava Hoffman
