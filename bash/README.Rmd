@@ -11,9 +11,69 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This document is intended to help understand the function of the files contained in here.
 
-## `aspera_transfer.txt`
+# Preprocessing
 
-This is a text file containing the files that I wanted to transfer from the sequencing facility's Aspera server to the computing cluster (MARCC). This was to maximize ease of transferring only certain files over at once, since transferring could take a long time. Possible file names include:
+## Step 1 - `01-aspera_transfer_n.txt`
+
+These are text files containing the _names_ of `fastq.gz` files that I wanted to transfer from the sequencing facility's Aspera server to the computing cluster (MARCC). This was to maximize ease of transferring only certain files over at once, since transferring could take a long time. I definitely did this piecemeal. Possible file names shown in [Aspera Transfer File Names](#aspera-filenames). There are multiple of these files so that I could parallelize (replace n with the correct number in the command used below).
+
+Files were transferred using the following command:
+
+```
+ASPERA4/bin/ascp -T -l8000 -i ASPERA4/etc/asperaweb_id_dsa.openssh -m 100M --file-list=01-aspera_transfer_n.txt --mode=recv --user=<aspera-user> --host=<aspera-IP> /scratch/users/<me>@jhu.edu
+```
+
+## Step 2 - `02-concat_files_across4lanes.sh`
+
+I ran my samples across the whole flow cell of the NovaSeq, so results came in 8 files for each demultiplexed sublibrary (4 lanes * paired reads). For example, for sublibrary 1_1, we'd see the following files:
+
+```
+AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
+AMH_macro_1_1_12px_S1_L001_R2_001.fastq.gz
+AMH_macro_1_1_12px_S1_L002_R1_001.fastq.gz
+AMH_macro_1_1_12px_S1_L002_R2_001.fastq.gz
+AMH_macro_1_1_12px_S1_L003_R1_001.fastq.gz
+AMH_macro_1_1_12px_S1_L003_R2_001.fastq.gz
+AMH_macro_1_1_12px_S1_L004_R1_001.fastq.gz
+AMH_macro_1_1_12px_S1_L004_R2_001.fastq.gz
+```
+
+This script finds all files in the working directory with the name pattern `*_L001_*.fastq.gz` and concatenates across lanes so they can be managed further. For example the 8 files above would become:
+
+```
+AMH_macro_1_1_12px_S1_R1.fastq.gz
+AMH_macro_1_1_12px_S1_R2.fastq.gz
+```
+
+## Step 3 - `03-clone_filter.sh` {#clone-filter}
+
+This script runs `clone_filter` from [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was run with options `--inline_inline --oligo_len_1 4 --oligo_len_2 4`. The script uses the file name prefixes listed for each single sub-pooled library in `03-clone_filter_file_names.txt` and loops to run `clone_filter` on all of them. Possible file names shown in [`clone_filter` File Names](#clonefilter-filenames).
+
+## Step 4 - `04-process_radtags.sh`
+
+This script runs `process_radtags` from [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was run with options `-c -q --inline_inline --renz_1 pstI --renz_2 mspI --rescue --disable_rad_check`. The script uses the same file prefixes as [Step 3 - `03-clone_filter.sh`](#clone-filter). Each sub-pooled library has a forward and reverse read file that was filtered in the previous step. Like the [above section](#clone-filter), the script uses the file name prefixes listed for each single sub-pooled library in `04-process_radtags_file_names.txt` and loops to run `process_radtags` on all of them. Possible file names shown in [`clone_filter` File Names](#clonefilter-filenames).
+
+
+Each sub-pooled library also has a demultiplexing file (`04-demux/` directory) that contains the sample names and inner (i5 and i7) barcodes. For example, the sublibrary 1_1, we'd see the following barcode file:
+
+```
+ATCACG	AGTCAA	DS.BA.PIK.U.1
+CGATGT	AGTTCC	DS.BA.PIK.U.2
+TTAGGC	ATGTCA	DS.BA.PIK.U.3
+TGACCA	CCGTCC	DS.BA.PIK.U.4
+ACAGTG	GTCCGC	DS.BA.PIK.U.5
+GCCAAT	GTGAAA	DS.BA.DHI.U.1
+CAGATC	GTGGCC	DS.BA.DHI.U.2
+ACTTGA	GTTTCG	DS.BA.DHI.U.3
+GATCAG	CGTACG	DS.BA.DHI.U.4
+TAGCTT	GAGTGG	DS.BA.DHI.U.5
+GGCTAC	ACTGAT	DS.BA.GA.U.1
+CTTGTA	ATTCCT	DS.BA.GA.U.2
+```
+
+# Appendix
+
+## Aspera Transfer File Names {#aspera-filenames}
 
 ```
 /Hoffman_macrosystems/AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
@@ -1562,9 +1622,7 @@ This is a text file containing the files that I wanted to transfer from the sequ
 /Hoffman_macrosystems/AMH_macro_9_9_12px_S121_L004_R2_001.fastq.gz
 ```
 
-## `clone_filter_file_names.txt`
-
-Filename prefixes that would be piped into the `clone_filter` function script. This file was created to easily pick and choose what files to do at what time. Each prefix represents a single sub-pooled library. Possible values include:
+## `clone_filter` File Names {#clonefilter-filenames}
 
 ```
 AMH_macro_1_1_12px_S1
@@ -1760,4 +1818,115 @@ AMH_macro_9_6_8px_S118
 AMH_macro_9_7_8px_S119
 AMH_macro_9_8_8px_S120
 AMH_macro_9_9_12px_S121
+```
+
+```
+DS.BA.PIK.U.1.1
+DS.BA.PIK.U.2.1
+DS.BA.PIK.U.3.1
+DS.BA.PIK.U.4.1
+DS.BA.PIK.U.5.1
+DS.BA.DHI.U.1.1
+DS.BA.DHI.U.2.1
+DS.BA.DHI.U.3.1
+DS.BA.DHI.U.4.1
+DS.BA.DHI.U.5.1
+DS.BA.GA.U.1.1
+DS.BA.GA.U.2.1
+DS.BA.GA.U.3.1
+DS.BA.GA.U.4.1
+DS.BA.GA.U.5.1
+DS.BA.LH-1.M.1.1
+DS.BA.LH-1.M.2.1
+DS.BA.LH-1.M.3.1
+DS.BA.LH-1.M.4.1
+DS.BA.LH-1.M.5.1
+DS.BA.LH-3.M.1.1
+DS.BA.LH-3.M.2.1
+DS.BA.LH-3.M.3.1
+DS.BA.LH-3.M.4.1
+DS.BA.LH-3.M.5.1
+DS.BA.CP.U.1.1
+DS.BA.CP.U.2.1
+DS.BA.CP.U.3.1
+DS.BA.CP.U.4.1
+DS.BA.CP.U.5.1
+DS.BA.WB.U.1.1
+DS.BA.WB.U.2.1
+DS.BA.WB.U.3.1
+DS.BA.WB.U.4.1
+DS.BA.WB.U.5.1
+DS.BA.LL-4.M.1.1
+DS.BA.LL-4.M.2.1
+DS.BA.LL-4.M.3.1
+DS.BA.LL-4.M.4.1
+DS.BA.LL-4.M.5.1
+DS.BA.LH-2.M.1.1
+DS.BA.LH-2.M.2.1
+DS.BA.LH-2.M.3.1
+DS.BA.LH-2.M.4.1
+DS.BA.LH-2.M.5.1
+DS.BA.LA.U.1.1
+DS.BA.LA.U.2.1
+DS.BA.LA.U.3.1
+DS.BA.LA.U.4.1
+DS.BA.LA.U.5.1
+DS.BA.TRC.U.1.1
+DS.BA.TRC.U.2.1
+DS.BA.TRC.U.3.1
+DS.BA.TRC.U.4.1
+DS.BA.TRC.U.5.1
+DS.BA.W3.M.1.1
+DS.BA.W3.M.2.1
+DS.BA.W3.M.3.1
+DS.BA.W3.M.4.1
+DS.BA.W3.M.5.1
+DS.BA.AA.U.1.1
+DS.BA.AA.U.2.1
+DS.BA.AA.U.3.1
+DS.BA.AA.U.4.1
+DS.BA.AA.U.5.1
+DS.BA.RG-1.M.1.1
+DS.BA.RG-1.M.2.1
+DS.BA.RG-1.M.3.1
+DS.BA.RG-1.M.4.1
+DS.BA.RG-1.M.5.1
+DS.BA.LL-3.M.1.1
+DS.BA.LL-3.M.2.1
+DS.BA.LL-3.M.3.1
+DS.BA.PSP.M.1.1
+DS.BA.PSP.M.2.1
+DS.BA.PSP.M.3.1
+DS.BA.PSP.M.4.1
+DS.BA.PSP.M.5.1
+DS.BA.RG-2.M.1.1
+DS.BA.RG-2.M.2.1
+DS.BA.RG-2.M.3.1
+DS.BA.RG-2.M.4.1
+DS.BA.RG-2.M.5.1
+DS.BO.LC2.M.3.1
+DS.BO.LC2.M.4.1
+DS.BO.LC2.M.5.1
+DS.BO.LC3.M.3.1
+DS.BO.LC3.M.4.1
+DS.BO.LC3.M.5.1
+DS.BO.LC4.M.1.1
+DS.BO.LC4.M.2.1
+DS.BO.LC4.M.3.1
+DS.BO.LC4.M.4.1
+DS.BO.LC4.M.5.1
+DS.BO.WL1.M.1.1
+DS.BO.WL1.M.2.1
+DS.BO.WL1.M.3.1
+DS.BO.WL1.M.4.1
+DS.BO.WL1.M.5.1
+DS.BO.WL2.M.1.1
+DS.BO.WL2.M.2.1
+DS.BO.WL2.M.3.1
+DS.BO.WL2.M.4.1
+DS.BO.WL2.M.5.1
+DS.BO.WL3.M.1.1
+DS.BO.WL3.M.2.1
+DS.BO.WL3.M.3.1
+
 ```
