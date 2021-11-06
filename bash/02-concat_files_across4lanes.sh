@@ -2,7 +2,7 @@
 
 
 # GIVE ABOUT 30 seconds FOR EACH SET OF 4 FILES
-#SBATCH --time=0:24:00
+#SBATCH --time=0:15:00
 #SBATCH --job-name=concat
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=avamariehoffman@gmail.com
@@ -17,12 +17,14 @@
 # Written by: Ava Hoffman
 # Date:       11 October 2021
 # Purpose:    Concatenate raw sequencing data by sample that was run across 4 
-#             lanes. They will not be unzipped until the next step.
+#             lanes.
 
+# Alternative approach can be found here:
 # https://www.michaelchimenti.com/2015/08/concatenate-several-lanes-of-illumina-hiseq-reads-quickly/
-#cat `find . -maxdepth 1 | egrep 'AMH_macro_1_1_12px_S1.*R1'` > AMH_macro_1_1_12px_S1_R1.fastq.gz
 
-# This approach takes the substring for each sub library and then concatenates all 1-4 lanes sharing that substring. Assumes there are all 4 lanes.
+# This approach takes the substring for each sub library and then concatenates 
+# all 1-4 lanes sharing that substring. Assumes there are all 4 lanes (L001 
+# through L004).
 for i in *_L001_*.fastq.gz; do
 b=${i%%_L001_*.fastq.gz}
 # Read 1
