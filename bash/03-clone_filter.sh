@@ -24,4 +24,4 @@ while read p; do
   clone_filter -1 "$p"_R1.fastq.gz -2 "$p"_R2.fastq.gz \
   -i gzfastq -o /home-1/ahoffm31@jhu.edu/scratch/out_dir \
   --inline_inline --oligo_len_1 4 --oligo_len_2 4
-done <~/code/clone_filter_file_names.txt
+done <~/code/03-clone_filter_file_names.txt

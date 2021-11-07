@@ -26,4 +26,4 @@ while read p; do
   -i gzfastq -b ~/code/demux/"$p"_demux.txt \
   -o /home-1/ahoffm31@jhu.edu/scratch/demux -c -q \
   --inline_inline --renz_1 pstI --renz_2 mspI --rescue --disable_rad_check
-done <~/code/process_radtags_file_names.txt
+done <~/code/04-process_radtags_file_names.txt
