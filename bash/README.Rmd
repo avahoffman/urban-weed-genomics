@@ -105,7 +105,7 @@ become:
 - DS.MN.L03-DS.U.2.tags.tsv.gz
 - DS.MN.L09-DS.U.1.snps.tsv.gz
 
-The script currently gives some strange log output, so it can probably be optimized/improved.
+The script currently gives some strange log output, so it can probably be optimized/improved. The script should be run from the directory where the changes need to be made.
 
 ## Step 6 - `cstacks`
 
