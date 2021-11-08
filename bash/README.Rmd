@@ -91,6 +91,22 @@ The sample name is the corresponding name for each sample ID in the spreadsheet.
 
 There are multiple of these files so that I could parallelize (replace n with the correct number).
 
+### Step 5b - Correct File Names
+
+This step contains a script `05b-fix_filenames.sh` which uses some simple regex to fix filenames that are output in previous steps. Stacks adds an extra "1" at some point at the end of the sample name which is not meaningful. The following files:
+
+- DS.MN.L02-DS.M.3.1.alleles.tsv.gz
+- DS.MN.L03-DS.U.2.1.tags.tsv.gz
+- DS.MN.L09-DS.U.1.1.snps.tsv.gz
+
+become:
+
+- DS.MN.L02-DS.M.3.alleles.tsv.gz
+- DS.MN.L03-DS.U.2.tags.tsv.gz
+- DS.MN.L09-DS.U.1.snps.tsv.gz
+
+The script currently gives some strange log output, so it can probably be optimized/improved.
+
 ## Step 6 - `cstacks`
 
 `cstacks` builds the locus catalog from all the samples. The accompanying script, `06-cstacks.sh` is relatively simple since it points to the directory containing all the sample files. The tricky thing is ensuring enough compute memory to run the entire process successfully. There is probably space to optimize this process. The `cstacks` method uses a "population" file, which in this project is `06-cstacks_popmap.txt`. This file contains samples and city in two tab-delimited columns, e.g.:
