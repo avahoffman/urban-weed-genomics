@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# Estimated 4 minutes (max) per sample @ tasks and -p 60
-#SBATCH --time=15:00:00
+# Estimated 4 minutes (max) per sample @ tasks =3 and -p 24 BUT this increases
+# With number of samples as the catalog gets more complex.
+#SBATCH --time=3:00:00
 #SBATCH --job-name=cStcks
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=avamariehoffman@gmail.com
@@ -21,4 +22,4 @@
 module load gcc
 export PATH=$PATH:/home-1/ahoffm31@jhu.edu/code/bin
 
-cstacks -P ~/scratch/stacks/ustacks -M ~/code/06-cstacks_popmap.txt -n 4 -p 60
+cstacks -P ~/scratch/stacks/ustacks -M ~/code/06-cstacks_popmap.txt -n 4 -p 24
