@@ -89,6 +89,8 @@ The sample ID should be derived from the `order_id` column (first column) on the
 
 The sample name is the corresponding name for each sample ID in the spreadsheet. E.g., sample ID "9" corresponds to sample name "DS.BA.DHI.U.4". Sample naming convention is species.city.site.management_type.replicate_plant.
 
+`05-ustacks_n.sh` should have an out_directory (`-o` option) corresponding to the date or other relevant output directory name that changes with each run. Otherwise this causes [problems downstream](https://groups.google.com/g/stacks-users/c/q3YYPprmYnU/m/cH5RB5KwBQAJ).
+
 There are multiple of these files so that I could parallelize (replace n with the correct number).
 
 ### Step 5b - Correct File Names
@@ -109,7 +111,7 @@ The script currently gives some strange log output, so it can probably be optimi
 
 ## Step 6 - `cstacks`
 
-`cstacks` builds the locus catalog from all the samples. The accompanying script, `06-cstacks.sh` is relatively simple since it points to the directory containing all the sample files. The tricky thing is ensuring enough compute memory to run the entire process successfully. There is probably space to optimize this process. The `cstacks` method uses a "population" file, which in this project is `06-cstacks_popmap.txt`. This file contains samples and city in two tab-delimited columns, e.g.:
+`cstacks` builds the locus catalog from all the samples specified. The accompanying script, `06-cstacks.sh` is relatively simple since it points to the directory containing all the sample files. The tricky thing is ensuring enough compute memory to run the entire process successfully. There is probably space to optimize this process. The `cstacks` method uses a "population" file, which in this project is `06-cstacks_popmap.txt`. This file contains samples and city in two tab-delimited columns, e.g.:
 
 ```
 DS.BA.GA.U.1.1	Baltimore
@@ -119,6 +121,12 @@ DS.BA.GA.U.4.1	Baltimore
 DS.BA.GA.U.5.1	Baltimore
 ...
 ```
+
+## Step 7 - `sstacks`
+
+## Step 8 - `tsv2bam`
+
+
 
 # Appendix
 
