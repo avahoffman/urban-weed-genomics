@@ -35,6 +35,6 @@ export PATH=$PATH:/home-1/ahoffm31@jhu.edu/code/bin
 # )
 
 while read p; do
-sstacks -c ~/scratch/stacks/sstacks_21_11_09 -s ~/scratch/stacks/sstacks_21_11_09/"$p" \
-  -o ~/scratch/stacks/sstacks_21_11_09 -p 8
+sstacks -c ~/scratch/stacks/stacks_21_11_09 -s ~/scratch/stacks/stacks_21_11_09/"$p" \
+  -o ~/scratch/stacks/stacks_21_11_09 -p 8
 done <~/code/07-sstacks_samples.txt
