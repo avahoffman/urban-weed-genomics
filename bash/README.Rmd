@@ -77,7 +77,7 @@ In the out directory, make sure the files are organized by species. By default, 
 
 Note: this is not automated at this point but it would be nice to automate the file moving process so it's not forgotten at this point.
 
-## Step 5 - `ustacks`
+## Step 5 - `ustacks` {#ustacks}
 
 `ustacks` builds _de novo_ loci in each individual sample. We have designed it so that the process requires three files:
 
@@ -89,7 +89,11 @@ The sample ID should be derived from the `order_id` column (first column) on the
 
 The sample name is the corresponding name for each sample ID in the spreadsheet. E.g., sample ID "9" corresponds to sample name "DS.BA.DHI.U.4". Sample naming convention is species.city.site.management_type.replicate_plant.
 
-`05-ustacks_n.sh` should have an out_directory (`-o` option) corresponding to the date or other relevant output directory name that changes with each run. Otherwise this causes [problems downstream](https://groups.google.com/g/stacks-users/c/q3YYPprmYnU/m/cH5RB5KwBQAJ).
+`05-ustacks_n.sh` should have an out_directory (`-o` option) corresponding to the date or other relevant output directory name that changes with each run. Otherwise this causes [problems downstream](https://groups.google.com/g/stacks-users/c/q3YYPprmYnU/m/cH5RB5KwBQAJ). There should be three files for every sample in the output directory:
+
+- `<samplename>.alleles.tsv.gz`
+- `<samplename>.snps.tsv.gz`
+- `<samplename>.tags.tsv.gz`
 
 There are multiple of these files so that I could parallelize (replace n with the correct number).
 
@@ -109,24 +113,50 @@ become:
 
 The script currently gives some strange log output, so it can probably be optimized/improved. The script should be run from the directory where the changes need to be made.
 
-## Step 6 - `cstacks`
+## Step 6 - `cstacks` {#cstacks}
 
 `cstacks` builds the locus catalog from all the samples specified. The accompanying script, `06-cstacks.sh` is relatively simple since it points to the directory containing all the sample files. The tricky thing is ensuring enough compute memory to run the entire process successfully. There is probably space to optimize this process. The `cstacks` method uses a "population" file, which in this project is `06-cstacks_popmap.txt`. This file contains samples and city in two tab-delimited columns, e.g.:
 
 ```
-DS.BA.GA.U.1.1	Baltimore
-DS.BA.GA.U.2.1	Baltimore
-DS.BA.GA.U.3.1	Baltimore
-DS.BA.GA.U.4.1	Baltimore
-DS.BA.GA.U.5.1	Baltimore
+DS.BA.GA.U.1	Baltimore
+DS.BA.GA.U.2	Baltimore
+DS.BA.GA.U.3	Baltimore
+DS.BA.GA.U.4	Baltimore
+DS.BA.GA.U.5	Baltimore
 ...
 ```
 
+`cstacks` builds three files for use in all your samples (in this pipeline run), mirroring the sample files outout by [`ustacks`](#ustacks):
+
+- `catalog.alleles.tsv.gz`
+- `catalog.snps.tsv.gz`
+- `catalog.tags.tsv.gz`
+
 ## Step 7 - `sstacks`
+
+All samples in the population are matched against the catalog produced in [`cstacks`](#cstacks) with `sstacks`, run in script `07-sstacks.sh`. It runs off of the samples based in the output directory _and_ the listed samples in `07-sstacks_samples.txt`, so make sure all your files (sample and catalog etc) are there and match. `07-sstacks_samples.txt` takes the form:
+
+```
+DS.BA.GA.U.1
+DS.BA.GA.U.2
+DS.BA.GA.U.3
+DS.BA.GA.U.4
+DS.BA.GA.U.5
+...
+```
+
+There should be a new file produced at this step for every sample in the output directory:
+
+- `<samplename>.matches.tsv.gz`
 
 ## Step 8 - `tsv2bam`
 
+`08-tsv2bam.sh`
+`08-tsv2bam_popmap.txt`
 
+## Step 9 - `gstacks`
+
+`09-gstacks.sh`
 
 # Appendix
 
