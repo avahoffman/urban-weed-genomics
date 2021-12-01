@@ -2,7 +2,8 @@
 title: "README"
 author: "Ava Hoffman"
 date: "10/13/2021"
-output: html_document
+output: 
+  md_document: default
 ---
 
 ```{r setup, include=FALSE}
