@@ -76,9 +76,9 @@ wanted to transfer from the sequencing facility’s Aspera server to the
 computing cluster (MARCC). This was to maximize ease of transferring
 only certain files over at once, since transferring could take a long
 time. I definitely did this piecemeal. Possible file names shown in
-[Aspera Transfer File Names](#aspera-filenames). There are multiple of
-these files so that I could parallelize (replace n with the correct
-number in the command used below).
+[Aspera Transfer File Names](#aspera-transfer-file-names). There are
+multiple of these files so that I could parallelize (replace n with the
+correct number in the command used below).
 
 Files were transferred using the following command:
 
@@ -114,7 +114,7 @@ run with options `--inline_inline --oligo_len_1 4 --oligo_len_2 4`. The
 script uses the file name prefixes listed for each single sub-pooled
 library in `03-clone_filter_file_names.txt` and loops to run
 `clone_filter` on all of them. Possible file names shown in
-[`clone_filter` File Names](#clonefilter-filenames).
+[`clone_filter` File Names](#clone_filter-file-names).
 
 ## Step 4 - `04-process_radtags.sh`
 

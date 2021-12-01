@@ -78,7 +78,7 @@ Doesn't mean anything - it was just added automatically :)
 
 ## Step 1 - `01-aspera_transfer_n.txt`
 
-These are text files containing the _names_ of `fastq.gz` files that I wanted to transfer from the sequencing facility's Aspera server to the computing cluster (MARCC). This was to maximize ease of transferring only certain files over at once, since transferring could take a long time. I definitely did this piecemeal. Possible file names shown in [Aspera Transfer File Names](#aspera-filenames). There are multiple of these files so that I could parallelize (replace n with the correct number in the command used below).
+These are text files containing the _names_ of `fastq.gz` files that I wanted to transfer from the sequencing facility's Aspera server to the computing cluster (MARCC). This was to maximize ease of transferring only certain files over at once, since transferring could take a long time. I definitely did this piecemeal. Possible file names shown in [Aspera Transfer File Names](#aspera-transfer-file-names). There are multiple of these files so that I could parallelize (replace n with the correct number in the command used below).
 
 Files were transferred using the following command:
 
@@ -110,7 +110,7 @@ AMH_macro_1_1_12px_S1_R2.fastq.gz
 
 ## Step 3 - `03-clone_filter.sh` {#clone-filter}
 
-This script runs `clone_filter` from [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was run with options `--inline_inline --oligo_len_1 4 --oligo_len_2 4`. The script uses the file name prefixes listed for each single sub-pooled library in `03-clone_filter_file_names.txt` and loops to run `clone_filter` on all of them. Possible file names shown in [`clone_filter` File Names](#clonefilter-filenames).
+This script runs `clone_filter` from [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was run with options `--inline_inline --oligo_len_1 4 --oligo_len_2 4`. The script uses the file name prefixes listed for each single sub-pooled library in `03-clone_filter_file_names.txt` and loops to run `clone_filter` on all of them. Possible file names shown in [`clone_filter` File Names](#clone_filter-file-names).
 
 ## Step 4 - `04-process_radtags.sh`
 
@@ -240,7 +240,7 @@ Produces the following:
 
 # Appendix :books:
 
-## Aspera Transfer File Names {#aspera-filenames}
+## Aspera Transfer File Names
 
 ```
 /Hoffman_macrosystems/AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
@@ -1789,7 +1789,7 @@ Produces the following:
 /Hoffman_macrosystems/AMH_macro_9_9_12px_S121_L004_R2_001.fastq.gz
 ```
 
-## `clone_filter` File Names {#clonefilter-filenames}
+## `clone_filter` File Names
 
 ```
 AMH_macro_1_1_12px_S1
