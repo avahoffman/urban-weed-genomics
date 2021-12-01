@@ -123,13 +123,13 @@ This script runs `process_radtags` from
 run with options
 `-c -q --inline_inline --renz_1 pstI --renz_2 mspI --rescue --disable_rad_check`.
 The script uses the same file prefixes as [Step 3 -
-`03-clone_filter.sh`](#clone-filter). Each sub-pooled library has a
-forward and reverse read file that was filtered in the previous step.
-Like the [above section](#clone-filter), the script uses the file name
-prefixes listed for each single sub-pooled library in
-`04-process_radtags_file_names.txt` and loops to run `process_radtags`
-on all of them. Possible file names shown in [`clone_filter` File
-Names](#clonefilter-filenames).
+`03-clone_filter.sh`](#step-3---03-clone_filter.sh). Each sub-pooled
+library has a forward and reverse read file that was filtered in the
+previous step. Like the [above section](#step-3---03-clone_filter.sh),
+the script uses the file name prefixes listed for each single sub-pooled
+library in `04-process_radtags_file_names.txt` and loops to run
+`process_radtags` on all of them. Possible file names shown in
+[`clone_filter` File Names](#clone_filter-file-names).
 
 Each sub-pooled library also has a demultiplexing file (`04-demux/`
 directory) that contains the sample names and inner (i5 and i7)
@@ -233,7 +233,7 @@ tab-delimited columns, e.g.:
 
 `cstacks` builds three files for use in all your samples (in this
 pipeline run), mirroring the sample files outout by
-[`ustacks`](#ustacks):
+[`ustacks`](#step-5---ustacks):
 
 -   `catalog.alleles.tsv.gz`
 -   `catalog.snps.tsv.gz`
@@ -242,11 +242,11 @@ pipeline run), mirroring the sample files outout by
 ## Step 7 - `sstacks`
 
 All samples in the population are matched against the catalog produced
-in [`cstacks`](#cstacks) with `sstacks`, run in script `07-sstacks.sh`.
-It runs off of the samples based in the output directory *and* the
-listed samples in `07-sstacks_samples.txt`, so make sure all your files
-(sample and catalog etc) are there and match. `07-sstacks_samples.txt`
-takes the form:
+in [`cstacks`](#step-6---cstacks) with `sstacks`, run in script
+`07-sstacks.sh`. It runs off of the samples based in the output
+directory *and* the listed samples in `07-sstacks_samples.txt`, so make
+sure all your files (sample and catalog etc) are there and match.
+`07-sstacks_samples.txt` takes the form:
 
     DS.BA.GA.U.1
     DS.BA.GA.U.2
