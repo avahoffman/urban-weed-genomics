@@ -1,7 +1,7 @@
 This document is intended to help understand the function of the files
 contained in here.
 
-# *First* A Note on File naming :sparkles:
+# *First*: A Note on File naming :sparkles:
 
 In this experiment, I used quaddRAD library prep to prepare the sample
 DNA. This means that there were both two unique outer barcodes (typical
@@ -14,48 +14,56 @@ still contains a mix of the inner barcodes. I will refer to these as
 “sublibraries” because they are sort of halfway demultiplexed. I
 separate them out bioinformatically later.
 
-Here’s a bit of information on the file name convention.
-
 The typical file looks like this:
 
-AMH\_macro\_1\_1\_12px\_S1\_L001\_R1\_001.fastq.gz
+    AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
 
-**AMH\_macro**\_1\_1\_12px\_S1\_L001\_R1\_001.fastq.gz
+Here’s a bit of information on the file name convention.
+
+    AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
+    ^^^^^^^^^
 
 These are my initials and “macro” stands for “Macrosystems”. These are
 on every file.
 
-AMH\_macro\_**1**\_1\_12px\_S1\_L001\_R1\_001.fastq.gz
+    AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
+              ^
 
 This is the *i5nn* barcode for the given sublibrary. I know all these
 samples have a i5nn barcode “1”, so that narrows down what they can be.
 
-AMH\_macro\_1\_**1**\_12px\_S1\_L001\_R1\_001.fastq.gz
+    AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
+                ^
 
 This is the *i7nn* barcode for the given sublibrary. I know all these
 samples have a i7nn barcode “1”, so that further narrows down what they
 can be.
 
-AMH\_macro\_1\_1\_**12px**\_S1\_L001\_R1\_001.fastq.gz
+    AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
+                  ^^^^
 
 This refers to how many samples are in the sublibrary. “12px” means
 12-plexed, or 12 samples. In other words, I will use the inner barcodes
 to further distinguish 12 unique samples in this sublibrary.
 
-AMH\_macro\_1\_1\_12px\_**S1**\_L001\_R1\_001.fastq.gz
+    AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
+                       ^^
 
 This is a unique sublibrary name. S1 = 1 i5nn and 1 i7nn.
 
-AMH\_macro\_1\_1\_12px\_S1\_**L001**\_R1\_001.fastq.gz
+    AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
+                          ^^^^
 
 This means this particular file came from lane 1 of the NovaSeq. There
 are four lanes. All samples should appear across all four lanes.
 
-AMH\_macro\_1\_1\_12px\_S1\_L001\_**R1**\_001.fastq.gz
+    AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
+                               ^^
 
 This is the first (R1) of two paired-end reads (R1 and R2).
 
-AMH\_macro\_1\_1\_12px\_S1\_L001\_R1\_**001**.fastq.gz
+    AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
+                                  ^^^
 
 Doesn’t mean anything - it was just added automatically :)
 
