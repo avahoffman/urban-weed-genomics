@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This document is intended to help understand the function of the files contained in here.
 
-# _First_: A Note on File naming :sparkles:
+# _First_: A Note on File Naming :sparkles:
 
 In this experiment, I used quaddRAD library prep to prepare the sample DNA. This means that there were both two unique outer barcodes (typical Illumina barcodes) _AND_ two unique inner barcodes (random barcode bases inside the adapters) for each sample - over 1700 to be exact!
 
