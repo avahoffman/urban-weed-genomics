@@ -100,7 +100,6 @@ DS.BO.WL1.M.5	Boston
 DS.BO.WL2.M.1	Boston
 DS.BO.WL2.M.2	Boston
 DS.BO.WL2.M.3	Boston
-DS.BO.WL2.M.4	Boston
 DS.BO.WL2.M.5	Boston
 DS.BO.WL3.M.1	Boston
 DS.BO.WL3.M.2	Boston
@@ -108,7 +107,6 @@ DS.BO.WL3.M.3	Boston
 DS.MN.L01-DS.M.1	Minneapolis
 DS.MN.L01-DS.M.2	Minneapolis
 DS.MN.L01-DS.M.3	Minneapolis
-DS.MN.L01-DS.M.4	Minneapolis
 DS.MN.L01-DS.M.5	Minneapolis
 DS.MN.L02-DS.M.1	Minneapolis
 DS.MN.L02-DS.M.2	Minneapolis
@@ -152,7 +150,6 @@ DS.MN.L09-DS.M.5	Minneapolis
 DS.MN.L10-DS.M.1	Minneapolis
 DS.MN.L10-DS.M.2	Minneapolis
 DS.MN.L10-DS.M.3	Minneapolis
-DS.MN.L10-DS.M.4	Minneapolis
 DS.MN.L10-DS.M.5	Minneapolis
 DS.MN.L11-DS.M.1	Minneapolis
 DS.MN.L11-DS.M.2	Minneapolis

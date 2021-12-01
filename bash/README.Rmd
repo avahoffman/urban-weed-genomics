@@ -154,9 +154,26 @@ There should be a new file produced at this step for every sample in the output 
 `08-tsv2bam.sh`
 `08-tsv2bam_popmap.txt`
 
+This is the step at which it's usually discovered that some samples are bad (don't have any useable matches to the catalog). These samples were excluded from `08-tsv2bam_popmap.txt`. For example I might simply cut out the following rows:
+
+```
+DS.MN.L10-DS.M.4	Minneapolis
+DS.MN.L01-DS.M.4	Minneapolis
+DS.BO.WL2.M.4	Boston
+```
+
 ## Step 9 - `gstacks`
 
 `09-gstacks.sh`
+
+Produces the following:
+
+- `catalog.fa.gz` : consensus catalog loci, contains the consensus sequence for each locus as produced by `gstacks` in a standard FASTA file
+- `catalog.calls` : per-nucleotide genotypes, contains the output of the SNP calling model for each nucleotide in the analysis
+
+## Step 10 - `populations`
+
+`10-population.sh`
 
 # Appendix
 

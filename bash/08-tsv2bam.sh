@@ -1,6 +1,8 @@
 #!/bin/bash
 
-#SBATCH --time=00:30:00
+# 19 mins for 107 samples
+# 32 mins for 221 samples
+#SBATCH --time=00:45:00
 #SBATCH --job-name=t2bam
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=avamariehoffman@gmail.com
