@@ -123,9 +123,9 @@ This script runs `process_radtags` from
 run with options
 `-c -q --inline_inline --renz_1 pstI --renz_2 mspI --rescue --disable_rad_check`.
 The script uses the same file prefixes as [Step 3 -
-`03-clone_filter.sh`](#step-3---03-clone_filter.sh). Each sub-pooled
+`03-clone_filter.sh`](#step-3---03-clone_filtersh). Each sub-pooled
 library has a forward and reverse read file that was filtered in the
-previous step. Like the [above section](#step-3---03-clone_filter.sh),
+previous step. Like the [above section](#step-3---03-clone_filtersh),
 the script uses the file name prefixes listed for each single sub-pooled
 library in `04-process_radtags_file_names.txt` and loops to run
 `process_radtags` on all of them. Possible file names shown in
