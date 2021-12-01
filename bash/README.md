@@ -67,7 +67,7 @@ This is the first (R1) of two paired-end reads (R1 and R2).
 
 Doesn’t mean anything - it was just added automatically :)
 
-# Preprocessing
+# Preprocessing :wrench:
 
 ## Step 1 - `01-aspera_transfer_n.txt`
 
@@ -289,7 +289,7 @@ Produces the following:
 
 `10-population.sh`
 
-# Appendix
+# Appendix :books:
 
 ## Aspera Transfer File Names
 

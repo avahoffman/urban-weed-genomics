@@ -74,7 +74,7 @@ AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
 ```
 Doesn't mean anything - it was just added automatically :)
 
-# Preprocessing
+# Preprocessing :wrench:
 
 ## Step 1 - `01-aspera_transfer_n.txt`
 
@@ -238,7 +238,7 @@ Produces the following:
 
 `10-population.sh`
 
-# Appendix
+# Appendix :books:
 
 ## Aspera Transfer File Names {#aspera-filenames}
 
