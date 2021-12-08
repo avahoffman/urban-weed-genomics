@@ -67,22 +67,35 @@ This is the first (R1) of two paired-end reads (R1 and R2).
 
 Doesn’t mean anything - it was just added automatically :)
 
+# A Note on File Transfers :arrows\_clockwise:
+
+There are three main systems at play for file transfer: my local
+machine, the sequencing facility’s (GRCF) Aspera server, and
+[MARCC](https://www.marcc.jhu.edu/). The Aspera server is where the data
+were/are stored immediately after sequencing. MARCC is where I plan to
+do preprocessing and analysis. Scripts and text files are easy for me to
+edit on my local machine. I used Globus to transfer these small files
+from my local machine to MARCC.
+
+![File transfer schematic](../figures/file_transfer.png)
+
 # Preprocessing :wrench:
 
 ## Step 1 - `01-aspera_transfer_n.txt`
 
 These are text files containing the *names* of `fastq.gz` files that I
 wanted to transfer from the sequencing facility’s Aspera server to the
-computing cluster ([MARCC](https://www.marcc.jhu.edu/)). This was to maximize ease of transferring
-only certain files over at once, since transferring could take a long
-time. I definitely did this piecemeal. Possible file names shown in
-[Aspera Transfer File Names](#aspera-transfer-file-names). There are
-multiple of these files so that I could parallelize (replace n with the
-correct number in the command used below).
+computing cluster ([MARCC](https://www.marcc.jhu.edu/)). This was to
+maximize ease of transferring only certain files over at once, since
+transferring could take a long time. I definitely did this piecemeal.
+Possible file names shown in [Aspera Transfer File
+Names](#aspera-transfer-file-names). There are multiple of these files
+so that I could parallelize (replace n with the correct number in the
+command used below).
 
 Files were transferred using the following command:
 
-    ASPERA4/bin/ascp -T -l8000 -i ASPERA4/etc/asperaweb_id_dsa.openssh -m 100M --file-list=01-aspera_transfer_n.txt --mode=recv --user=<aspera-user> --host=<aspera-IP> /scratch/users/<me>@jhu.edu
+    ascp -T -l8G -i /software/apps/aspera/3.9.1/etc/asperaweb_id_dsa.openssh --file-list=01-aspera_transfer_n.txt --mode=recv --user=<aspera-user> --host=<aspera-IP> /scratch/users/<me>@jhu.edu
 
 ## Step 2 - `02-concat_files_across4lanes.sh`
 
