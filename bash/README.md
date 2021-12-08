@@ -77,7 +77,7 @@ do preprocessing and analysis. Scripts and text files are easy for me to
 edit on my local machine. I used Globus to transfer these small files
 from my local machine to MARCC.
 
-![File transfer schematic](../figures/file_transfer.jpg)
+<img src="../figures/file_transfer.jpg" alt="File transfer schematic" width="600"/>
 
 # Preprocessing :wrench:
 
