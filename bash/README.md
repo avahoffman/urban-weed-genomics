@@ -74,8 +74,8 @@ machine, the sequencing facility’s (GRCF) Aspera server, and
 [MARCC](https://www.marcc.jhu.edu/). The Aspera server is where the data
 were/are stored immediately after sequencing. MARCC is where I plan to
 do preprocessing and analysis. Scripts and text files are easy for me to
-edit on my local machine. I used Globus to transfer these small files
-from my local machine to MARCC.
+edit on my local machine. I used [Globus](https://app.globus.org) to
+transfer these small files from my local machine to MARCC.
 
 <img src="../figures/file_transfer.jpg" alt="File transfer schematic" width="600"/>
 
