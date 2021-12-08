@@ -73,7 +73,7 @@ Doesn’t mean anything - it was just added automatically :)
 
 These are text files containing the *names* of `fastq.gz` files that I
 wanted to transfer from the sequencing facility’s Aspera server to the
-computing cluster (MARCC). This was to maximize ease of transferring
+computing cluster ([MARCC](https://www.marcc.jhu.edu/)). This was to maximize ease of transferring
 only certain files over at once, since transferring could take a long
 time. I definitely did this piecemeal. Possible file names shown in
 [Aspera Transfer File Names](#aspera-transfer-file-names). There are
