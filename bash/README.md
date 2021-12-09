@@ -93,7 +93,13 @@ Names](#aspera-transfer-file-names). There are multiple of these files
 so that I could parallelize (replace n with the correct number in the
 command used below).
 
-Files were transferred using the following command:
+Files were transferred using the following commands. First, load the
+aspera module. Alternatively, you can install the Aspera transfer
+software and use that.
+
+    module load aspera
+
+Initiate the transfer:
 
     ascp -T -l8G -i /software/apps/aspera/3.9.1/etc/asperaweb_id_dsa.openssh --file-list=01-aspera_transfer_n.txt --mode=recv --user=<aspera-user> --host=<aspera-IP> /scratch/users/<me>@jhu.edu
 

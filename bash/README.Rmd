@@ -86,7 +86,13 @@ There are three main systems at play for file transfer: my local machine, the se
 
 These are text files containing the _names_ of `fastq.gz` files that I wanted to transfer from the sequencing facility's Aspera server to the computing cluster ([MARCC](https://www.marcc.jhu.edu/)). This was to maximize ease of transferring only certain files over at once, since transferring could take a long time. I definitely did this piecemeal. Possible file names shown in [Aspera Transfer File Names](#aspera-transfer-file-names). There are multiple of these files so that I could parallelize (replace n with the correct number in the command used below).
 
-Files were transferred using the following command:
+Files were transferred using the following commands. First, load the aspera module. Alternatively, you can install the Aspera transfer software and use that.
+
+```
+module load aspera
+```
+
+Initiate the transfer:
 
 ```
 ascp -T -l8G -i /software/apps/aspera/3.9.1/etc/asperaweb_id_dsa.openssh --file-list=01-aspera_transfer_n.txt --mode=recv --user=<aspera-user> --host=<aspera-IP> /scratch/users/<me>@jhu.edu
