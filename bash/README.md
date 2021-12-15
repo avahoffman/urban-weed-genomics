@@ -95,7 +95,7 @@ command used below).
 
 Files were transferred using the following commands. First, load the
 aspera module. Alternatively, you can install the Aspera transfer
-software and use that.
+software and use that. More info here
 
     module load aspera
 
