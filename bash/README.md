@@ -2,7 +2,8 @@ This document is intended to help understand the function of the files
 contained in here.
 
 ## Table of Contents
-<!-- Do not edit the table of contents. It is updated by GitHub Actions. -->
+<!-- Do not edit the table of contents. It is updated automatically by GitHub 
+Actions. -->
 
 <!-- toc -->
 <!-- tocstop -->
