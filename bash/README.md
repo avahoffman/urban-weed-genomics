@@ -5,6 +5,29 @@ contained in here.
 Actions. -->
 
 <!-- toc -->
+
+- [*First*: A Note on File Naming :sparkles:](#first-a-note-on-file-naming-sparkles)
+- [A note](#a-note)
+    + [a subnote](#a-subnote)
+- [A Note on File Transfers :arrows\_clockwise:](#a-note-on-file-transfers-arrows_clockwise)
+- [Preprocessing :wrench:](#preprocessing-wrench)
+  * [Step 1 - `01-aspera_transfer_n.txt`](#step-1---01-aspera_transfer_ntxt)
+  * [Step 2 - `02-concat_files_across4lanes.sh`](#step-2---02-concat_files_across4lanessh)
+  * [Step 2b – Download [Stacks](https://catchenlab.life.illinois.edu/stacks/)](#step-2b-%E2%80%93-download-stackshttpscatchenlablifeillinoisedustacks)
+  * [Step 3 - `03-clone_filter.sh`](#step-3---03-clone_filtersh)
+  * [Step 4 - `04-process_radtags.sh`](#step-4---04-process_radtagssh)
+    + [Step 4b - Organize files](#step-4b---organize-files)
+  * [Step 5 - `ustacks`](#step-5---ustacks)
+    + [Step 5b - Correct File Names](#step-5b---correct-file-names)
+  * [Step 6 - `cstacks`](#step-6---cstacks)
+  * [Step 7 - `sstacks`](#step-7---sstacks)
+  * [Step 8 - `tsv2bam`](#step-8---tsv2bam)
+  * [Step 9 - `gstacks`](#step-9---gstacks)
+  * [Step 10 - `populations`](#step-10---populations)
+- [Appendix :books:](#appendix-books)
+  * [Aspera Transfer File Names](#aspera-transfer-file-names)
+  * [`clone_filter` File Names](#clone_filter-file-names)
+
 <!-- tocstop -->
 
 # *First*: A Note on File Naming :sparkles:
