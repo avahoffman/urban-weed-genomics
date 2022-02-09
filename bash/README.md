@@ -7,13 +7,11 @@ Actions. -->
 <!-- toc -->
 
 - [*First*: A Note on File Naming :sparkles:](#first-a-note-on-file-naming-sparkles)
-- [A note](#a-note)
-    + [a subnote](#a-subnote)
 - [A Note on File Transfers :arrows\_clockwise:](#a-note-on-file-transfers-arrows_clockwise)
 - [Preprocessing :wrench:](#preprocessing-wrench)
   * [Step 1 - `01-aspera_transfer_n.txt`](#step-1---01-aspera_transfer_ntxt)
   * [Step 2 - `02-concat_files_across4lanes.sh`](#step-2---02-concat_files_across4lanessh)
-  * [Step 2b – Download [Stacks](https://catchenlab.life.illinois.edu/stacks/)](#step-2b-%E2%80%93-download-stackshttpscatchenlablifeillinoisedustacks)
+    + [Step 2b – Download Stacks](#step-2b-%E2%80%93-download-stacks)
   * [Step 3 - `03-clone_filter.sh`](#step-3---03-clone_filtersh)
   * [Step 4 - `04-process_radtags.sh`](#step-4---04-process_radtagssh)
     + [Step 4b - Organize files](#step-4b---organize-files)
