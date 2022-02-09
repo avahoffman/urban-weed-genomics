@@ -1,6 +1,12 @@
 This document is intended to help understand the function of the files
 contained in here.
 
+## Table of Contents
+<!-- Do not edit the table of contents. It is updated by GitHub Actions. -->
+
+<!-- toc -->
+<!-- tocstop -->
+
 # *First*: A Note on File Naming :sparkles:
 
 In this experiment, I used quaddRAD library prep to prepare the sample
