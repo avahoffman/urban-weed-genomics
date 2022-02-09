@@ -1,6 +1,8 @@
 This document is intended to help understand the function of the files
 contained in here.
 
+Written by Ava Hoffman and Jenny Cocciardi
+
 <!-- Do not edit the table of contents. It is updated automatically by GitHub 
 Actions. -->
 
