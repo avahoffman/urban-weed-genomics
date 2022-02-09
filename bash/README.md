@@ -127,7 +127,8 @@ managed further. For example the 8 files above would become:
     AMH_macro_1_1_12px_S1_R1.fastq.gz
     AMH_macro_1_1_12px_S1_R2.fastq.gz
     
-To run the script, use the `sbatch` command. For example:
+MARCC uses [slurm](https://slurm.schedmd.com/overview.html) to manage jobs. To 
+run the script, use the `sbatch` command. For example:
 
     sbatch ~/code/02-concat_files_across4lanes.sh
     
@@ -136,17 +137,17 @@ but will look for and pull the script from the code directory. This
 will concatenate all files within the current directory that match
 the loop pattern.
 
-## Step 3 – Download [Stacks](https://catchenlab.life.illinois.edu/stacks/)
+## Step 2b – Download [Stacks](https://catchenlab.life.illinois.edu/stacks/)
 
-Stacks will need to be downloaded to your MARCC code directory. This should
-be done in interactive mode. For more information on interacttive mode, see
-`interact --usage`
+On MARCC, we downloaded Stacks will need to be downloaded to each user's code 
+directory. Stacks should be compiled in an interactive mode. For more 
+information on interactive mode, see `interact --usage`.
 
     interact -p debug -g 1 -n 1 -c 1
     module load gcc
 
-Now download stacks.
-
+Now download Stacks. We used version 2.60.
+ 
     wget http://catchenlab.life.illinois.edu/stacks/source/stacks-2.60.tar.gz
     tar xfvz stacks-2.60.tar.gz
 
@@ -159,8 +160,10 @@ Next, go into the stacks-2.60 directory and run the following commands:
     
 Troubleshooting: Please note that the path will need to match for each of these commands. 
 For example, we have found that stacks may download to *home-2* rather than *home-1*.
+The filesystem on your cluster might be different, and you should change it 
+accordingly.
 
-## Step 4 - `03-clone_filter.sh`
+## Step 3 - `03-clone_filter.sh`
 
 This script runs `clone_filter` from
 [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was
@@ -172,7 +175,7 @@ library in `03-clone_filter_file_names.txt` and loops to run
 to transfer the text file from your local machine to MARCC and run
 this script using the `sbatch` command.
 
-## Step 5 - `04-process_radtags.sh`
+## Step 4 - `04-process_radtags.sh`
 
 This script runs `process_radtags` from
 [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was
@@ -205,7 +208,7 @@ barcode file:
     GGCTAC  ACTGAT  DS.BA.GA.U.1
     CTTGTA  ATTCCT  DS.BA.GA.U.2
 
-### Step 5b - Organize files
+### Step 4b - Organize files
 
 In the out directory, make sure the files are organized by species. By
 default, files are sent to `~/scratch/demux`, but each file needs to be
@@ -216,7 +219,7 @@ directory.
 Note: this is not automated at this point but it would be nice to
 automate the file moving process so it’s not forgotten at this point.
 
-## Step 6 - `ustacks`
+## Step 5 - `ustacks`
 
 `ustacks` builds *de novo* loci in each individual sample. We have
 designed it so that the process requires three files:
@@ -248,7 +251,7 @@ There should be three files for every sample in the output directory:
 There are multiple of these files so that I could parallelize (replace n
 with the correct number).
 
-### Step 6b - Correct File Names
+### Step 5b - Correct File Names
 
 This step contains a script `05b-fix_filenames.sh` which uses some
 simple regex to fix filenames that are output in previous steps. Stacks
@@ -269,7 +272,7 @@ The script currently gives some strange log output, so it can probably
 be optimized/improved. The script should be run from the directory where
 the changes need to be made.
 
-## Step 7 - `cstacks`
+## Step 6 - `cstacks`
 
 `cstacks` builds the locus catalog from all the samples specified. The
 accompanying script, `06-cstacks.sh` is relatively simple since it
@@ -295,7 +298,7 @@ pipeline run), mirroring the sample files outout by
 -   `catalog.snps.tsv.gz`
 -   `catalog.tags.tsv.gz`
 
-## Step 8 - `sstacks`
+## Step 7 - `sstacks`
 
 All samples in the population are matched against the catalog produced
 in [`cstacks`](#step-6---cstacks) with `sstacks`, run in script
@@ -316,7 +319,7 @@ output directory:
 
 -   `<samplename>.matches.tsv.gz`
 
-## Step 9 - `tsv2bam`
+## Step 8 - `tsv2bam`
 
 `08-tsv2bam.sh` `08-tsv2bam_popmap.txt`
 
@@ -329,7 +332,7 @@ out the following rows:
     DS.MN.L01-DS.M.4    Minneapolis
     DS.BO.WL2.M.4   Boston
 
-## Step 10 - `gstacks`
+## Step 9 - `gstacks`
 
 `09-gstacks.sh`
 
@@ -341,7 +344,7 @@ Produces the following:
 -   `catalog.calls` : per-nucleotide genotypes, contains the output of
     the SNP calling model for each nucleotide in the analysis
 
-## Step 11 - `populations`
+## Step 10 - `populations`
 
 `10-population.sh`
 
