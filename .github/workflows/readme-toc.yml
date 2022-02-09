@@ -16,7 +16,7 @@ jobs:
     - name: Check out repo
       uses: actions/checkout@v2
     - name: Update TOC
-      run: npx markdown-toc README.md -i
+      run: npx markdown-toc bash/README.md -i
     - name: Commit and push if README changed
       run: |-
         git diff
