@@ -8,8 +8,6 @@ Actions. -->
 <!-- tocstop -->
 
 # *First*: A Note on File Naming :sparkles:
-# A note
-### a subnote
 
 In this experiment, I used quaddRAD library prep to prepare the sample
 DNA. This means that there were both two unique outer barcodes (typical
@@ -145,11 +143,12 @@ but will look for and pull the script from the code directory. This
 will concatenate all files within the current directory that match
 the loop pattern.
 
-## Step 2b – Download [Stacks](https://catchenlab.life.illinois.edu/stacks/)
+### Step 2b – Download Stacks
 
-On MARCC, we downloaded Stacks will need to be downloaded to each user's code 
-directory. Stacks should be compiled in an interactive mode. For more 
-information on interactive mode, see `interact --usage`.
+On MARCC, [Stacks](https://catchenlab.life.illinois.edu/stacks/) will need to 
+be downloaded to each user's code directory. Stacks should be compiled in an 
+interactive mode. For more information on interactive mode, see 
+`interact --usage`.
 
     interact -p debug -g 1 -n 1 -c 1
     module load gcc
