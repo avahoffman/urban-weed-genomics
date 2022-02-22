@@ -2,7 +2,7 @@
 
 
 # GIVE ABOUT 30 seconds FOR EACH SET OF 4 FILES
-#SBATCH --time=0:15:00
+#SBATCH --time=2:30:00
 #SBATCH --job-name=concat
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=avamariehoffman@gmail.com

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ABOUT 70 minutes for each sublibrary (R1 and R2)
-#SBATCH --time=15:00:00
+#SBATCH --time=12:00:00
 #SBATCH --job-name=clonefilter
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=avamariehoffman@gmail.com
