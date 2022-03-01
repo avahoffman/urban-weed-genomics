@@ -3,9 +3,9 @@ Note! Usage from the command line should be as follows, for example:
   
 $> python 03.5-parse_clone_filter.py --file 'clone_filter.52618524.out'
 """
-# import itertools
 import argparse
 import pandas as pd
+
 
 def parse_args():
     """
@@ -14,10 +14,10 @@ def parse_args():
     """
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--file", 
-        help="The log output file should go here. E.g.:'clone_filter.52618524.out'", 
-        type=str, 
-        required=True
+        "--file",
+        help="The log output file should go here. E.g.:'clone_filter.52618524.out'",
+        type=str,
+        required=True,
     )
 
     return parser.parse_args()
@@ -26,7 +26,9 @@ def parse_args():
 def generate_stats(filename: str) -> pd.DataFrame:
     """
     This function does everything. It reads the log file from Stacks' clone_filter
-    function and then rearranges everything to a nice data frame
+    function and then rearranges everything to a nice data frame. Note that this should
+    Still work even if processing a set of files was killed/timed out. In the case of an aborted file,
+    It just doesn't record it.
     filename: str, refers to the log file that is being looked at.
     returns: DataFrame, containing three columns:
       1. Sublibrary name
@@ -40,28 +42,35 @@ def generate_stats(filename: str) -> pd.DataFrame:
 
     # Open the file
     Lines = open(filename, "r").readlines()
- 
+
     # Detect lines with filenames and the output results.
     # Strip them and append to the empty dataframe created above
     count = 0
     for line in Lines:
-      count += 1
-      if "Reading data from" in line:
-        filename = Lines[count].strip().strip("_R1.fastq.gz and")
-      if "pairs of reads input" in line:
-        stats = line
-        df = df.append(pd.DataFrame([[filename, stats]], columns=cols))
+        count += 1
+        if "Reading data from" in line:
+            filename = Lines[count].strip().strip("_R1.fastq.gz and")
+        if "pairs of reads input" in line:
+            stats = line
+            df = df.append(pd.DataFrame([[filename, stats]], columns=cols))
 
     # Split the output results line into actual data
-    split_ = df['stats'].str.split(' pairs of reads input. ', expand=True)
-    input_ = split_[[0]].rename(columns = {0:'input'})
-    output_ = split_[1].str.split(' pairs of reads output, ', expand=True)[[0]].rename(columns = {0:'output'})
+    split_ = df["stats"].str.split(" pairs of reads input. ", expand=True)
+    input_ = split_[[0]].rename(columns={0: "input"})
+    output_ = (
+        split_[1]
+        .str.split(" pairs of reads output, ", expand=True)[[0]]
+        .rename(columns={0: "output"})
+    )
 
-    # Combine the split columns with the filenames
-    out = pd.concat([df['file'], input_, output_], axis=1)
+    # Combine the split columns with the filenames, add a diff column
+    out = pd.concat([df["file"], input_, output_], axis=1)
+    out["PCR_clones_removed"] = pd.to_numeric(out["input"]) - pd.to_numeric(
+        out["output"]
+    )
 
     return out
-  
+
 
 def main():
     """
