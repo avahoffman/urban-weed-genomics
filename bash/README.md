@@ -19,6 +19,7 @@ Actions. -->
     + [Step 4b - Organize files](#step-4b---organize-files)
   * [Step 5 - `ustacks`](#step-5---ustacks)
     + [Step 5b - Correct File Names](#step-5b---correct-file-names)
+    + [Step 5c - Choose catalog samples/files](#step-5c---choose-catalog-samplesfiles)
   * [Step 6 - `cstacks`](#step-6---cstacks)
   * [Step 7 - `sstacks`](#step-7---sstacks)
   * [Step 8 - `tsv2bam`](#step-8---tsv2bam)
