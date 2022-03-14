@@ -268,18 +268,17 @@ spreadsheet. E.g., sample ID “9” corresponds to sample name
 “DS.BA.DHI.U.4”. Sample naming convention is
 species.city.site.management\_type.replicate\_plant.
 
-`05-ustacks_n.sh` should have an out\_directory (`-o` option)
-corresponding to the date or other relevant output directory name that
-changes with each run. Otherwise this causes [problems
-downstream](https://groups.google.com/g/stacks-users/c/q3YYPprmYnU/m/cH5RB5KwBQAJ).
-There should be three files for every sample in the output directory:
+`05-ustacks_n.sh` should have an out\_directory (`-o` option) that will be used 
+for all samples (e.g., `stacks/ustacks`). Files can be processed piecemeal
+into this directory. There should be three files for every sample in the 
+output directory:
 
 -   `<samplename>.alleles.tsv.gz`
 -   `<samplename>.snps.tsv.gz`
 -   `<samplename>.tags.tsv.gz`
 
-There are multiple of these files so that I could parallelize (replace n
-with the correct number).
+Multiple versions of the `05-ustacks_n.sh` script can be run in parallel
+(simply replace n in the three files above with the correct number).
 
 ### Step 5b - Correct File Names
 
@@ -300,14 +299,46 @@ become:
 
 The script currently gives some strange log output, so it can probably
 be optimized/improved. The script should be run from the directory where
-the changes need to be made.
+the changes need to be made. Files that have already been fixed will not be 
+changed.
+
+### Step 5c - Choose catalog samples/files
+
+In the next step, we will choose the files we want to go into the catalog. 
+This involves a few steps:
+
+1. Create a meaningful directory name. This could be the date (e.g., 
+`stacks_22_01_25`).
+
+2. Copy the `ustacks` output for all of the files you want to use in 
+the reference from Step 5b. Remember this includes three files per sample. 
+So if you have 20 samples you want to include in the reference catalog, you 
+will transfer 3 x 20 = 60 files into the meaningful directory name. 
+The three files per sample should follow this convention:
+
+-   `<samplename>.alleles.tsv.gz`
+-   `<samplename>.snps.tsv.gz`
+-   `<samplename>.tags.tsv.gz`
+
+3. Remember the meaningful directory name. You will need it in Step 6.
 
 ## Step 6 - `cstacks`
 
 `cstacks` builds the locus catalog from all the samples specified. The
 accompanying script, `06-cstacks.sh` is relatively simple since it
-points to the directory containing all the sample files. The tricky
-thing is ensuring enough compute memory to run the entire process
+points to the directory containing all the sample files. It follows this
+format to point to that directory:
+
+    cstacks -P ~/directory ...
+
+Make sure that you use the meaningful directory from Step 5c and that you
+have copied all the relevant files over. Otherwise this causes [problems
+downstream](https://groups.google.com/g/stacks-users/c/q3YYPprmYnU/m/cH5RB5KwBQAJ).
+For example, you might edit the code to point to `~/scratch/stacks/stacks_22_01_25`.
+
+    cstacks -P ~/scratch/stacks/stacks_22_01_25 ...
+
+The tricky thing is ensuring enough compute memory to run the entire process
 successfully. There is probably space to optimize this process. The
 `cstacks` method uses a “population” file, which in this project is
 `06-cstacks_popmap.txt`. This file contains samples and city in two
@@ -319,6 +350,9 @@ tab-delimited columns, e.g.:
     DS.BA.GA.U.4    Baltimore
     DS.BA.GA.U.5    Baltimore
     ...
+
+Make sure the samples in this file correspond to the input files located in
+e.g., `~/scratch/stacks/stacks_22_01_25`.
 
 `cstacks` builds three files for use in all your samples (in this
 pipeline run), mirroring the sample files outout by
