@@ -1,0 +1,16 @@
+---
+title: "Supplementary Information"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+PCR clones 
+
+```{r pressure, echo=FALSE, message=FALSE, fig.cap = "PCR clone removal statistics."}
+source("src/examine_clones.R")
+make_cloneplot()
+```
+
