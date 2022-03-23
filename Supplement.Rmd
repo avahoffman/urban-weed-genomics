@@ -7,9 +7,7 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-PCR clones 
-
-```{r pressure, echo=FALSE, message=FALSE, fig.cap = "PCR clone removal statistics."}
+```{r pressure, echo=FALSE, message=FALSE, fig.cap = "PCR clone removal statistics"}
 source("src/examine_clones.R")
 make_cloneplot()
 ```

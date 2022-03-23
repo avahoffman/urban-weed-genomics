@@ -6,8 +6,9 @@ library(magrittr)
 make_cloneplot <- function() {
   # Read in output from the clone filtering part of sequence preperation
   df <- readr::read_csv("output/clone_filter_out.csv") %>%
+    dplyr::mutate(pct_clones = PCR_clones_removed/input * 100) %>% 
     pivot_longer(
-      cols = c(input, output, PCR_clones_removed),
+      cols = c(input, output, pct_clones),
       names_to = "feature",
       values_to = "value"
     )
@@ -16,11 +17,11 @@ make_cloneplot <- function() {
   df$feature <-
     factor(
       df$feature,
-      levels = c("input", "PCR_clones_removed", "output"),
+      levels = c("input", "pct_clones", "output"),
       labels = c(
-        "Reads Input (per sublibrary)",
-        "PCR clones removed",
-        "Reads Output (per sublibrary)"
+        "Raw reads input (per sublibrary)",
+        "Percent PCR clones (removed)",
+        "Reads retained (per sublibrary)"
       )
     )
   
