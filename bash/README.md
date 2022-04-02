@@ -206,6 +206,12 @@ library in `03-clone_filter_file_names.txt` and loops to run
 to transfer the text file from your local machine to MARCC and run
 this script using the `sbatch` command.
 
+### Step 3b - `03.5-parse_clone_filter.py`
+
+If you want to extract descriptive statistics from the `clone_filter` output, you can
+use this script to do so. It can be run on your local terminal after transfering the 
+`clone_filter.out` logs to your local computer.
+
 ## Step 4 - `04-process_radtags.sh`
 
 This script runs `process_radtags` from
@@ -252,8 +258,67 @@ automate the file moving process so it’s not forgotten at this point.
 
 ## Step 5 - `ustacks`
 
-`ustacks` builds *de novo* loci in each individual sample. We have
-designed it so that the process requires three files:
+`ustacks` builds *de novo* loci in each individual sample. However, before
+performing `ustacks` on the entirety of your samples, it is important to conduct
+preliminary analyses that will help you to select an optimal set of parameters
+for your dataset (see [Step 5a] below)
+
+### Step 5a - `denovo_map.pl`
+
+Stack assembly will differ based on several different aspects of your 
+dataset (such as your study species, the RAD-seq method used, and/or the
+quality and quantity of DNA used). So it is important to use parameters 
+that will maximize the amount of biological data obtained from stacks. 
+
+There are three main parameters to consider when doing this:
+1. *m* = controls the minimum number of raw reads required
+to form a stack (implemented in `ustacks`)
+2. *M* = controls the number of mismatches between stacks to
+to merge them into a putative locus (implemented in `ustacks`)
+3. *n* = controls the number of mismatches allowed between stacks to merge
+into the catalog (implemented in `cstacks`)
+
+There are two main ways to optimize parameterization:
+1. an iterative method were you sequentially change each parameter while keeping the
+other parameters the same (described in *Paris et al. 2017*), or
+2. an iterative method were you sequentially change the values of *m* while fixing
+*M* = *n* and vice versa (described in *Rochette and Catchen 2017*, *Catchen 2020*)
+
+Use the `denovo_map.pl` script to proceed. This script will require that you first
+choose a subset of your samples to run the iterations on. The samples should be
+representative of your overall dataset (i.e., include all populations and have similiar
+read coverage numbers which can be assessed by looking at the descriptive statistics
+produced from `04.5-parse_process_radtags.sh`). Place these samples in a text file
+with the name of the sample and, here, specify that all samples belong to the 
+same population (seperated by a tab). It is important to have all representative
+samples treated as one population because you will assess outputs found across
+80% of the individuals. The script will read this text file from the `--popmap` command.
+
+`Denovo_map.pl` also requires that you specifiy an output  directory after `-o`. 
+This should be unique to the parameter you are testing... for example, if you 
+are testing *M* = 3, then you could make a subdirectory labeled `stacks.M3` where all
+outputs from `denovo_map.pl` will be placed. Otherwise, for each iteration, the outputs
+will be overwritten and you will lose the logs from the previous iteration. The 
+`denovo_map.pl` script also requires that you direct it toward where 
+your samples are stored (i.e., your <SPP> directory built in `Step 4b`).
+You will also want to make sure that you run the `--min-samples-per-pop 0.80` command. 
+
+To decide which parameters to use, examine:
+1. the average sample coverage: This is obtained from the summary log in the `ustacks`
+section of `denovo_map.log`. If samples have a coverage <10x, you will have to rethink 
+the parameters you use here.
+3. the number of assembled loci shared by 80% of samples: This can be found in the
+`haplotypes.tsv` by counting the number of loci:  `cat populations.haplotypes.tsv | grep -v ^"#" | wc -l`
+5. the number of polymorphic loci shared by 80% of samples: This can be found in
+`populations.sumstats.tsv` or by counting `populations.hapstats.tsv`: 
+`cat populations.hapstats.tsv | grep -v "^#" | wc -l`
+7. the number of SNPs per locus shared by 80% of samples: found in `denovo_map.log` or
+by counting the number of SNPs in `populations.sumstats.tsv`:
+ `populations.sumstats.tsv | grep -v ^"#" | wc -l`
+
+### Step 5b - `ustacks`
+
+We have designed it so that the process requires three files:
 
 -   `05-ustacks_n.sh` : the shell script that executes `ustacks`
 -   `05-ustacks_id_n.txt` : the sample ID number
@@ -281,7 +346,7 @@ output directory:
 Multiple versions of the `05-ustacks_n.sh` script can be run in parallel
 (simply replace n in the three files above with the correct number).
 
-### Step 5b - Correct File Names
+### Step 5c - Correct File Names
 
 This step contains a script `05b-fix_filenames.sh` which uses some
 simple regex to fix filenames that are output in previous steps. Stacks
@@ -303,7 +368,7 @@ be optimized/improved. The script should be run from the directory where
 the changes need to be made. Files that have already been fixed will not be 
 changed.
 
-### Step 5c - Choose catalog samples/files
+### Step 5d - Choose catalog samples/files
 
 In the next step, we will choose the files we want to go into the catalog. 
 This involves a few steps:
