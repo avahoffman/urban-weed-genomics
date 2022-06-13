@@ -245,11 +245,57 @@ barcode file:
     GGCTAC  ACTGAT  DS.BA.GA.U.1
     CTTGTA  ATTCCT  DS.BA.GA.U.2
 
-### Step 4b - Organize files
+The 'process_radtags' command will demultiplex the data by seperating out
+each sublibrary into the individual samples. It can also clean the data,
+and will remove low quality reads and discard reads where a barcode was 
+not found.
 
-In the out directory, make sure the files are organized by species. By
-default, files are sent to `~/scratch/demux`, but each file needs to be
-sent to `~/scratch/demux/<SPP>`. For example, the file
+### Step 4b - Assessing the raw, processed, and cleaned data
+
+In the script for the [above section](#step-4---04-process_radtagssh), 
+we have specified that a new output folder be created for each sublibrary.
+The output folder is where all sample files and the log file will be dumped for each
+sublibrary. It is important to specify a different output folder if you have multiple
+sublibraries because we will be assessing the output log for each sublibrary individually
+(and otherwise, the log is overwritten when the script loops to a new sublibrary).
+
+The utility `stacks-dist-extract` can be used to extract data from the log file.
+First, it is important to examine the library-wide statistics to identify sublibraries
+where barcodes may have been misentered or where sequencing error may have occurred. 
+Use:
+
+     stacks-dist-extract process_radtags.log total_raw_read_counts
+     
+to pull out data on the total number of sequences, the number of low-quality reads, 
+whether barcodes were found or not, and the total number of retained reads per sublibary. 
+Assay these to make sure there are no outliers or sublibraries that need to be checked 
+and rerun.
+
+Next, use:
+
+     stacks-dist-extract process_radtags.log per_barcode_raw_read_counts | head
+     
+to analyze how well each sample performed. There are three important statistics to
+consider for each sample. 
+1. *The proportion of reads per sample for each sublibrary* indicates the proportion 
+that each individual was processed and sequenced within the overall library. This is
+important to consider as cases where a single sample dominates the sublibary may
+indicate contamination.
+2. *The number of reads retained for each sample* can be an indicator of coverage.
+It is most likely a good idea to remove samples with a very low number of reads.
+Where you decide to place the cutoff for outliers is dependent on your dataset.
+For example, a threshold of 1 million reads is often used but this is not universal.
+3. *The proportion of reads retained for each sample* can also indicate low-quality
+samples and will give an idea of the variation in coverage across samples.
+
+The script `04-process_radtags_stats.R' can be used to create plots for easily
+assaying each statistic. 
+
+### Step 4c - Organize files
+
+In a new directory, make sure the files are organized by species. By
+default, files are sent to `~/scratch/demux/*sublibrary_name*`, but each
+file needs to be sent to `~/scratch/demux/*SPP*`. For example, the file
 “DS.MN.L01-DS.M.1.1.fq.gz” should be sent to the `~/scratch/demux/DS`
 directory.
 
@@ -260,10 +306,10 @@ automate the file moving process so it’s not forgotten at this point.
 
 `ustacks` builds *de novo* loci in each individual sample. However, before
 performing `ustacks` on the entirety of your samples, it is important to conduct
-preliminary analyses that will help you to select an optimal set of parameters
-for your dataset (see [Step 5a] below)
+preliminary analyses that will idenitfy an optimal set of parameters for the
+dataset (see [Step 5a] below)
 
-### Step 5a - `denovo_map.pl`
+## Step 5a - `denovo_map.pl`
 
 Stack assembly will differ based on several different aspects of your 
 dataset (such as your study species, the RAD-seq method used, and/or the
@@ -280,7 +326,7 @@ into the catalog (implemented in `cstacks`)
 
 There are two main ways to optimize parameterization:
 1. an iterative method were you sequentially change each parameter while keeping the
-other parameters the same (described in *Paris et al. 2017*), or
+other parameters fixed (described in *Paris et al. 2017*), or
 2. an iterative method were you sequentially change the values of *m* while fixing
 *M* = *n* and vice versa (described in *Rochette and Catchen 2017*, *Catchen 2020*)
 
@@ -288,11 +334,12 @@ Use the `denovo_map.pl` script to proceed. This script will require that you fir
 choose a subset of your samples to run the iterations on. The samples should be
 representative of your overall dataset (i.e., include all populations and have similiar
 read coverage numbers which can be assessed by looking at the descriptive statistics
-produced from `04.5-parse_process_radtags.sh`). Place these samples in a text file
-with the name of the sample and, here, specify that all samples belong to the 
-same population (seperated by a tab). It is important to have all representative
-samples treated as one population because you will assess outputs found across
-80% of the individuals. The script will read this text file from the `--popmap` command.
+produced from [Section 4b](#step-4b---assessing-the-raw-processed-and-cleaned-data). 
+Place these samples in a text file with the name of the sample and, here, 
+specify that all samples belong to the same population (seperated by a tab). 
+It is important to have all representative samples treated as one population because 
+you will assess outputs found across 80% of the individuals. T
+he script will read this text file from the `--popmap` command.
 
 `Denovo_map.pl` also requires that you specifiy an output  directory after `-o`. 
 This should be unique to the parameter you are testing... for example, if you 
