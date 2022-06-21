@@ -321,7 +321,7 @@ performing `ustacks` on the entirety of the samples, it is important to conduct
 preliminary analyses that will identify an optimal set of parameters for the
 dataset (see [Step 5a](#step-5a---denovo_mappl))
 
-### Step 5a - `denovo_map.pl`
+### Step 5a - `denovo_map.sh`
 
 Stack assembly will differ based on several different aspects of the 
 dataset (such as the study species, the RAD-seq method used, and/or the
@@ -342,10 +342,10 @@ other parameters fixed (described in *Paris et al. 2017*), or
 2. an iterative method were you sequentially change the values of *m* while fixing
 *M* = *n* and vice versa (described in *Rochette and Catchen 2017*, *Catchen 2020*)
 
-We used the `denovo_map.pl` script to perform iterations. This script requires that we 
-first choose a subset of samples to run the iterations on. The samples should be
-representative of the overall dataset (i.e., include all populations and have similiar
-read coverage numbers which can be assessed by looking at the descriptive statistics
+We used the `denovo_map.sh` script to run the `denovo_map.pl` command and perform iterations. 
+This script requires that we first choose a subset of samples to run the iterations on. 
+The samples should be representative of the overall dataset (i.e., include all populations and 
+have similiar read coverage numbers which can be assessed by looking at the descriptive statistics
 produced from [Section 4c](#step-4c---assess-the-raw-processed-and-cleaned-data). 
 Place these samples in a text file with the name of the sample and, here, 
 specify that all samples belong to the same population (seperated by a tab). For example,
@@ -364,9 +364,9 @@ this text file from the `--popmap` command.
 The script also requires that you specifiy an output directory after `-o`. 
 This should be unique to the parameter you are testing... for example, if you 
 are testing *M* = 3, then you could make a subdirectory labeled `stacks.M3` where all
-outputs from `denovo_map.pl` will be placed. Otherwise, for each iteration, the outputs
+outputs from `denovo_map.sh` will be placed. Otherwise, for each iteration, the outputs
 will be overwritten and you will lose the log from the previous iteration. 
-The `denovo_map.pl` script also requires that you direct it toward where 
+The `denovo_map.sh` script also requires that you direct it toward where 
 your samples are stored, which is your directory built in [Section 4b](#step-4b---organize-files). 
 Make sure to run the `--min-samples-per-pop 0.80` command. 
 
