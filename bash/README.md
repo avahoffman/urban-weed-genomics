@@ -350,10 +350,13 @@ produced from [Section 4c](#step-4c---assess-the-raw-processed-and-cleaned-data)
 Place these samples in a text file with the name of the sample and, here, 
 specify that all samples belong to the same population (seperated by a tab). For example,
 
-DS.BA.PIK.U.1 A
-DS.BA.LH-2.M.3 A
-DS.BA.PSP.M.5 A
 
+    DS.BA.GA.U.1    A
+    DS.PX.BUF.M.5   A
+    DS.B0.HC4.M.1   A
+    ...
+    
+    
 It is important to have all representative samples treated as one population because 
 you will assess outputs found across 80% of the individuals. The script will read 
 this text file from the `--popmap` command.
