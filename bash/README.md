@@ -302,7 +302,7 @@ For example, a threshold of 1 million reads is often used but this is not univer
 3. *The proportion of reads retained for each sample* can also indicate low-quality
 samples and will give an idea of the variation in coverage across samples.
 
-The script `04-process_radtags_stats.R` was used to create plots for easily
+The script `04c-process_radtags_stats.R` was used to create plots for easily
 assessing each statistic.
 
 ### Step 4d - Identify outliers and remove samples from downstream analysis
@@ -385,6 +385,9 @@ the parameters you use here.
 7. the number of SNPs per locus shared by 80% of samples: found in `denovo_map.log` or
 by counting the number of SNPs in `populations.sumstats.tsv`:
  `populations.sumstats.tsv | grep -v ^"#" | wc -l`
+ 
+The script `05a-param_opt-figures_script.R` was used to create plots for assessing
+the change in shared loci across parameter iterations. 
 
 ### Step 5b - `ustacks`
 
