@@ -553,6 +553,47 @@ Produces the following:
 
 `10-population.sh`
 
+# File Organization :bookmark_tabs:
+
+All data files for the Macrosystems project are permanently stored under Meghan Avolio’s 
+group resources in the Johns Hopkins University Rockfish computing cluster. Files are stored 
+under the ‘data’ directory under the following subdirectories:
+
+- `raw_data`: This folder contains the raw, unprocessed data files that were obtained directly 
+from the sequencing server. There are eight `fastq.gz` files per sublibrary that correspond 
+to the four sequencing lanes for each read direction. 
+-	`02-concatenated_data`: This folder contains the concatenated, unprocessed files for each 
+sublibrary (i.e., the files containing the sequences for each lane were combined to create one 
+file per read direction).
+-	`03-pcr_filtered_data`:  Here, you will find the resulting data files from the `clone_filter` 
+program, where pcr replicates/clones have been removed from the raw sequences. There are two `fq.gz` 
+files per sublibrary.
+-	`04-process_radtags`: This folder contains various subdirectories that correspond to the 
+`process_radtags` program that demultiplexes and cleans the data. The `demux_txt_files` folder 
+contains the .txt files used to identify barcodes and separate out the individual samples from 
+each sublibrary. The resulting data files from the `process-radtags` program are separated by 
+individual and can be found in the relevant species folder (i.e., CD, DS, EC, LS, PA, TE, TO). 
+Each individual sample has four data files; `sampleID.1.fq.gz` and `sampleID.2.fq.gz` correspond 
+to the forward and reverse reads for each sample and `sampleID.rem,1/2.fq.gz` contain the remainder 
+reads that were cleaned and removed from the data sequence. 
+-	`05-ustacks-denovo_data`: This folder contains species subdirectories that store the resulting data 
+files from the `ustacks` program for each individual. There are three files per individual; 
+`sampleID.allelles.tsv.gz`, `sampleID.snps.tsv.gz`, and, `sampleID.tags.tsv.gz`. These files should 
+be permanently stored here and copied to a new directory for any new catalogs and/or when a group of 
+samples are being aligned to a new catalog.
+-	`catalogs`: All catalogs created for this project are permanently stored under this directory 
+within species-specific subdirectories. Within each species subdirectory, you will find catalogs 
+categorized by the date they were created (for example, `CD` -> `catalog_7_13_22`). Catalogs will 
+contain five files; `catalog.alleles.tsv.gz`, `catalog.calls`, `catalog.fa.gz`, `catalog.snps.tsv.gz`, 
+`catalog.tafs.tsv.gz`. You can determine which individuals were used to create the catalog by looking 
+at the `cstacks_popmap.txt` file, also found within the same folder. If you would like to use the catalog 
+on a new project, you will need to copy all five files to a new project folder.
+    - In addition, these folders contain the subsequent pipeline output files for the stacks pipeline. 
+    For example, if a catalog was created with the intention of aligning all individuals in the project 
+    to it, you will find the ustacks data files for each individual and the subsequent pipeline output 
+    files (i.e., outputs from `cstacks`, `gstacks`, `stacks`, `tsv2bam`, and `populations`), in addition 
+    to the relevant catalog files. 
+
 # Appendix :books:
 
 ## Aspera Transfer File Names
