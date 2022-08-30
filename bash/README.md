@@ -569,10 +569,12 @@ Produces the following:
 
 The populations program will use the script `10-population.sh` and the population map
 specified in [Step 8](#step-8---tsv2bam) (`08-tsv2bam_popmap.txt`) to caluclate
-population-level summary statistics. You will most likely run the populations
-program multiple times if you are looking at different 'sub-populations'. A new directory
-should be created and the population program should run out of that directory for each 
-iteration of the population program. 
+population-level summary statistics. 
+
+You will most likely run the populations program multiple times if you are looking at 
+different 'sub-populations'. A new directory should be created and the population program 
+should run out of that directory for each iteration of the population program. Alternativley, 
+you can specify a new directory as the output folder in the script using the command `-O`.
 
 # File Organization :bookmark_tabs:
 
