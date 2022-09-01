@@ -613,7 +613,7 @@ three files; `catalog.alleles.tsv.gz`, `catalog.snps.tsv.gz`, and `catalog.tafs.
    of the folder and information on the purpose of the catalog and how it was created. Please read this
    to understand how the catalog was created and before using it for further projects. 
    - You can determine which individuals were used to create the catalog by looking at `cstacks_popmap.txt`, 
-   found within the folder. If you would like to use the catalog, on a new project, you will need to 
+   found within the folder. If you would like to use the catalog on a new project, you will need to 
    copy all three files to a new project folder.
    - Additionally, these folders contain the subsequent pipeline output files for the stacks pipeline. 
    For example, if a catalog was created with the intention of aligning all individuals in the project 
