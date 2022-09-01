@@ -30,6 +30,7 @@ Actions. -->
   * [Step 8 - `tsv2bam`](#step-8---tsv2bam)
   * [Step 9 - `gstacks`](#step-9---gstacks)
   * [Step 10 - `populations`](#step-10---populations)
+- [File Organization :bookmark_tabs:](#file-organization-bookmark_tabs)
 - [Appendix :books:](#appendix-books)
   * [Aspera Transfer File Names](#aspera-transfer-file-names)
   * [`clone_filter` File Names](#clone_filter-file-names)
