@@ -257,11 +257,12 @@ not found.
 
 ### Step 4b - Organize files
 
-In a new directory, make sure the files are organized by species. By
-default, files are sent to `~/scratch/demux/*sublibrary_name*`, but each
-file will need to be sent to `~/scratch/demux/*SPP*`. For example, the file
-“DS.MN.L01-DS.M.1.1.fq.gz” should be sent to the `~/scratch/demux/DS`
-directory.
+In a new directory, make sure the files are organized by species. In the 
+`process_radtags` script, we specified that files be sent to 
+`~/scratch/demux/*sublibrary_name*` (reasoning for this is in [Step 4c](#step-4c---assess-the-raw-processed-and-cleaned-data)), 
+but files should manually be organized into species folders (i.e., `~/scratch/demux/*SPP*`) 
+after `process_radtags` is performed. For example, the file “DS.MN.L01-DS.M.1.1.fq.gz” 
+should be sent to the `~/scratch/demux/DS` directory.
 
 Note: this is not automated at this point but it would be nice to
 automate the file moving process so it’s not forgotten at this point.
@@ -269,7 +270,7 @@ automate the file moving process so it’s not forgotten at this point.
 ### Step 4c - Assess the raw, processed, and cleaned data
 
 In the script for [Step 4](#step-4---04-process_radtagssh), 
-we have specified that a new output folder will be created for each sublibrary.
+we have specified that a new output folder be created for each sublibrary.
 The output folder is where all sample files and the log file will be dumped for each
 sublibrary. It is important to specify a different output folder if you have multiple
 sublibraries because we will be assessing the output log for each sublibrary individually
@@ -324,7 +325,7 @@ contribute to downstream analyses.
 `ustacks` builds *de novo* loci in each individual sample. However, before
 performing `ustacks` on the entirety of the samples, it is important to conduct
 preliminary analyses that will identify an optimal set of parameters for the
-dataset (see [Step 5a](#step-5a---denovo_mappl))
+dataset (see [Step 5a](#step-5a---denovo_mapsh))
 
 ### Step 5a - `denovo_map.sh`
 
@@ -344,16 +345,18 @@ into the catalog (implemented in `cstacks`)
 There are two main ways to optimize parameterization:
 1. an iterative method were you sequentially change each parameter while keeping the
 other parameters fixed (described in *Paris et al. 2017*), or
-2. an iterative method were you sequentially change the values of *m* while fixing
-*M* = *n* and vice versa (described in *Rochette and Catchen 2017*, *Catchen 2020*)
+2. an iterative method were you sequentially change the values of *M* and *n* (keeping *M* = *n*)
+while fixing *m* = 3, and then test *m* = 2, 4 once the optimal *M* = *n* is determined
+(described in *Rochette and Catchen 2017*, *Catchen 2020*).
 
-We used the `denovo_map.sh` script to run the `denovo_map.pl` command and perform iterations. 
-This script requires that we first choose a subset of samples to run the iterations on. 
-The samples should be representative of the overall dataset (i.e., include all populations and 
-have similar read coverage numbers which can be assessed by looking at the descriptive statistics
-produced from [Section 4c](#step-4c---assess-the-raw-processed-and-cleaned-data). 
-Place these samples in a text file (`popmap_test_samples.txt`) with the name of the sample and, here, 
-specify that all samples belong to the same population (separated by a tab). For example,
+We performed the second method and used the `denovo_map.sh` script to run the `denovo_map.pl` 
+command to perform iterations. This script requires that we first choose a subset of samples to 
+run the iterations on. The samples should be representative of the overall dataset; meaning they 
+should include all populations and have similar read coverage numbers. Read coverage numbers 
+can be assessed by looking at the descriptive statistics produced from [Step 4c](#step-4c---assess-the-raw-processed-and-cleaned-data). 
+Place these samples in a text file (`popmap_test_samples.txt`) with the name of the sample and 
+specify that all samples belong to the same population. For example,
+`popmap_test_samples.txt` should look like...
 
 
     DS.BA.GA.U.1    A
@@ -372,10 +375,10 @@ are testing *M* = 3, then you could make a subdirectory labeled `stacks.M3` wher
 outputs from `denovo_map.sh` will be placed. Otherwise, for each iteration, the outputs
 will be overwritten and you will lose the log from the previous iteration. 
 The `denovo_map.sh` script also requires that you direct it toward where 
-your samples are stored, which is your directory built in [Section 4b](#step-4b---organize-files). 
+your samples are stored, which is your directory built in [Step 4b](#step-4b---organize-files). 
 Make sure to run the `--min-samples-per-pop 0.80` argument. 
 
-To decide which parameters to use, examine:
+To decide which parameters to use, examine the following from each iteration:
 1. the average sample coverage: This is obtained from the summary log in the `ustacks`
 section of `denovo_map.log`. If samples have a coverage <10x, you will have to rethink 
 the parameters you use here.
@@ -393,7 +396,7 @@ the change in shared loci across parameter iterations.
 
 ### Step 5b - `ustacks`
 
-We have designed it so that the process requires three files:
+We have designed the `ustacks` script so that the process requires three files:
 
 -   `05-ustacks_n.sh` : the shell script that executes `ustacks`
 -   `05-ustacks_id_n.txt` : the sample ID number
@@ -480,10 +483,12 @@ For example, you might edit the code to point to `~/scratch/stacks/stacks_22_01_
     cstacks -P ~/scratch/stacks/stacks_22_01_25 ...
 
 The tricky thing is ensuring enough compute memory to run the entire process
-successfully. There is probably space to optimize this process. The
-`cstacks` method uses a “population” file, which in this project is
-`06-cstacks_popmap.txt`. This file contains samples and city in two
-tab-delimited columns, e.g.:
+successfully. There is probably space to optimize this process. 
+
+The `cstacks` method uses a “population map” file, which in this project is
+`06-cstacks_popmap.txt`. This file specifys which samples to build the catalog
+from and categorizes them into your 'populations', or in this case, cities 
+using two tab-delimited columns, e.g.:
 
     DS.BA.GA.U.1    Baltimore
     DS.BA.GA.U.2    Baltimore
@@ -496,7 +501,7 @@ Make sure the samples in this file correspond to the input files located in
 e.g., `~/scratch/stacks/stacks_22_01_25`.
 
 `cstacks` builds three files for use in all your samples (in this
-pipeline run), mirroring the sample files outout by
+pipeline run), mirroring the sample files output by
 [`ustacks`](#step-5---ustacks):
 
 -   `catalog.alleles.tsv.gz`
@@ -505,11 +510,12 @@ pipeline run), mirroring the sample files outout by
 
 ## Step 7 - `sstacks`
 
-All samples in the population are matched against the catalog produced
+All samples in the population (or all samples you want to include
+in the analysis) are matched against the catalog produced
 in [`cstacks`](#step-6---cstacks) with `sstacks`, run in script
 `07-sstacks.sh`. It runs off of the samples based in the output
 directory *and* the listed samples in `07-sstacks_samples.txt`, so make
-sure all your files (sample and catalog etc) are there and match.
+sure all your files (sample and catalog, etc.) are there and match.
 `07-sstacks_samples.txt` takes the form:
 
     DS.BA.GA.U.1
@@ -525,8 +531,16 @@ output directory:
 -   `<samplename>.matches.tsv.gz`
 
 ## Step 8 - `tsv2bam`
+  
+`tsv2bam` and the proceeding programs in the pipeline use a populations map 
+text file to specify which samples to include in the analysis.
+As such, a new population map (that differs from `06-cstacks_popmap.txt`)
+should be created that includes all samples (including those used to create your catalog)
+that you want to include in the analysis. This file will include the same samples specified 
+in `07-sstacks_samples.txt` with a colomn specifying population. 
+Here, this file is `08-tsv2bam_popmap.txt`.
 
-`08-tsv2bam.sh` `08-tsv2bam_popmap.txt`
+We run `tsv2bam` using the script `08-tsv2bam.sh`.
 
 This is the step at which it’s usually discovered that some samples are
 bad (don’t have any useable matches to the catalog). These samples were
@@ -539,7 +553,9 @@ out the following rows:
 
 ## Step 9 - `gstacks`
 
-`09-gstacks.sh`
+The script `09-gstacks.sh` also uses the population map specified in [Step 8](#step-8---tsv2bam)
+– `08-tsv2bam_popmap.txt`. The `gstacks` program aligns the paired-end reads and assembles
+the paired-end contigs and then calls SNPs.
 
 Produces the following:
 
@@ -551,7 +567,55 @@ Produces the following:
 
 ## Step 10 - `populations`
 
-`10-population.sh`
+The populations program will use the script `10-population.sh` and the population map
+specified in [Step 8](#step-8---tsv2bam) (`08-tsv2bam_popmap.txt`) to caluclate
+population-level summary statistics. 
+
+You will most likely run the populations program multiple times if you are looking at 
+different 'sub-populations'. A new directory should be created and the population program 
+should run out of that directory for each iteration of the population program. Alternativley, 
+you can specify a new directory as the output folder in the script using the command `-O`.
+
+# File Organization :bookmark_tabs:
+
+All data files for the Macrosystems project are permanently stored under Meghan Avolio’s 
+group resources in the Johns Hopkins University Rockfish computing cluster. Files are stored 
+under the ‘data’ directory under the following subdirectories:
+
+- `raw_data`: This folder contains the raw, unprocessed data files that were obtained directly 
+from the sequencing server. There are eight `fastq.gz` files per sublibrary that correspond 
+to the four sequencing lanes for each read direction. 
+-	`02-concatenated_data`: This folder contains the concatenated, unprocessed files for each 
+sublibrary (i.e., the files containing the sequences for each lane were combined to create one 
+file per read direction).
+-	`03-pcr_filtered_data`:  Here, you will find the resulting data files from the `clone_filter` 
+program, where pcr replicates/clones have been removed from the raw sequences. There are two `fq.gz` 
+files per sublibrary.
+-	`04-process_radtags`: This folder contains various subdirectories that correspond to the 
+`process_radtags` program that demultiplexes and cleans the data. The `demux_txt_files` folder 
+contains the .txt files used to identify barcodes and separate out the individual samples from 
+each sublibrary. The resulting data files from the `process-radtags` program are separated by 
+individual and can be found in the relevant species folder (i.e., CD, DS, EC, LS, PA, TE, TO). 
+Each individual sample has four data files; `sampleID.1.fq.gz` and `sampleID.2.fq.gz` correspond 
+to the forward and reverse reads for each sample and `sampleID.rem,1/2.fq.gz` contain the remainder 
+reads that were cleaned and removed from the data sequence. 
+-	`05-ustacks-denovo_data`: This folder contains species subdirectories that store the resulting data 
+files from the `ustacks` program for each individual. There are three files per individual; 
+`sampleID.allelles.tsv.gz`, `sampleID.snps.tsv.gz`, and, `sampleID.tags.tsv.gz`. These files should 
+be permanently stored here and copied to a new directory for any new catalogs and/or when a group of 
+samples are being aligned to a new catalog.
+-	`catalogs`: All catalogs created for this project are permanently stored under this directory 
+within species-specific subdirectories. Within each species subdirectory, you will find catalogs 
+categorized by the date they were created (for example, `CD` -> `catalog_7_13_22`). Catalogs will 
+contain three files; `catalog.alleles.tsv.gz`, `catalog.snps.tsv.gz`, and `catalog.tafs.tsv.gz`. 
+You can determine which individuals were used to create the catalog by looking at `cstacks_popmap.txt`, 
+found within the same folder. If you would like to use the catalog 
+on a new project, you will need to copy all three files to a new project folder.
+    - In addition, these folders contain the subsequent pipeline output files for the stacks pipeline. 
+    For example, if a catalog was created with the intention of aligning all individuals in the project 
+    to it, you will find the ustacks data files for each individual and the subsequent pipeline output 
+    files (i.e., outputs from `cstacks`, `gstacks`, `stacks`, `tsv2bam`, and `populations`), in addition 
+    to the relevant catalog files. 
 
 # Appendix :books:
 
