@@ -569,7 +569,7 @@ Produces the following:
 ## Step 10 - `populations`
 
 The populations program will use the script `10-population.sh` and the population map
-specified in [Step 8](#step-8---tsv2bam) (`08-tsv2bam_popmap.txt`) to caluclate
+specified in [Step 8](#step-8---tsv2bam) (`08-tsv2bam_popmap.txt`) to calculate
 population-level summary statistics. 
 
 You will most likely run the populations program multiple times if you are looking at 
@@ -607,16 +607,19 @@ be permanently stored here and copied to a new directory for any new catalogs an
 samples are being aligned to a new catalog.
 -	`catalogs`: All catalogs created for this project are permanently stored under this directory 
 within species-specific subdirectories. Within each species subdirectory, you will find catalogs 
-categorized by the date they were created (for example, `CD` -> `catalog_7_13_22`). Catalogs will 
-contain three files; `catalog.alleles.tsv.gz`, `catalog.snps.tsv.gz`, and `catalog.tafs.tsv.gz`. 
-You can determine which individuals were used to create the catalog by looking at `cstacks_popmap.txt`, 
-found within the same folder. If you would like to use the catalog 
-on a new project, you will need to copy all three files to a new project folder.
-    - In addition, these folders contain the subsequent pipeline output files for the stacks pipeline. 
-    For example, if a catalog was created with the intention of aligning all individuals in the project 
-    to it, you will find the ustacks data files for each individual and the subsequent pipeline output 
-    files (i.e., outputs from `cstacks`, `gstacks`, `stacks`, `tsv2bam`, and `populations`), in addition 
-    to the relevant catalog files. 
+categorized by the date they were created (for example, `CD` -> `catalog_7_13_22`). Catalogs contain 
+three files; `catalog.alleles.tsv.gz`, `catalog.snps.tsv.gz`, and `catalog.tafs.tsv.gz`.
+   - Each directory will contain a `README.txt` file, where you will find information on the contents
+   of the folder and information on the purpose of the catalog and how it was created. Please read this
+   to understand how the catalog was created and before using it for further projects. 
+   - You can determine which individuals were used to create the catalog by looking at `cstacks_popmap.txt`, 
+   found within the folder. If you would like to use the catalog on a new project, you will need to 
+   copy all three files to a new project folder.
+   - Additionally, these folders contain the subsequent pipeline output files for the stacks pipeline. 
+   For example, if a catalog was created with the intention of aligning all individuals in the project 
+   to it, you will find the ustacks data files for each individual and the subsequent pipeline output 
+   files (i.e., outputs from `cstacks`, `gstacks`, `stacks`, `tsv2bam`, and `populations`), in addition 
+   to the relevant catalog files. This information can be found within the `REAMDE.txt` file. 
 
 # Appendix :books:
 
