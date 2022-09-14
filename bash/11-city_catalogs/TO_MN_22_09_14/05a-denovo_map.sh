@@ -2,7 +2,7 @@
 
 # Need  ~15 mins per sample
 #SBATCH --time=3:00:00
-#SBATCH --job-name=denovo_map
+#SBATCH --job-name=dm_TO_MN
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=avamariehoffman@gmail.com
 #SBATCH --error=denovo_map_TO_MN.%j.out
