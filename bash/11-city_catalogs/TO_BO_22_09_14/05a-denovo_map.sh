@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Need  ~15 mins per sample
-#SBATCH --time=3:00:00
+#SBATCH --time=9:00:00
 #SBATCH --job-name=dm_TO_BO
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=avamariehoffman@gmail.com
