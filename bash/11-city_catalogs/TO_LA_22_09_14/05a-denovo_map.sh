@@ -29,5 +29,5 @@ echo "Creating a by-city catalog for Taraxicum (TO) in Los Angeles."
 
 denovo_map.pl -M 6 -T 8 -o /home/ahoffm31/scratch4-mavolio2/scratch_AH/catalog_tests/TO_LA_22_09_14 \
   --popmap /home/ahoffm31/scratch4-mavolio2/scratch_AH/catalog_tests/TO_LA_22_09_14/popmap_TO_LA.txt \
-  --samples /home/ahoffm31/scratch4-mavolio2/scratch_AH/demux/TO --paired --min-samples-per-pop 0.50
+  --samples /home/ahoffm31/scratch4-mavolio2/scratch_AH/demux/TO --paired --time-components
 
