@@ -115,6 +115,10 @@ transfer these small files from my local machine to MARCC.
 
 <img src="../figures/file_transfer.jpg" alt="File transfer schematic" width="600"/>
 
+Note: Midway through this analyses, we transitioned to another cluster, JHU's
+Rockfish. Scripts below should reflect the new filesystem, though you will have to 
+adjust the file paths accordingly.
+
 # Preprocessing :wrench:
 
 ## Step 1 - `01-aspera_transfer_n.txt`
@@ -163,7 +167,7 @@ managed further. For example the 8 files above would become:
     AMH_macro_1_1_12px_S1_R1.fastq.gz
     AMH_macro_1_1_12px_S1_R2.fastq.gz
     
-MARCC uses [slurm](https://slurm.schedmd.com/overview.html) to manage jobs. To 
+Rockfish uses [slurm](https://slurm.schedmd.com/overview.html) to manage jobs. To 
 run the script, use the `sbatch` command. For example:
 
     sbatch ~/code/02-concat_files_across4lanes.sh
@@ -175,7 +179,7 @@ the loop pattern.
 
 ### Step 2b – Download Stacks
 
-On MARCC, [Stacks](https://catchenlab.life.illinois.edu/stacks/) will need to 
+On Rockfish, [Stacks](https://catchenlab.life.illinois.edu/stacks/) will need to 
 be downloaded to each user's code directory. Stacks should be compiled in an 
 interactive mode. For more information on interactive mode, see 
 `interact --usage`.
@@ -190,15 +194,15 @@ Now download Stacks. We used version 2.60.
 
 Next, go into the stacks-2.60 directory and run the following commands:
 
-    ./configure --prefix=/home-net/home-1/<your_username>@jhu.edu/code
+    ./configure --prefix=/home/<your_username>/code4-<PI_username>
     make
     make install
-    export PATH=$PATH:/home-1/<your_username>@jhu.edu/code/bin
+    export PATH=$PATH:/home/<your_username>/code4-<PI_username>/stacks-2.60
     
-Troubleshooting: Please note that the path will need to match for each of these commands. 
-For example, we have found that stacks may download to *home-2* rather than *home-1*.
-The filesystem on your cluster might be different, and you should change it 
-accordingly.
+Troubleshooting: Please note that the path will need to match for each of these 
+commands. For example, when working on MARCC, we have found that stacks may 
+download to *home-2* rather than *home-1*. The filesystem on your cluster 
+might be different, and you should change it accordingly.
 
 ## Step 3 - `03-clone_filter.sh`
 
@@ -209,7 +213,7 @@ script uses the file name prefixes listed for each single sub-pooled
 library in `03-clone_filter_file_names.txt` and loops to run
 `clone_filter` on all of them. Possible file names shown in
 [`clone_filter` File Names](#clone_filter-file-names). You will need
-to transfer the text file from your local machine to MARCC and run
+to transfer the text file from your local machine to Rockfish and run
 this script using the `sbatch` command.
 
 ### Step 3b - `03.5-parse_clone_filter.py`
@@ -2365,226 +2369,3 @@ three files; `catalog.alleles.tsv.gz`, `catalog.snps.tsv.gz`, and `catalog.tafs.
     AMH_macro_9_7_8px_S119
     AMH_macro_9_8_8px_S120
     AMH_macro_9_9_12px_S121
-
-    DS.BA.PIK.U.1.1
-    DS.BA.PIK.U.2.1
-    DS.BA.PIK.U.3.1
-    DS.BA.PIK.U.4.1
-    DS.BA.PIK.U.5.1
-    DS.BA.DHI.U.1.1
-    DS.BA.DHI.U.2.1
-    DS.BA.DHI.U.3.1
-    DS.BA.DHI.U.4.1
-    DS.BA.DHI.U.5.1
-    DS.BA.GA.U.1.1
-    DS.BA.GA.U.2.1
-    DS.BA.GA.U.3.1
-    DS.BA.GA.U.4.1
-    DS.BA.GA.U.5.1
-    DS.BA.LH-1.M.1.1
-    DS.BA.LH-1.M.2.1
-    DS.BA.LH-1.M.3.1
-    DS.BA.LH-1.M.4.1
-    DS.BA.LH-1.M.5.1
-    DS.BA.LH-3.M.1.1
-    DS.BA.LH-3.M.2.1
-    DS.BA.LH-3.M.3.1
-    DS.BA.LH-3.M.4.1
-    DS.BA.LH-3.M.5.1
-    DS.BA.CP.U.1.1
-    DS.BA.CP.U.2.1
-    DS.BA.CP.U.3.1
-    DS.BA.CP.U.4.1
-    DS.BA.CP.U.5.1
-    DS.BA.WB.U.1.1
-    DS.BA.WB.U.2.1
-    DS.BA.WB.U.3.1
-    DS.BA.WB.U.4.1
-    DS.BA.WB.U.5.1
-    DS.BA.LL-4.M.1.1
-    DS.BA.LL-4.M.2.1
-    DS.BA.LL-4.M.3.1
-    DS.BA.LL-4.M.4.1
-    DS.BA.LL-4.M.5.1
-    DS.BA.LH-2.M.1.1
-    DS.BA.LH-2.M.2.1
-    DS.BA.LH-2.M.3.1
-    DS.BA.LH-2.M.4.1
-    DS.BA.LH-2.M.5.1
-    DS.BA.LA.U.1.1
-    DS.BA.LA.U.2.1
-    DS.BA.LA.U.3.1
-    DS.BA.LA.U.4.1
-    DS.BA.LA.U.5.1
-    DS.BA.TRC.U.1.1
-    DS.BA.TRC.U.2.1
-    DS.BA.TRC.U.3.1
-    DS.BA.TRC.U.4.1
-    DS.BA.TRC.U.5.1
-    DS.BA.W3.M.1.1
-    DS.BA.W3.M.2.1
-    DS.BA.W3.M.3.1
-    DS.BA.W3.M.4.1
-    DS.BA.W3.M.5.1
-    DS.BA.AA.U.1.1
-    DS.BA.AA.U.2.1
-    DS.BA.AA.U.3.1
-    DS.BA.AA.U.4.1
-    DS.BA.AA.U.5.1
-    DS.BA.RG-1.M.1.1
-    DS.BA.RG-1.M.2.1
-    DS.BA.RG-1.M.3.1
-    DS.BA.RG-1.M.4.1
-    DS.BA.RG-1.M.5.1
-    DS.BA.LL-3.M.1.1
-    DS.BA.LL-3.M.2.1
-    DS.BA.LL-3.M.3.1
-    DS.BA.PSP.M.1.1
-    DS.BA.PSP.M.2.1
-    DS.BA.PSP.M.3.1
-    DS.BA.PSP.M.4.1
-    DS.BA.PSP.M.5.1
-    DS.BA.RG-2.M.1.1
-    DS.BA.RG-2.M.2.1
-    DS.BA.RG-2.M.3.1
-    DS.BA.RG-2.M.4.1
-    DS.BA.RG-2.M.5.1
-    DS.BO.LC2.M.3.1
-    DS.BO.LC2.M.4.1
-    DS.BO.LC2.M.5.1
-    DS.BO.LC3.M.3.1
-    DS.BO.LC3.M.4.1
-    DS.BO.LC3.M.5.1
-    DS.BO.LC4.M.1.1
-    DS.BO.LC4.M.2.1
-    DS.BO.LC4.M.3.1
-    DS.BO.LC4.M.4.1
-    DS.BO.LC4.M.5.1
-    DS.BO.WL1.M.1.1
-    DS.BO.WL1.M.2.1
-    DS.BO.WL1.M.3.1
-    DS.BO.WL1.M.4.1
-    DS.BO.WL1.M.5.1
-    DS.BO.WL2.M.1.1
-    DS.BO.WL2.M.2.1
-    DS.BO.WL2.M.3.1
-    DS.BO.WL2.M.4.1
-    DS.BO.WL2.M.5.1
-    DS.BO.WL3.M.1.1
-    DS.BO.WL3.M.2.1
-    DS.BO.WL3.M.3.1
-
-    DS.MN.L01-DS.M.1
-    DS.MN.L01-DS.M.2
-    DS.MN.L01-DS.M.3
-    DS.MN.L01-DS.M.4
-    DS.MN.L01-DS.M.5
-    DS.MN.L02-DS.M.1
-    DS.MN.L02-DS.M.2
-    DS.MN.L02-DS.M.3
-    DS.MN.L02-DS.M.4
-    DS.MN.L02-DS.M.5
-    DS.MN.L03-DS.M.1
-    DS.MN.L03-DS.M.2
-    DS.MN.L03-DS.M.3
-    DS.MN.L03-DS.M.4
-    DS.MN.L03-DS.M.5
-    DS.MN.L04-DS.M.1
-    DS.MN.L04-DS.M.2
-    DS.MN.L04-DS.M.3
-    DS.MN.L04-DS.M.4
-    DS.MN.L04-DS.M.5
-    DS.MN.L05-DS.M.1
-    DS.MN.L05-DS.M.2
-    DS.MN.L05-DS.M.3
-    DS.MN.L05-DS.M.4
-    DS.MN.L05-DS.M.5
-    DS.MN.L06-DS.M.1
-    DS.MN.L06-DS.M.2
-    DS.MN.L06-DS.M.3
-    DS.MN.L06-DS.M.4
-    DS.MN.L06-DS.M.5
-    DS.MN.L07-DS.M.1
-    DS.MN.L07-DS.M.2
-    DS.MN.L07-DS.M.3
-    DS.MN.L07-DS.M.4
-    DS.MN.L08-DS.M.1
-    DS.MN.L08-DS.M.2
-    DS.MN.L08-DS.M.3
-    DS.MN.L08-DS.M.4
-    DS.MN.L08-DS.M.5
-    DS.MN.L09-DS.M.1
-    DS.MN.L09-DS.M.2
-    DS.MN.L09-DS.M.3
-    DS.MN.L09-DS.M.4
-    DS.MN.L09-DS.M.5
-    DS.MN.L10-DS.M.1
-    DS.MN.L10-DS.M.2
-    DS.MN.L10-DS.M.3
-    DS.MN.L10-DS.M.4
-    DS.MN.L10-DS.M.5
-    DS.MN.L11-DS.M.1
-    DS.MN.L11-DS.M.2
-    DS.MN.L11-DS.M.3
-    DS.MN.L11-DS.M.4
-    DS.MN.L11-DS.M.5
-    DS.MN.L12-DS.M.1
-    DS.MN.L12-DS.M.2
-    DS.MN.L12-DS.M.3
-    DS.MN.L12-DS.M.4
-    DS.MN.L12-DS.M.5
-    DS.MN.L01-DS.U.1
-    DS.MN.L01-DS.U.2
-    DS.MN.L01-DS.U.3
-    DS.MN.L01-DS.U.4
-    DS.MN.L01-DS.U.5
-    DS.MN.L02-DS.U.1
-    DS.MN.L02-DS.U.2
-    DS.MN.L02-DS.U.3
-    DS.MN.L02-DS.U.4
-    DS.MN.L02-DS.U.5
-    DS.MN.L03-DS.U.1
-    DS.MN.L03-DS.U.2
-    DS.MN.L03-DS.U.3
-    DS.MN.L03-DS.U.4
-    DS.MN.L03-DS.U.5
-    DS.MN.L04-DS.U.1
-    DS.MN.L04-DS.U.2
-    DS.MN.L04-DS.U.3
-    DS.MN.L04-DS.U.4
-    DS.MN.L04-DS.U.5
-    DS.MN.L05-DS.U.1
-    DS.MN.L05-DS.U.2
-    DS.MN.L05-DS.U.3
-    DS.MN.L05-DS.U.4
-    DS.MN.L05-DS.U.5
-    DS.MN.L06-DS.U.1
-    DS.MN.L06-DS.U.2
-    DS.MN.L06-DS.U.3
-    DS.MN.L06-DS.U.4
-    DS.MN.L06-DS.U.5
-    DS.MN.L07-DS.U.1
-    DS.MN.L07-DS.U.2
-    DS.MN.L07-DS.U.3
-    DS.MN.L07-DS.U.4
-    DS.MN.L07-DS.U.5
-    DS.MN.L08-DS.U.1
-    DS.MN.L08-DS.U.2
-    DS.MN.L08-DS.U.3
-    DS.MN.L08-DS.U.4
-    DS.MN.L08-DS.U.5
-    DS.MN.L09-DS.U.1
-    DS.MN.L09-DS.U.2
-    DS.MN.L09-DS.U.3
-    DS.MN.L09-DS.U.4
-    DS.MN.L09-DS.U.5
-    DS.MN.L10-DS.U.1
-    DS.MN.L10-DS.U.2
-    DS.MN.L10-DS.U.3
-    DS.MN.L10-DS.U.4
-    DS.MN.L10-DS.U.5
-    DS.MN.L11-DS.U.1
-    DS.MN.L11-DS.U.2
-    DS.MN.L11-DS.U.3
-    DS.MN.L11-DS.U.4
-    DS.MN.L11-DS.U.5
