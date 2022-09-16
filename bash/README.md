@@ -121,8 +121,10 @@ adjust the file paths accordingly.
 
 # Preprocessing :wrench:
 
-## Step 1 - `01-aspera_transfer_n.txt`
+## Step 1 - Transfer Files
 
+`01-aspera_transfer_n.txt`  
+  
 These are text files containing the *names* of `fastq.gz` files that I
 wanted to transfer from the sequencing facility’s Aspera server to the
 computing cluster ([MARCC](https://www.marcc.jhu.edu/)). This was to
@@ -145,7 +147,9 @@ Initiate the transfer from within your scratch directory:
 
     ascp -T -l8G -i /software/apps/aspera/3.9.1/etc/asperaweb_id_dsa.openssh --file-list=01-aspera_transfer_n.txt --mode=recv --user=<aspera-user> --host=<aspera-IP> /scratch/users/<me>@jhu.edu
 
-## Step 2 - `02-concat_files_across4lanes.sh`
+## Step 2 - Concatenate Files and Install Stacks
+
+### Step 2a - `02-concat_files_across4lanes.sh`
 
 I ran my samples across the whole flow cell of the NovaSeq, so results
 came in 8 files for each demultiplexed sublibrary (4 lanes \* paired
@@ -204,7 +208,9 @@ commands. For example, when working on MARCC, we have found that stacks may
 download to *home-2* rather than *home-1*. The filesystem on your cluster 
 might be different, and you should change it accordingly.
 
-## Step 3 - `03-clone_filter.sh`
+## Step 3 - Remove PCR Clones
+
+### Step 3a - `03-clone_filter.sh`
 
 This script runs `clone_filter` from
 [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was
@@ -222,7 +228,9 @@ If you want to extract descriptive statistics from the `clone_filter` output, yo
 use this script to do so. It can be run on your local terminal after transfering the 
 `clone_filter.out` logs to your local computer.
 
-## Step 4 - `04-process_radtags.sh`
+## Step 4 - Demultiplexing and Sample Filtering
+
+### Step 4a - `04-process_radtags.sh`
 
 This script runs `process_radtags` from
 [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was
@@ -301,39 +309,49 @@ to analyze how well each sample performed. There are three important statistics 
 consider for each sample. 
 1. *The proportion of reads per sample for each sublibrary* indicates the proportion 
 that each individual was processed and sequenced within the overall library. This is
-important to consider as cases where a single sample dominates the sublibary may
+important to consider as cases where a single sample dominates the sublibrary may
 indicate contamination.
 2. *The number of reads retained for each sample* can be an indicator of coverage.
 It is most likely a good idea to remove samples with a very low number of reads.
-Where you decide to place the cutoff for outliers is dependent on your dataset.
+Where you decide to place the cutoff for low coverage samples is dependent on your dataset.
 For example, a threshold of 1 million reads is often used but this is not universal.
 3. *The proportion of reads retained for each sample* can also indicate low-quality
 samples and will give an idea of the variation in coverage across samples.
 
+Output for sublibraries for this step are summarized in [`process_radtags-library_output.csv`](../output/process_radtags-sample_output.csv).
+
+Output for individual samples for this step are summarized in [`process_radtags-sample_output.csv`](../output/process_radtags-sample_output.csv).
+
 The script `04c-process_radtags_stats.R` was used to create plots for easily
 assessing each statistic.
 
-### Step 4d - Identify outliers and remove samples from downstream analysis
+### Step 4d - Identify low-coverage and low-quality samples from downstream analysis
 
-Using the same output log and the above statistics, we removed outliers and 
+Using the same output log and the above statistics, we removed low-coverage and low-quality 
 samples that may skew downstream analyses. 
 
-Samples were identified as outliers and removed via the following procedure:
-1. First, samples that represented less than 1% of the sequenced library were identified and
+Samples were identified and removed via the following procedure:
+1. First, samples that represented less than **1% of the sequenced sublibrary** were identified and
 removed. These samples correlate to low-read and low-coverage samples.
-2. Next, a threshold of 1 million retained reads per sample was used to remove any remaining
+2. Next, a threshold of **1 million retained reads per sample** was used to remove any remaining
 low-read samples. Low-read samples correlate to low coverage and will lack enough raw reads to 
 contribute to downstream analyses. 
+
+Good/kept samples are summarized in [`process_radtags-kept_samples.csv`](../output/process_radtags-kept_samples.csv).
+
+Discarded samples are summarized in [`process_radtags-discarded_samples.csv`](../output/process_radtags-discarded_samples.csv).
 
 Note: At this point, we started using Stacks 2.62 for its multi-threading 
 capabilities. Functionality of the previous steps should be the same, however.
 
-## Step 5 - `ustacks`
+# Generating Stacks Catalogs and Calling SNPs :mag:
 
-`ustacks` builds *de novo* loci in each individual sample. However, before
-performing `ustacks` on the entirety of the samples, it is important to conduct
+## Step 5 - Catalog Building and Parameter Search
+
+It is important to conduct
 preliminary analyses that will identify an optimal set of parameters for the
-dataset (see [Step 5a](#step-5a---denovo_mapsh))
+dataset (see [Step 5a](#step-5a---denovo_mapsh)). Following the parameter 
+optimization, the program `ustacks` can be run to generate a catalog of loci.
 
 ### Step 5a - `denovo_map.sh`
 
@@ -404,7 +422,8 @@ the change in shared loci across parameter iterations.
 
 ### Step 5b - `ustacks`
 
-We have designed the `ustacks` script so that the process requires three files:
+`ustacks` builds *de novo* loci in each individual sample. We have designed the 
+`ustacks` script so that the process requires three files:
 
 -   `05-ustacks_n.sh` : the shell script that executes `ustacks`
 -   `05-ustacks_id_n.txt` : the sample ID number
