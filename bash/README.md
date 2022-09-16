@@ -303,7 +303,7 @@ and rerun.
 
 Next, we used:
 
-     stacks-dist-extract process_radtags.log per_barcode_raw_read_counts | head
+     stacks-dist-extract process_radtags.log per_barcode_raw_read_counts
      
 to analyze how well each sample performed. There are three important statistics to
 consider for each sample. 
