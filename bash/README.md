@@ -39,14 +39,14 @@ Actions. -->
 
 # *First*: A Note on File Naming :sparkles:
 
-In this experiment, I used quaddRAD library prep to prepare the sample
+In this experiment, we used quaddRAD library prep to prepare the sample
 DNA. This means that there were both two unique outer barcodes (typical
 Illumina barcodes) *AND* two unique inner barcodes (random barcode bases
 inside the adapters) for each sample - over 1700 to be exact!
 
 The sequencing facility demultiplexes samples based on the outer
 barcodes (typically called 5nn and i7nn). Once this is done, each file
-still contains a mix of the inner barcodes. I will refer to these as
+still contains a mix of the inner barcodes. We will refer to these as
 “sublibraries” because they are sort of halfway demultiplexed. I
 separate them out bioinformatically later.
 
@@ -65,13 +65,13 @@ on every file.
     AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
               ^
 
-This is the *i5nn* barcode for the given sublibrary. I know all these
+This is the *i5nn* barcode for the given sublibrary. We know all these
 samples have a i5nn barcode “1”, so that narrows down what they can be.
 
     AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
                 ^
 
-This is the *i7nn* barcode for the given sublibrary. I know all these
+This is the *i7nn* barcode for the given sublibrary. We know all these
 samples have a i7nn barcode “1”, so that further narrows down what they
 can be.
 
@@ -79,7 +79,7 @@ can be.
                   ^^^^
 
 This refers to how many samples are in the sublibrary. “12px” means
-12-plexed, or 12 samples. In other words, I will use the inner barcodes
+12-plexed, or 12 samples. In other words, we will use the inner barcodes
 to further distinguish 12 unique samples in this sublibrary.
 
     AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
@@ -108,9 +108,9 @@ Doesn’t mean anything - it was just added automatically :)
 There are three main systems at play for file transfer: my local
 machine, the sequencing facility’s (GRCF) Aspera server, and
 [MARCC](https://www.marcc.jhu.edu/). The Aspera server is where the data
-were/are stored immediately after sequencing. MARCC is where I plan to
+were/are stored immediately after sequencing. MARCC is where we plan to
 do preprocessing and analysis. Scripts and text files are easy for me to
-edit on my local machine. I used [Globus](https://app.globus.org) to
+edit on my local machine. We used [Globus](https://app.globus.org) to
 transfer these small files from my local machine to MARCC.
 
 <img src="../figures/file_transfer.jpg" alt="File transfer schematic" width="600"/>
@@ -127,10 +127,10 @@ These are text files containing the *names* of `fastq.gz` files that I
 wanted to transfer from the sequencing facility’s Aspera server to the
 computing cluster ([MARCC](https://www.marcc.jhu.edu/)). This was to
 maximize ease of transferring only certain files over at once, since
-transferring could take a long time. I definitely did this piecemeal.
+transferring could take a long time. We definitely did this piecemeal.
 Possible file names shown in [Aspera Transfer File
 Names](#aspera-transfer-file-names). There are multiple of these files
-so that I could parallelize (replace n with the correct number in the
+so that we could parallelize (replace n with the correct number in the
 command used below). This text file will need to be uploaded to your 
 scratch directory in MARCC.
 
@@ -552,7 +552,7 @@ We run `tsv2bam` using the script `08-tsv2bam.sh`.
 
 This is the step at which it’s usually discovered that some samples are
 bad (don’t have any useable matches to the catalog). These samples were
-excluded from `08-tsv2bam_popmap.txt`. For example I might simply cut
+excluded from `08-tsv2bam_popmap.txt`. For example we might simply cut
 out the following rows:
 
     DS.MN.L10-DS.M.4    Minneapolis
