@@ -10,9 +10,16 @@ read_csv("output/process_radtags-sample_output.csv") %>%
   filter(retained_reads > retained_reads_threshold &  
          prop_sample_per_library > prop_sample_threshold) %>% 
   select(Filename) %>% arrange(Filename) %>% 
+  mutate(Population = case_when(grepl("\\.BA\\.", Filename) ~ "Baltimore",
+                                grepl("\\.BO\\.", Filename) ~ "Boston", 
+                                grepl("\\.LA\\.", Filename) ~ "Los Angeles", 
+                                grepl("\\.MN\\.", Filename) ~ "Minneapolis", 
+                                grepl("\\.PX\\.", Filename) ~ "Phoenix", 
+                                TRUE ~ "None")) %>% 
   write_csv("output/process_radtags-kept_samples.csv")
 
 read_csv("output/process_radtags-sample_output.csv") %>% 
   filter(retained_reads <= retained_reads_threshold |  
          prop_sample_per_library <= prop_sample_threshold) %>% 
+  select(!(`...1`)) %>% 
   write_csv("output/process_radtags-discarded_samples.csv")
