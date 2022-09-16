@@ -325,6 +325,9 @@ removed. These samples correlate to low-read and low-coverage samples.
 low-read samples. Low-read samples correlate to low coverage and will lack enough raw reads to 
 contribute to downstream analyses. 
 
+Note: At this point, we started using Stacks 2.62 for its multithreading capabilities. 
+Functionality of the previous steps should be the same, however.
+
 ## Step 5 - `ustacks`
 
 `ustacks` builds *de novo* loci in each individual sample. However, before
