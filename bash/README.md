@@ -650,7 +650,7 @@ A population map is also included within each directory to ensure only appropria
 
 ## Step 12 - City Level Population Analysis
 
-The city-level populations program will use the script `11-city_catalogs/12-city_populations.sh`. The goal of this script is to run the Stacks function `populations` on each city-species conmbination while toggling the `--min-samples-overall` option to output of a reasonable number of SNPs while also getting rid of SNPs with a lot of missing data.
+The city-level populations program will use the script `11-city_catalogs/12-city_populations.sh`. The goal of this script is to run the Stacks function `populations` on each city-species combination while toggling the `--min-samples-overall` option. Toggling this option allows us to hone in on a reasonable number of SNPs while also getting rid of SNPs with a lot of missing data, therefore creating a more robust population structure snapshot. As described in [step 11](step-11---examine-within-city-catalogs-and-populations), each city-species combination with adequate data is represented by a folder. The `12-city_populations.sh` script iterates through folders, within which it runs several `--min-samples-overall` levels and outputs each parameter permutation to its own new directory. This script uses the `11-city_catalogs/12-city_catalog_names.txt` to iterate rather than doing all folders by default. This is convenient if you only want to iterate through a subset of the folders (city-species combinations).
 
 # File Organization :bookmark_tabs:
 
