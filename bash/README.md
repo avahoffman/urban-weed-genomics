@@ -41,7 +41,7 @@ Actions. -->
 
 <!-- tocstop -->
 
-# *First*: A Note on File Naming :sparkles:
+# Introduction
 
 In this experiment, we used quaddRAD library prep to prepare the sample
 DNA. This means that there were both two unique outer barcodes (typical
@@ -51,8 +51,10 @@ inside the adapters) for each sample - over 1700 to be exact!
 The sequencing facility demultiplexes samples based on the outer
 barcodes (typically called 5nn and i7nn). Once this is done, each file
 still contains a mix of the inner barcodes. We will refer to these as
-“sublibraries” because they are sort of halfway demultiplexed. I
+“sublibraries” because they are sort of halfway demultiplexed. We
 separate them out bioinformatically later.
+
+## Raw Data File Naming - Sublibraries
 
 The typical file looks like this:
 
@@ -107,9 +109,9 @@ This is the first (R1) of two paired-end reads (R1 and R2).
 
 Doesn’t mean anything - it was just added automatically :)
 
-# A Note on File Transfers :arrows\_clockwise:
+## A Note on File Transfers
 
-There are three main systems at play for file transfer: my local
+There are three main systems at play for file transfer: the local
 machine, the sequencing facility’s (GRCF) Aspera server, and
 [MARCC](https://www.marcc.jhu.edu/). The Aspera server is where the data
 were/are stored immediately after sequencing. MARCC is where we plan to
@@ -117,11 +119,11 @@ do preprocessing and analysis. Scripts and text files are easy for me to
 edit on my local machine. We used [Globus](https://app.globus.org) to
 transfer these small files from my local machine to MARCC.
 
-<img src="../figures/file_transfer.jpg" alt="File transfer schematic" width="600"/>
-
-Note: Midway through this analyses, we transitioned to another cluster, JHU's
-Rockfish. Scripts below should reflect the new filesystem, though you will have to 
+Midway through this analyses, we transitioned to another cluster, JHU's
+Rockfish. Scripts below, with the exception of file transfer from the Aspera server, should reflect the new filesystem, though you will have to 
 adjust the file paths accordingly.
+
+<img src="../figures/file_transfer.jpg" alt="File transfer schematic" width="600"/>
 
 # Preprocessing :wrench:
 
@@ -129,7 +131,7 @@ adjust the file paths accordingly.
 
 `01-aspera_transfer_n.txt`  
   
-These are text files containing the *names* of `fastq.gz` files that I
+These are text files containing the *names* of `fastq.gz` files that we
 wanted to transfer from the sequencing facility’s Aspera server to the
 computing cluster ([MARCC](https://www.marcc.jhu.edu/)). This was to
 maximize ease of transferring only certain files over at once, since
@@ -153,11 +155,11 @@ Initiate the transfer from within your scratch directory:
 
 ## Step 2 - Concatenate Files and Install Stacks
 
-### Step 2a - `02-concat_files_across4lanes.sh`
+### Step 2a - Concatenate Files for each Sublibrary
 
-I ran my samples across the whole flow cell of the NovaSeq, so results
+We ran my samples across the whole flow cell of the NovaSeq, so results
 came in 8 files for each demultiplexed sublibrary (4 lanes \* paired
-reads). For example, for sublibrary 1\_1, we’d see the following files:
+reads). For example, for sublibrary 1\_1, we’d see the following 8 files:
 
     AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
     AMH_macro_1_1_12px_S1_L001_R2_001.fastq.gz
@@ -168,13 +170,13 @@ reads). For example, for sublibrary 1\_1, we’d see the following files:
     AMH_macro_1_1_12px_S1_L004_R1_001.fastq.gz
     AMH_macro_1_1_12px_S1_L004_R2_001.fastq.gz
 
-This script finds all files in the working directory with the name
-pattern `*_L001_*.fastq.gz` and concatenates across lanes so they can be
-managed further. For example the 8 files above would become:
+The `02-concat_files_across4lanes.sh` script finds all files in the working directory with the name
+pattern `*_L001_*.fastq.gz` and then concatenates across lanes 001, 002, 003, and 004 so they can be
+managed further. The "L001" part of the filename is then eliminated. For example the 8 files above would become:
 
     AMH_macro_1_1_12px_S1_R1.fastq.gz
     AMH_macro_1_1_12px_S1_R2.fastq.gz
-    
+
 Rockfish uses [slurm](https://slurm.schedmd.com/overview.html) to manage jobs. To 
 run the script, use the `sbatch` command. For example:
 
@@ -185,10 +187,10 @@ but will look for and pull the script from the code directory. This
 will concatenate all files within the current directory that match
 the loop pattern.
 
-### Step 2b – Download Stacks
+### Step 2b – Download and Install Stacks
 
 On Rockfish, [Stacks](https://catchenlab.life.illinois.edu/stacks/) will need to 
-be downloaded to each user's code directory. Stacks should be compiled in an 
+be downloaded to each user's code directory. Stacks, and software in general, should be compiled in an 
 interactive mode. For more information on interactive mode, see 
 `interact --usage`.
 
@@ -207,41 +209,37 @@ Next, go into the stacks-2.60 directory and run the following commands:
     make install
     export PATH=$PATH:/home/<your_username>/code4-<PI_username>/stacks-2.60
     
-Troubleshooting: Please note that the path will need to match for each of these 
-commands. For example, when working on MARCC, we have found that stacks may 
-download to *home-2* rather than *home-1*. The filesystem on your cluster 
-might be different, and you should change it accordingly.
+The filesystem patterns on your cluster 
+might be different, and you should change these file paths accordingly.
 
 ## Step 3 - Remove PCR Clones
 
-### Step 3a - `03-clone_filter.sh`
+### Step 3a - Run PCR Clone Removal Script
 
-This script runs `clone_filter` from
+The `03-clone_filter.sh` script runs `clone_filter` from
 [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was
-run with options `--inline_inline --oligo_len_1 4 --oligo_len_2 4`. The
+run with options `--inline_inline --oligo_len_1 4 --oligo_len_2 4`. The `--oligo_len_x 4` options indicate the 4-base pair degenerate sequence was included on the outside of the barcodes for detecting PCR duplicates. The
 script uses the file name prefixes listed for each single sub-pooled
 library in `03-clone_filter_file_names.txt` and loops to run
 `clone_filter` on all of them. Possible file names shown in
-[`clone_filter` File Names](#clone_filter-file-names). You will need
-to transfer the text file from your local machine to Rockfish and run
-this script using the `sbatch` command.
+[`clone_filter` File Names](#clone_filter-file-names).
 
-### Step 3b - `03.5-parse_clone_filter.py`
+### Step 3b - Parse PCR Clone Removal Results
 
 If you want to extract descriptive statistics from the `clone_filter` output, you can
-use this script to do so. It can be run on your local terminal after transfering the 
+use the `03.5-parse_clone_filter.py` script to do so. It can be run on your local terminal after transferring the 
 `clone_filter.out` logs to your local computer.
 
 ## Step 4 - Demultiplexing and Sample Filtering
 
-### Step 4a - `04-process_radtags.sh`
+### Step 4a - Demultiplex and Filter
 
-This script runs `process_radtags` from
+The `04-process_radtags.sh` script runs `process_radtags` from
 [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was
 run with options
 `-c -q --inline_inline --renz_1 pstI --renz_2 mspI --rescue --disable_rad_check`.
 The script uses the same file prefixes as [Step 3 -
-`03-clone_filter.sh`](#step-3---03-clone_filtersh). Each sub-pooled
+`03-clone_filter.sh`](#step-3---remove-pcr-clones). Each sub-pooled
 library has a forward and reverse read file that was filtered in the
 previous step. Like the [above section](#step-3---03-clone_filtersh),
 the script uses the file name prefixes listed for each single sub-pooled
@@ -286,7 +284,7 @@ automate the file moving process so it’s not forgotten at this point.
 
 ### Step 4c - Assess the raw, processed, and cleaned data
 
-In the script for [Step 4](#step-4---04-process_radtagssh), 
+In the script for [Step 4](#step-4---demultiplex-and-filter), 
 we have specified that a new output folder be created for each sublibrary.
 The output folder is where all sample files and the log file will be dumped for each
 sublibrary. It is important to specify a different output folder if you have multiple
@@ -606,6 +604,53 @@ You will most likely run the populations program multiple times if you are looki
 different 'sub-populations'. A new directory should be created and the population program 
 should run out of that directory for each iteration of the population program. Alternativley, 
 you can specify a new directory as the output folder in the script using the command `-O`.
+
+## Step 11 - Examine Within-city Catalogs and Populations
+
+For any given species within city, there is likely to be a slightly different set of SNPs compared to the whole metapopulation of five cities. 
+We examined 24 sets of species-city combinations. Within the folder `11-city_catalogs` there are 24 folders:
+
+```
+CD_BA_22_09_14
+CD_LA_22_09_14
+CD_PX_22_09_14
+DS_BA_22_09_14
+DS_BO_22_09_14
+DS_MN_22_09_14
+DS_PX_22_09_14
+EC_BA_22_09_14
+EC_LA_22_09_14
+EC_PX_22_09_14
+LS_BA_22_09_14
+LS_BO_22_09_14
+LS_LA_22_09_14
+LS_MN_22_09_14
+LS_PX_22_09_14
+PA_BA_22_09_14
+PA_BO_22_09_14
+PA_LA_22_09_14
+PA_PX_22_09_14
+TO_BA_22_09_14
+TO_BO_22_09_14
+TO_LA_22_09_14
+TO_MN_22_09_14
+TO_PX_22_09_14
+```
+
+All folders contain a script and set of samples used to build the species-city catalog. Because parameter search had already been performed at the metapopulation level, we ran all species-city combinations using `denovo_map.pl`. Input samples came from [step 4](#step-4---demultiplexing-and-sample-filtering). For example, input files should look like this:
+
+```
+CD.BA.AA.U.1.1.fq.gz
+CD.BA.AA.U.1.2.fq.gz
+CD.BA.AA.U.1.rem.1.fq.gz
+CD.BA.AA.U.1.rem.2.fq.gz 
+```
+
+A population map is also included within each directory to ensure only appropriate samples (i.e., ok coverage) are included in the catalog.
+
+## Step 12 - City Level Population Analysis
+
+The city-level populations program will use the script `11-city_catalogs/12-city_populations.sh`. The goal of this script is to run the Stacks function `populations` on each city-species conmbination while toggling the `--min-samples-overall` option to output of a reasonable number of SNPs while also getting rid of SNPs with a lot of missing data.
 
 # File Organization :bookmark_tabs:
 
