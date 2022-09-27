@@ -11,16 +11,20 @@ Actions. -->
 - [*First*: A Note on File Naming :sparkles:](#first-a-note-on-file-naming-sparkles)
 - [A Note on File Transfers :arrows\_clockwise:](#a-note-on-file-transfers-arrows_clockwise)
 - [Preprocessing :wrench:](#preprocessing-wrench)
-  * [Step 1 - `01-aspera_transfer_n.txt`](#step-1---01-aspera_transfer_ntxt)
-  * [Step 2 - `02-concat_files_across4lanes.sh`](#step-2---02-concat_files_across4lanessh)
+  * [Step 1 - Transfer Files](#step-1---transfer-files)
+  * [Step 2 - Concatenate Files and Install Stacks](#step-2---concatenate-files-and-install-stacks)
+    + [Step 2a - `02-concat_files_across4lanes.sh`](#step-2a---02-concat_files_across4lanessh)
     + [Step 2b – Download Stacks](#step-2b-%E2%80%93-download-stacks)
-  * [Step 3 - `03-clone_filter.sh`](#step-3---03-clone_filtersh)
+  * [Step 3 - Remove PCR Clones](#step-3---remove-pcr-clones)
+    + [Step 3a - `03-clone_filter.sh`](#step-3a---03-clone_filtersh)
     + [Step 3b - `03.5-parse_clone_filter.py`](#step-3b---035-parse_clone_filterpy)
-  * [Step 4 - `04-process_radtags.sh`](#step-4---04-process_radtagssh)
+  * [Step 4 - Demultiplexing and Sample Filtering](#step-4---demultiplexing-and-sample-filtering)
+    + [Step 4a - `04-process_radtags.sh`](#step-4a---04-process_radtagssh)
     + [Step 4b - Organize files](#step-4b---organize-files)
     + [Step 4c - Assess the raw, processed, and cleaned data](#step-4c---assess-the-raw-processed-and-cleaned-data)
-    + [Step 4d - Identify outliers and remove samples from downstream analysis](#step-4d---identify-outliers-and-remove-samples-from-downstream-analysis)
-  * [Step 5 - `ustacks`](#step-5---ustacks)
+    + [Step 4d - Identify low-coverage and low-quality samples from downstream analysis](#step-4d---identify-low-coverage-and-low-quality-samples-from-downstream-analysis)
+- [Generating Stacks Catalogs and Calling SNPs :mag:](#generating-stacks-catalogs-and-calling-snps-mag)
+  * [Step 5 - Catalog Building and Parameter Search](#step-5---catalog-building-and-parameter-search)
     + [Step 5a - `denovo_map.sh`](#step-5a---denovo_mapsh)
     + [Step 5b - `ustacks`](#step-5b---ustacks)
     + [Step 5c - Correct File Names](#step-5c---correct-file-names)
@@ -39,14 +43,14 @@ Actions. -->
 
 # *First*: A Note on File Naming :sparkles:
 
-In this experiment, I used quaddRAD library prep to prepare the sample
+In this experiment, we used quaddRAD library prep to prepare the sample
 DNA. This means that there were both two unique outer barcodes (typical
 Illumina barcodes) *AND* two unique inner barcodes (random barcode bases
 inside the adapters) for each sample - over 1700 to be exact!
 
 The sequencing facility demultiplexes samples based on the outer
 barcodes (typically called 5nn and i7nn). Once this is done, each file
-still contains a mix of the inner barcodes. I will refer to these as
+still contains a mix of the inner barcodes. We will refer to these as
 “sublibraries” because they are sort of halfway demultiplexed. I
 separate them out bioinformatically later.
 
@@ -65,13 +69,13 @@ on every file.
     AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
               ^
 
-This is the *i5nn* barcode for the given sublibrary. I know all these
+This is the *i5nn* barcode for the given sublibrary. We know all these
 samples have a i5nn barcode “1”, so that narrows down what they can be.
 
     AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
                 ^
 
-This is the *i7nn* barcode for the given sublibrary. I know all these
+This is the *i7nn* barcode for the given sublibrary. We know all these
 samples have a i7nn barcode “1”, so that further narrows down what they
 can be.
 
@@ -79,7 +83,7 @@ can be.
                   ^^^^
 
 This refers to how many samples are in the sublibrary. “12px” means
-12-plexed, or 12 samples. In other words, I will use the inner barcodes
+12-plexed, or 12 samples. In other words, we will use the inner barcodes
 to further distinguish 12 unique samples in this sublibrary.
 
     AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
@@ -108,25 +112,31 @@ Doesn’t mean anything - it was just added automatically :)
 There are three main systems at play for file transfer: my local
 machine, the sequencing facility’s (GRCF) Aspera server, and
 [MARCC](https://www.marcc.jhu.edu/). The Aspera server is where the data
-were/are stored immediately after sequencing. MARCC is where I plan to
+were/are stored immediately after sequencing. MARCC is where we plan to
 do preprocessing and analysis. Scripts and text files are easy for me to
-edit on my local machine. I used [Globus](https://app.globus.org) to
+edit on my local machine. We used [Globus](https://app.globus.org) to
 transfer these small files from my local machine to MARCC.
 
 <img src="../figures/file_transfer.jpg" alt="File transfer schematic" width="600"/>
 
+Note: Midway through this analyses, we transitioned to another cluster, JHU's
+Rockfish. Scripts below should reflect the new filesystem, though you will have to 
+adjust the file paths accordingly.
+
 # Preprocessing :wrench:
 
-## Step 1 - `01-aspera_transfer_n.txt`
+## Step 1 - Transfer Files
 
+`01-aspera_transfer_n.txt`  
+  
 These are text files containing the *names* of `fastq.gz` files that I
 wanted to transfer from the sequencing facility’s Aspera server to the
 computing cluster ([MARCC](https://www.marcc.jhu.edu/)). This was to
 maximize ease of transferring only certain files over at once, since
-transferring could take a long time. I definitely did this piecemeal.
+transferring could take a long time. We definitely did this piecemeal.
 Possible file names shown in [Aspera Transfer File
 Names](#aspera-transfer-file-names). There are multiple of these files
-so that I could parallelize (replace n with the correct number in the
+so that we could parallelize (replace n with the correct number in the
 command used below). This text file will need to be uploaded to your 
 scratch directory in MARCC.
 
@@ -141,7 +151,9 @@ Initiate the transfer from within your scratch directory:
 
     ascp -T -l8G -i /software/apps/aspera/3.9.1/etc/asperaweb_id_dsa.openssh --file-list=01-aspera_transfer_n.txt --mode=recv --user=<aspera-user> --host=<aspera-IP> /scratch/users/<me>@jhu.edu
 
-## Step 2 - `02-concat_files_across4lanes.sh`
+## Step 2 - Concatenate Files and Install Stacks
+
+### Step 2a - `02-concat_files_across4lanes.sh`
 
 I ran my samples across the whole flow cell of the NovaSeq, so results
 came in 8 files for each demultiplexed sublibrary (4 lanes \* paired
@@ -163,7 +175,7 @@ managed further. For example the 8 files above would become:
     AMH_macro_1_1_12px_S1_R1.fastq.gz
     AMH_macro_1_1_12px_S1_R2.fastq.gz
     
-MARCC uses [slurm](https://slurm.schedmd.com/overview.html) to manage jobs. To 
+Rockfish uses [slurm](https://slurm.schedmd.com/overview.html) to manage jobs. To 
 run the script, use the `sbatch` command. For example:
 
     sbatch ~/code/02-concat_files_across4lanes.sh
@@ -175,7 +187,7 @@ the loop pattern.
 
 ### Step 2b – Download Stacks
 
-On MARCC, [Stacks](https://catchenlab.life.illinois.edu/stacks/) will need to 
+On Rockfish, [Stacks](https://catchenlab.life.illinois.edu/stacks/) will need to 
 be downloaded to each user's code directory. Stacks should be compiled in an 
 interactive mode. For more information on interactive mode, see 
 `interact --usage`.
@@ -190,17 +202,19 @@ Now download Stacks. We used version 2.60.
 
 Next, go into the stacks-2.60 directory and run the following commands:
 
-    ./configure --prefix=/home-net/home-1/<your_username>@jhu.edu/code
+    ./configure --prefix=/home/<your_username>/code4-<PI_username>
     make
     make install
-    export PATH=$PATH:/home-1/<your_username>@jhu.edu/code/bin
+    export PATH=$PATH:/home/<your_username>/code4-<PI_username>/stacks-2.60
     
-Troubleshooting: Please note that the path will need to match for each of these commands. 
-For example, we have found that stacks may download to *home-2* rather than *home-1*.
-The filesystem on your cluster might be different, and you should change it 
-accordingly.
+Troubleshooting: Please note that the path will need to match for each of these 
+commands. For example, when working on MARCC, we have found that stacks may 
+download to *home-2* rather than *home-1*. The filesystem on your cluster 
+might be different, and you should change it accordingly.
 
-## Step 3 - `03-clone_filter.sh`
+## Step 3 - Remove PCR Clones
+
+### Step 3a - `03-clone_filter.sh`
 
 This script runs `clone_filter` from
 [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was
@@ -209,7 +223,7 @@ script uses the file name prefixes listed for each single sub-pooled
 library in `03-clone_filter_file_names.txt` and loops to run
 `clone_filter` on all of them. Possible file names shown in
 [`clone_filter` File Names](#clone_filter-file-names). You will need
-to transfer the text file from your local machine to MARCC and run
+to transfer the text file from your local machine to Rockfish and run
 this script using the `sbatch` command.
 
 ### Step 3b - `03.5-parse_clone_filter.py`
@@ -218,7 +232,9 @@ If you want to extract descriptive statistics from the `clone_filter` output, yo
 use this script to do so. It can be run on your local terminal after transfering the 
 `clone_filter.out` logs to your local computer.
 
-## Step 4 - `04-process_radtags.sh`
+## Step 4 - Demultiplexing and Sample Filtering
+
+### Step 4a - `04-process_radtags.sh`
 
 This script runs `process_radtags` from
 [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was
@@ -291,42 +307,55 @@ and rerun.
 
 Next, we used:
 
-     stacks-dist-extract process_radtags.log per_barcode_raw_read_counts | head
+     stacks-dist-extract process_radtags.log per_barcode_raw_read_counts
      
 to analyze how well each sample performed. There are three important statistics to
 consider for each sample. 
 1. *The proportion of reads per sample for each sublibrary* indicates the proportion 
 that each individual was processed and sequenced within the overall library. This is
-important to consider as cases where a single sample dominates the sublibary may
+important to consider as cases where a single sample dominates the sublibrary may
 indicate contamination.
 2. *The number of reads retained for each sample* can be an indicator of coverage.
 It is most likely a good idea to remove samples with a very low number of reads.
-Where you decide to place the cutoff for outliers is dependent on your dataset.
+Where you decide to place the cutoff for low coverage samples is dependent on your dataset.
 For example, a threshold of 1 million reads is often used but this is not universal.
 3. *The proportion of reads retained for each sample* can also indicate low-quality
 samples and will give an idea of the variation in coverage across samples.
 
+Output for sublibraries for this step are summarized in [`process_radtags-library_output.csv`](../output/process_radtags-sample_output.csv).
+
+Output for individual samples for this step are summarized in [`process_radtags-sample_output.csv`](../output/process_radtags-sample_output.csv).
+
 The script `04c-process_radtags_stats.R` was used to create plots for easily
 assessing each statistic.
 
-### Step 4d - Identify outliers and remove samples from downstream analysis
+### Step 4d - Identify low-coverage and low-quality samples from downstream analysis
 
-Using the same output log and the above statistics, we removed outliers and 
+Using the same output log and the above statistics, we removed low-coverage and low-quality 
 samples that may skew downstream analyses. 
 
-Samples were identified as outliers and removed via the following procedure:
-1. First, samples that represented less than 1% of the sequenced library were identified and
+Samples were identified and removed via the following procedure:
+1. First, samples that represented less than **1% of the sequenced sublibrary** were identified and
 removed. These samples correlate to low-read and low-coverage samples.
-2. Next, a threshold of 1 million retained reads per sample was used to remove any remaining
+2. Next, a threshold of **1 million retained reads per sample** was used to remove any remaining
 low-read samples. Low-read samples correlate to low coverage and will lack enough raw reads to 
 contribute to downstream analyses. 
 
-## Step 5 - `ustacks`
+Good/kept samples are summarized in [`process_radtags-kept_samples.csv`](../output/process_radtags-kept_samples.csv).
 
-`ustacks` builds *de novo* loci in each individual sample. However, before
-performing `ustacks` on the entirety of the samples, it is important to conduct
+Discarded samples are summarized in [`process_radtags-discarded_samples.csv`](../output/process_radtags-discarded_samples.csv).
+
+Note: At this point, we started using Stacks 2.62 for its multi-threading 
+capabilities. Functionality of the previous steps should be the same, however.
+
+# Generating Stacks Catalogs and Calling SNPs :mag:
+
+## Step 5 - Catalog Building and Parameter Search
+
+It is important to conduct
 preliminary analyses that will identify an optimal set of parameters for the
-dataset (see [Step 5a](#step-5a---denovo_mapsh))
+dataset (see [Step 5a](#step-5a---denovo_mapsh)). Following the parameter 
+optimization, the program `ustacks` can be run to generate a catalog of loci.
 
 ### Step 5a - `denovo_map.sh`
 
@@ -397,7 +426,8 @@ the change in shared loci across parameter iterations.
 
 ### Step 5b - `ustacks`
 
-We have designed the `ustacks` script so that the process requires three files:
+`ustacks` builds *de novo* loci in each individual sample. We have designed the 
+`ustacks` script so that the process requires three files:
 
 -   `05-ustacks_n.sh` : the shell script that executes `ustacks`
 -   `05-ustacks_id_n.txt` : the sample ID number
@@ -545,7 +575,7 @@ We run `tsv2bam` using the script `08-tsv2bam.sh`.
 
 This is the step at which it’s usually discovered that some samples are
 bad (don’t have any useable matches to the catalog). These samples were
-excluded from `08-tsv2bam_popmap.txt`. For example I might simply cut
+excluded from `08-tsv2bam_popmap.txt`. For example we might simply cut
 out the following rows:
 
     DS.MN.L10-DS.M.4    Minneapolis
@@ -2365,226 +2395,3 @@ three files; `catalog.alleles.tsv.gz`, `catalog.snps.tsv.gz`, and `catalog.tafs.
     AMH_macro_9_7_8px_S119
     AMH_macro_9_8_8px_S120
     AMH_macro_9_9_12px_S121
-
-    DS.BA.PIK.U.1.1
-    DS.BA.PIK.U.2.1
-    DS.BA.PIK.U.3.1
-    DS.BA.PIK.U.4.1
-    DS.BA.PIK.U.5.1
-    DS.BA.DHI.U.1.1
-    DS.BA.DHI.U.2.1
-    DS.BA.DHI.U.3.1
-    DS.BA.DHI.U.4.1
-    DS.BA.DHI.U.5.1
-    DS.BA.GA.U.1.1
-    DS.BA.GA.U.2.1
-    DS.BA.GA.U.3.1
-    DS.BA.GA.U.4.1
-    DS.BA.GA.U.5.1
-    DS.BA.LH-1.M.1.1
-    DS.BA.LH-1.M.2.1
-    DS.BA.LH-1.M.3.1
-    DS.BA.LH-1.M.4.1
-    DS.BA.LH-1.M.5.1
-    DS.BA.LH-3.M.1.1
-    DS.BA.LH-3.M.2.1
-    DS.BA.LH-3.M.3.1
-    DS.BA.LH-3.M.4.1
-    DS.BA.LH-3.M.5.1
-    DS.BA.CP.U.1.1
-    DS.BA.CP.U.2.1
-    DS.BA.CP.U.3.1
-    DS.BA.CP.U.4.1
-    DS.BA.CP.U.5.1
-    DS.BA.WB.U.1.1
-    DS.BA.WB.U.2.1
-    DS.BA.WB.U.3.1
-    DS.BA.WB.U.4.1
-    DS.BA.WB.U.5.1
-    DS.BA.LL-4.M.1.1
-    DS.BA.LL-4.M.2.1
-    DS.BA.LL-4.M.3.1
-    DS.BA.LL-4.M.4.1
-    DS.BA.LL-4.M.5.1
-    DS.BA.LH-2.M.1.1
-    DS.BA.LH-2.M.2.1
-    DS.BA.LH-2.M.3.1
-    DS.BA.LH-2.M.4.1
-    DS.BA.LH-2.M.5.1
-    DS.BA.LA.U.1.1
-    DS.BA.LA.U.2.1
-    DS.BA.LA.U.3.1
-    DS.BA.LA.U.4.1
-    DS.BA.LA.U.5.1
-    DS.BA.TRC.U.1.1
-    DS.BA.TRC.U.2.1
-    DS.BA.TRC.U.3.1
-    DS.BA.TRC.U.4.1
-    DS.BA.TRC.U.5.1
-    DS.BA.W3.M.1.1
-    DS.BA.W3.M.2.1
-    DS.BA.W3.M.3.1
-    DS.BA.W3.M.4.1
-    DS.BA.W3.M.5.1
-    DS.BA.AA.U.1.1
-    DS.BA.AA.U.2.1
-    DS.BA.AA.U.3.1
-    DS.BA.AA.U.4.1
-    DS.BA.AA.U.5.1
-    DS.BA.RG-1.M.1.1
-    DS.BA.RG-1.M.2.1
-    DS.BA.RG-1.M.3.1
-    DS.BA.RG-1.M.4.1
-    DS.BA.RG-1.M.5.1
-    DS.BA.LL-3.M.1.1
-    DS.BA.LL-3.M.2.1
-    DS.BA.LL-3.M.3.1
-    DS.BA.PSP.M.1.1
-    DS.BA.PSP.M.2.1
-    DS.BA.PSP.M.3.1
-    DS.BA.PSP.M.4.1
-    DS.BA.PSP.M.5.1
-    DS.BA.RG-2.M.1.1
-    DS.BA.RG-2.M.2.1
-    DS.BA.RG-2.M.3.1
-    DS.BA.RG-2.M.4.1
-    DS.BA.RG-2.M.5.1
-    DS.BO.LC2.M.3.1
-    DS.BO.LC2.M.4.1
-    DS.BO.LC2.M.5.1
-    DS.BO.LC3.M.3.1
-    DS.BO.LC3.M.4.1
-    DS.BO.LC3.M.5.1
-    DS.BO.LC4.M.1.1
-    DS.BO.LC4.M.2.1
-    DS.BO.LC4.M.3.1
-    DS.BO.LC4.M.4.1
-    DS.BO.LC4.M.5.1
-    DS.BO.WL1.M.1.1
-    DS.BO.WL1.M.2.1
-    DS.BO.WL1.M.3.1
-    DS.BO.WL1.M.4.1
-    DS.BO.WL1.M.5.1
-    DS.BO.WL2.M.1.1
-    DS.BO.WL2.M.2.1
-    DS.BO.WL2.M.3.1
-    DS.BO.WL2.M.4.1
-    DS.BO.WL2.M.5.1
-    DS.BO.WL3.M.1.1
-    DS.BO.WL3.M.2.1
-    DS.BO.WL3.M.3.1
-
-    DS.MN.L01-DS.M.1
-    DS.MN.L01-DS.M.2
-    DS.MN.L01-DS.M.3
-    DS.MN.L01-DS.M.4
-    DS.MN.L01-DS.M.5
-    DS.MN.L02-DS.M.1
-    DS.MN.L02-DS.M.2
-    DS.MN.L02-DS.M.3
-    DS.MN.L02-DS.M.4
-    DS.MN.L02-DS.M.5
-    DS.MN.L03-DS.M.1
-    DS.MN.L03-DS.M.2
-    DS.MN.L03-DS.M.3
-    DS.MN.L03-DS.M.4
-    DS.MN.L03-DS.M.5
-    DS.MN.L04-DS.M.1
-    DS.MN.L04-DS.M.2
-    DS.MN.L04-DS.M.3
-    DS.MN.L04-DS.M.4
-    DS.MN.L04-DS.M.5
-    DS.MN.L05-DS.M.1
-    DS.MN.L05-DS.M.2
-    DS.MN.L05-DS.M.3
-    DS.MN.L05-DS.M.4
-    DS.MN.L05-DS.M.5
-    DS.MN.L06-DS.M.1
-    DS.MN.L06-DS.M.2
-    DS.MN.L06-DS.M.3
-    DS.MN.L06-DS.M.4
-    DS.MN.L06-DS.M.5
-    DS.MN.L07-DS.M.1
-    DS.MN.L07-DS.M.2
-    DS.MN.L07-DS.M.3
-    DS.MN.L07-DS.M.4
-    DS.MN.L08-DS.M.1
-    DS.MN.L08-DS.M.2
-    DS.MN.L08-DS.M.3
-    DS.MN.L08-DS.M.4
-    DS.MN.L08-DS.M.5
-    DS.MN.L09-DS.M.1
-    DS.MN.L09-DS.M.2
-    DS.MN.L09-DS.M.3
-    DS.MN.L09-DS.M.4
-    DS.MN.L09-DS.M.5
-    DS.MN.L10-DS.M.1
-    DS.MN.L10-DS.M.2
-    DS.MN.L10-DS.M.3
-    DS.MN.L10-DS.M.4
-    DS.MN.L10-DS.M.5
-    DS.MN.L11-DS.M.1
-    DS.MN.L11-DS.M.2
-    DS.MN.L11-DS.M.3
-    DS.MN.L11-DS.M.4
-    DS.MN.L11-DS.M.5
-    DS.MN.L12-DS.M.1
-    DS.MN.L12-DS.M.2
-    DS.MN.L12-DS.M.3
-    DS.MN.L12-DS.M.4
-    DS.MN.L12-DS.M.5
-    DS.MN.L01-DS.U.1
-    DS.MN.L01-DS.U.2
-    DS.MN.L01-DS.U.3
-    DS.MN.L01-DS.U.4
-    DS.MN.L01-DS.U.5
-    DS.MN.L02-DS.U.1
-    DS.MN.L02-DS.U.2
-    DS.MN.L02-DS.U.3
-    DS.MN.L02-DS.U.4
-    DS.MN.L02-DS.U.5
-    DS.MN.L03-DS.U.1
-    DS.MN.L03-DS.U.2
-    DS.MN.L03-DS.U.3
-    DS.MN.L03-DS.U.4
-    DS.MN.L03-DS.U.5
-    DS.MN.L04-DS.U.1
-    DS.MN.L04-DS.U.2
-    DS.MN.L04-DS.U.3
-    DS.MN.L04-DS.U.4
-    DS.MN.L04-DS.U.5
-    DS.MN.L05-DS.U.1
-    DS.MN.L05-DS.U.2
-    DS.MN.L05-DS.U.3
-    DS.MN.L05-DS.U.4
-    DS.MN.L05-DS.U.5
-    DS.MN.L06-DS.U.1
-    DS.MN.L06-DS.U.2
-    DS.MN.L06-DS.U.3
-    DS.MN.L06-DS.U.4
-    DS.MN.L06-DS.U.5
-    DS.MN.L07-DS.U.1
-    DS.MN.L07-DS.U.2
-    DS.MN.L07-DS.U.3
-    DS.MN.L07-DS.U.4
-    DS.MN.L07-DS.U.5
-    DS.MN.L08-DS.U.1
-    DS.MN.L08-DS.U.2
-    DS.MN.L08-DS.U.3
-    DS.MN.L08-DS.U.4
-    DS.MN.L08-DS.U.5
-    DS.MN.L09-DS.U.1
-    DS.MN.L09-DS.U.2
-    DS.MN.L09-DS.U.3
-    DS.MN.L09-DS.U.4
-    DS.MN.L09-DS.U.5
-    DS.MN.L10-DS.U.1
-    DS.MN.L10-DS.U.2
-    DS.MN.L10-DS.U.3
-    DS.MN.L10-DS.U.4
-    DS.MN.L10-DS.U.5
-    DS.MN.L11-DS.U.1
-    DS.MN.L11-DS.U.2
-    DS.MN.L11-DS.U.3
-    DS.MN.L11-DS.U.4
-    DS.MN.L11-DS.U.5
