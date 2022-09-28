@@ -376,14 +376,18 @@ should be the same, however.
 
 # Generating Stacks Catalogs and Calling SNPs :mag:
 
-## Step 5 - Catalog Building and Parameter Search
+## Step 5 - Metapopulation Catalog Building and Parameter Search
+
+Going forward, when we use the term **metapopulation**, we are referring to the
+collection of all samples within species among all cities where the species
+was present.
 
 It is important to conduct preliminary analyses that will identify an
 optimal set of parameters for the dataset (see 
 [Step 5a](#step-5a---denovo_mapsh)). Following the parameter optimization, the
 program `ustacks` can be run to generate a catalog of loci.
 
-### Step 5a - `denovo_map.sh`
+### Step 5a - Run `denovo_map.sh`
 
 Stack assembly will differ based on several different aspects of the
 dataset(such as the study species, the RAD-seq method used, and/or the
@@ -473,7 +477,7 @@ wc -l`
 The script `05a-param_opt-figures_script.R` was used to create plots for
 assessing the change in shared loci across parameter iterations. 
 
-### Step 5b - `ustacks`
+### Step 5b - Run `ustacks`
 
 `ustacks` builds *de novo* loci in each individual sample. We have
 designed the `ustacks` script so that the process requires three
@@ -547,7 +551,7 @@ The three files per sample should follow this convention:
 
 3. Remember the meaningful directory name. You will need it in Step 6.
 
-## Step 6 - `cstacks`
+## Step 6 - Metapopulation catalog with `cstacks`
 
 `cstacks` builds the locus catalog from all the samples specified. The
 accompanying script, `06-cstacks.sh` is relatively simple since it
@@ -590,7 +594,7 @@ pipeline run), mirroring the sample files output by[`ustacks`](#step-5---ustacks
 -   `catalog.snps.tsv.gz`
 -   `catalog.tags.tsv.gz`
 
-## Step 7 - `sstacks`
+## Step 7 - Metapopulation locus matching with `sstacks`
 
 All samples in the population (or all samples you want to include in the
 analysis) are matched against the catalog produced in 
@@ -612,7 +616,7 @@ output directory:
 
 -   `<samplename>.matches.tsv.gz`
 
-## Step 8 - `tsv2bam`
+## Step 8 - Metapopulation oriented by locus `tsv2bam`
   
 `tsv2bam` and the proceeding programs in the pipeline use a populations
 map text file to specify which samples to include in the analysis. As
@@ -634,7 +638,7 @@ out the following rows:
     DS.MN.L01-DS.M.4    Minneapolis
     DS.BO.WL2.M.4   Boston
 
-## Step 9 - `gstacks`
+## Step 9 - Metapopulation SNP calling with `gstacks`
 
 The script `09-gstacks.sh` also uses the population map specified in
 [Step 8](#step-8---tsv2bam), `08-tsv2bam_popmap.txt`. The `gstacks`
@@ -649,7 +653,7 @@ Produces the following:
 -   `catalog.calls` : per-nucleotide genotypes, contains the output of
     the SNP calling model for each nucleotide in the analysis
 
-## Step 10 - `populations`
+## Step 10 - Metapopulation summaries with `populations`
 
 The populations program will use the script `10-population.sh` and the
 population map specified in [Step 8](#step-8---tsv2bam)
