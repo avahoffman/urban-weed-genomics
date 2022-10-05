@@ -1,11 +1,6 @@
 This document is intended to help understand the function of the files contained within the output directory 
 of urban-weed-genomics.
 
-<!-- Do not edit the table of contents. It is updated automatically by GitHub 
-Actions. -->
-
-<!-- toc -->
-
 - [Introduction](#introduction)
   * [Raw Data File Naming - Sublibraries](#raw-data-file-naming---sublibraries)
   * [A Note on File Transfers](#a-note-on-file-transfers)
