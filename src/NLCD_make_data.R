@@ -220,25 +220,14 @@ crop_raster_data <-
     
     spdf_transformed <- sites
     
-    # Need to have different figure buffers if the x values are negative
-    # (both PX and LA are negative on the AEA projection)
-    if (city != "PX" | city != "LA") {
-      figure_margins <-
-        raster::extent(
-          xmin(spdf_transformed) * 0.999,
-          xmax(spdf_transformed) * 1.001,
-          ymin(spdf_transformed) * 0.999,
-          ymax(spdf_transformed) * 1.001
-        )
-    } else {
-      figure_margins <-
+    # Need figure buffers 
+    figure_margins <-
         raster::extent(
           xmin(spdf_transformed) * 1.001,
           xmax(spdf_transformed) * 0.999,
           ymin(spdf_transformed) * 0.999,
           ymax(spdf_transformed) * 1.001
         )
-    }
     
     return(list(
       "raster_" = crop(urban_data, figure_margins),
