@@ -287,7 +287,7 @@ make_all_urban_cover_plots <-
     ggplot_urban_pct_cover_plot(
       urban_data = BO[[2]],
       sites = BO[[1]],
-      file_suffix = "urban_zone.jpg",
+      file_suffix = "urban_zone.png",
       guide_title = "% Urban"
     )
     
@@ -295,7 +295,7 @@ make_all_urban_cover_plots <-
     ggplot_urban_pct_cover_plot(
       urban_data = MN[[2]],
       sites = MN[[1]],
-      file_suffix = "urban_zone.jpg",
+      file_suffix = "urban_zone.png",
       guide_title = "% Urban"
     )
     
@@ -303,7 +303,7 @@ make_all_urban_cover_plots <-
     ggplot_urban_pct_cover_plot(
       urban_data = PX[[2]],
       sites = PX[[1]],
-      file_suffix = "urban_zone.jpg",
+      file_suffix = "urban_zone.png",
       guide_title = "% Urban"
     )
     
@@ -311,7 +311,7 @@ make_all_urban_cover_plots <-
     ggplot_urban_pct_cover_plot(
       urban_data = LA[[2]],
       sites = LA[[1]],
-      file_suffix = "urban_zone.jpg",
+      file_suffix = "urban_zone.png",
       guide_title = "% Urban"
     )
     
