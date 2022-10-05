@@ -42,7 +42,6 @@ vignettes/*.pdf
 *.DS_Store
 data/*
 figures/*.pdf
-figures/*.png
 key.md
 bash/Notes.Rmd
 archive/*
