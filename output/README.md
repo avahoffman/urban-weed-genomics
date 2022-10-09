@@ -53,6 +53,11 @@ This files contains the library-wide statistics and output from [Step 4c - Asses
 
 This files contains the per-sample statistics and output from [Step 4c - Assess the raw, processed, and cleaned data](#step-4c---assess-the-raw-processed-and-cleaned-data).
 
+### `tsv2bam-discarded_samples.csv`
+
+This file contains a list of samples that were discarded at the tsv2bam stage. Samples listed were not included 
+in the species population map because they contained less than 300 sample loci matched to catalog loci.
+
 #### `ustacks-discarded_samples.csv`
 
 Samples identified and discarded as part of [Step 5b - Run `ustacks`](#step-5b---run-ustacks) are listed here.
