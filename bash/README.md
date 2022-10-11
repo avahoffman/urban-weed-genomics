@@ -743,19 +743,19 @@ Meghan Avolio’s group resources in the Johns Hopkins University
 Rockfish computing cluster. Files are stored under the ‘data’ directory
 under the following subdirectories:
 
-- `raw_data`: This folder contains the raw, unprocessed data files that
+- **`01-raw_data`**: This folder contains the raw, unprocessed data files that
   were obtained directly from the sequencing server. There are eight
   `fastq.gz` files per sublibrary that correspond to the four
   sequencing lanes for each read direction. 
--	`02-concatenated_data`: This folder contains the concatenated,
+-	**`02-concatenated_data`**: This folder contains the concatenated,
     unprocessed files for each sublibrary (i.e., the files containing
     the sequences for each lane were combined to create one file per
     read direction).
--	`03-pcr_filtered_data`:  Here, you will find the resulting data files
+-	**`03-pcr_filtered_data`**:  Here, you will find the resulting data files
     from the `clone_filter` program, where pcr replicates/clones have
     been removed from the raw sequences. There are two `fq.gz` files
     per sublibrary.
--	`04-process_radtags`: This folder contains various subdirectories that
+-	**`04-process_radtags`**: This folder contains various subdirectories that
     correspond to the `process_radtags` program that demultiplexes and
     cleans the data. The `demux_txt_files` folder contains the .txt
     files used to identify barcodes and separate out the individual
@@ -766,37 +766,40 @@ under the following subdirectories:
     and `sampleID.2.fq.gz` correspond to the forward and reverse reads
     for each sample and `sampleID.rem,1/2.fq.gz` contain the remainder
     reads that were cleaned and removed from the data sequence. 
--	`05-ustacks-denovo_data`: This folder contains species subdirectories
+-	**`05-ustacks-denovo_data`**: This folder contains species subdirectories
     that store the resulting data files from the `ustacks` program for
     each individual. There are three files per individual;
     `sampleID.allelles.tsv.gz`, `sampleID.snps.tsv.gz`, and,
     `sampleID.tags.tsv.gz`. These files should be permanently stored
     here and copied to a new directory for any new catalogs and/or when
     a group of samples are being aligned to a new catalog.
--	`catalogs`: All catalogs created for this project are permanently
-    stored under this directory within species-specific subdirectories.
-    Within each species subdirectory, you will find catalogs
-    categorized by the date they were created (for example, `CD` ->
-    `catalog_7_13_22`). Catalogs contain three files;
+-	**`catalogs_by_city`**: For any given species within city, 
+    there is likely to be a slightly different set of SNPs 
+    compared to the whole metapopulation of five
+    cities. We examined 24 sets of species-city combinations.
+    These catalogs are permanently stored here.
+- **`catalogs_by_species`**: Metapopulation catalogs are stored
+    within this folder for each species. The metapopulation 
+    catalog was created using samples from all populations to
+    create a national catalog.
+    
+    Some notes about catalog directories:
+   - Catalogs contain three files;
     `catalog.alleles.tsv.gz`, `catalog.snps.tsv.gz`, and
-    `catalog.tafs.tsv.gz`.
-   - Each directory will contain a `README.txt` file, where you will
-     find information on the contents of the folder and information on
-     the purpose of the catalog and how it was created. Please read
-     this to understand how the catalog was created and before using it
-     for further projects. 
+    `catalog.tafs.tsv.gz`. If you would like to use the catalog 
+     on a new project, you will need to copy all three files 
+     to a new project folder.
    - You can determine which individuals were used to create the catalog
-     by looking at `cstacks_popmap.txt`, found within the folder. If
-     you would like to use the catalog on a new project, you will need
-     to copy all three files to a new project folder.
-   - Additionally, these folders contain the subsequent pipeline output
-     files for the stacks pipeline. For example, if a catalog was
-     created with the intention of aligning all individuals in the
-     project to it, you will find the ustacks data files for each
-     individual and the subsequent pipeline output files (i.e., outputs
-     from `cstacks`, `gstacks`, `stacks`, `tsv2bam`, and
-     `populations`), in addition to the relevant catalog files. This
-     information can be found within the `REAMDE.txt` file. 
+     by looking at the `cstacks_popmap.txt` found within each folder.
+     Specifically for the metapopulation catalogs, this information
+     is also found in the [cstacks-metapop-catalog_samples-included.csv](/output/cstacks-metapop-catalog_samples-included.csv) 
+   - You can determine which individuals were subsequently aligned to
+     the catalog and used in the subsequent stacks analysis by looking
+     at the `popmap*.txt` found within each folder.
+   - Each folder also contains the relevant ustacks and
+     stacks pipeline scripts and output files (i.e., from 
+     `cstacks`, `gstacks`, `stacks`, `tsv2bam`, and
+     `populations`), 
 
 # Appendix :books:
 
