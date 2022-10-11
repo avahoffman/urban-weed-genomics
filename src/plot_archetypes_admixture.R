@@ -30,17 +30,30 @@ make_ADMIXTURE_plot <-
     long_df <- data.frame()
     samp <-
       readr::read_tsv(path_popmap, col_names = c("sample", "city"))
+    
+    samp <- 
+      samp %>% 
+      separate(sample, into = c("spp","ct","site_abbv","management_type","id"), sep = "\\.", remove = F)
+    site_info <- 
+      read_csv(paste0(primary_dir,
+                      "/data/macrosystems_urban_site_data_nlcd_pct_urban_by_site.csv")) %>% 
+      dplyr::select(site_abbv, city, management_type, nlcd_urban_pct)
+    samp <- 
+      samp %>% left_join(site_info, by = c("city", "site_abbv", "management_type")) %>% 
+      dplyr::select(sample, site_abbv, city, nlcd_urban_pct)
     for (k in k_list) {
       tmp_df <-
         readr::read_delim(paste0("AA.", k, ".Q"),
                           delim = ' ',
                           col_names = FALSE) %>% mutate(k = k)
       long_df_k <-
-        tidyr::pivot_longer(cbind(samp, tmp_df), cols = !c(sample, city, `k`))
+        tidyr::pivot_longer(cbind(samp, tmp_df), cols = !c(sample, city, `k`, site_abbv, nlcd_urban_pct))
       long_df <- rbind(long_df, long_df_k)
     }
     long_df$name <-
       factor(long_df$name, levels = rev(levels(as.factor(long_df$name))))
+    long_df$sample <- 
+      fct_reorder(factor(long_df$sample), long_df$nlcd_urban_pct, mean)
     
     grp.labs <- paste("K =", k_list)
     names(grp.labs) <- k_list
