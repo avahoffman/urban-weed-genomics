@@ -42,6 +42,12 @@ run_archetype_analysis(spp = "LS", city = "BA")
 run_archetype_analysis(spp = "PA", city = "BA")
 run_archetype_analysis(spp = "TO", city = "BA")
 
+# Run a few more
+run_archetype_analysis(spp = "EC", city = "PX")
+run_archetype_analysis(spp = "LS", city = "PX")
+run_archetype_analysis(spp = "EC", city = "LA")
+run_archetype_analysis(spp = "LS", city = "LA")
+
 # Make Archetypal analysis plots - metapopulations
 make_ADMIXTURE_plot(spp = "CD", 
                     k_list = c(2, 3, 4, 5),
@@ -72,6 +78,42 @@ make_ADMIXTURE_plot(spp = "TO",
                     k_list = c(2, 3, 4, 5),
                     out_file = "figures/genetics/TO_archetypes.png"
 )
+
+
+# Make Archetypal analysis plots - metapopulations but sorted by urbanness
+make_ADMIXTURE_plot_by_urban(
+  spp = "CD",
+  k_list = c(2, 3, 4, 5),
+  out_file = "figures/genetics/CD_archetypes_by_ULC.png",
+  width = 10
+)
+make_ADMIXTURE_plot_by_urban(
+  spp = "DS",
+  k_list = c(2, 3, 4, 5),
+  out_file = "figures/genetics/DS_archetypes_by_ULC.png",
+  width = 10
+)
+make_ADMIXTURE_plot_by_urban(
+  spp = "EC",
+  k_list = c(2, 3, 4, 5),
+  out_file = "figures/genetics/EC_archetypes_by_ULC.png",
+  width = 6
+)
+make_ADMIXTURE_plot_by_urban(
+  spp = "LS",
+  k_list = c(2, 3, 4, 5),
+  out_file = "figures/genetics/LS_archetypes_by_ULC.png",
+  width = 10
+)
+make_ADMIXTURE_plot_by_urban(
+  spp = "PA",
+  k_list = c(2, 3, 4, 5),
+  out_file = "figures/genetics/PA_archetypes_by_ULC.png",
+  width = 10
+)
+make_ADMIXTURE_plot_by_urban(spp = "TO",
+                             k_list = c(2, 3, 4, 5),
+                             out_file = "figures/genetics/TO_archetypes_by_ULC.png")
 
 
 # Make Archetypal analysis plots - by species for Baltimore only
@@ -111,7 +153,30 @@ make_ADMIXTURE_plot_by_City(spp = "TO",
                             out_file = "figures/genetics/TO_BA_archetypes.png",
                             width = 5
 )
-
+make_ADMIXTURE_plot_by_City(spp = "EC",
+                            city = "PX",
+                            k_list = c(2, 3, 4, 5),
+                            out_file = "figures/genetics/EC_PX_archetypes.png",
+                            width = 4
+)
+make_ADMIXTURE_plot_by_City(spp = "LS",
+                            city = "PX",
+                            k_list = c(2, 3, 4, 5),
+                            out_file = "figures/genetics/LS_PX_archetypes.png",
+                            width = 5
+)
+make_ADMIXTURE_plot_by_City(spp = "EC",
+                            city = "LA",
+                            k_list = c(2, 3, 4, 5),
+                            out_file = "figures/genetics/EC_LA_archetypes.png",
+                            width = 4
+)
+make_ADMIXTURE_plot_by_City(spp = "LS",
+                            city = "LA",
+                            k_list = c(2, 3, 4, 5),
+                            out_file = "figures/genetics/LS_LA_archetypes.png",
+                            width = 5
+)
 
 # Plot pie graphs with archetypal analysis results for all k and species for Baltimore only
 plot_pies_on_map(city = "BA", spp = "CD", k_ = 2, out_file = "figures/genetics/CD_BA_pies_k2.png")
@@ -143,3 +208,27 @@ plot_pies_on_map(city = "BA", spp = "TO", k_ = 2, out_file = "figures/genetics/T
 plot_pies_on_map(city = "BA", spp = "TO", k_ = 3, out_file = "figures/genetics/TO_BA_pies_k3.png")
 plot_pies_on_map(city = "BA", spp = "TO", k_ = 4, out_file = "figures/genetics/TO_BA_pies_k4.png")
 plot_pies_on_map(city = "BA", spp = "TO", k_ = 5, out_file = "figures/genetics/TO_BA_pies_k5.png")
+
+plot_pies_on_map(city = "PX", spp = "EC", k_ = 2, out_file = "figures/genetics/EC_PX_pies_k2.png")
+plot_pies_on_map(city = "PX", spp = "EC", k_ = 3, out_file = "figures/genetics/EC_PX_pies_k3.png")
+plot_pies_on_map(city = "PX", spp = "EC", k_ = 4, out_file = "figures/genetics/EC_PX_pies_k4.png")
+plot_pies_on_map(city = "PX", spp = "EC", k_ = 5, out_file = "figures/genetics/EC_PX_pies_k5.png")
+
+plot_pies_on_map(city = "PX", spp = "LS", k_ = 2, out_file = "figures/genetics/LS_PX_pies_k2.png")
+plot_pies_on_map(city = "PX", spp = "LS", k_ = 3, out_file = "figures/genetics/LS_PX_pies_k3.png")
+plot_pies_on_map(city = "PX", spp = "LS", k_ = 4, out_file = "figures/genetics/LS_PX_pies_k4.png")
+plot_pies_on_map(city = "PX", spp = "LS", k_ = 5, out_file = "figures/genetics/LS_PX_pies_k5.png")
+
+plot_pies_on_map(city = "LA", spp = "EC", k_ = 2, out_file = "figures/genetics/EC_LA_pies_k2.png")
+plot_pies_on_map(city = "LA", spp = "EC", k_ = 3, out_file = "figures/genetics/EC_LA_pies_k3.png")
+plot_pies_on_map(city = "LA", spp = "EC", k_ = 4, out_file = "figures/genetics/EC_LA_pies_k4.png")
+plot_pies_on_map(city = "LA", spp = "EC", k_ = 5, out_file = "figures/genetics/EC_LA_pies_k5.png")
+
+plot_pies_on_map(city = "LA", spp = "LS", k_ = 2, out_file = "figures/genetics/LS_LA_pies_k2.png")
+plot_pies_on_map(city = "LA", spp = "LS", k_ = 3, out_file = "figures/genetics/LS_LA_pies_k3.png")
+plot_pies_on_map(city = "LA", spp = "LS", k_ = 4, out_file = "figures/genetics/LS_LA_pies_k4.png")
+plot_pies_on_map(city = "LA", spp = "LS", k_ = 5, out_file = "figures/genetics/LS_LA_pies_k5.png")
+
+# Simulated archetype plots for presentation / demos
+make_simulated_archetypes_plot(out_file = "figures/genetics/simulated_admixture.png")
+make_simulated_archetypes_plot(out_file = "figures/genetics/simulated_structure.png", admixed = F)
