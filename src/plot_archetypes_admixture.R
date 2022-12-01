@@ -57,7 +57,7 @@ make_ADMIXTURE_plot <-
     
     grp.labs <- paste("K =", k_list)
     names(grp.labs) <- k_list
-    my_pal <- RColorBrewer::brewer.pal(n = 8, name = "Set1")
+    my_pal <- RColorBrewer::brewer.pal(n = 10, name = "Set3")
     
     ggplot(data = long_df, aes(x = sample, y = value, fill = name)) +
       geom_col(width = 1.1, color = NA) +

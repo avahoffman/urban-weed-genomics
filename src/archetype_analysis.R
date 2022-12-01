@@ -34,13 +34,23 @@ run_archetype_analysis <- function(
     }
     
     # Run archetypal analysis
+    # system2('archetypal-analysis',
+    #         '-i populations.snps.vcf -o AA -k 2')
+    # system2('archetypal-analysis',
+    #         '-i populations.snps.vcf -o AA -k 3')
+    # system2('archetypal-analysis',
+    #         '-i populations.snps.vcf -o AA -k 4')
+    # system2('archetypal-analysis',
+    #         '-i populations.snps.vcf -o AA -k 5')
     system2('archetypal-analysis',
-            '-i populations.snps.vcf -o AA -k 2')
+            '-i populations.snps.vcf -o AA -k 6')
     system2('archetypal-analysis',
-            '-i populations.snps.vcf -o AA -k 3')
+            '-i populations.snps.vcf -o AA -k 7')
+    # system2('archetypal-analysis',
+    #         '-i populations.snps.vcf -o AA -k 8')
     system2('archetypal-analysis',
-            '-i populations.snps.vcf -o AA -k 4')
+            '-i populations.snps.vcf -o AA -k 9')
     system2('archetypal-analysis',
-            '-i populations.snps.vcf -o AA -k 5')
+            '-i populations.snps.vcf -o AA -k 10')
   }
 }

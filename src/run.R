@@ -8,7 +8,7 @@
 # Set working directory for the repository (should be the git repo)
 library(here)
 setwd(
-  here() # Make sure to launch directly from the src dirctory in order for here function to
+  here() # Make sure to launch directly from the src directory in order for here function to
          # work. Can also put path to the repo here instead.
 )
 
@@ -50,32 +50,32 @@ run_archetype_analysis(spp = "LS", city = "LA")
 
 # Make Archetypal analysis plots - metapopulations
 make_ADMIXTURE_plot(spp = "CD", 
-                    k_list = c(2, 3, 4, 5),
+                    k_list = c(3, 6),
                     out_file = "figures/genetics/CD_archetypes.png",
                     width = 10
 )
 make_ADMIXTURE_plot(spp = "DS", 
-                    k_list = c(2, 3, 4, 5),
+                    k_list = c(2, 4, 8),
                     out_file = "figures/genetics/DS_archetypes.png",
                     width = 10
 )
 make_ADMIXTURE_plot(spp = "EC", 
-                    k_list = c(2, 3, 4, 5),
+                    k_list = c(3, 6),
                     out_file = "figures/genetics/EC_archetypes.png",
                     width = 6
 )
 make_ADMIXTURE_plot(spp = "LS", 
-                    k_list = c(2, 3, 4, 5),
+                    k_list = c(5, 10),
                     out_file = "figures/genetics/LS_archetypes.png",
                     width = 10
 )
 make_ADMIXTURE_plot(spp = "PA", 
-                    k_list = c(2, 3, 4, 5),
+                    k_list = c(5, 10),
                     out_file = "figures/genetics/PA_archetypes.png",
                     width = 10
 )
 make_ADMIXTURE_plot(spp = "TO", 
-                    k_list = c(2, 3, 4, 5),
+                    k_list = c(5, 10),
                     out_file = "figures/genetics/TO_archetypes.png"
 )
 
