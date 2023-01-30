@@ -2,11 +2,11 @@
 title: "Supplementary Information" 
 author: "Ava Hoffman, Jenny Cocciardi" 
 output: 
+  pdf_document: 
+    toc: true 
   md_document: 
     variant: gfm
     toc: true
-  pdf_document: 
-    toc: true 
 urlcolor: blue 
 editor_options: 
   markdown:
@@ -675,6 +675,14 @@ out the following rows:
     DS.MN.L10-DS.M.4    Minneapolis
     DS.MN.L01-DS.M.4    Minneapolis
     DS.BO.WL2.M.4   Boston
+    
+The following samples were discarded because they contained less than 300 sample loci matched to catalog loci:
+
+```{r tsv2bam_discarded_samples_table, echo = FALSE, message = FALSE}
+table_ <- readr::read_csv("output/tsv2bam-discarded_samples.csv")
+colnames(table_) <- c("Sample", "City")
+knitr::kable(table_, format="markdown", caption = "Samples discarded at the `tsv2bam` stage of the Stacks pipeline.")
+```
 
 ## Step 9 - Metapopulation SNP calling with `gstacks` {#step-9---metapopulation-snp-calling-with-gstacks}
 
@@ -708,6 +716,8 @@ created and the population program should run out of that directory for
 each iteration of the population program. Alternativley, you can specify
 a new directory as the output folder in the script using the command
 `-O`.
+
+
 
 ## Step 11 - Examine Within-city Catalogs and Populations {#step-11---examine-within-city-catalogs-and-populations}
 

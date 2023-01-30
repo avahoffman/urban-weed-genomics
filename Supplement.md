@@ -1035,6 +1035,66 @@ out the following rows:
     DS.MN.L01-DS.M.4    Minneapolis
     DS.BO.WL2.M.4   Boston
 
+The following samples were discarded because they contained less than
+300 sample loci matched to catalog loci:
+
+| Sample           | City        |
+|:-----------------|:------------|
+| CD.BA.RG-1.M.4   | Baltimore   |
+| CD.BA.RG-1.M.5   | Baltimore   |
+| CD.BA.DHI.U.2    | Baltimore   |
+| CD.BA.DHI.U.3    | Baltimore   |
+| DS.MN.L04-DS.U.2 | Minneapolis |
+| DS.BO.WL3.M.4    | Boston      |
+| DS.BO.WL1.M.4    | Boston      |
+| DS.BO.LC1.M.2    | Boston      |
+| DS.BO.HC4.M.4    | Boston      |
+| EC.BO.R4.U.1     | Boston      |
+| LS.PX.PAL.M.5    | Phoenix     |
+| LS.PX.PAL.M.2    | Phoenix     |
+| LS.PX.PAL.M.1    | Phoenix     |
+| LS.MN.L01-LS.M.1 | Minneapolis |
+| LS.PX.PKW.U.3    | Phoenix     |
+| LS.PX.ENC.M.2    | Phoenix     |
+| LS.MN.L01-LS.U.1 | Minneapolis |
+| LS.LA.ARR.U.4    | Los Angeles |
+| LS.BO.WL2.M.3    | Boston      |
+| LS.BO.WL2.M.1    | Boston      |
+| LS.BO.R4.U.4     | Boston      |
+| LS.BO.R4.U.2     | Boston      |
+| LS.BO.R4.U.1     | Boston      |
+| LS.BO.R3.U.2     | Boston      |
+| LS.BO.R2.U.1     | Boston      |
+| LS.BO.LC4.M.5    | Boston      |
+| LS.BO.LC2.M.1    | Boston      |
+| LS.BO.I4.U.1     | Boston      |
+| LS.BO.HC4.M.4    | Boston      |
+| LS.BO.HC4.M.2    | Boston      |
+| LS.BA.WB.U.5     | Baltimore   |
+| PA.BA.AA.U.3     | Baltimore   |
+| PA.BA.AA.U.4     | Baltimore   |
+| PA.BA.LH-3.M.1   | Baltimore   |
+| PA.BA.LH-3.M.4   | Baltimore   |
+| PA.BA.LL-4.M.1   | Baltimore   |
+| PA.BA.RG-1.M.1   | Baltimore   |
+| PA.BO.HC2.M.4    | Boston      |
+| PA.BO.LC2.M.3    | Boston      |
+| PA.BO.LC2.M.4    | Boston      |
+| PA.BO.R3.U.3     | Boston      |
+| PA.PX.ALA.M.2    | Phoenix     |
+| PA.PX.ALA.M.3    | Phoenix     |
+| PA.PX.RPP.U.1    | Phoenix     |
+| PA.PX.RPP.U.2    | Phoenix     |
+| TO.BA.DHI.U.5    | Baltimore   |
+| TO.BA.TRC.U.1    | Baltimore   |
+| TO.BA.TRC.U.2    | Baltimore   |
+| TO.BA.TRC.U.3    | Baltimore   |
+| TO.BO.R2.U.2     | Boston      |
+| TO.BO.R4.U.1     | Boston      |
+| TO.BO.R4.U.2     | Boston      |
+
+Samples discarded at the `tsv2bam` stage of the Stacks pipeline.
+
 ## Step 9 - Metapopulation SNP calling with `gstacks`
 
 Files can be found in the `09_gstacks/` directory.
