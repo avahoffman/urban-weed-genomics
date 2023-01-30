@@ -37,6 +37,7 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+*.Rproj
 
 # Other
 *.DS_Store
@@ -47,3 +48,4 @@ bash/Notes.Rmd
 archive/*
 *.pptx
 bash/clone_filter.52618524.out
+
