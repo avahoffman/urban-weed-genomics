@@ -1,6 +1,9 @@
 ---
 title: "Supplementary Information"
-output: pdf_document
+output:
+  pdf_document: default
+  md_document:
+    variant: markdown_github
 ---
 
 ```{r setup, include=FALSE}
