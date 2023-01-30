@@ -43,9 +43,9 @@ vignettes/*.pdf
 *.DS_Store
 data/*
 figures/*.pdf
-key.md
-bash/Notes.Rmd
+Notes.Rmd
 archive/*
 *.pptx
 bash/clone_filter.52618524.out
+Supplement_files/*
 

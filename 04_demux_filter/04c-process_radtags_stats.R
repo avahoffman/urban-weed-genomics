@@ -4,6 +4,7 @@
 # remove outliers
 
 ## Import excel spreadsheet with data and rename
+# Checking_process_radtags <- readr::read_csv("output/process_radtags-sample_output.csv")
 processRadtags <- Checking_process_radtags
 
 ## Make into dataframe

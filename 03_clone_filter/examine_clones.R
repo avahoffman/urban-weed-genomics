@@ -4,7 +4,7 @@ library(magrittr)
 
 
 make_cloneplot <- function() {
-  # Read in output from the clone filtering part of sequence preperation
+  # Read in output from the clone filtering part of sequence preparation
   df <- readr::read_csv("output/clone_filter_out.csv") %>%
     dplyr::mutate(pct_clones = PCR_clones_removed/input * 100) %>% 
     pivot_longer(

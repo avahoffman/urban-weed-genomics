@@ -99,4 +99,4 @@ while read p; do
   -t 8 --structure --genepop --write-random-snp --verbose --vcf \
   --min-samples-overall 50 --min-maf 0.05
 
-done </home/ahoffm31/scratch4-mavolio2/scratch_AH/catalog_tests/12-city_catalog_names.txt
+done </home/ahoffm31/scratch4-mavolio2/scratch_AH/catalog_tests/11-city_catalog_names.txt
