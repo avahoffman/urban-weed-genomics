@@ -1,0 +1,48 @@
+PA.BA.PIK.U.1	Baltimore
+PA.BA.LH-3.M.2	Baltimore
+PA.BA.LH-3.M.3	Baltimore
+PA.BA.WB.U.1	Baltimore
+PA.BA.AA.U.1	Baltimore
+PA.BA.WGP.M.3	Baltimore
+PA.BA.LL-4.M.3	Baltimore
+PA.BA.LA.U.2	Baltimore
+PA.BA.LH-2.M.2	Baltimore
+PA.BA.W3.M.3	Baltimore
+PA.BA.RG-1.M.2	Baltimore
+PA.BA.LL-3.M.5	Baltimore
+PA.BO.I2.U.3	Boston
+PA.BO.HC1.M.4	Boston
+PA.BO.R3.U.2	Boston
+PA.BO.HC4.M.5	Boston
+PA.BO.R4.U.2	Boston
+PA.BO.WL2.M.5	Boston
+PA.BO.WL4.M.4	Boston
+PA.BO.LC4.M.4	Boston
+PA.BO.HC2.M.1	Boston
+PA.BO.R1.U.2	Boston
+PA.BO.WL1.M.1	Boston
+PA.BO.I1.U.5	Boston
+PA.LA.ALL.M.5	Los Angeles
+PA.LA.SEP.M.1	Los Angeles
+PA.LA.SEP.M.5	Los Angeles
+PA.LA.WHI.M.2	Los Angeles
+PA.LA.ROS.M.5	Los Angeles
+PA.LA.LUB.M.2	Los Angeles
+PA.LA.GLO.M.2	Los Angeles
+PA.LA.ZOO.M.4	Los Angeles
+PA.LA.ZOO.M.5	Los Angeles
+PA.LA.NWH.M.2	Los Angeles
+PA.LA.KIN.M.4	Los Angeles
+PA.LA.POP.M.4	Los Angeles
+PA.PX.BUF.M.3	Phoenix
+PA.PX.PIE.M.4	Phoenix
+PA.PX.LAP.M.5	Phoenix
+PA.PX.ALA.M.1	Phoenix
+PA.PX.PAP.M.2	Phoenix
+PA.PX.PAP.M.5	Phoenix
+PA.PX.DF1.M.2	Phoenix
+PA.PX.RPP.U.3	Phoenix
+PA.PX.ENC.M.4	Phoenix
+PA.PX.ENC.M.5	Phoenix
+PA.PX.COY.M.1	Phoenix
+PA.PX.BUF.M.2	Phoenix

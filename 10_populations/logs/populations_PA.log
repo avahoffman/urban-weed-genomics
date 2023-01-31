@@ -1,0 +1,76 @@
+populations v2.60, executed 2022-10-09 16:23:24 (zlib-1.2.11)
+populations -P /home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/PA_metapop_catalog/ -O /home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/PA_metapop_catalog/populations_20_pct/ -M /home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/PA_metapop_catalog/popmap_PA.txt -t 8 --structure --genepop --write-random-snp --verbose --vcf --min-samples-overall 20 --min-maf 0.05
+Locus/sample distributions will be written to '/home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/PA_metapop_catalog/populations_20_pct/populations.log.distribs'.
+populations parameters selected:
+  Percent samples limit per population: 0
+  Locus Population limit: 1
+  Percent samples overall: 0.2
+  Minor allele frequency cutoff: 0.05
+  Maximum observed heterozygosity cutoff: 1
+  Applying Fst correction: none.
+  Pi/Fis kernel smoothing: off
+  F-stats kernel smoothing: off
+  Bootstrap resampling: off
+
+Parsing population map...
+The population map contained 170 samples, 5 population(s), 1 group(s).
+Working on 170 samples.
+Working on 5 population(s):
+    Baltimore: PA.BA.AA.U.1, PA.BA.AA.U.2, PA.BA.AA.U.5, PA.BA.LA.U.2, PA.BA.LA.U.3, PA.BA.LA.U.5, PA.BA.LH-2.M.1, PA.BA.LH-2.M.2, PA.BA.LH-2.M.3, 
+               PA.BA.LH-2.M.4, PA.BA.LH-2.M.5, PA.BA.LH-3.M.2, PA.BA.LH-3.M.3, PA.BA.LH-3.M.5, PA.BA.LL-3.M.1, PA.BA.LL-3.M.2, PA.BA.LL-3.M.3, 
+               PA.BA.LL-3.M.4, PA.BA.LL-3.M.5, PA.BA.LL-4.M.2, PA.BA.LL-4.M.3, PA.BA.LL-4.M.4, PA.BA.PIK.U.1, PA.BA.PIK.U.3, PA.BA.PIK.U.4, 
+               PA.BA.PIK.U.5, PA.BA.RG-1.M.2, PA.BA.RG-1.M.3, PA.BA.RG-1.M.4, PA.BA.RG-1.M.5, PA.BA.RG-2.M.2, PA.BA.RG-2.M.4, PA.BA.W3.M.2, 
+               PA.BA.W3.M.3, PA.BA.W3.M.4, PA.BA.WB.U.1, PA.BA.WB.U.2, PA.BA.WB.U.3, PA.BA.WB.U.4, PA.BA.WGP.M.1, PA.BA.WGP.M.2, PA.BA.WGP.M.3, 
+               PA.BA.WGP.M.4, PA.BA.WGP.M.5
+    Boston: PA.BO.HC1.M.1, PA.BO.HC1.M.2, PA.BO.HC1.M.3, PA.BO.HC1.M.4, PA.BO.HC1.M.5, PA.BO.HC2.M.1, PA.BO.HC2.M.2, PA.BO.HC2.M.5, PA.BO.HC4.M.1, 
+            PA.BO.HC4.M.3, PA.BO.HC4.M.4, PA.BO.HC4.M.5, PA.BO.I1.U.1, PA.BO.I1.U.2, PA.BO.I1.U.3, PA.BO.I1.U.4, PA.BO.I1.U.5, PA.BO.I2.U.2, 
+            PA.BO.I2.U.3, PA.BO.I2.U.4, PA.BO.I2.U.5, PA.BO.I4.U.2, PA.BO.I4.U.4, PA.BO.LC1.M.2, PA.BO.LC2.M.1, PA.BO.LC2.M.2, PA.BO.LC2.M.5, 
+            PA.BO.LC3.M.2, PA.BO.LC3.M.3, PA.BO.LC3.M.4, PA.BO.LC4.M.1, PA.BO.LC4.M.2, PA.BO.LC4.M.4, PA.BO.R1.U.1, PA.BO.R1.U.2, PA.BO.R1.U.4, 
+            PA.BO.R1.U.5, PA.BO.R3.U.1, PA.BO.R3.U.2, PA.BO.R3.U.4, PA.BO.R4.U.2, PA.BO.R4.U.3, PA.BO.R4.U.4, PA.BO.WL1.M.1, PA.BO.WL1.M.2, 
+            PA.BO.WL1.M.3, PA.BO.WL1.M.4, PA.BO.WL2.M.1, PA.BO.WL2.M.2, PA.BO.WL2.M.4, PA.BO.WL2.M.5, PA.BO.WL3.M.1, PA.BO.WL3.M.2, PA.BO.WL3.M.4, 
+            PA.BO.WL4.M.1, PA.BO.WL4.M.3, PA.BO.WL4.M.4, PA.BO.WL4.M.5
+    Los Angeles: PA.LA.ALL.M.4, PA.LA.ALL.M.5, PA.LA.GLO.M.2, PA.LA.GLO.M.3, PA.LA.GLO.M.4, PA.LA.GLO.M.5, PA.LA.KIN.M.2, PA.LA.KIN.M.4, PA.LA.KIN.M.5, 
+                 PA.LA.LUB.M.1, PA.LA.LUB.M.2, PA.LA.LUB.M.4, PA.LA.LUB.M.5, PA.LA.NWH.M.1, PA.LA.NWH.M.2, PA.LA.NWH.M.3, PA.LA.NWH.M.4, PA.LA.NWH.M.5, 
+                 PA.LA.POP.M.1, PA.LA.POP.M.3, PA.LA.POP.M.4, PA.LA.POP.M.5, PA.LA.ROS.M.1, PA.LA.ROS.M.3, PA.LA.ROS.M.4, PA.LA.ROS.M.5, PA.LA.SEP.M.1, 
+                 PA.LA.SEP.M.2, PA.LA.SEP.M.4, PA.LA.SEP.M.5, PA.LA.WHI.M.2, PA.LA.WHI.M.3, PA.LA.WHI.M.4, PA.LA.WHI.M.5, PA.LA.ZOO.M.1, PA.LA.ZOO.M.3, 
+                 PA.LA.ZOO.M.4, PA.LA.ZOO.M.5
+    Minneapolis: PA.MN.L01-TO_PA.M.4, PA.MN.L01-TO_PA.M.5
+    Phoenix: PA.PX.ALA.M.1, PA.PX.ALA.M.5, PA.PX.BUF.M.1, PA.PX.BUF.M.2, PA.PX.BUF.M.3, PA.PX.BUF.M.4, PA.PX.COY.M.1, PA.PX.DF1.M.2, PA.PX.DF1.M.5, 
+             PA.PX.ENC.M.2, PA.PX.ENC.M.3, PA.PX.ENC.M.4, PA.PX.ENC.M.5, PA.PX.LAP.M.1, PA.PX.LAP.M.2, PA.PX.LAP.M.4, PA.PX.LAP.M.5, PA.PX.PAP.M.1, 
+             PA.PX.PAP.M.2, PA.PX.PAP.M.3, PA.PX.PAP.M.4, PA.PX.PAP.M.5, PA.PX.PIE.M.1, PA.PX.PIE.M.2, PA.PX.PIE.M.3, PA.PX.PIE.M.4, PA.PX.RPP.U.3, 
+             PA.PX.RPP.U.5
+Working on 1 group(s) of populations:
+    defaultgrp: Baltimore, Boston, Los Angeles, Minneapolis, Phoenix
+
+Polymorphic sites in Structure format will be written to '/home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/PA_metapop_catalog/populations_20_pct/populations.structure'
+Polymorphic sites in GenePop format will be written to '/home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/PA_metapop_catalog/populations_20_pct/populations.snps.genepop'
+SNPs and calls will be written in VCF format to '/home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/PA_metapop_catalog/populations_20_pct/populations.snps.vcf'
+Raw haplotypes will be written to '/home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/PA_metapop_catalog/populations_20_pct/populations.haplotypes.tsv'
+Population-level summary statistics will be written to '/home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/PA_metapop_catalog/populations_20_pct/populations.sumstats.tsv'
+Population-level haplotype summary statistics will be written to '/home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/PA_metapop_catalog/populations_20_pct/populations.hapstats.tsv'
+
+Processing data in batches:
+  * load a batch of catalog loci and apply filters
+  * compute SNP- and haplotype-wise per-population statistics
+  * write the above statistics in the output files
+  * export the genotypes/haplotypes in specified format(s)
+More details in '/home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/PA_metapop_catalog/populations_20_pct/populations.log.distribs'.
+
+Now processing...
+Batch 1 
+
+Removed 429148 loci that did not pass sample/population constraints from 430539 loci.
+Kept 1391 loci, composed of 477070 sites; 15336 of those sites were filtered, 707 variant sites remained.
+Number of loci with PE contig: 1391.00 (100.0%);
+  Mean length of loci: 332.97bp (stderr 1.42);
+Number of loci with SE/PE overlap: 38.00 (2.7%);
+  Mean length of overlapping loci: 399.18bp (stderr 2.94); mean overlap: 11.11bp (stderr 0.26);
+Mean genotyped sites per locus: 333.68bp (stderr 1.43).
+
+Population summary statistics (more detail in populations.sumstats_summary.tsv):
+  Baltimore: 6.9433 samples per locus; pi: 0.26528; all/variant/polymorphic sites: 464142/706/466; private alleles: 10
+  Boston: 9.2928 samples per locus; pi: 0.24894; all/variant/polymorphic sites: 463405/707/464; private alleles: 19
+  Los Angeles: 13.783 samples per locus; pi: 0.24432; all/variant/polymorphic sites: 462122/706/557; private alleles: 17
+  Minneapolis: 1.3349 samples per locus; pi: 0.12451; all/variant/polymorphic sites: 303698/427/69; private alleles: 0
+  Phoenix: 7.7269 samples per locus; pi: 0.21096; all/variant/polymorphic sites: 446542/692/391; private alleles: 8
+Populations is done.

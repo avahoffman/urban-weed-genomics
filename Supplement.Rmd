@@ -488,9 +488,18 @@ assessing the change in shared loci across parameter iterations.
 Based on this optimization step, we used the following parameters:
 
 ```{r param_table, echo = FALSE, message = FALSE}
-table_ <- readr::read_csv("output/parameter_opt-final_params_per_species.csv")[,2:5]
-colnames(table_) <- c("Species", "M (locus mismatches)", "n (catalog mismatches)", "m (minimum reads)")
-knitr::kable(table_, format="markdown", caption = "Final parameter optimization values for the Stacks pipeline.")
+table_ <-
+  readr::read_csv("output/parameter_opt-final_params_per_species.csv")[, 2:5]
+colnames(table_) <-
+  c("Species",
+    "M (locus mismatches)",
+    "n (catalog mismatches)",
+    "m (minimum reads)")
+knitr::kable(
+  table_,
+  format = "markdown",
+  caption = "Final parameter optimization values for the Stacks pipeline."
+)
 ```
 
 ### Step 5b - Run `ustacks` {#step-5b---run-ustacks}
@@ -524,14 +533,9 @@ sample in the output directory:
 Multiple versions of the `05-ustacks_n.sh` script can be run in parallel
 (simply replace n in the three files above with the correct number).
 
-A small number of samples were discarded at this stage as the `ustacks` tool was
-unable to form any primary stacks corresponding to loci:
-
-```{r no_primary_stacks_table, echo = FALSE, message = FALSE}
-table_ <- readr::read_csv("output/ustacks-discarded_samples.csv")
-colnames(table_) <- c("Sample", "City")
-knitr::kable(table_, format="markdown", caption = "Samples discarded at the `ustacks` stage (unable to form any primary stacks).")
-```
+A small number of samples (13) were discarded at this stage as the `ustacks` tool was
+unable to form any primary stacks corresponding to loci. See 
+[output/ustacks-discarded_samples.csv](output/ustacks-discarded_samples.csv).
 
 ### Step 5c - Correct File Names {#step-5c---correct-file-names}
 
@@ -581,7 +585,7 @@ catalog. This involves a few steps:
 Files can be found in the `06_cstacks/` directory.
 
 `cstacks` builds the locus catalog from all the samples specified. The
-accompanying script, `06-cstacks.sh` is relatively simple since it
+accompanying script, `cstacks_SPECIES.sh` is relatively simple since it
 points to the directory containing all the sample files. It follows this
 format to point to that directory:
 
@@ -600,7 +604,7 @@ The tricky thing is ensuring enough compute memory to run the entire
 process successfully. There is probably space to optimize this process.
 
 The `cstacks` method uses a "population map" file, which in this project
-is `06-cstacks_popmap.txt`. This file specifys which samples to build
+is `cstacks_popmap_SPECIES.txt`. This file specifies which samples to build
 the catalog from and categorizes them into your 'populations', or in
 this case, cities using two tab-delimited columns, e.g.:
 
@@ -623,9 +627,12 @@ by[`ustacks`](#step-5---ustacks):
 -   `catalog.tags.tsv.gz`
 
 ```{r catalog_samples_table, echo = FALSE, message = FALSE}
-table_ <- readr::read_csv("output/cstacks-metapop-catalog_samples-included.csv")[,1:3]
+table_ <-
+  readr::read_csv("output/cstacks-metapop-catalog_samples-included.csv")[, 1:3]
 colnames(table_) <- c("Sample", "Species", "City")
-knitr::kable(table_, format="markdown", caption = "Subset of samples used in SNP catalog creation.")
+knitr::kable(table_,
+             format = "markdown",
+             caption = "Subset of samples used in SNP catalog creation.")
 ```
 
 ## Step 7 - Metapopulation locus matching with `sstacks` {#step-7---metapopulation-locus-matching-with-sstacks}
@@ -633,12 +640,14 @@ knitr::kable(table_, format="markdown", caption = "Subset of samples used in SNP
 Files can be found in the `07_sstacks/` directory.
 
 All samples in the population (or all samples you want to include in the
-analysis) are matched against the catalog produced in
-[`cstacks`](#step-6---cstacks) with `sstacks`, run in script
-`07-sstacks.sh`. It runs off of the samples based in the output
-directory *and* the listed samples in `07-sstacks_samples.txt`, so make
-sure all your files (sample and catalog, etc.) are there and match.
-`07-sstacks_samples.txt` takes the form:
+analysis) are matched against the catalog produced in[`cstacks`]
+(#step-6---cstacks) with `sstacks`, run in script `stacks_SPECIES.sh`
+and `stacks_SPECIES_additional.sh`. It runs off of the samples based in
+the output directory *and* the listed samples in
+`sstacks_samples_SPECIES.txt` and
+`sstacks_samples_SPECIES_additional.txt` (respectively), so make sure
+all your files (sample and catalog, etc.) are there and match.
+`sstacks_samples_SPECIES.txt` takes the form:
 
     DS.BA.GA.U.1
     DS.BA.GA.U.2
@@ -661,35 +670,41 @@ map text file to specify which samples to include in the analysis. As
 such, a new population map (that differs from `06-cstacks_popmap.txt`)
 should be created that includes all samples (including those used to
 create your catalog) that you want to include in the analysis. This file
-will include the same samples specified in `07-sstacks_samples.txt` with
+will include the same samples specified in `sstacks_samples_SPECIES.txt` with
 a colomn specifying population. Here, this file is
-`08-tsv2bam_popmap.txt`.
+`popmap_SPECIES.txt`.
 
-We run `tsv2bam` using the script `08-tsv2bam.sh`.
+We run `tsv2bam` using the script `tsv2bam_SPECIES.sh`.
 
 This is the step at which it's usually discovered that some samples are
 bad(don't have any useable matches to the catalog). These samples were
-excluded from `08-tsv2bam_popmap.txt`. For example we might simply cut
+excluded from `popmap_SPECIES.txt`. For example we might simply cut
 out the following rows:
 
     DS.MN.L10-DS.M.4    Minneapolis
     DS.MN.L01-DS.M.4    Minneapolis
     DS.BO.WL2.M.4   Boston
     
-The following samples were discarded because they contained less than 300 sample loci matched to catalog loci:
+The following samples were discarded because they contained less than
+300 sample loci matched to catalog loci:
 
 ```{r tsv2bam_discarded_samples_table, echo = FALSE, message = FALSE}
-table_ <- readr::read_csv("output/tsv2bam-discarded_samples.csv")
+table_ <- 
+  readr::read_csv("output/tsv2bam-discarded_samples.csv")
 colnames(table_) <- c("Sample", "City")
-knitr::kable(table_, format="markdown", caption = "Samples discarded at the `tsv2bam` stage of the Stacks pipeline.")
+knitr::kable(
+  table_,
+  format = "markdown",
+  caption = "Samples discarded at the `tsv2bam` stage of the Stacks pipeline."
+)
 ```
 
 ## Step 9 - Metapopulation SNP calling with `gstacks` {#step-9---metapopulation-snp-calling-with-gstacks}
 
 Files can be found in the `09_gstacks/` directory.
 
-The script `09-gstacks.sh` also uses the population map specified in
-[Step 8](#step-8---tsv2bam), `08-tsv2bam_popmap.txt`. The `gstacks`
+The script `gstacks_SPECIES.sh` also uses the population map specified in
+[Step 8](#step-8---tsv2bam), `popmap_SPECIES.txt`. The `gstacks`
 program aligns the paired-end reads and assembles the paired-end contigs
 and then calls SNPs.
 
@@ -699,25 +714,37 @@ Produces the following:
     sequence for each locus as produced by `gstacks` in a standard FASTA
     file
 -   `catalog.calls` : per-nucleotide genotypes, contains the output of
-    the SNP calling model for each nucleotide in the analysis
 
 ## Step 10 - Metapopulation summaries with `populations` {#step-10---metapopulation-summaries-with-populations}
 
 Files can be found in the `10_populations/` directory.
 
-The populations program will use the script `10-population.sh` and the
-population map specified in [Step 8](#step-8---tsv2bam)
-(`08-tsv2bam_popmap.txt`) to calculate population-level summary
-statistics.
+The populations program will use the script `species_populations.sh` and
+the population maps specified in 
+[Step 9](#step-9---metapopulation-snp-calling-with-gstacks)
+(`popmap_SPECIES.txt`) to calculate population-level summary
+statistics. Specifically, the script iterates through all species and
+several levels of the parameter `--min-samples-overall`, the minimum
+percentage of individuals across populations required to process a
+locus
 
 You will most likely run the populations program multiple times if you
 are looking at different 'sub-populations'. A new directory should be
 created and the population program should run out of that directory for
-each iteration of the population program. Alternativley, you can specify
-a new directory as the output folder in the script using the command
-`-O`.
+each iteration of the population program. Alternativley, you can
+specify a new directory as the output folder in the script using the
+command `-O`.
 
+Ultimately, the key parameters we used for running `populations` were as
+follows:
 
+- `--write-random-snp`: restrict data analysis to one random SNP per
+  locus
+
+- `--min-samples-overall`: 20 - locus must be in 20% of individuals
+
+- `--min-maf`: 0.05 - minimum minor allele frequency required to process
+  a nucleotide site at a locus
 
 ## Step 11 - Examine Within-city Catalogs and Populations {#step-11---examine-within-city-catalogs-and-populations}
 
@@ -786,7 +813,9 @@ parameter permutation to its own new directory. This script uses the
 doing all folders by default. This is convenient if you only want to
 iterate through a subset of the folders (city-species combinations).
 
-# File Organization {#file-organization-bookmark_tabs}
+# Appendix {#appendix-books}
+
+## File Organization {#file-organization-bookmark_tabs}
 
 All data files for the Macrosystems project are permanently stored under
 Meghan Avolio's group resources in the Johns Hopkins University Rockfish
@@ -855,8 +884,6 @@ following subdirectories:
     -   Each folder also contains the relevant ustacks and stacks
         pipeline scripts and output files (i.e., from `cstacks`,
         `gstacks`, `stacks`, `tsv2bam`, and `populations`),
-
-# Appendix {#appendix-books}
 
 ## Aspera Transfer File Names {#aspera-transfer-file-names}
 

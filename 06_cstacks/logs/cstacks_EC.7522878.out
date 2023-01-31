@@ -1,0 +1,631 @@
+cstacks parameters selected:
+  Loci matched based on sequence identity.
+  Number of mismatches allowed between stacks: 8
+  Gapped alignments: enabled
+Constructing catalog from 45 samples.
+
+Initializing new catalog...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.CP.U.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.CP.U.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.CP.U.2.alleles.tsv.gz
+  2257 loci were newly added to the catalog.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.FH.U.3 [2 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.FH.U.3.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.FH.U.3.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.FH.U.3.alleles.tsv.gz
+Searching for sequence matches...
+  2257 loci in the catalog, 251027 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  303 loci were matched to a catalog locus.
+  638 loci were matched to a catalog locus using gapped alignments.
+  6071 loci were newly added to the catalog.
+  16 loci matched more than one catalog locus, linking them.
+    31 linked catalog loci were merged into 15 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.GA.U.2 [3 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.GA.U.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.GA.U.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.GA.U.2.alleles.tsv.gz
+Searching for sequence matches...
+  8312 loci in the catalog, 967706 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  2102 loci were matched to a catalog locus.
+  1941 loci were matched to a catalog locus using gapped alignments.
+  8831 loci were newly added to the catalog.
+  87 loci matched more than one catalog locus, linking them.
+    162 linked catalog loci were merged into 77 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.LH-2.M.2 [4 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.LH-2.M.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.LH-2.M.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.LH-2.M.2.alleles.tsv.gz
+Searching for sequence matches...
+  17058 loci in the catalog, 2107919 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  591 loci were matched to a catalog locus.
+  900 loci were matched to a catalog locus using gapped alignments.
+  586 loci were newly added to the catalog.
+  51 loci matched more than one catalog locus, linking them.
+    101 linked catalog loci were merged into 50 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.LL-3.M.3 [5 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.LL-3.M.3.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.LL-3.M.3.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.LL-3.M.3.alleles.tsv.gz
+Searching for sequence matches...
+  17593 loci in the catalog, 2193058 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  1870 loci were matched to a catalog locus.
+  2373 loci were matched to a catalog locus using gapped alignments.
+  1748 loci were newly added to the catalog.
+  76 loci matched more than one catalog locus, linking them.
+    148 linked catalog loci were merged into 72 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.LL-4.M.4 [6 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.LL-4.M.4.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.LL-4.M.4.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.LL-4.M.4.alleles.tsv.gz
+Searching for sequence matches...
+  19265 loci in the catalog, 2450736 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  1797 loci were matched to a catalog locus.
+  2229 loci were matched to a catalog locus using gapped alignments.
+  1160 loci were newly added to the catalog.
+  53 loci matched more than one catalog locus, linking them.
+    103 linked catalog loci were merged into 49 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.ML.U.1 [7 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.ML.U.1.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.ML.U.1.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.ML.U.1.alleles.tsv.gz
+Searching for sequence matches...
+  20371 loci in the catalog, 2618665 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  712 loci were matched to a catalog locus.
+  1692 loci were matched to a catalog locus using gapped alignments.
+  264 loci were newly added to the catalog.
+  48 loci matched more than one catalog locus, linking them.
+    98 linked catalog loci were merged into 47 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.ML.U.3 [8 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.ML.U.3.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.ML.U.3.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.ML.U.3.alleles.tsv.gz
+Searching for sequence matches...
+  20584 loci in the catalog, 2674670 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  516 loci were matched to a catalog locus.
+  1456 loci were matched to a catalog locus using gapped alignments.
+  234 loci were newly added to the catalog.
+  31 loci matched more than one catalog locus, linking them.
+    62 linked catalog loci were merged into 30 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.PIK.U.5 [9 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.PIK.U.5.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.PIK.U.5.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.PIK.U.5.alleles.tsv.gz
+Searching for sequence matches...
+  20786 loci in the catalog, 2726219 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  2003 loci were matched to a catalog locus.
+  2582 loci were matched to a catalog locus using gapped alignments.
+  1270 loci were newly added to the catalog.
+  55 loci matched more than one catalog locus, linking them.
+    102 linked catalog loci were merged into 47 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.PSP.M.4 [10 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.PSP.M.4.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.PSP.M.4.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.PSP.M.4.alleles.tsv.gz
+Searching for sequence matches...
+  22001 loci in the catalog, 2916386 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  4223 loci were matched to a catalog locus.
+  2886 loci were matched to a catalog locus using gapped alignments.
+  4693 loci were newly added to the catalog.
+  59 loci matched more than one catalog locus, linking them.
+    120 linked catalog loci were merged into 59 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.TRC.U.3 [11 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.TRC.U.3.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.TRC.U.3.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.TRC.U.3.alleles.tsv.gz
+Searching for sequence matches...
+  26633 loci in the catalog, 3579689 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  2289 loci were matched to a catalog locus.
+  2818 loci were matched to a catalog locus using gapped alignments.
+  926 loci were newly added to the catalog.
+  53 loci matched more than one catalog locus, linking them.
+    103 linked catalog loci were merged into 51 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.TRC.U.5 [12 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.TRC.U.5.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.TRC.U.5.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.TRC.U.5.alleles.tsv.gz
+Searching for sequence matches...
+  27507 loci in the catalog, 3746606 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  5528 loci were matched to a catalog locus.
+  5825 loci were matched to a catalog locus using gapped alignments.
+  5761 loci were newly added to the catalog.
+  76 loci matched more than one catalog locus, linking them.
+    143 linked catalog loci were merged into 70 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.WB.U.1 [13 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.WB.U.1.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.WB.U.1.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.WB.U.1.alleles.tsv.gz
+Searching for sequence matches...
+  33195 loci in the catalog, 4528955 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  2081 loci were matched to a catalog locus.
+  3314 loci were matched to a catalog locus using gapped alignments.
+  697 loci were newly added to the catalog.
+  61 loci matched more than one catalog locus, linking them.
+    121 linked catalog loci were merged into 57 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.WB.U.5 [14 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.WB.U.5.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.WB.U.5.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.WB.U.5.alleles.tsv.gz
+Searching for sequence matches...
+  33828 loci in the catalog, 4666637 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  1440 loci were matched to a catalog locus.
+  3015 loci were matched to a catalog locus using gapped alignments.
+  579 loci were newly added to the catalog.
+  71 loci matched more than one catalog locus, linking them.
+    144 linked catalog loci were merged into 69 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.WBO.U.4 [15 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.WBO.U.4.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.WBO.U.4.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.BA.WBO.U.4.alleles.tsv.gz
+Searching for sequence matches...
+  34332 loci in the catalog, 4782878 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  352 loci were matched to a catalog locus.
+  2087 loci were matched to a catalog locus using gapped alignments.
+  126 loci were newly added to the catalog.
+  49 loci matched more than one catalog locus, linking them.
+    97 linked catalog loci were merged into 46 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.AC1.U.1 [16 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.AC1.U.1.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.AC1.U.1.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.AC1.U.1.alleles.tsv.gz
+Searching for sequence matches...
+  34407 loci in the catalog, 4834734 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  1760 loci were matched to a catalog locus.
+  3535 loci were matched to a catalog locus using gapped alignments.
+  1081 loci were newly added to the catalog.
+  54 loci matched more than one catalog locus, linking them.
+    104 linked catalog loci were merged into 51 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.AC2.U.2 [17 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.AC2.U.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.AC2.U.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.AC2.U.2.alleles.tsv.gz
+Searching for sequence matches...
+  35435 loci in the catalog, 4999322 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  2746 loci were matched to a catalog locus.
+  3799 loci were matched to a catalog locus using gapped alignments.
+  1203 loci were newly added to the catalog.
+  44 loci matched more than one catalog locus, linking them.
+    75 linked catalog loci were merged into 34 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.DUR.U.2 [18 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.DUR.U.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.DUR.U.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.DUR.U.2.alleles.tsv.gz
+Searching for sequence matches...
+  36597 loci in the catalog, 5186369 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  2283 loci were matched to a catalog locus.
+  3767 loci were matched to a catalog locus using gapped alignments.
+  844 loci were newly added to the catalog.
+  63 loci matched more than one catalog locus, linking them.
+    128 linked catalog loci were merged into 60 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.HOW.U.2 [19 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.HOW.U.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.HOW.U.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.HOW.U.2.alleles.tsv.gz
+Searching for sequence matches...
+  37373 loci in the catalog, 5336452 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  6727 loci were matched to a catalog locus.
+  6845 loci were matched to a catalog locus using gapped alignments.
+  17110 loci were newly added to the catalog.
+  85 loci matched more than one catalog locus, linking them.
+    164 linked catalog loci were merged into 80 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.HOW.U.3 [20 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.HOW.U.3.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.HOW.U.3.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.HOW.U.3.alleles.tsv.gz
+Searching for sequence matches...
+  54399 loci in the catalog, 7090318 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  1988 loci were matched to a catalog locus.
+  4038 loci were matched to a catalog locus using gapped alignments.
+  2026 loci were newly added to the catalog.
+  93 loci matched more than one catalog locus, linking them.
+    179 linked catalog loci were merged into 85 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.SAN.U.2 [21 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.SAN.U.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.SAN.U.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.SAN.U.2.alleles.tsv.gz
+Searching for sequence matches...
+  56331 loci in the catalog, 7356889 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  354 loci were matched to a catalog locus.
+  2344 loci were matched to a catalog locus using gapped alignments.
+  642 loci were newly added to the catalog.
+  74 loci matched more than one catalog locus, linking them.
+    147 linked catalog loci were merged into 71 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.SGB.U.2 [22 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.SGB.U.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.SGB.U.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.SGB.U.2.alleles.tsv.gz
+Searching for sequence matches...
+  56897 loci in the catalog, 7482161 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  2209 loci were matched to a catalog locus.
+  3988 loci were matched to a catalog locus using gapped alignments.
+  949 loci were newly added to the catalog.
+  43 loci matched more than one catalog locus, linking them.
+    86 linked catalog loci were merged into 40 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.SGB.U.5 [23 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.SGB.U.5.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.SGB.U.5.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.SGB.U.5.alleles.tsv.gz
+Searching for sequence matches...
+  57800 loci in the catalog, 7643975 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  422 loci were matched to a catalog locus.
+  2827 loci were matched to a catalog locus using gapped alignments.
+  231 loci were newly added to the catalog.
+  49 loci matched more than one catalog locus, linking them.
+    94 linked catalog loci were merged into 46 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.SGR.U.4 [24 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.SGR.U.4.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.SGR.U.4.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.SGR.U.4.alleles.tsv.gz
+Searching for sequence matches...
+  57983 loci in the catalog, 7715321 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  1884 loci were matched to a catalog locus.
+  2946 loci were matched to a catalog locus using gapped alignments.
+  407 loci were newly added to the catalog.
+  71 loci matched more than one catalog locus, linking them.
+    138 linked catalog loci were merged into 66 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.SGR.U.5 [25 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.SGR.U.5.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.SGR.U.5.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.SGR.U.5.alleles.tsv.gz
+Searching for sequence matches...
+  58318 loci in the catalog, 7817525 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  1349 loci were matched to a catalog locus.
+  3674 loci were matched to a catalog locus using gapped alignments.
+  473 loci were newly added to the catalog.
+  65 loci matched more than one catalog locus, linking them.
+    128 linked catalog loci were merged into 63 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.VB1.U.1 [26 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.VB1.U.1.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.VB1.U.1.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.VB1.U.1.alleles.tsv.gz
+Searching for sequence matches...
+  58726 loci in the catalog, 7919852 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  1024 loci were matched to a catalog locus.
+  4026 loci were matched to a catalog locus using gapped alignments.
+  3705 loci were newly added to the catalog.
+  80 loci matched more than one catalog locus, linking them.
+    148 linked catalog loci were merged into 70 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.VB1.U.3 [27 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.VB1.U.3.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.VB1.U.3.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.VB1.U.3.alleles.tsv.gz
+Searching for sequence matches...
+  62353 loci in the catalog, 8361658 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  6592 loci were matched to a catalog locus.
+  6984 loci were matched to a catalog locus using gapped alignments.
+  3219 loci were newly added to the catalog.
+  71 loci matched more than one catalog locus, linking them.
+    135 linked catalog loci were merged into 65 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.VB2.U.4 [28 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.VB2.U.4.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.VB2.U.4.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.VB2.U.4.alleles.tsv.gz
+Searching for sequence matches...
+  65502 loci in the catalog, 8826148 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  1512 loci were matched to a catalog locus.
+  4436 loci were matched to a catalog locus using gapped alignments.
+  3118 loci were newly added to the catalog.
+  106 loci matched more than one catalog locus, linking them.
+    203 linked catalog loci were merged into 94 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.VER.U.1 [29 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.VER.U.1.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.VER.U.1.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.VER.U.1.alleles.tsv.gz
+Searching for sequence matches...
+  68511 loci in the catalog, 9253365 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  3877 loci were matched to a catalog locus.
+  6118 loci were matched to a catalog locus using gapped alignments.
+  2172 loci were newly added to the catalog.
+  77 loci matched more than one catalog locus, linking them.
+    152 linked catalog loci were merged into 69 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.VER.U.4 [30 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.VER.U.4.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.VER.U.4.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.LA.VER.U.4.alleles.tsv.gz
+Searching for sequence matches...
+  70600 loci in the catalog, 9557271 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  1881 loci were matched to a catalog locus.
+  4892 loci were matched to a catalog locus using gapped alignments.
+  2353 loci were newly added to the catalog.
+  79 loci matched more than one catalog locus, linking them.
+    155 linked catalog loci were merged into 74 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.ALA.M.3 [31 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.ALA.M.3.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.ALA.M.3.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.ALA.M.3.alleles.tsv.gz
+Searching for sequence matches...
+  72872 loci in the catalog, 9878401 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  151 loci were matched to a catalog locus.
+  1845 loci were matched to a catalog locus using gapped alignments.
+  2350 loci were newly added to the catalog.
+  59 loci matched more than one catalog locus, linking them.
+    121 linked catalog loci were merged into 55 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.ALA.M.5 [32 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.ALA.M.5.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.ALA.M.5.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.ALA.M.5.alleles.tsv.gz
+Searching for sequence matches...
+  75156 loci in the catalog, 10168894 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  811 loci were matched to a catalog locus.
+  2777 loci were matched to a catalog locus using gapped alignments.
+  1756 loci were newly added to the catalog.
+  120 loci matched more than one catalog locus, linking them.
+    243 linked catalog loci were merged into 113 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.BUF.M.1 [33 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.BUF.M.1.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.BUF.M.1.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.BUF.M.1.alleles.tsv.gz
+Searching for sequence matches...
+  76782 loci in the catalog, 10439658 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  1062 loci were matched to a catalog locus.
+  5258 loci were matched to a catalog locus using gapped alignments.
+  4673 loci were newly added to the catalog.
+  114 loci matched more than one catalog locus, linking them.
+    208 linked catalog loci were merged into 95 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.BUF.M.3 [34 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.BUF.M.3.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.BUF.M.3.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.BUF.M.3.alleles.tsv.gz
+Searching for sequence matches...
+  81342 loci in the catalog, 11084780 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  629 loci were matched to a catalog locus.
+  2461 loci were matched to a catalog locus using gapped alignments.
+  576 loci were newly added to the catalog.
+  114 loci matched more than one catalog locus, linking them.
+    231 linked catalog loci were merged into 107 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.CLA.M.1 [35 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.CLA.M.1.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.CLA.M.1.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.CLA.M.1.alleles.tsv.gz
+Searching for sequence matches...
+  81794 loci in the catalog, 11197741 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  981 loci were matched to a catalog locus.
+  3735 loci were matched to a catalog locus using gapped alignments.
+  658 loci were newly added to the catalog.
+  109 loci matched more than one catalog locus, linking them.
+    215 linked catalog loci were merged into 101 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.COY.M.2 [36 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.COY.M.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.COY.M.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.COY.M.2.alleles.tsv.gz
+Searching for sequence matches...
+  82338 loci in the catalog, 11344214 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  1952 loci were matched to a catalog locus.
+  6098 loci were matched to a catalog locus using gapped alignments.
+  2280 loci were newly added to the catalog.
+  151 loci matched more than one catalog locus, linking them.
+    290 linked catalog loci were merged into 136 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.COY.M.3 [37 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.COY.M.3.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.COY.M.3.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.COY.M.3.alleles.tsv.gz
+Searching for sequence matches...
+  84464 loci in the catalog, 11758025 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  2707 loci were matched to a catalog locus.
+  8620 loci were matched to a catalog locus using gapped alignments.
+  3786 loci were newly added to the catalog.
+  185 loci matched more than one catalog locus, linking them.
+    342 linked catalog loci were merged into 157 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.DF1.M.1 [38 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.DF1.M.1.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.DF1.M.1.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.DF1.M.1.alleles.tsv.gz
+Searching for sequence matches...
+  88065 loci in the catalog, 12386370 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  673 loci were matched to a catalog locus.
+  4880 loci were matched to a catalog locus using gapped alignments.
+  668 loci were newly added to the catalog.
+  148 loci matched more than one catalog locus, linking them.
+    291 linked catalog loci were merged into 136 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.DOW.M.1 [39 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.DOW.M.1.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.DOW.M.1.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.DOW.M.1.alleles.tsv.gz
+Searching for sequence matches...
+  88578 loci in the catalog, 12548528 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  1554 loci were matched to a catalog locus.
+  6458 loci were matched to a catalog locus using gapped alignments.
+  1062 loci were newly added to the catalog.
+  140 loci matched more than one catalog locus, linking them.
+    274 linked catalog loci were merged into 132 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.DOW.M.2 [40 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.DOW.M.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.DOW.M.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.DOW.M.2.alleles.tsv.gz
+Searching for sequence matches...
+  89498 loci in the catalog, 12782120 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  1517 loci were matched to a catalog locus.
+  7240 loci were matched to a catalog locus using gapped alignments.
+  1243 loci were newly added to the catalog.
+  136 loci matched more than one catalog locus, linking them.
+    253 linked catalog loci were merged into 116 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.MAN.M.1 [41 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.MAN.M.1.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.MAN.M.1.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.MAN.M.1.alleles.tsv.gz
+Searching for sequence matches...
+  90604 loci in the catalog, 13065551 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  354 loci were matched to a catalog locus.
+  3011 loci were matched to a catalog locus using gapped alignments.
+  225 loci were newly added to the catalog.
+  131 loci matched more than one catalog locus, linking them.
+    264 linked catalog loci were merged into 124 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.MTN.M.2 [42 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.MTN.M.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.MTN.M.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.MTN.M.2.alleles.tsv.gz
+Searching for sequence matches...
+  90689 loci in the catalog, 13154132 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  430 loci were matched to a catalog locus.
+  3905 loci were matched to a catalog locus using gapped alignments.
+  254 loci were newly added to the catalog.
+  128 loci matched more than one catalog locus, linking them.
+    258 linked catalog loci were merged into 121 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.PSC.M.1 [43 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.PSC.M.1.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.PSC.M.1.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.PSC.M.1.alleles.tsv.gz
+Searching for sequence matches...
+  90806 loci in the catalog, 13259337 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  513 loci were matched to a catalog locus.
+  3313 loci were matched to a catalog locus using gapped alignments.
+  518 loci were newly added to the catalog.
+  142 loci matched more than one catalog locus, linking them.
+    286 linked catalog loci were merged into 133 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.WES.M.1 [44 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.WES.M.1.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.WES.M.1.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.WES.M.1.alleles.tsv.gz
+Searching for sequence matches...
+  91171 loci in the catalog, 13395441 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  450 loci were matched to a catalog locus.
+  5494 loci were matched to a catalog locus using gapped alignments.
+  502 loci were newly added to the catalog.
+  163 loci matched more than one catalog locus, linking them.
+    321 linked catalog loci were merged into 148 loci.
+
+Processing sample /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.WES.M.2 [45 of 45]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.WES.M.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.WES.M.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/EC.PX.WES.M.2.alleles.tsv.gz
+Searching for sequence matches...
+  91500 loci in the catalog, 13562444 kmers in the catalog hash.
+Searching for gapped alignments...
+Merging matches into catalog...
+  370 loci were matched to a catalog locus.
+  4078 loci were matched to a catalog locus using gapped alignments.
+  211 loci were newly added to the catalog.
+  113 loci matched more than one catalog locus, linking them.
+    216 linked catalog loci were merged into 104 loci.
+
+Writing catalog in directory '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/EC/catalog_7_13_22/'.
+Final catalog contains 91599 loci.
+cstacks is done.

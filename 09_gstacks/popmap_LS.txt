@@ -1,0 +1,167 @@
+LS.BA.CP.U.2	Baltimore
+LS.BA.CP.U.4	Baltimore
+LS.BA.CP.U.5	Baltimore
+LS.BA.DHI.U.2	Baltimore
+LS.BA.GA.U.1	Baltimore
+LS.BA.GA.U.3	Baltimore
+LS.BA.ML.U.2	Baltimore
+LS.BA.ML.U.4	Baltimore
+LS.BA.ML.U.5	Baltimore
+LS.BA.PIK.U.1	Baltimore
+LS.BA.PIK.U.2	Baltimore
+LS.BA.PIK.U.3	Baltimore
+LS.BA.PIK.U.5	Baltimore
+LS.BA.PSP.M.1	Baltimore
+LS.BA.WB.U.1	Baltimore
+LS.BA.WB.U.2	Baltimore
+LS.BA.WB.U.3	Baltimore
+LS.BA.WBO.U.3	Baltimore
+LS.BA.WBO.U.5	Baltimore
+LS.BO.HC2.M.5	Boston
+LS.BO.HC4.M.3	Boston
+LS.BO.I1.U.1	Boston
+LS.BO.I2.U.1	Boston
+LS.BO.I2.U.3	Boston
+LS.BO.I2.U.4	Boston
+LS.BO.I2.U.5	Boston
+LS.BO.I4.U.2	Boston
+LS.BO.LC1.M.2	Boston
+LS.BO.LC4.M.2	Boston
+LS.BO.LC4.M.3	Boston
+LS.BO.LC4.M.4	Boston
+LS.BO.R1.U.1	Boston
+LS.BO.R1.U.2	Boston
+LS.BO.R2.U.2	Boston
+LS.BO.R2.U.4	Boston
+LS.BO.R3.U.1	Boston
+LS.BO.R3.U.3	Boston
+LS.BO.WL1.M.1	Boston
+LS.BO.WL1.M.2	Boston
+LS.BO.WL1.M.3	Boston
+LS.BO.WL2.M.2	Boston
+LS.BO.WL3.M.1	Boston
+LS.BO.WL3.M.3	Boston
+LS.BO.WL3.M.4	Boston
+LS.BO.WL3.M.5	Boston
+LS.LA.ARR.U.1	Los Angeles
+LS.LA.ARR.U.2	Los Angeles
+LS.LA.ARR.U.3	Los Angeles
+LS.LA.ARR.U.5	Los Angeles
+LS.LA.ESM.M.1	Los Angeles
+LS.LA.ESM.M.2	Los Angeles
+LS.LA.ESM.M.4	Los Angeles
+LS.LA.ESM.M.5	Los Angeles
+LS.LA.FIG.U.1	Los Angeles
+LS.LA.FIG.U.3	Los Angeles
+LS.LA.FIG.U.5	Los Angeles
+LS.LA.GLO.M.3	Los Angeles
+LS.LA.GLO.M.5	Los Angeles
+LS.LA.GRI.M.1	Los Angeles
+LS.LA.GRI.M.3	Los Angeles
+LS.LA.HOW.U.1	Los Angeles
+LS.LA.HOW.U.3	Los Angeles
+LS.LA.HOW.U.4	Los Angeles
+LS.LA.HOW.U.5	Los Angeles
+LS.LA.MAD.M.1	Los Angeles
+LS.LA.MAD.M.2	Los Angeles
+LS.LA.MAD.M.4	Los Angeles
+LS.LA.NAV.M.2	Los Angeles
+LS.LA.NAV.M.4	Los Angeles
+LS.LA.NAV.M.5	Los Angeles
+LS.LA.NVR.U.1	Los Angeles
+LS.LA.PAR.M.2	Los Angeles
+LS.LA.PAR.M.4	Los Angeles
+LS.LA.SAN.U.1	Los Angeles
+LS.LA.SAN.U.2	Los Angeles
+LS.LA.SAN.U.3	Los Angeles
+LS.LA.SAN.U.4	Los Angeles
+LS.LA.SAN.U.5	Los Angeles
+LS.LA.SHO.M.1	Los Angeles
+LS.LA.SHO.M.2	Los Angeles
+LS.LA.SHO.M.3	Los Angeles
+LS.LA.SHO.M.4	Los Angeles
+LS.LA.SHO.M.5	Los Angeles
+LS.LA.SSV.M.1	Los Angeles
+LS.LA.SSV.M.2	Los Angeles
+LS.LA.SSV.M.3	Los Angeles
+LS.LA.SSV.M.4	Los Angeles
+LS.LA.SSV.M.5	Los Angeles
+LS.LA.STO.U.1	Los Angeles
+LS.LA.STO.U.4	Los Angeles
+LS.LA.VB1.U.1	Los Angeles
+LS.LA.VB1.U.2	Los Angeles
+LS.LA.VB1.U.3	Los Angeles
+LS.LA.VB1.U.4	Los Angeles
+LS.LA.VET.M.3	Los Angeles
+LS.LA.VET.M.4	Los Angeles
+LS.LA.VET.M.5	Los Angeles
+LS.LA.VNH.M.2	Los Angeles
+LS.LA.VNH.M.4	Los Angeles
+LS.LA.VNH.M.5	Los Angeles
+LS.LA.WES.M.2	Los Angeles
+LS.LA.WES.M.3	Los Angeles
+LS.LA.WES.M.4	Los Angeles
+LS.LA.WES.M.5	Los Angeles
+LS.MN.L01-LS.M.2	Minneapolis
+LS.MN.L01-LS.M.4	Minneapolis
+LS.MN.L01-LS.U.2	Minneapolis
+LS.MN.L01-LS.U.3	Minneapolis
+LS.MN.L01-LS.U.4	Minneapolis
+LS.MN.L02-LS.U.1	Minneapolis
+LS.MN.L03-LS.U.2	Minneapolis
+LS.MN.L04-LS.U.2	Minneapolis
+LS.MN.L05-LS.U.1	Minneapolis
+LS.MN.L05-LS.U.2	Minneapolis
+LS.MN.L05-LS.U.3	Minneapolis
+LS.MN.L05-LS.U.4	Minneapolis
+LS.MN.L05-LS.U.5	Minneapolis
+LS.MN.L06-LS.U.2	Minneapolis
+LS.MN.L06-LS.U.4	Minneapolis
+LS.MN.L06-LS.U.5	Minneapolis
+LS.MN.L07-LS.U.2	Minneapolis
+LS.MN.L07-LS.U.4	Minneapolis
+LS.MN.L07-LS.U.5	Minneapolis
+LS.MN.L08-LS.U.1	Minneapolis
+LS.MN.L08-LS.U.2	Minneapolis
+LS.MN.L08-LS.U.3	Minneapolis
+LS.MN.L08-LS.U.5	Minneapolis
+LS.MN.L09-LS.U.3	Minneapolis
+LS.MN.L09-LS.U.5	Minneapolis
+LS.MN.L10-LS.U.1	Minneapolis
+LS.MN.L10-LS.U.2	Minneapolis
+LS.MN.L11-LS.U.1	Minneapolis
+LS.PX.ALA.M.2	Phoenix
+LS.PX.ALA.M.3	Phoenix
+LS.PX.ALA.M.4	Phoenix
+LS.PX.ALA.M.5	Phoenix
+LS.PX.ALA.M.6	Phoenix
+LS.PX.COY.M.3	Phoenix
+LS.PX.COY.M.4	Phoenix
+LS.PX.COY.M.5	Phoenix
+LS.PX.DOW.M.2	Phoenix
+LS.PX.DOW.M.3	Phoenix
+LS.PX.DOW.M.4	Phoenix
+LS.PX.ENC.M.4	Phoenix
+LS.PX.ENC.M.5	Phoenix
+LS.PX.LAP.M.1	Phoenix
+LS.PX.LAP.M.2	Phoenix
+LS.PX.MAN.M.1	Phoenix
+LS.PX.MAN.M.2	Phoenix
+LS.PX.MAN.M.3	Phoenix
+LS.PX.MAN.M.4	Phoenix
+LS.PX.MAN.M.5	Phoenix
+LS.PX.MON.U.2	Phoenix
+LS.PX.MON.U.3	Phoenix
+LS.PX.MON.U.5	Phoenix
+LS.PX.MON.U.7	Phoenix
+LS.PX.NUE.M.1	Phoenix
+LS.PX.NUE.M.3	Phoenix
+LS.PX.PAL.M.3	Phoenix
+LS.PX.PIE.M.2	Phoenix
+LS.PX.PIE.M.4	Phoenix
+LS.PX.PIE.M.5	Phoenix
+LS.PX.PKW.U.1	Phoenix
+LS.PX.PKW.U.5	Phoenix
+LS.PX.RPL.U.2	Phoenix
+LS.PX.RPL.U.3	Phoenix
+LS.PX.RPL.U.5	Phoenix

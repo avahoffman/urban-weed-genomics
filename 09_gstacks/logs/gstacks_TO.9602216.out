@@ -1,0 +1,37 @@
+Logging to '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/TO/catalog_7_13_22/gstacks.log'.
+Locus/sample distributions will be written to '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/TO/catalog_7_13_22/gstacks.log.distribs'.
+
+Configuration for this run:
+  Input mode: denovo
+  Population map: '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/TO/catalog_7_13_22/popmap_TO.txt'
+  Input files: 237, e.g. '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/TO/catalog_7_13_22/TO.BA.AA.U.2.matches.bam'
+  Output to: '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/TO/catalog_7_13_22/'
+  Model: marukilow (var_alpha: 0.01, gt_alpha: 0.05)
+
+Reading BAM headers...
+Processing all loci...
+1%...
+2%...
+5%...
+10%...
+20%...
+50%...
+100%
+
+Attempted to assemble and align paired-end reads for 112156 loci:
+  0 loci had no or almost no paired-end reads (0.0%);
+  1019 loci had paired-end reads that couldn't be assembled into a contig (0.9%);
+  For the remaining 111137 loci (99.1%), a paired-end contig was assembled;
+    Average contig size was 308.2 bp;
+  3737 paired-end contigs overlapped the forward region (3.4%)
+    Mean overlap: 18.7bp; mean size of overlapped loci after merging: 302.2;
+  Out of 50107576 paired-end reads in these loci (mean 442.5 reads per locus),
+    49174293 were successfuly aligned (98.1%);
+  Mean insert length was 376.5, stdev: 105.8 (based on aligned reads in overlapped loci).
+
+Genotyped 111137 loci:
+  effective per-sample coverage: mean=47.8x, stdev=8.8x, min=29.2x, max=84.3x
+  mean number of sites per locus: 298.6
+  a consistent phasing was found for 79650 of out 199605 (39.9%) diploid loci needing phasing
+
+gstacks is done.

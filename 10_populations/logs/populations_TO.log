@@ -1,0 +1,84 @@
+populations v2.60, executed 2022-10-09 15:31:35 (zlib-1.2.11)
+populations -P /home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/TO_metapop_catalog/ -O /home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/TO_metapop_catalog/populations_20_pct/ -M /home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/TO_metapop_catalog/popmap_TO.txt -t 8 --structure --genepop --write-random-snp --verbose --vcf --min-samples-overall 20 --min-maf 0.05
+Locus/sample distributions will be written to '/home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/TO_metapop_catalog/populations_20_pct/populations.log.distribs'.
+populations parameters selected:
+  Percent samples limit per population: 0
+  Locus Population limit: 1
+  Percent samples overall: 0.2
+  Minor allele frequency cutoff: 0.05
+  Maximum observed heterozygosity cutoff: 1
+  Applying Fst correction: none.
+  Pi/Fis kernel smoothing: off
+  F-stats kernel smoothing: off
+  Bootstrap resampling: off
+
+Parsing population map...
+The population map contained 237 samples, 5 population(s), 1 group(s).
+Working on 237 samples.
+Working on 5 population(s):
+    Baltimore: TO.BA.AA.U.2, TO.BA.AA.U.3, TO.BA.AA.U.5, TO.BA.CP.U.1, TO.BA.CP.U.2, TO.BA.CP.U.3, TO.BA.CP.U.4, TO.BA.FH.U.1, TO.BA.FH.U.2, 
+               TO.BA.FH.U.4, TO.BA.FH.U.5, TO.BA.GA.U.1, TO.BA.GA.U.2, TO.BA.GA.U.3, TO.BA.GA.U.4, TO.BA.GA.U.5, TO.BA.LH-1.M.2, TO.BA.LH-1.M.4, 
+               TO.BA.LH-1.M.5, TO.BA.LH-2.M.1, TO.BA.LH-2.M.2, TO.BA.LH-2.M.3, TO.BA.LH-2.M.4, TO.BA.LH-3.M.2, TO.BA.LH-3.M.4, TO.BA.LH-3.M.5, 
+               TO.BA.LL-3.M.1, TO.BA.LL-3.M.2, TO.BA.LL-3.M.4, TO.BA.ML.U.1, TO.BA.ML.U.2, TO.BA.ML.U.3, TO.BA.ML.U.5, TO.BA.PIK.U.2, TO.BA.PIK.U.3, 
+               TO.BA.PIK.U.4, TO.BA.PIK.U.5, TO.BA.PSP.M.1, TO.BA.PSP.M.2, TO.BA.PSP.M.4, TO.BA.RG-1.M.2, TO.BA.RG-1.M.4, TO.BA.RG-1.M.5, 
+               TO.BA.RG-2.M.1, TO.BA.RG-2.M.2, TO.BA.RG-2.M.4, TO.BA.RG-2.M.5, TO.BA.W3.M.2, TO.BA.W3.M.3, TO.BA.W3.M.4, TO.BA.W3.M.5, TO.BA.WB.U.1, 
+               TO.BA.WB.U.2, TO.BA.WB.U.4, TO.BA.WBO.U.2, TO.BA.WBO.U.4, TO.BA.WGP.M.1, TO.BA.WGP.M.3, TO.BA.WGP.M.5
+    Boston: TO.BO.HC1.M.1, TO.BO.HC1.M.2, TO.BO.HC1.M.3, TO.BO.HC1.M.4, TO.BO.HC2.M.1, TO.BO.HC2.M.3, TO.BO.HC2.M.4, TO.BO.HC2.M.5, TO.BO.HC3.M.1, 
+            TO.BO.HC3.M.2, TO.BO.HC3.M.3, TO.BO.HC3.M.4, TO.BO.HC4.M.4, TO.BO.HC4.M.5, TO.BO.I1.U.1, TO.BO.I1.U.2, TO.BO.I1.U.3, TO.BO.I1.U.5, 
+            TO.BO.I2.U.2, TO.BO.I2.U.3, TO.BO.I2.U.4, TO.BO.I2.U.5, TO.BO.I3.U.1, TO.BO.I3.U.2, TO.BO.I3.U.4, TO.BO.I4.U.2, TO.BO.I4.U.4, 
+            TO.BO.LC1.M.1, TO.BO.LC1.M.2, TO.BO.LC1.M.4, TO.BO.LC2.M.1, TO.BO.LC2.M.2, TO.BO.LC2.M.3, TO.BO.LC2.M.5, TO.BO.LC3.M.1, TO.BO.LC3.M.5, 
+            TO.BO.LC4.M.1, TO.BO.LC4.M.2, TO.BO.LC4.M.3, TO.BO.LC4.M.5, TO.BO.R4.U.3, TO.BO.R4.U.4, TO.BO.R4.U.5, TO.BO.WL1.M.2, TO.BO.WL1.M.3, 
+            TO.BO.WL1.M.4, TO.BO.WL1.M.5, TO.BO.WL2.M.1, TO.BO.WL2.M.3, TO.BO.WL3.M.1, TO.BO.WL3.M.2, TO.BO.WL3.M.3, TO.BO.WL3.M.4, TO.BO.WL3.M.5, 
+            TO.BO.WL4.M.1, TO.BO.WL4.M.2, TO.BO.WL4.M.3, TO.BO.WL4.M.5
+    Los Angeles: TO.LA.COM.M.1, TO.LA.COM.M.2, TO.LA.COM.M.3, TO.LA.COM.M.4, TO.LA.GLO.M.2, TO.LA.GLO.M.5, TO.LA.HAR.M.4, TO.LA.MR1.M.1, TO.LA.MR1.M.2, 
+                 TO.LA.MR1.M.3, TO.LA.MR1.M.4, TO.LA.NWH.M.1, TO.LA.NWH.M.3, TO.LA.NWH.M.4, TO.LA.PEP.M.1, TO.LA.PEP.M.3, TO.LA.PEP.M.5, TO.LA.RID.M.1, 
+                 TO.LA.ROS.M.1, TO.LA.ROS.M.3, TO.LA.STC.M.3, TO.LA.STC.M.5, TO.LA.VNS.M.2, TO.LA.VNS.M.3, TO.LA.VNS.M.5, TO.LA.WHI.M.5, TO.LA.ZOO.M.1, 
+                 TO.LA.ZOO.M.3, TO.LA.ZOO.M.6
+    Minneapolis: TO.MN.L01-TO.U.2, TO.MN.L01-TO.U.4, TO.MN.L01-TO.U.5, TO.MN.L02-TO.M.1, TO.MN.L02-TO.M.3, TO.MN.L02-TO.M.4, TO.MN.L02-TO.U.1, 
+                 TO.MN.L02-TO.U.2, TO.MN.L02-TO.U.3, TO.MN.L02-TO.U.4, TO.MN.L03-TO.M.1, TO.MN.L03-TO.M.2, TO.MN.L03-TO.M.4, TO.MN.L03-TO.U.3, 
+                 TO.MN.L03-TO.U.4, TO.MN.L03-TO.U.5, TO.MN.L04-TO.M.2, TO.MN.L04-TO.M.4, TO.MN.L04-TO.M.5, TO.MN.L04-TO.U.1, TO.MN.L04-TO.U.3, 
+                 TO.MN.L04-TO.U.5, TO.MN.L05-TO.M.1, TO.MN.L05-TO.M.2, TO.MN.L05-TO.M.3, TO.MN.L05-TO.M.5, TO.MN.L05-TO.U.1, TO.MN.L05-TO.U.2, 
+                 TO.MN.L05-TO.U.3, TO.MN.L05-TO.U.4, TO.MN.L05-TO.U.5, TO.MN.L06-TO.M.2, TO.MN.L06-TO.M.3, TO.MN.L06-TO.M.5, TO.MN.L06-TO.U.2, 
+                 TO.MN.L06-TO.U.3, TO.MN.L06-TO.U.4, TO.MN.L06-TO.U.5, TO.MN.L07-TO.M.2, TO.MN.L07-TO.M.3, TO.MN.L07-TO.M.4, TO.MN.L07-TO.M.5, 
+                 TO.MN.L07-TO.U.1, TO.MN.L07-TO.U.2, TO.MN.L07-TO.U.3, TO.MN.L07-TO.U.5, TO.MN.L08-TO.M.1, TO.MN.L08-TO.M.2, TO.MN.L08-TO.M.4, 
+                 TO.MN.L08-TO.M.5, TO.MN.L08-TO.U.2, TO.MN.L08-TO.U.3, TO.MN.L08-TO.U.4, TO.MN.L08-TO.U.5, TO.MN.L09-TO.M.1, TO.MN.L09-TO.M.2, 
+                 TO.MN.L09-TO.M.4, TO.MN.L09-TO.M.5, TO.MN.L09-TO.U.2, TO.MN.L09-TO.U.4, TO.MN.L09-TO.U.5, TO.MN.L10-TO.M.1, TO.MN.L10-TO.M.3, 
+                 TO.MN.L10-TO.M.4, TO.MN.L10-TO.U.1, TO.MN.L10-TO.U.2, TO.MN.L10-TO.U.3, TO.MN.L10-TO.U.4, TO.MN.L11-TO.M.1, TO.MN.L11-TO.M.2, 
+                 TO.MN.L11-TO.M.3, TO.MN.L11-TO.M.5, TO.MN.L11-TO.U.1, TO.MN.L11-TO.U.3, TO.MN.L11-TO.U.4
+    Phoenix: TO.PX.ALA.M.2, TO.PX.ALA.M.3, TO.PX.ALA.M.4, TO.PX.ALA.M.5, TO.PX.BUF.M.1, TO.PX.BUF.M.2, TO.PX.CLA.M.1, TO.PX.COY.M.1, TO.PX.COY.M.3, 
+             TO.PX.COY.M.6, TO.PX.DF1.M.1, TO.PX.DF2.M.1, TO.PX.LAP.M.3, TO.PX.LAP.M.4, TO.PX.WES.M.1, TO.PX.WES.M.2
+Working on 1 group(s) of populations:
+    defaultgrp: Baltimore, Boston, Los Angeles, Minneapolis, Phoenix
+
+Polymorphic sites in Structure format will be written to '/home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/TO_metapop_catalog/populations_20_pct/populations.structure'
+Polymorphic sites in GenePop format will be written to '/home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/TO_metapop_catalog/populations_20_pct/populations.snps.genepop'
+SNPs and calls will be written in VCF format to '/home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/TO_metapop_catalog/populations_20_pct/populations.snps.vcf'
+Raw haplotypes will be written to '/home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/TO_metapop_catalog/populations_20_pct/populations.haplotypes.tsv'
+Population-level summary statistics will be written to '/home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/TO_metapop_catalog/populations_20_pct/populations.sumstats.tsv'
+Population-level haplotype summary statistics will be written to '/home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/TO_metapop_catalog/populations_20_pct/populations.hapstats.tsv'
+
+Processing data in batches:
+  * load a batch of catalog loci and apply filters
+  * compute SNP- and haplotype-wise per-population statistics
+  * write the above statistics in the output files
+  * export the genotypes/haplotypes in specified format(s)
+More details in '/home/jcoccia1/scr4_mavolio2/scratch_JC/metapop_catalogs/TO_metapop_catalog/populations_20_pct/populations.log.distribs'.
+
+Now processing...
+Batch 1 
+
+Removed 108910 loci that did not pass sample/population constraints from 111137 loci.
+Kept 2227 loci, composed of 847915 sites; 23930 of those sites were filtered, 1360 variant sites remained.
+Number of loci with PE contig: 2227.00 (100.0%);
+  Mean length of loci: 370.74bp (stderr 1.79);
+Number of loci with SE/PE overlap: 177.00 (7.9%);
+  Mean length of overlapping loci: 451.49bp (stderr 2.44); mean overlap: 20.60bp (stderr 0.23);
+Mean genotyped sites per locus: 372.57bp (stderr 1.81).
+
+Population summary statistics (more detail in populations.sumstats_summary.tsv):
+  Baltimore: 14.507 samples per locus; pi: 0.22091; all/variant/polymorphic sites: 828244/1360/1034; private alleles: 4
+  Boston: 14.97 samples per locus; pi: 0.25286; all/variant/polymorphic sites: 829708/1360/1181; private alleles: 47
+  Los Angeles: 7.4428 samples per locus; pi: 0.23884; all/variant/polymorphic sites: 826584/1355/902; private alleles: 3
+  Minneapolis: 20.676 samples per locus; pi: 0.22512; all/variant/polymorphic sites: 829708/1360/1148; private alleles: 12
+  Phoenix: 3.2449 samples per locus; pi: 0.19797; all/variant/polymorphic sites: 765896/1229/451; private alleles: 0
+Populations is done.

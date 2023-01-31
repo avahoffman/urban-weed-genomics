@@ -1,0 +1,39 @@
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/DS/catalog_7_7_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/DS/catalog_7_7_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/DS/catalog_7_7_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/ustacks/DS/DS.BO.R4.U.5' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/ustacks/DS/DS.BO.R4.U.5.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/ustacks/DS/DS.BO.R4.U.5.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/ustacks/DS/DS.BO.R4.U.5.alleles.tsv.gz
+Searching for sequence matches...
+28540 sample loci compared against the catalog containing 208837 loci.
+  2660 matching loci, 794 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  794 loci contained SNPs unaccounted for in the catalog and were excluded.
+  7108 total haplotypes examined from matching loci, 5585 verified.
+Searching for gapped alignments...
+Out of 28540 query loci, 26674 gapped alignments attempted.
+  4817 loci matched one catalog locus; 83829 total haplotypes examined, 13578 verified.
+  21857 loci matched no catalog locus;
+    23 loci matched more than one catalog locus and were excluded.
+    1815 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/DS/catalog_7_7_22/DS.BO.R4.U.5.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/DS/catalog_7_7_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/DS/catalog_7_7_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/DS/catalog_7_7_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/ustacks/DS/' [1 of 1]
+ Unable to open '/home/jcoccia1/scr4_mavolio2/scratch_JC/ustacks/DS/'
+Error: Unable to parse '/home/jcoccia1/scr4_mavolio2/scratch_JC/ustacks/DS/'
+Aborted.

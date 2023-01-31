@@ -1,0 +1,1251 @@
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BA.GA.U.4' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BA.GA.U.4.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BA.GA.U.4.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BA.GA.U.4.alleles.tsv.gz
+Searching for sequence matches...
+4 sample loci compared against the catalog containing 125959 loci.
+  0 matching loci, 0 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  0 loci contained SNPs unaccounted for in the catalog and were excluded.
+  0 total haplotypes examined from matching loci, 0 verified.
+Searching for gapped alignments...
+Out of 4 query loci, 4 gapped alignments attempted.
+  1 loci matched one catalog locus; 10 total haplotypes examined, 1 verified.
+  3 loci matched no catalog locus;
+    0 loci matched more than one catalog locus and were excluded.
+    0 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BA.GA.U.4.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BA.GA.U.5' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BA.GA.U.5.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BA.GA.U.5.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BA.GA.U.5.alleles.tsv.gz
+Searching for sequence matches...
+1 sample loci compared against the catalog containing 125959 loci.
+  0 matching loci, 0 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  0 loci contained SNPs unaccounted for in the catalog and were excluded.
+  0 total haplotypes examined from matching loci, 0 verified.
+Searching for gapped alignments...
+Out of 1 query loci, 1 gapped alignments attempted.
+  0 loci matched one catalog locus; 2 total haplotypes examined, 0 verified.
+  1 loci matched no catalog locus;
+    0 loci matched more than one catalog locus and were excluded.
+    0 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BA.GA.U.5.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BA.ML.U.5' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BA.ML.U.5.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BA.ML.U.5.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BA.ML.U.5.alleles.tsv.gz
+Searching for sequence matches...
+5801 sample loci compared against the catalog containing 125959 loci.
+  353 matching loci, 59 contained no verified haplotypes.
+  1 loci matched more than one catalog locus and were excluded.
+  58 loci contained SNPs unaccounted for in the catalog and were excluded.
+  901 total haplotypes examined from matching loci, 801 verified.
+Searching for gapped alignments...
+Out of 5801 query loci, 5507 gapped alignments attempted.
+  1664 loci matched one catalog locus; 16744 total haplotypes examined, 4303 verified.
+  3843 loci matched no catalog locus;
+    13 loci matched more than one catalog locus and were excluded.
+    340 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BA.ML.U.5.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.HC2.M.5' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.HC2.M.5.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.HC2.M.5.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.HC2.M.5.alleles.tsv.gz
+Searching for sequence matches...
+2698 sample loci compared against the catalog containing 125959 loci.
+  131 matching loci, 60 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  60 loci contained SNPs unaccounted for in the catalog and were excluded.
+  331 total haplotypes examined from matching loci, 211 verified.
+Searching for gapped alignments...
+Out of 2698 query loci, 2627 gapped alignments attempted.
+  139 loci matched one catalog locus; 10898 total haplotypes examined, 348 verified.
+  2488 loci matched no catalog locus;
+    17 loci matched more than one catalog locus and were excluded.
+    238 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.HC2.M.5.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.HC4.M.2' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.HC4.M.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.HC4.M.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.HC4.M.2.alleles.tsv.gz
+Searching for sequence matches...
+3716 sample loci compared against the catalog containing 125959 loci.
+  105 matching loci, 53 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  53 loci contained SNPs unaccounted for in the catalog and were excluded.
+  180 total haplotypes examined from matching loci, 96 verified.
+Searching for gapped alignments...
+Out of 3716 query loci, 3664 gapped alignments attempted.
+  84 loci matched one catalog locus; 10193 total haplotypes examined, 160 verified.
+  3580 loci matched no catalog locus;
+    3 loci matched more than one catalog locus and were excluded.
+    113 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.HC4.M.2.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.LC2.M.1' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.LC2.M.1.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.LC2.M.1.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.LC2.M.1.alleles.tsv.gz
+Searching for sequence matches...
+6790 sample loci compared against the catalog containing 125959 loci.
+  54 matching loci, 16 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  16 loci contained SNPs unaccounted for in the catalog and were excluded.
+  143 total haplotypes examined from matching loci, 110 verified.
+Searching for gapped alignments...
+Out of 6790 query loci, 6752 gapped alignments attempted.
+  81 loci matched one catalog locus; 29470 total haplotypes examined, 208 verified.
+  6671 loci matched no catalog locus;
+    2 loci matched more than one catalog locus and were excluded.
+    34 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.LC2.M.1.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.LC4.M.4' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.LC4.M.4.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.LC4.M.4.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.LC4.M.4.alleles.tsv.gz
+Searching for sequence matches...
+10362 sample loci compared against the catalog containing 125959 loci.
+  1026 matching loci, 648 contained no verified haplotypes.
+  18 loci matched more than one catalog locus and were excluded.
+  630 loci contained SNPs unaccounted for in the catalog and were excluded.
+  2565 total haplotypes examined from matching loci, 1061 verified.
+Searching for gapped alignments...
+Out of 10362 query loci, 9985 gapped alignments attempted.
+  253 loci matched one catalog locus; 42603 total haplotypes examined, 714 verified.
+  9732 loci matched no catalog locus;
+    46 loci matched more than one catalog locus and were excluded.
+    971 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.LC4.M.4.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.LC4.M.5' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.LC4.M.5.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.LC4.M.5.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.LC4.M.5.alleles.tsv.gz
+Searching for sequence matches...
+3104 sample loci compared against the catalog containing 125959 loci.
+  122 matching loci, 48 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  48 loci contained SNPs unaccounted for in the catalog and were excluded.
+  256 total haplotypes examined from matching loci, 165 verified.
+Searching for gapped alignments...
+Out of 3104 query loci, 3030 gapped alignments attempted.
+  74 loci matched one catalog locus; 8303 total haplotypes examined, 128 verified.
+  2956 loci matched no catalog locus;
+    7 loci matched more than one catalog locus and were excluded.
+    149 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.LC4.M.5.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.WL1.M.1' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.WL1.M.1.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.WL1.M.1.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.WL1.M.1.alleles.tsv.gz
+Searching for sequence matches...
+17514 sample loci compared against the catalog containing 125959 loci.
+  1098 matching loci, 526 contained no verified haplotypes.
+  2 loci matched more than one catalog locus and were excluded.
+  524 loci contained SNPs unaccounted for in the catalog and were excluded.
+  2629 total haplotypes examined from matching loci, 1481 verified.
+Searching for gapped alignments...
+Out of 17514 query loci, 16942 gapped alignments attempted.
+  523 loci matched one catalog locus; 65274 total haplotypes examined, 1416 verified.
+  16419 loci matched no catalog locus;
+    16 loci matched more than one catalog locus and were excluded.
+    958 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.BO.WL1.M.1.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ARR.U.3' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ARR.U.3.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ARR.U.3.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ARR.U.3.alleles.tsv.gz
+Searching for sequence matches...
+7567 sample loci compared against the catalog containing 125959 loci.
+  867 matching loci, 181 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  182 loci contained SNPs unaccounted for in the catalog and were excluded.
+  2511 total haplotypes examined from matching loci, 2116 verified.
+Searching for gapped alignments...
+Out of 7567 query loci, 6882 gapped alignments attempted.
+  2246 loci matched one catalog locus; 28080 total haplotypes examined, 7557 verified.
+  4636 loci matched no catalog locus;
+    23 loci matched more than one catalog locus and were excluded.
+    565 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ARR.U.3.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ARR.U.4' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ARR.U.4.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ARR.U.4.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ARR.U.4.alleles.tsv.gz
+Searching for sequence matches...
+1290 sample loci compared against the catalog containing 125959 loci.
+  24 matching loci, 4 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  4 loci contained SNPs unaccounted for in the catalog and were excluded.
+  48 total haplotypes examined from matching loci, 42 verified.
+Searching for gapped alignments...
+Out of 1290 query loci, 1270 gapped alignments attempted.
+  393 loci matched one catalog locus; 3273 total haplotypes examined, 793 verified.
+  877 loci matched no catalog locus;
+    8 loci matched more than one catalog locus and were excluded.
+    88 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ARR.U.4.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ARR.U.5' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ARR.U.5.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ARR.U.5.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ARR.U.5.alleles.tsv.gz
+Searching for sequence matches...
+8780 sample loci compared against the catalog containing 125959 loci.
+  795 matching loci, 131 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  131 loci contained SNPs unaccounted for in the catalog and were excluded.
+  1992 total haplotypes examined from matching loci, 1737 verified.
+Searching for gapped alignments...
+Out of 8780 query loci, 8116 gapped alignments attempted.
+  2401 loci matched one catalog locus; 27300 total haplotypes examined, 6443 verified.
+  5715 loci matched no catalog locus;
+    26 loci matched more than one catalog locus and were excluded.
+    537 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ARR.U.5.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.CAN.U.3' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.CAN.U.3.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.CAN.U.3.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.CAN.U.3.alleles.tsv.gz
+Searching for sequence matches...
+2 sample loci compared against the catalog containing 125959 loci.
+  0 matching loci, 0 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  0 loci contained SNPs unaccounted for in the catalog and were excluded.
+  0 total haplotypes examined from matching loci, 0 verified.
+Searching for gapped alignments...
+Out of 2 query loci, 2 gapped alignments attempted.
+  1 loci matched one catalog locus; 6 total haplotypes examined, 1 verified.
+  1 loci matched no catalog locus;
+    0 loci matched more than one catalog locus and were excluded.
+    0 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.CAN.U.3.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.CRI.U.3' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.CRI.U.3.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.CRI.U.3.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.CRI.U.3.alleles.tsv.gz
+Searching for sequence matches...
+1 sample loci compared against the catalog containing 125959 loci.
+  0 matching loci, 0 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  0 loci contained SNPs unaccounted for in the catalog and were excluded.
+  0 total haplotypes examined from matching loci, 0 verified.
+Searching for gapped alignments...
+Out of 1 query loci, 1 gapped alignments attempted.
+  1 loci matched one catalog locus; 4 total haplotypes examined, 2 verified.
+  0 loci matched no catalog locus;
+    0 loci matched more than one catalog locus and were excluded.
+    0 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.CRI.U.3.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.CRI.U.4' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.CRI.U.4.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.CRI.U.4.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.CRI.U.4.alleles.tsv.gz
+Searching for sequence matches...
+3 sample loci compared against the catalog containing 125959 loci.
+  0 matching loci, 0 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  0 loci contained SNPs unaccounted for in the catalog and were excluded.
+  0 total haplotypes examined from matching loci, 0 verified.
+Searching for gapped alignments...
+Out of 3 query loci, 3 gapped alignments attempted.
+  0 loci matched one catalog locus; 4 total haplotypes examined, 0 verified.
+  3 loci matched no catalog locus;
+    0 loci matched more than one catalog locus and were excluded.
+    0 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.CRI.U.4.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.CRI.U.5' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.CRI.U.5.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.CRI.U.5.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.CRI.U.5.alleles.tsv.gz
+Searching for sequence matches...
+2 sample loci compared against the catalog containing 125959 loci.
+  0 matching loci, 0 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  0 loci contained SNPs unaccounted for in the catalog and were excluded.
+  0 total haplotypes examined from matching loci, 0 verified.
+Searching for gapped alignments...
+Out of 2 query loci, 2 gapped alignments attempted.
+  0 loci matched one catalog locus; 8 total haplotypes examined, 0 verified.
+  2 loci matched no catalog locus;
+    1 loci matched more than one catalog locus and were excluded.
+    0 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.CRI.U.5.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ESM.M.1' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ESM.M.1.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ESM.M.1.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ESM.M.1.alleles.tsv.gz
+Searching for sequence matches...
+3256 sample loci compared against the catalog containing 125959 loci.
+  484 matching loci, 133 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  133 loci contained SNPs unaccounted for in the catalog and were excluded.
+  1042 total haplotypes examined from matching loci, 828 verified.
+Searching for gapped alignments...
+Out of 3256 query loci, 2905 gapped alignments attempted.
+  820 loci matched one catalog locus; 10777 total haplotypes examined, 2299 verified.
+  2085 loci matched no catalog locus;
+    15 loci matched more than one catalog locus and were excluded.
+    315 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ESM.M.1.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ESM.M.2' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ESM.M.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ESM.M.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ESM.M.2.alleles.tsv.gz
+Searching for sequence matches...
+2109 sample loci compared against the catalog containing 125959 loci.
+  96 matching loci, 13 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  13 loci contained SNPs unaccounted for in the catalog and were excluded.
+  237 total haplotypes examined from matching loci, 193 verified.
+Searching for gapped alignments...
+Out of 2109 query loci, 2026 gapped alignments attempted.
+  921 loci matched one catalog locus; 6038 total haplotypes examined, 2088 verified.
+  1105 loci matched no catalog locus;
+    15 loci matched more than one catalog locus and were excluded.
+    101 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ESM.M.2.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ESM.M.4' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ESM.M.4.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ESM.M.4.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ESM.M.4.alleles.tsv.gz
+Searching for sequence matches...
+3511 sample loci compared against the catalog containing 125959 loci.
+  670 matching loci, 160 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  160 loci contained SNPs unaccounted for in the catalog and were excluded.
+  1594 total haplotypes examined from matching loci, 1323 verified.
+Searching for gapped alignments...
+Out of 3511 query loci, 3001 gapped alignments attempted.
+  770 loci matched one catalog locus; 10312 total haplotypes examined, 2103 verified.
+  2231 loci matched no catalog locus;
+    15 loci matched more than one catalog locus and were excluded.
+    362 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ESM.M.4.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ESM.M.5' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ESM.M.5.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ESM.M.5.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ESM.M.5.alleles.tsv.gz
+Searching for sequence matches...
+15737 sample loci compared against the catalog containing 125959 loci.
+  2087 matching loci, 611 contained no verified haplotypes.
+  2 loci matched more than one catalog locus and were excluded.
+  609 loci contained SNPs unaccounted for in the catalog and were excluded.
+  6117 total haplotypes examined from matching loci, 4923 verified.
+Searching for gapped alignments...
+Out of 15737 query loci, 14263 gapped alignments attempted.
+  2858 loci matched one catalog locus; 53883 total haplotypes examined, 8965 verified.
+  11405 loci matched no catalog locus;
+    29 loci matched more than one catalog locus and were excluded.
+    1162 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.ESM.M.5.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MAD.M.1' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MAD.M.1.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MAD.M.1.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MAD.M.1.alleles.tsv.gz
+Searching for sequence matches...
+9444 sample loci compared against the catalog containing 125959 loci.
+  693 matching loci, 142 contained no verified haplotypes.
+  2 loci matched more than one catalog locus and were excluded.
+  140 loci contained SNPs unaccounted for in the catalog and were excluded.
+  1594 total haplotypes examined from matching loci, 1322 verified.
+Searching for gapped alignments...
+Out of 9444 query loci, 8893 gapped alignments attempted.
+  2446 loci matched one catalog locus; 27840 total haplotypes examined, 6054 verified.
+  6447 loci matched no catalog locus;
+    38 loci matched more than one catalog locus and were excluded.
+    480 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MAD.M.1.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MAD.M.2' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MAD.M.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MAD.M.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MAD.M.2.alleles.tsv.gz
+Searching for sequence matches...
+21616 sample loci compared against the catalog containing 125959 loci.
+  2019 matching loci, 642 contained no verified haplotypes.
+  1 loci matched more than one catalog locus and were excluded.
+  641 loci contained SNPs unaccounted for in the catalog and were excluded.
+  4992 total haplotypes examined from matching loci, 3786 verified.
+Searching for gapped alignments...
+Out of 21616 query loci, 20239 gapped alignments attempted.
+  2476 loci matched one catalog locus; 70228 total haplotypes examined, 7188 verified.
+  17763 loci matched no catalog locus;
+    35 loci matched more than one catalog locus and were excluded.
+    1228 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MAD.M.2.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MAD.M.4' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MAD.M.4.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MAD.M.4.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MAD.M.4.alleles.tsv.gz
+Searching for sequence matches...
+4002 sample loci compared against the catalog containing 125959 loci.
+  241 matching loci, 33 contained no verified haplotypes.
+  1 loci matched more than one catalog locus and were excluded.
+  32 loci contained SNPs unaccounted for in the catalog and were excluded.
+  552 total haplotypes examined from matching loci, 474 verified.
+Searching for gapped alignments...
+Out of 4002 query loci, 3794 gapped alignments attempted.
+  1414 loci matched one catalog locus; 11911 total haplotypes examined, 3505 verified.
+  2380 loci matched no catalog locus;
+    21 loci matched more than one catalog locus and were excluded.
+    234 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MAD.M.4.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MRC.U.2' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MRC.U.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MRC.U.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MRC.U.2.alleles.tsv.gz
+Searching for sequence matches...
+4 sample loci compared against the catalog containing 125959 loci.
+  0 matching loci, 0 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  0 loci contained SNPs unaccounted for in the catalog and were excluded.
+  0 total haplotypes examined from matching loci, 0 verified.
+Searching for gapped alignments...
+Out of 4 query loci, 4 gapped alignments attempted.
+  1 loci matched one catalog locus; 9 total haplotypes examined, 1 verified.
+  3 loci matched no catalog locus;
+    0 loci matched more than one catalog locus and were excluded.
+    1 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MRC.U.2.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MRC.U.3' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MRC.U.3.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MRC.U.3.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MRC.U.3.alleles.tsv.gz
+Searching for sequence matches...
+4 sample loci compared against the catalog containing 125959 loci.
+  0 matching loci, 0 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  0 loci contained SNPs unaccounted for in the catalog and were excluded.
+  0 total haplotypes examined from matching loci, 0 verified.
+Searching for gapped alignments...
+Out of 4 query loci, 4 gapped alignments attempted.
+  0 loci matched one catalog locus; 10 total haplotypes examined, 0 verified.
+  4 loci matched no catalog locus;
+    0 loci matched more than one catalog locus and were excluded.
+    1 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MRC.U.3.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MRC.U.4' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MRC.U.4.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MRC.U.4.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MRC.U.4.alleles.tsv.gz
+Searching for sequence matches...
+1 sample loci compared against the catalog containing 125959 loci.
+  0 matching loci, 0 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  0 loci contained SNPs unaccounted for in the catalog and were excluded.
+  0 total haplotypes examined from matching loci, 0 verified.
+Searching for gapped alignments...
+Out of 1 query loci, 1 gapped alignments attempted.
+  0 loci matched one catalog locus; 2 total haplotypes examined, 0 verified.
+  1 loci matched no catalog locus;
+    0 loci matched more than one catalog locus and were excluded.
+    0 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MRC.U.4.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MRC.U.5' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MRC.U.5.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MRC.U.5.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MRC.U.5.alleles.tsv.gz
+Searching for sequence matches...
+11 sample loci compared against the catalog containing 125959 loci.
+  0 matching loci, 0 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  0 loci contained SNPs unaccounted for in the catalog and were excluded.
+  0 total haplotypes examined from matching loci, 0 verified.
+Searching for gapped alignments...
+Out of 11 query loci, 11 gapped alignments attempted.
+  2 loci matched one catalog locus; 29 total haplotypes examined, 2 verified.
+  9 loci matched no catalog locus;
+    3 loci matched more than one catalog locus and were excluded.
+    1 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.MRC.U.5.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.PAR.M.2' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.PAR.M.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.PAR.M.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.PAR.M.2.alleles.tsv.gz
+Searching for sequence matches...
+2225 sample loci compared against the catalog containing 125959 loci.
+  133 matching loci, 23 contained no verified haplotypes.
+  2 loci matched more than one catalog locus and were excluded.
+  21 loci contained SNPs unaccounted for in the catalog and were excluded.
+  268 total haplotypes examined from matching loci, 222 verified.
+Searching for gapped alignments...
+Out of 2225 query loci, 2115 gapped alignments attempted.
+  1003 loci matched one catalog locus; 6277 total haplotypes examined, 2300 verified.
+  1112 loci matched no catalog locus;
+    20 loci matched more than one catalog locus and were excluded.
+    117 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.PAR.M.2.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.PAR.M.4' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.PAR.M.4.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.PAR.M.4.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.PAR.M.4.alleles.tsv.gz
+Searching for sequence matches...
+22016 sample loci compared against the catalog containing 125959 loci.
+  1343 matching loci, 359 contained no verified haplotypes.
+  3 loci matched more than one catalog locus and were excluded.
+  356 loci contained SNPs unaccounted for in the catalog and were excluded.
+  3475 total haplotypes examined from matching loci, 2783 verified.
+Searching for gapped alignments...
+Out of 22016 query loci, 21033 gapped alignments attempted.
+  2657 loci matched one catalog locus; 81740 total haplotypes examined, 8077 verified.
+  18376 loci matched no catalog locus;
+    39 loci matched more than one catalog locus and were excluded.
+    921 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.PAR.M.4.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VB1.U.2' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VB1.U.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VB1.U.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VB1.U.2.alleles.tsv.gz
+Searching for sequence matches...
+1717 sample loci compared against the catalog containing 125959 loci.
+  76 matching loci, 7 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  7 loci contained SNPs unaccounted for in the catalog and were excluded.
+  224 total haplotypes examined from matching loci, 217 verified.
+Searching for gapped alignments...
+Out of 1717 query loci, 1648 gapped alignments attempted.
+  741 loci matched one catalog locus; 5000 total haplotypes examined, 1805 verified.
+  907 loci matched no catalog locus;
+    7 loci matched more than one catalog locus and were excluded.
+    107 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VB1.U.2.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VER.U.1' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VER.U.1.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VER.U.1.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VER.U.1.alleles.tsv.gz
+Searching for sequence matches...
+0 sample loci compared against the catalog containing 125959 loci.
+  0 matching loci, 0 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  0 loci contained SNPs unaccounted for in the catalog and were excluded.
+  0 total haplotypes examined from matching loci, 0 verified.
+Searching for gapped alignments...
+/cm/local/apps/slurm/var/spool/job9595804/slurm_script: line 33: 44581 Segmentation fault      (core dumped) sstacks -c ~/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22 -s ~/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/"$p" -o ~/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22 -p 10
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VER.U.2' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VER.U.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VER.U.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VER.U.2.alleles.tsv.gz
+Searching for sequence matches...
+6 sample loci compared against the catalog containing 125959 loci.
+  1 matching loci, 0 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  0 loci contained SNPs unaccounted for in the catalog and were excluded.
+  1 total haplotypes examined from matching loci, 1 verified.
+Searching for gapped alignments...
+Out of 6 query loci, 5 gapped alignments attempted.
+  0 loci matched one catalog locus; 8 total haplotypes examined, 0 verified.
+  5 loci matched no catalog locus;
+    1 loci matched more than one catalog locus and were excluded.
+    0 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VER.U.2.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VER.U.5' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VER.U.5.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VER.U.5.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VER.U.5.alleles.tsv.gz
+Searching for sequence matches...
+2 sample loci compared against the catalog containing 125959 loci.
+  1 matching loci, 0 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  0 loci contained SNPs unaccounted for in the catalog and were excluded.
+  2 total haplotypes examined from matching loci, 2 verified.
+Searching for gapped alignments...
+Out of 2 query loci, 1 gapped alignments attempted.
+  0 loci matched one catalog locus; 2 total haplotypes examined, 0 verified.
+  1 loci matched no catalog locus;
+    0 loci matched more than one catalog locus and were excluded.
+    0 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VER.U.5.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VNH.M.2' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VNH.M.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VNH.M.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VNH.M.2.alleles.tsv.gz
+Searching for sequence matches...
+17002 sample loci compared against the catalog containing 125959 loci.
+  984 matching loci, 556 contained no verified haplotypes.
+  5 loci matched more than one catalog locus and were excluded.
+  551 loci contained SNPs unaccounted for in the catalog and were excluded.
+  2495 total haplotypes examined from matching loci, 1288 verified.
+Searching for gapped alignments...
+Out of 17002 query loci, 16575 gapped alignments attempted.
+  1596 loci matched one catalog locus; 75963 total haplotypes examined, 5133 verified.
+  14979 loci matched no catalog locus;
+    40 loci matched more than one catalog locus and were excluded.
+    1050 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VNH.M.2.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VNH.M.4' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VNH.M.4.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VNH.M.4.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VNH.M.4.alleles.tsv.gz
+Searching for sequence matches...
+34806 sample loci compared against the catalog containing 125959 loci.
+  2363 matching loci, 716 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  716 loci contained SNPs unaccounted for in the catalog and were excluded.
+  5090 total haplotypes examined from matching loci, 3839 verified.
+Searching for gapped alignments...
+Out of 34806 query loci, 33159 gapped alignments attempted.
+  2587 loci matched one catalog locus; 115990 total haplotypes examined, 6337 verified.
+  30572 loci matched no catalog locus;
+    32 loci matched more than one catalog locus and were excluded.
+    1449 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VNH.M.4.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VNH.M.5' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VNH.M.5.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VNH.M.5.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VNH.M.5.alleles.tsv.gz
+Searching for sequence matches...
+21477 sample loci compared against the catalog containing 125959 loci.
+  1625 matching loci, 523 contained no verified haplotypes.
+  4 loci matched more than one catalog locus and were excluded.
+  519 loci contained SNPs unaccounted for in the catalog and were excluded.
+  4275 total haplotypes examined from matching loci, 3254 verified.
+Searching for gapped alignments...
+Out of 21477 query loci, 20375 gapped alignments attempted.
+  2283 loci matched one catalog locus; 68424 total haplotypes examined, 6701 verified.
+  18092 loci matched no catalog locus;
+    29 loci matched more than one catalog locus and were excluded.
+    1028 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.LA.VNH.M.5.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L05-LS.U.3' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L05-LS.U.3.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L05-LS.U.3.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L05-LS.U.3.alleles.tsv.gz
+Searching for sequence matches...
+4100 sample loci compared against the catalog containing 125959 loci.
+  8 matching loci, 3 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  3 loci contained SNPs unaccounted for in the catalog and were excluded.
+  18 total haplotypes examined from matching loci, 11 verified.
+Searching for gapped alignments...
+Out of 4100 query loci, 4095 gapped alignments attempted.
+  2056 loci matched one catalog locus; 15848 total haplotypes examined, 6771 verified.
+  2039 loci matched no catalog locus;
+    34 loci matched more than one catalog locus and were excluded.
+    303 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L05-LS.U.3.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L05-LS.U.4' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L05-LS.U.4.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L05-LS.U.4.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L05-LS.U.4.alleles.tsv.gz
+Searching for sequence matches...
+1666 sample loci compared against the catalog containing 125959 loci.
+  1 matching loci, 1 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  1 loci contained SNPs unaccounted for in the catalog and were excluded.
+  1 total haplotypes examined from matching loci, 0 verified.
+Searching for gapped alignments...
+Out of 1666 query loci, 1666 gapped alignments attempted.
+  839 loci matched one catalog locus; 5047 total haplotypes examined, 2003 verified.
+  827 loci matched no catalog locus;
+    10 loci matched more than one catalog locus and were excluded.
+    103 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L05-LS.U.4.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L05-LS.U.5' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L05-LS.U.5.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L05-LS.U.5.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L05-LS.U.5.alleles.tsv.gz
+Searching for sequence matches...
+17334 sample loci compared against the catalog containing 125959 loci.
+  50 matching loci, 25 contained no verified haplotypes.
+  1 loci matched more than one catalog locus and were excluded.
+  24 loci contained SNPs unaccounted for in the catalog and were excluded.
+  87 total haplotypes examined from matching loci, 46 verified.
+Searching for gapped alignments...
+Out of 17334 query loci, 17309 gapped alignments attempted.
+  4681 loci matched one catalog locus; 54673 total haplotypes examined, 11377 verified.
+  12628 loci matched no catalog locus;
+    27 loci matched more than one catalog locus and were excluded.
+    1335 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L05-LS.U.5.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L07-LS.U.5' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L07-LS.U.5.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L07-LS.U.5.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L07-LS.U.5.alleles.tsv.gz
+Searching for sequence matches...
+7636 sample loci compared against the catalog containing 125959 loci.
+  953 matching loci, 262 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  262 loci contained SNPs unaccounted for in the catalog and were excluded.
+  2269 total haplotypes examined from matching loci, 1801 verified.
+Searching for gapped alignments...
+Out of 7636 query loci, 6946 gapped alignments attempted.
+  1962 loci matched one catalog locus; 22233 total haplotypes examined, 5467 verified.
+  4984 loci matched no catalog locus;
+    20 loci matched more than one catalog locus and were excluded.
+    572 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L07-LS.U.5.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L08-LS.U.1' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L08-LS.U.1.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L08-LS.U.1.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L08-LS.U.1.alleles.tsv.gz
+Searching for sequence matches...
+1615 sample loci compared against the catalog containing 125959 loci.
+  60 matching loci, 10 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  10 loci contained SNPs unaccounted for in the catalog and were excluded.
+  109 total haplotypes examined from matching loci, 88 verified.
+Searching for gapped alignments...
+Out of 1615 query loci, 1565 gapped alignments attempted.
+  728 loci matched one catalog locus; 4686 total haplotypes examined, 1691 verified.
+  837 loci matched no catalog locus;
+    9 loci matched more than one catalog locus and were excluded.
+    100 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L08-LS.U.1.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L08-LS.U.2' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L08-LS.U.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L08-LS.U.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L08-LS.U.2.alleles.tsv.gz
+Searching for sequence matches...
+8794 sample loci compared against the catalog containing 125959 loci.
+  782 matching loci, 162 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  162 loci contained SNPs unaccounted for in the catalog and were excluded.
+  1732 total haplotypes examined from matching loci, 1457 verified.
+Searching for gapped alignments...
+Out of 8794 query loci, 8174 gapped alignments attempted.
+  2390 loci matched one catalog locus; 26892 total haplotypes examined, 6190 verified.
+  5784 loci matched no catalog locus;
+    28 loci matched more than one catalog locus and were excluded.
+    530 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L08-LS.U.2.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L10-LS.U.2' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L10-LS.U.2.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L10-LS.U.2.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L10-LS.U.2.alleles.tsv.gz
+Searching for sequence matches...
+5873 sample loci compared against the catalog containing 125959 loci.
+  772 matching loci, 152 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  152 loci contained SNPs unaccounted for in the catalog and were excluded.
+  2095 total haplotypes examined from matching loci, 1798 verified.
+Searching for gapped alignments...
+Out of 5873 query loci, 5253 gapped alignments attempted.
+  1927 loci matched one catalog locus; 20134 total haplotypes examined, 6520 verified.
+  3326 loci matched no catalog locus;
+    20 loci matched more than one catalog locus and were excluded.
+    458 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L10-LS.U.2.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L11-LS.U.1' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L11-LS.U.1.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L11-LS.U.1.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L11-LS.U.1.alleles.tsv.gz
+Searching for sequence matches...
+17743 sample loci compared against the catalog containing 125959 loci.
+  2191 matching loci, 529 contained no verified haplotypes.
+  0 loci matched more than one catalog locus and were excluded.
+  529 loci contained SNPs unaccounted for in the catalog and were excluded.
+  4689 total haplotypes examined from matching loci, 3795 verified.
+Searching for gapped alignments...
+Out of 17743 query loci, 16084 gapped alignments attempted.
+  2930 loci matched one catalog locus; 50667 total haplotypes examined, 7510 verified.
+  13154 loci matched no catalog locus;
+    24 loci matched more than one catalog locus and were excluded.
+    1109 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.MN.L11-LS.U.1.matches.tsv.gz
+
+sstacks is done.
+Searching for matches by sequence identity...
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/catalog.alleles.tsv.gz
+Populating kmer dictionary for exact matches...done.
+Populating kmer dictionary for gapped alignments...done.
+
+Processing sample '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.PX.PAL.M.5' [1 of 1]
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.PX.PAL.M.5.tags.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.PX.PAL.M.5.snps.tsv.gz
+  Parsing /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.PX.PAL.M.5.alleles.tsv.gz
+Searching for sequence matches...
+3875 sample loci compared against the catalog containing 125959 loci.
+  167 matching loci, 66 contained no verified haplotypes.
+  3 loci matched more than one catalog locus and were excluded.
+  63 loci contained SNPs unaccounted for in the catalog and were excluded.
+  398 total haplotypes examined from matching loci, 265 verified.
+Searching for gapped alignments...
+Out of 3875 query loci, 3774 gapped alignments attempted.
+  86 loci matched one catalog locus; 11950 total haplotypes examined, 205 verified.
+  3688 loci matched no catalog locus;
+    10 loci matched more than one catalog locus and were excluded.
+    156 loci contained SNPs unaccounted for in the catalog and were excluded.
+    0 loci had no verified haplotypes.
+    0 loci had inconsistent alignments to a catalog locus and were excluded.
+Outputing to file /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/LS/catalog_7_13_22/LS.PX.PAL.M.5.matches.tsv.gz
+
+sstacks is done.

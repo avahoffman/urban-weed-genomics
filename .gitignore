@@ -41,7 +41,7 @@ vignettes/*.pdf
 
 # Other
 *.DS_Store
-data/*
+data_archive/*
 figures/*.pdf
 Notes.Rmd
 archive/*
