@@ -1,4 +1,5 @@
 # SIMULATED AA plots (not real data - useful for presenting this work to lay audience)
+# Simulated archetype plots for powerpoint presentation / demos
 
 library(tidyverse)
 library(ggplot2)
@@ -50,8 +51,8 @@ make_simulated_archetypes_plot <- function(out_file,
   names(grp.labs) <- k_
   my_pal <- RColorBrewer::brewer.pal(n = 8, name = "Set1")
   
-  ggplot(data = long_d, aes(x = sample, y = value, fill = name)) +
-    geom_col(width = 1.1, color = NA) +
+  ggplot(data = long_d, aes(x = sample, y = value, fill = name, group = name)) +
+    geom_col(width = 1, color = NA) +
     facet_nested(
       k ~ breed,
       scales = "free_x",
@@ -85,3 +86,7 @@ make_simulated_archetypes_plot <- function(out_file,
          width = width,
          height = height)
 }
+
+# Simulated archetype plots for presentation / demos
+make_simulated_archetypes_plot(out_file = "extra/figures/simulated_admixture.png")
+make_simulated_archetypes_plot(out_file = "extra/figures/simulated_structure.png", admixed = F)
