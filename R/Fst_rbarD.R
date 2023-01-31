@@ -4,17 +4,17 @@ library(poppr)
 
 read_dat <- function() {
   CD <-
-    read.genepop("data_archive/SNP_data/by-species/CD/populations_20_pct/populations.snps.gen")
+    read.genepop("SNP_data/CD/populations_20_pct/populations.snps.gen")
   DS <-
-    read.genepop("data_archive/SNP_data/by-species/DS/populations_20_pct/populations.snps.gen")
+    read.genepop("SNP_data/DS/populations_20_pct/populations.snps.gen")
   EC <-
-    read.genepop("data_archive/SNP_data/by-species/EC/populations_20_pct/populations.snps.gen")
+    read.genepop("SNP_data/EC/populations_20_pct/populations.snps.gen")
   LS <-
-    read.genepop("data_archive/SNP_data/by-species/LS/populations_20_pct/populations.snps.gen")
+    read.genepop("SNP_data/LS/populations_20_pct/populations.snps.gen")
   PA <-
-    read.genepop("data_archive/SNP_data/by-species/PA/populations_20_pct/populations.snps.gen")
+    read.genepop("SNP_data/PA/populations_20_pct/populations.snps.gen")
   TO <-
-    read.genepop("data_archive/SNP_data/by-species/TO/populations_20_pct/populations.snps.gen")
+    read.genepop("SNP_data/TO/populations_20_pct/populations.snps.gen")
   
   genind_ <- list(
     "CD" = CD,
