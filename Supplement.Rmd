@@ -815,6 +815,12 @@ iterate through a subset of the folders (city-species combinations).
 
 # Appendix {#appendix-books}
 
+## `SessionInfo()`
+
+```{r}
+sessionInfo()
+```
+
 ## File Organization {#file-organization-bookmark_tabs}
 
 All data files for the Macrosystems project are permanently stored under
