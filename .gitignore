@@ -47,6 +47,7 @@ Supplement_files/*
 
 # Large and/or personal files
 data_archive/*
+spatial_data/*
 SNP_data/*
 figures/*.pdf
 Notes.Rmd
