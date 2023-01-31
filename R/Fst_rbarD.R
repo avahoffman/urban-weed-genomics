@@ -32,12 +32,16 @@ read_dat <- function() {
 calc_fst <- function() {
   read_dat()
   
+  # Only EC and LS are reliably diploid
+  ploidy_ <- c(FALSE, FALSE, TRUE, TRUE, FALSE, FALSE)
+  
   fst_dat <- tibble::tibble()
   # Loop through species
   for (i in 1:6) {
     fst_dat <- fst_dat %>% rbind(tibble::tibble(
     "spp" = names(genind_)[i],
-    "Fst" = round(wc(genind_[[i]])$FST, 3)
+    "Diploid" = ploidy_[i],
+    "Fst" = round(wc(genind_[[i]], diploid = ploidy_[i])$FST, 3)
     ))
   }
   
