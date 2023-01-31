@@ -41,11 +41,14 @@ vignettes/*.pdf
 
 # Other
 *.DS_Store
+
+# Rendering intermediate files
+Supplement_files/*
+
+# Large and/or personal files
 data_archive/*
+SNP_data/*
 figures/*.pdf
 Notes.Rmd
 archive/*
 *.pptx
-bash/clone_filter.52618524.out
-Supplement_files/*
-
