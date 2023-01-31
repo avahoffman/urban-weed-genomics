@@ -2,11 +2,11 @@
 title: "Supplementary Information" 
 author: "Ava Hoffman, Jenny Cocciardi" 
 output: 
-  pdf_document: 
-    toc: true 
   md_document: 
     variant: gfm
     toc: true
+  pdf_document: 
+    toc: true 
 urlcolor: blue 
 editor_options: 
   markdown:
@@ -877,6 +877,47 @@ knitr::kable(
   format = "markdown",
   caption = "rbarD statistics for species and nested populations in this study."
 )
+```
+
+# Map of samples
+
+## Trim spatial files
+
+From the USGS:
+
+> The U.S. Geological Survey (USGS), in partnership with several federal agencies,
+has developed and released four National Land Cover Database (NLCD) products over
+the past two decades: NLCD 1992, 2001, 2006, and 2011. This one is for data from
+2016 and describes urban imperviousness.
+
+> https://www.mrlc.gov/data/type/urban-imperviousness
+
+> NLCD imperviousness products represent urban impervious surfaces as a percentage of
+developed surface over every 30-meter pixel in the United States. NLCD 2016 updates all
+previously released versions of impervious products for CONUS (NLCD 2001, NLCD 2006,
+NLCD 2011) along with a new date of impervious surface for 2016. New for NLCD 2016 is
+an impervious surface descriptor layer. This descriptor layer identifies types of roads,
+core urban areas, and energy production sites for each impervious pixel to allow deeper
+analysis of developed features.
+
+First, we trimmed the large data. This makes a smaller `.rds` file for each city.
+
+```{r trim_spatial_1, message=FALSE}
+source("R/trim_NLCD_spatial_data.R")
+```
+
+```{r trim_spatial_2, eval = FALSE, message=FALSE}
+create_spatial_rds_files()
+```
+
+Next, we made plots for each city's sampling locations. Note that these only include sites that had viable SNPs.
+
+```{r plot_map_1, message=FALSE}
+source("R/plot_map_of_samples.R")
+```
+
+```{r plot_map_2, eval = FALSE, message=FALSE}
+make_all_urban_site_plots()
 ```
 
 # Appendix {#appendix-books}
