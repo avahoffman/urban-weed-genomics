@@ -76,9 +76,11 @@
     - <a href="#step-11b---city-level-population-analysis"
       id="toc-step-11b---city-level-population-analysis">Step 11b - City Level
       Population Analysis</a>
-- <a href="#file-organization-bookmark_tabs"
-  id="toc-file-organization-bookmark_tabs">File Organization</a>
 - <a href="#appendix-books" id="toc-appendix-books">Appendix</a>
+  - <a href="#sessioninfo"
+    id="toc-sessioninfo"><code>SessionInfo()</code></a>
+  - <a href="#file-organization-bookmark_tabs"
+    id="toc-file-organization-bookmark_tabs">File Organization</a>
   - <a href="#aspera-transfer-file-names"
     id="toc-aspera-transfer-file-names">Aspera Transfer File Names</a>
   - <a href="#clone_filter-file-names"
@@ -595,27 +597,10 @@ sample in the output directory:
 Multiple versions of the `05-ustacks_n.sh` script can be run in parallel
 (simply replace n in the three files above with the correct number).
 
-A small number of samples were discarded at this stage as the `ustacks`
-tool was unable to form any primary stacks corresponding to loci:
-
-| Sample        | City        |
-|:--------------|:------------|
-| CD.BA.DHI.U.1 | Baltimore   |
-| CD.BA.DHI.U.4 | Baltimore   |
-| CD.BA.DHI.U.5 | Baltimore   |
-| LS.BO.I3.U.1  | Boston      |
-| LS.LA.CAN.U.2 | Los Angeles |
-| LS.LA.CAN.U.5 | Los Angeles |
-| LS.LA.CRI.U.1 | Los Angeles |
-| LS.LA.MAR.U.1 | Los Angeles |
-| LS.LA.MAR.U.3 | Los Angeles |
-| PA.BA.PSP.M.1 | Baltimore   |
-| TO.BA.DHI.U.1 | Baltimore   |
-| TO.BA.DHI.U.3 | Baltimore   |
-| TO.BA.DHI.U.4 | Baltimore   |
-
-Samples discarded at the `ustacks` stage (unable to form any primary
-stacks).
+A small number of samples (13) were discarded at this stage as the
+`ustacks` tool was unable to form any primary stacks corresponding to
+loci. See
+[output/ustacks-discarded_samples.csv](output/ustacks-discarded_samples.csv).
 
 ### Step 5c - Correct File Names
 
@@ -665,7 +650,7 @@ catalog. This involves a few steps:
 Files can be found in the `06_cstacks/` directory.
 
 `cstacks` builds the locus catalog from all the samples specified. The
-accompanying script, `06-cstacks.sh` is relatively simple since it
+accompanying script, `cstacks_SPECIES.sh` is relatively simple since it
 points to the directory containing all the sample files. It follows this
 format to point to that directory:
 
@@ -684,9 +669,9 @@ The tricky thing is ensuring enough compute memory to run the entire
 process successfully. There is probably space to optimize this process.
 
 The `cstacks` method uses a “population map” file, which in this project
-is `06-cstacks_popmap.txt`. This file specifys which samples to build
-the catalog from and categorizes them into your ‘populations’, or in
-this case, cities using two tab-delimited columns, e.g.:
+is `cstacks_popmap_SPECIES.txt`. This file specifies which samples to
+build the catalog from and categorizes them into your ‘populations’, or
+in this case, cities using two tab-delimited columns, e.g.:
 
     DS.BA.GA.U.1    Baltimore
     DS.BA.GA.U.2    Baltimore
@@ -992,12 +977,14 @@ Subset of samples used in SNP catalog creation.
 Files can be found in the `07_sstacks/` directory.
 
 All samples in the population (or all samples you want to include in the
-analysis) are matched against the catalog produced in
-[`cstacks`](#step-6---cstacks) with `sstacks`, run in script
-`07-sstacks.sh`. It runs off of the samples based in the output
-directory *and* the listed samples in `07-sstacks_samples.txt`, so make
-sure all your files (sample and catalog, etc.) are there and match.
-`07-sstacks_samples.txt` takes the form:
+analysis) are matched against the catalog produced in\[`cstacks`\]
+(#step-6—cstacks) with `sstacks`, run in script `stacks_SPECIES.sh` and
+`stacks_SPECIES_additional.sh`. It runs off of the samples based in the
+output directory *and* the listed samples in
+`sstacks_samples_SPECIES.txt` and
+`sstacks_samples_SPECIES_additional.txt` (respectively), so make sure
+all your files (sample and catalog, etc.) are there and match.
+`sstacks_samples_SPECIES.txt` takes the form:
 
     DS.BA.GA.U.1
     DS.BA.GA.U.2
@@ -1020,16 +1007,16 @@ map text file to specify which samples to include in the analysis. As
 such, a new population map (that differs from `06-cstacks_popmap.txt`)
 should be created that includes all samples (including those used to
 create your catalog) that you want to include in the analysis. This file
-will include the same samples specified in `07-sstacks_samples.txt` with
-a colomn specifying population. Here, this file is
-`08-tsv2bam_popmap.txt`.
+will include the same samples specified in `sstacks_samples_SPECIES.txt`
+with a colomn specifying population. Here, this file is
+`popmap_SPECIES.txt`.
 
-We run `tsv2bam` using the script `08-tsv2bam.sh`.
+We run `tsv2bam` using the script `tsv2bam_SPECIES.sh`.
 
 This is the step at which it’s usually discovered that some samples are
 bad(don’t have any useable matches to the catalog). These samples were
-excluded from `08-tsv2bam_popmap.txt`. For example we might simply cut
-out the following rows:
+excluded from `popmap_SPECIES.txt`. For example we might simply cut out
+the following rows:
 
     DS.MN.L10-DS.M.4    Minneapolis
     DS.MN.L01-DS.M.4    Minneapolis
@@ -1099,8 +1086,8 @@ Samples discarded at the `tsv2bam` stage of the Stacks pipeline.
 
 Files can be found in the `09_gstacks/` directory.
 
-The script `09-gstacks.sh` also uses the population map specified in
-[Step 8](#step-8---tsv2bam), `08-tsv2bam_popmap.txt`. The `gstacks`
+The script `gstacks_SPECIES.sh` also uses the population map specified
+in [Step 8](#step-8---tsv2bam), `popmap_SPECIES.txt`. The `gstacks`
 program aligns the paired-end reads and assembles the paired-end contigs
 and then calls SNPs.
 
@@ -1109,17 +1096,19 @@ Produces the following:
 - `catalog.fa.gz` : consensus catalog loci, contains the consensus
   sequence for each locus as produced by `gstacks` in a standard FASTA
   file
-- `catalog.calls` : per-nucleotide genotypes, contains the output of the
-  SNP calling model for each nucleotide in the analysis
+- `catalog.calls` : per-nucleotide genotypes, contains the output of
 
 ## Step 10 - Metapopulation summaries with `populations`
 
 Files can be found in the `10_populations/` directory.
 
-The populations program will use the script `10-population.sh` and the
-population map specified in [Step 8](#step-8---tsv2bam)
-(`08-tsv2bam_popmap.txt`) to calculate population-level summary
-statistics.
+The populations program will use the script `species_populations.sh` and
+the population maps specified in [Step
+9](#step-9---metapopulation-snp-calling-with-gstacks)
+(`popmap_SPECIES.txt`) to calculate population-level summary statistics.
+Specifically, the script iterates through all species and several levels
+of the parameter `--min-samples-overall`, the minimum percentage of
+individuals across populations required to process a locus
 
 You will most likely run the populations program multiple times if you
 are looking at different ‘sub-populations’. A new directory should be
@@ -1127,6 +1116,17 @@ created and the population program should run out of that directory for
 each iteration of the population program. Alternativley, you can specify
 a new directory as the output folder in the script using the command
 `-O`.
+
+Ultimately, the key parameters we used for running `populations` were as
+follows:
+
+- `--write-random-snp`: restrict data analysis to one random SNP per
+  locus
+
+- `--min-samples-overall`: 20 - locus must be in 20% of individuals
+
+- `--min-maf`: 0.05 - minimum minor allele frequency required to process
+  a nucleotide site at a locus
 
 ## Step 11 - Examine Within-city Catalogs and Populations
 
@@ -1195,7 +1195,47 @@ parameter permutation to its own new directory. This script uses the
 doing all folders by default. This is convenient if you only want to
 iterate through a subset of the folders (city-species combinations).
 
-# File Organization
+# Appendix
+
+## `SessionInfo()`
+
+``` r
+sessionInfo()
+```
+
+    ## R version 4.2.2 (2022-10-31)
+    ## Platform: aarch64-apple-darwin20 (64-bit)
+    ## Running under: macOS Big Sur 11.7
+    ## 
+    ## Matrix products: default
+    ## BLAS:   /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRblas.0.dylib
+    ## LAPACK: /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRlapack.dylib
+    ## 
+    ## locale:
+    ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+    ## 
+    ## attached base packages:
+    ## [1] stats     graphics  grDevices utils     datasets  methods   base     
+    ## 
+    ## other attached packages:
+    ## [1] dplyr_1.0.10   magrittr_2.0.3 tidyr_1.2.1    ggplot2_3.4.0 
+    ## 
+    ## loaded via a namespace (and not attached):
+    ##  [1] highr_0.9         pillar_1.8.1      compiler_4.2.2    formatR_1.12     
+    ##  [5] tools_4.2.2       bit_4.0.5         digest_0.6.30     evaluate_0.18    
+    ##  [9] lifecycle_1.0.3   tibble_3.1.8      gtable_0.3.1      pkgconfig_2.0.3  
+    ## [13] rlang_1.0.6       cli_3.4.1         DBI_1.1.3         rstudioapi_0.14  
+    ## [17] parallel_4.2.2    yaml_2.3.6        xfun_0.35         fastmap_1.1.0    
+    ## [21] withr_2.5.0       stringr_1.4.1     knitr_1.41        systemfonts_1.0.4
+    ## [25] hms_1.1.2         generics_0.1.3    vctrs_0.5.1       bit64_4.0.5      
+    ## [29] grid_4.2.2        tidyselect_1.2.0  glue_1.6.2        R6_2.5.1         
+    ## [33] textshaping_0.3.6 fansi_1.0.3       vroom_1.6.0       rmarkdown_2.18   
+    ## [37] farver_2.1.1      tzdb_0.3.0        readr_2.1.3       purrr_0.3.5      
+    ## [41] ellipsis_0.3.2    scales_1.2.1      htmltools_0.5.3   assertthat_0.2.1 
+    ## [45] colorspace_2.0-3  labeling_0.4.2    ragg_1.2.4        utf8_1.2.2       
+    ## [49] stringi_1.7.8     munsell_0.5.0     crayon_1.5.2
+
+## File Organization
 
 All data files for the Macrosystems project are permanently stored under
 Meghan Avolio’s group resources in the Johns Hopkins University Rockfish
@@ -1263,8 +1303,6 @@ following subdirectories:
   - Each folder also contains the relevant ustacks and stacks pipeline
     scripts and output files (i.e., from `cstacks`, `gstacks`, `stacks`,
     `tsv2bam`, and `populations`),
-
-# Appendix
 
 ## Aspera Transfer File Names
 

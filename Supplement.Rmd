@@ -2,11 +2,11 @@
 title: "Supplementary Information" 
 author: "Ava Hoffman, Jenny Cocciardi" 
 output: 
-  pdf_document: 
-    toc: true 
   md_document: 
     variant: gfm
     toc: true
+  pdf_document: 
+    toc: true 
 urlcolor: blue 
 editor_options: 
   markdown:
