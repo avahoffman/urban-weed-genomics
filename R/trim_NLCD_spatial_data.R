@@ -24,6 +24,7 @@ library(raster)
 library(stringr)
 library(tidyr)
 library(readr)
+library(dplyr)
 
 data_projection_settings <- 
   "+proj=longlat +datum=WGS84 +no_defs"
@@ -71,11 +72,14 @@ trim_site_data <-
           c(city_abbv, site_abbv, management_type),
           sep = ".",
           remove = F
-        )
+        ) %>% 
+        dplyr::mutate(site_comb = str_replace(site_comb, " ", "_"))
       
       sitedata <-
         filter(sitedata,
-               site_comb %in% c(final_sites_to_use, "MN.L01-TO PA.M"))
+               site_comb %in% c(final_sites_to_use)) %>% 
+        left_join(final_samples %>% group_by(site) %>% count(),
+                  by = c("site_comb" = "site"))
       
       nrow(sitedata)
     }
