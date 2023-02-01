@@ -923,7 +923,9 @@ make_all_urban_site_plots()
 
 # Archetypal analysis
 
-...
+We performed archetypal analysis following https://github.com/AI-sandbox/archetypal-analysis.
+
+
 
 # Appendix {#appendix-books}
 
