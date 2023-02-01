@@ -30,13 +30,19 @@ plot_urban_cover_and_sites <-
     # Crop the margins
     figure_margins <-
         raster::extent(
-          xmin(sites) * 1.0001,
-          xmax(sites) * 0.9999,
-          ymin(sites) * 0.9999,
-          ymax(sites) * 1.0001
+          xmin(sites) * 1.0003,
+          xmax(sites) * 0.9997,
+          ymin(sites) * 0.9997,
+          ymax(sites) * 1.0003
         )
     cr <- crop(urban_data, figure_margins)
     site_points <- sites
+    
+    # !! Dodging the points a bit so that the sampling location is more on the point 
+    # of the triangle point rather than the center, when plotted.
+    range_factor <- ( max(site_points@data$lat) - min(site_points@data$lat) ) / 500
+    site_points@data$lat <- site_points@data$lat+(range_factor*site_points@data$n)
+    
     coords <- xyFromCell(cr, seq_len(ncell(cr)))
     urban_df <- stack(as.data.frame(getValues(cr)))
     names(urban_df) <- c('value', 'variable')
@@ -56,16 +62,20 @@ plot_urban_cover_and_sites <-
           color = value
         )
       ) +
-      coord_fixed(1.4) + #prevents weird warping of map due to tile size
+      coord_fixed(1.1) + #prevents weird warping of map due to tile size
       scale_fill_viridis(option = "A") +
       scale_color_viridis(option = "A") + #prevents white borders on tile
       geom_point(
-        data = as.data.frame(site_points@coords),
-        aes(x = long, y = lat),
+        data = as.data.frame(site_points@data),
+        aes(x = long, y = lat, size = n),
         color = "black",
         fill = "white",
-        size = 6,
+        #size = 6,
         shape = 25
+      ) +
+      scale_size_binned_area(
+        limits = c(0, 25),
+        breaks = c(1, 5, 15)
       ) +
       theme_map() +
       ggtitle(label = as.character(as.factor(site_points@data$city[1]))) +
@@ -73,13 +83,13 @@ plot_urban_cover_and_sites <-
              color = guide_legend(title = "% Urban")) +
       theme(plot.title = element_text(
         hjust = 0.5,
-        size = 30,
+        size = 20,
         vjust = 0
-      ))
+      )) 
     
     gg
     ggsave(paste0("figures/sampling_map/sites_", city, ".png"),
-           dpi = "print")
+           dpi = "screen")
     return(gg)
   }
 
@@ -88,19 +98,44 @@ make_all_urban_site_plots <-
   function() {
     # This function serves as a wrapper to execute all of the cover plots
     
-    plot_urban_cover_and_sites(
+    g1 <- plot_urban_cover_and_sites(
       readr::read_rds("spatial_data/trimmed_spatial_BA.rds")
-    )
-    plot_urban_cover_and_sites(
+    ) + theme(plot.margin = unit(c(0, 0, -0.3, 0), "cm"))
+    g2 <- plot_urban_cover_and_sites(
       readr::read_rds("spatial_data/trimmed_spatial_BO.rds")
-    )
-    plot_urban_cover_and_sites(
+    ) + theme(plot.margin = unit(c(0, 0, -0.3, 0), "cm"))
+    g3 <- plot_urban_cover_and_sites(
       readr::read_rds("spatial_data/trimmed_spatial_LA.rds")
-    )
-    plot_urban_cover_and_sites(
+    ) + theme(plot.margin = unit(c(0, 0, -0.3, 0), "cm"))
+    g4 <- plot_urban_cover_and_sites(
       readr::read_rds("spatial_data/trimmed_spatial_MN.rds")
-    )
-    plot_urban_cover_and_sites(
+    ) + theme(plot.margin = unit(c(-0.3, 0, 0, 0), "cm"))
+    g5 <- plot_urban_cover_and_sites(
       readr::read_rds("spatial_data/trimmed_spatial_PX.rds")
+    ) + theme(plot.margin = unit(c(-0.3, 0, 0, 0), "cm"))
+    
+    legend <- get_legend(
+      # create some space to the left of the legend
+      g1 + theme(legend.box.margin = unit(c(0, 0, 0, 2.5), "cm"),
+                 legend.box = "horizontal")
     )
+    
+    mega_plot <- plot_grid(
+      g1 + theme(legend.position="none"),
+      g2 + theme(legend.position="none"),
+      g3 + theme(legend.position="none"),
+      g4 + theme(legend.position="none"),
+      g5 + theme(legend.position="none"),
+      legend,
+      align = 'v',
+      axis = "l",
+      #hjust = -1,
+      nrow = 2
+    )
+    mega_plot
+    ggsave(paste0("figures/sampling_map/sites_ALL.png"),
+           dpi = "screen")
+    rm(g1,g2,g3,g4,g5,legend,mega_plot)
   }
+
+

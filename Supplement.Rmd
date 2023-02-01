@@ -2,11 +2,11 @@
 title: "Supplementary Information" 
 author: "Ava Hoffman, Jenny Cocciardi" 
 output: 
+  pdf_document: 
+    toc: true 
   md_document: 
     variant: gfm
     toc: true
-  pdf_document: 
-    toc: true 
 urlcolor: blue 
 editor_options: 
   markdown:
@@ -109,8 +109,7 @@ Rockfish. Scripts below, with the exception of file transfer from the
 Aspera server, should reflect the new filesystem, though you will have
 to adjust the file paths accordingly.
 
-<img src="figures/file_transfer.jpg" alt="File transfer schematic"
-width="600"/>
+![File transfer schematic](figures/file_transfer.jpg)\
 
 # Preprocessing {#preprocessing-wrench}
 
@@ -910,6 +909,8 @@ source("R/trim_NLCD_spatial_data.R")
 create_spatial_rds_files()
 ```
 
+## Make Sampling Maps
+
 Next, we made plots for each city's sampling locations. Note that these only include sites that had viable SNPs.
 
 ```{r plot_map_1, message=FALSE}
@@ -919,6 +920,10 @@ source("R/plot_map_of_samples.R")
 ```{r plot_map_2, eval = FALSE, message=FALSE}
 make_all_urban_site_plots()
 ```
+
+# Archetypal analysis
+
+...
 
 # Appendix {#appendix-books}
 

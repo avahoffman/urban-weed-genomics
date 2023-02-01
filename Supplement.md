@@ -87,6 +87,10 @@
 - <a href="#map-of-samples" id="toc-map-of-samples">Map of samples</a>
   - <a href="#trim-spatial-files" id="toc-trim-spatial-files">Trim spatial
     files</a>
+  - <a href="#make-sampling-maps" id="toc-make-sampling-maps">Make Sampling
+    Maps</a>
+- <a href="#archetypal-analysis" id="toc-archetypal-analysis">Archetypal
+  analysis</a>
 - <a href="#appendix-books" id="toc-appendix-books">Appendix</a>
   - <a href="#sessioninfo"
     id="toc-sessioninfo"><code>SessionInfo()</code></a>
@@ -176,8 +180,7 @@ Rockfish. Scripts below, with the exception of file transfer from the
 Aspera server, should reflect the new filesystem, though you will have
 to adjust the file paths accordingly.
 
-<img src="figures/file_transfer.jpg" alt="File transfer schematic"
-width="600"/>
+![File transfer schematic](figures/file_transfer.jpg)  
 
 # Preprocessing
 
@@ -1331,6 +1334,8 @@ source("R/trim_NLCD_spatial_data.R")
 create_spatial_rds_files()
 ```
 
+## Make Sampling Maps
+
 Next, we made plots for each city’s sampling locations. Note that these
 only include sites that had viable SNPs.
 
@@ -1341,6 +1346,10 @@ source("R/plot_map_of_samples.R")
 ``` r
 make_all_urban_site_plots()
 ```
+
+# Archetypal analysis
+
+…
 
 # Appendix
 
