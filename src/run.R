@@ -228,7 +228,3 @@ plot_pies_on_map(city = "LA", spp = "LS", k_ = 2, out_file = "figures/genetics/L
 plot_pies_on_map(city = "LA", spp = "LS", k_ = 3, out_file = "figures/genetics/LS_LA_pies_k3.png")
 plot_pies_on_map(city = "LA", spp = "LS", k_ = 4, out_file = "figures/genetics/LS_LA_pies_k4.png")
 plot_pies_on_map(city = "LA", spp = "LS", k_ = 5, out_file = "figures/genetics/LS_LA_pies_k5.png")
-
-# Simulated archetype plots for presentation / demos
-make_simulated_archetypes_plot(out_file = "figures/genetics/simulated_admixture.png")
-make_simulated_archetypes_plot(out_file = "figures/genetics/simulated_structure.png", admixed = F)

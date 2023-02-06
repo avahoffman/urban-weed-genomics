@@ -1,0 +1,45 @@
+LS.BA.WB.U.1	Baltimore
+LS.BA.WB.U.2	Baltimore
+LS.BA.DHI.U.2	Baltimore
+LS.BA.GA.U.1	Baltimore
+LS.BA.PIK.U.3	Baltimore
+LS.BA.PIK.U.5	Baltimore
+LS.BA.CP.U.2	Baltimore
+LS.BA.ML.U.2	Baltimore
+LS.BA.WBO.U.3	Baltimore
+LS.BO.WL3.M.4	Boston
+LS.BO.I1.U.1	Boston
+LS.BO.I2.U.1	Boston
+LS.BO.WL2.M.2	Boston
+LS.BO.R1.U.2	Boston
+LS.BO.R2.U.4	Boston
+LS.BO.R3.U.3	Boston
+LS.BO.HC4.M.3	Boston
+LS.BO.LC4.M.2	Boston
+LS.LA.VET.M.4	Los Angeles
+LS.LA.SSV.M.1	Los Angeles
+LS.LA.NAV.M.4	Los Angeles
+LS.LA.SHO.M.2	Los Angeles
+LS.LA.WES.M.3	Los Angeles
+LS.LA.GLO.M.3	Los Angeles
+LS.LA.HOW.U.5	Los Angeles
+LS.LA.SAN.U.2	Los Angeles
+LS.LA.ARR.U.2	Los Angeles
+LS.MN.L06-LS.U.2	Minneapolis
+LS.MN.L06-LS.U.5	Minneapolis
+LS.MN.L07-LS.U.4	Minneapolis
+LS.MN.L08-LS.U.5	Minneapolis
+LS.MN.L09-LS.U.3	Minneapolis
+LS.MN.L01-LS.M.4	Minneapolis
+LS.MN.L01-LS.U.3	Minneapolis
+LS.MN.L02-LS.U.1	Minneapolis
+LS.MN.L05-LS.U.2	Minneapolis
+LS.PX.MON.U.2	Phoenix
+LS.PX.PKW.U.5	Phoenix
+LS.PX.PIE.M.4	Phoenix
+LS.PX.ALA.M.3	Phoenix
+LS.PX.PAL.M.3	Phoenix
+LS.PX.MAN.M.2	Phoenix
+LS.PX.NUE.M.1	Phoenix
+LS.PX.ENC.M.4	Phoenix
+LS.PX.COY.M.3	Phoenix

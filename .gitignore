@@ -37,13 +37,19 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+*.Rproj
 
 # Other
 *.DS_Store
-data/*
+
+# Rendering intermediate files
+Supplement_files/*
+
+# Large and/or personal files
+data_archive/*
+spatial_data/*
+SNP_data/*
 figures/*.pdf
-key.md
 Notes.Rmd
 archive/*
 *.pptx
-bash/clone_filter.52618524.out

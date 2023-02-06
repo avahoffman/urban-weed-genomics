@@ -1,14 +1,1022 @@
 ---
-title: "Supplementary Information"
-output: pdf_document
+title: "Supplementary Information" 
+author: "Ava Hoffman, Jenny Cocciardi" 
+output: 
+  pdf_document: 
+    toc: true 
+  md_document: 
+    variant: gfm
+    toc: true
+urlcolor: blue 
+editor_options: 
+  markdown:
+    wrap: 72
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE} 
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 72), tidy = TRUE)
 ```
 
-```{r pressure, echo=FALSE, message=FALSE, fig.cap = "PCR clone removal statistics"}
-source("src/examine_clones.R")
-make_cloneplot()
+```{=html} 
+<!-- To nicely format this markdown doc, I recommend using
+Sublime Text editor. Highlight the text in question and select Edit >
+Wrap > Wrap paragraph at 72 characters. --> 
 ```
 
+<!-- Allow S labeling on Figs and Tables  -->
+\newcommand{\beginsupplement}{%
+        \setcounter{table}{0}
+        \renewcommand{\thetable}{S\arabic{table}}%
+        \setcounter{figure}{0}
+        \renewcommand{\thefigure}{S\arabic{figure}}%
+     }
+
+\beginsupplement
+<!-- End -->
+
+# Introduction {#introduction}
+
+In this experiment, we used quaddRAD library prep to prepare the sample
+DNA. This means that there were both two unique outer barcodes 
+(typical Illumina barcodes) *AND* two unique inner barcodes
+(random barcode bases inside the adapters) for each sample - over 1700
+to be exact!
+
+The sequencing facility demultiplexes samples based on the outer
+barcodes (typically called 5nn and i7nn). Once this is done, each file
+still contains a mix of the inner barcodes. We will refer to these as
+"sublibraries" because they are sort of halfway demultiplexed. We
+ separate them out bioinformatically later.
+
+## Raw Data File Naming - Sublibraries{#raw-data-file-naming---sublibraries}
+
+Here's a bit of information on the file name convention. The typical raw
+file looks like this:
+
+``` AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz ```
+  
+- These are author initials and "macro" stands for "Macrosystems". These
+  are on every file.
+
+    `AMH_macro`
+
+- The first number is the *i5nn* barcode for the given sublibrary. We
+  know all these samples have a i5nn barcode "1", so that narrows down
+  what they can be. The second number is the *i7nn* barcode for the
+  given sublibrary. We know all these samples have a i7nn barcode "1",
+  so that further narrows down what they can be.
+
+    `1_1`
+
+- This refers to how many samples are in the sublibrary. "12px" means
+  12-plexed, or 12 samples. In other words, we will use the inner
+  barcodes to further distinguish 12 unique samples in this
+  sublibrary.
+
+    `12px`
+
+- This is a unique sublibrary name. S1 = 1 i5nn and 1 i7nn.
+  
+    `S1`
+
+- This means this particular file came from lane 1 of the NovaSeq. There
+  are four lanes. All samples should appear across all four lanes.
+
+    `L001`
+    
+- This is the first (R1) of two paired-end reads (R1 and R2).
+
+    `R1`
+    
+- The last part doesn't mean anything - it was just added automatically
+  before the file suffix (`fastq.gz`)
+
+    `001.fastq.gz`
+    
+## A Note on File Transfers {#a-note-on-file-transfers}
+
+There are three main systems at play for file transfer: the local
+machine, the sequencing facility's (GRCF) Aspera server, and 
+[MARCC](https://www.marcc.jhu.edu/). The Aspera server is where the data
+were/are stored immediately after sequencing. MARCC is where we plan to
+do preprocessing and analysis. Scripts and text files are easy for me
+to edit on my local machine. We used [Globus](https://app.globus.org) 
+to transfer these small files from my local machine to MARCC.
+
+Midway through this analyses, we transitioned to another cluster, JHU's
+Rockfish. Scripts below, with the exception of file transfer from the
+Aspera server, should reflect the new filesystem, though you will have
+to adjust the file paths accordingly.
+
+![File transfer schematic](figures/file_transfer.jpg)\
+
+# Preprocessing {#preprocessing-wrench}
+
+## Step 1 - Transfer Files {#step-1---transfer-files}
+
+Files can be found in the `01_transfer_files/` directory.
+
+`01-aspera_transfer_n.txt`
+
+These are text files containing the *names* of `fastq.gz` files that we
+wanted to transfer from the sequencing facility's Aspera server to the
+computing cluster ([MARCC](https://www.marcc.jhu.edu/)). This was to
+maximize ease of transferring only certain files over at once, since
+transferring could take a long time. We definitely did this piecemeal.
+Possible file names shown in 
+[Aspera Transfer File Names](#aspera-transfer-file-names). 
+There are multiple of these files so
+that we could parallelize (replace n with the correct number in the
+command used below). This text file will need to be uploaded to your
+scratch directory in MARCC.
+
+Files were then transferred using the following commands. Before
+starting, make sure you are in a data transfer node. Then, load the
+aspera module. Alternatively, you can install the Aspera transfer
+software and use that.
+
+```
+module load aspera
+```
+
+Initiate the transfer from within your scratch directory:
+
+```
+ascp -T -l8G -i /software/apps/aspera/3.9.1/etc/asperaweb_id_dsa.openssh
+--file-list=01-aspera_transfer_n.txt
+--mode=recv --user=<aspera-user> --host=<aspera-IP> /scratch/users/<me>@jhu.edu
+```
+
+## Step 2 - Concatenate Files and Install Stacks {#step-2---concatenate-files-and-install-stacks}
+
+Files can be found in the `02_concatenate_and_check/` directory.
+
+### Step 2a - Concatenate Files for each Sublibrary {#step-2a---concatenate-files-for-each-sublibrary}
+
+We ran my samples across the whole flow cell of the NovaSeq, so results
+came in 8 files for each demultiplexed sublibrary (4 lanes \* paired
+reads). For example, for sublibrary 1_1, we'd see the following 8 files:
+
+    AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
+    AMH_macro_1_1_12px_S1_L001_R2_001.fastq.gz
+    AMH_macro_1_1_12px_S1_L002_R1_001.fastq.gz
+    AMH_macro_1_1_12px_S1_L002_R2_001.fastq.gz    
+    AMH_macro_1_1_12px_S1_L003_R1_001.fastq.gz
+    AMH_macro_1_1_12px_S1_L003_R2_001.fastq.gz
+    AMH_macro_1_1_12px_S1_L004_R1_001.fastq.gz
+    AMH_macro_1_1_12px_S1_L004_R2_001.fastq.gz
+
+The `02_concatendate_and_check/02-concat_files_across4lanes.sh` 
+script finds all files in the 
+working directory with the name pattern `*_L001_*.fastq.gz` and then
+concatenates across lanes 001, 002, 003, and 004 so they can be managed
+further. The "L001" part of the filename is then eliminated. For example
+the 8 files above would become:
+
+    AMH_macro_1_1_12px_S1_R1.fastq.gz
+    AMH_macro_1_1_12px_S1_R2.fastq.gz
+
+Rockfish uses [slurm](https://slurm.schedmd.com/overview.html) to manage
+jobs. To run the script, use the `sbatch` command. For example:
+
+    sbatch ~/code/02-concat_files_across4lanes.sh
+
+This command will run the script from within the current directory, but
+will look for and pull the script from the code directory. This will
+concatenate all files within the current directory that match the loop
+pattern.
+
+### Step 2b -- Download and Install Stacks
+
+On Rockfish, [Stacks](https://catchenlab.life.illinois.edu/stacks/) will
+need to be downloaded to each user's code directory. Stacks, and
+software in general, should be compiled in an interactive mode or loaded via module. For more
+information on interactive mode, see `interact --usage`.
+
+    interact -p debug -g 1 -n 1 -c 1
+    module load gcc
+
+Now download Stacks. We used version 2.60.
+
+    wget http://catchenlab.life.illinois.edu/stacks/source/stacks-2.60.tar.gz
+    tar xfvz stacks-2.60.tar.gz
+
+Next, go into the stacks-2.60 directory and run the following commands:
+
+    ./configure --prefix=/home/<your_username>/code4-<PI_username>
+    make
+    make install
+    export PATH=$PATH:/home/<your_username>/code4-<PI_username>/stacks-2.60
+
+The filesystem patterns on your cluster might be different, and you
+should change these file paths accordingly.
+
+## Step 3 - Remove PCR Clones {#step-3---remove-pcr-clones}
+
+Files can be found in the `03_clone_filter/` directory.
+
+### Step 3a - Run PCR Clone Removal Script {#step-3a---run-pcr-clone-removal-script}
+
+The `03-clone_filter.sh` script runs `clone_filter` from
+[Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was
+run with options `--inline_inline --oligo_len_1 4 --oligo_len_2 4`. The
+`--oligo_len_x 4` options indicate the 4-base pair degenerate sequence
+was included on the outside of the barcodes for detecting PCR
+duplicates. The script uses the file name prefixes listed for each
+single sub-pooled library in `03-clone_filter_file_names.txt` and loops
+to run `clone_filter` on all of them. Possible file names shown in
+[`clone_filter` File Names](#clone_filter-file-names).
+
+### Step 3b - Parse PCR Clone Removal Results {#step-3b---parse-pcr-clone-removal-results}
+
+If you want to extract descriptive statistics from the `clone_filter`
+output, you can use the `03.5-parse_clone_filter.py` script to do so. It
+can be run on your local terminal after transferring the
+`clone_filter.out` logs to your local computer.
+
+```{r PCR_clones, message=FALSE, fig.cap = "PCR clone removal statistics"} 
+source("03_clone_filter/examine_clones.R") 
+make_cloneplot() 
+```
+
+## Step 4 - Demultiplexing and Sample Filtering {#step-4---demultiplexing-and-sample-filtering}
+
+Files can be found in the `04_demux_filter/` directory.
+
+### Step 4a - Demultiplex and Filter {#step-4a---demultiplex-and-filter}
+
+The `04-process_radtags.sh` script runs `process_radtags` from
+[Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was
+run with options
+`-c -q --inline_inline --renz_1 pstI --renz_2 mspI --rescue --disable_rad_check`.
+The script uses the same file prefixes as [Step 3 -
+`03-clone_filter.sh`](#step-3---remove-pcr-clones). Each sub-pooled
+library has a forward and reverse read file that was filtered in the
+previous step. Like the [above section](#step-3---03-clone_filtersh),
+the script uses the file name prefixes listed for each single sub-pooled
+library in `04-process_radtags_file_names.txt` and loops to run
+`process_radtags` on all of them. Possible file names shown in
+[`clone_filter` File Names](#clone_filter-file-names).
+
+Each sub-pooled library also has a demultiplexing file (`04-demux/`
+directory) that contains the sample names and inner(i5 and i7) barcodes.
+For example, the sublibrary 1_1, we'd see the following barcode file:
+
+    ATCACG  AGTCAA  DS.BA.PIK.U.1
+    CGATGT  AGTTCC  DS.BA.PIK.U.2
+    TTAGGC  ATGTCA  DS.BA.PIK.U.3
+    TGACCA  CCGTCC  DS.BA.PIK.U.4
+    ACAGTG  GTCCGC  DS.BA.PIK.U.5
+    GCCAAT  GTGAAA  DS.BA.DHI.U.1
+    CAGATC  GTGGCC  DS.BA.DHI.U.2
+    ACTTGA  GTTTCG  DS.BA.DHI.U.3
+    GATCAG  CGTACG  DS.BA.DHI.U.4
+    TAGCTT  GAGTGG  DS.BA.DHI.U.5
+    GGCTAC  ACTGAT  DS.BA.GA.U.1
+    CTTGTA  ATTCCT  DS.BA.GA.U.2
+
+The 'process_radtags' command will demultiplex the data by separating
+out each sublibrary into the individual samples. It will then clean the
+data, and will remove low quality reads and discard reads where a
+barcode was not found.
+
+### Step 4b - Organize files {#step-4b---organize-files}
+
+In a new directory, make sure the files are organized by species. In the
+`process_radtags` script, we specified that files be sent to
+`~/scratch/demux/*sublibrary_name*` (reasoning for this is in [Step
+4c](#step-4c---assess-the-raw-processed-and-cleaned-data)), but files
+should manually be organized into species folders (i.e.,
+`~/scratch/demux/*SPP*`) after `process_radtags` is performed. For
+example, the file "DS.MN.L01-DS.M.1.1.fq.gz" should be sent to the
+`~/scratch/demux/DS` directory.
+
+Note: this is not automated at this point but it would be nice to
+automate the file moving process so it's not forgotten at this point.
+
+### Step 4c - Assess the raw, processed, and cleaned data {#step-4c---assess-the-raw-processed-and-cleaned-data}
+
+In the script for [Step 4](#step-4---demultiplex-and-filter), we have
+specified that a new output folder be created for each sublibrary. The
+output folder is where all sample files and the log file will be dumped
+for each sublibrary. It is important to specify a different output
+folder if you have multiple sublibraries because we will be assessing
+the output log for each sublibrary individually (and otherwise, the log
+is overwritten when the script loops to a new sublibrary).
+
+The utility `stacks-dist-extract` can be used to extract data from the
+log file. First, we examined the library-wide statistics to identify
+sublibraries where barcodes may have been misentered or where sequencing
+error may have occurred. We used:
+
+     stacks-dist-extract process_radtags.log total_raw_read_counts
+     
+
+to pull out data on the total number of sequences, the number of
+low-quality reads, whether barcodes were found or not, and the total
+number of retained reads per sublibary. Look over these to make sure
+there are no outliers or sublibraries that need to be checked and rerun.
+
+Next, we used:
+
+     stacks-dist-extract process_radtags.log per_barcode_raw_read_counts
+     
+
+to analyze how well each sample performed. There are three important
+statistics to consider for each sample.
+
+1.  *The proportion of reads per sample for each sublibrary* indicates
+    the proportion that each individual was processed and sequenced
+    within the overall library. This is important to consider as cases
+    where a single sample dominates the sublibrary may indicate
+    contamination.
+
+2.  *The number of reads retained for each sample* can be an indicator
+    of coverage. It is most likely a good idea to remove samples with a
+    very low number of reads. Where you decide to place the cutoff for
+    low coverage samples is dependent on your dataset. For example, a
+    threshold of 1 million reads is often used but this is not
+    universal.
+
+3.  *The proportion of reads retained for each sample* can also indicate
+    low-quality samples and will give an idea of the variation in
+    coverage across samples.
+
+Output for sublibraries for this step are summarized in
+[`process_radtags-library_output.csv`](output/process_radtags-sample_output.csv).
+
+Output for individual samples for this step are summarized in
+[`process_radtags-sample_output.csv`](output/process_radtags-sample_output.csv).
+
+The script `04c-process_radtags_stats.R` was used to create many plots for
+easily assessing each statistic. Output from this step can be found in 
+`figures/process_radtags/` where figures are organized by species.
+
+```{r radtag_stats, message=FALSE, fig.cap = "RAD tag processing statistics"} 
+source("04_demux_filter/04c-radtags_filter_summary.R") 
+make_filterplot() 
+```
+
+
+### Step 4d - Identify low-coverage and low-quality samples from {#step-4d---identify-low-coverage-and-low-quality-samples-from}
+
+    downstream analysis
+
+Using the same output log and the above statistics, we removed
+low-coverage and low-quality samples that may skew downstream analyses.
+
+Samples were identified and removed via the following procedure:
+
+1.  First, samples that represented less than **1% of the sequenced
+    sublibrary** were identified and removed. These samples correlate to
+    low-read and low-coverage samples.
+
+2.  Next, a threshold of **1 million retained reads per sample** was
+    used to remove any remaining low-read samples. Low-read samples
+    correlate to low coverage and will lack enough raw reads to
+    contribute to downstream analyses.
+
+Good/kept samples are summarized in
+[`process_radtags-kept_samples.csv`](output/process_radtags-kept_samples.csv).
+
+Discarded samples are summarized in
+[`process_radtags-discarded_samples.csv`](output/process_radtags-discarded_samples.csv).
+
+```{r radtag_manual_filter, message=FALSE, fig.cap = "RAD tag manual filtering summary"} 
+source("04_demux_filter/04c-radtags_filter_summary.R") 
+make_manual_discard_plot() 
+```
+
+Note: At this point, we started using Stacks 2.62 for its
+multi-threading capabilities. Functionality of the previous steps should
+be the same, however.
+
+# Generating Stacks Catalogs and Calling SNPs {#generating-stacks-catalogs-and-calling-snps-mag}
+
+## Step 5 - Metapopulation Catalog Building and Parameter Search {#step-5---metapopulation-catalog-building-and-parameter-search}
+
+Files can be found in the `05_ustacks_and_params/` directory.
+
+Going forward, when we use the term **metapopulation**, we are referring
+to the collection of all samples within species among all cities where
+the species was present.
+
+It is important to conduct preliminary analyses that will identify an
+optimal set of parameters for the dataset (see [Step
+5a](#step-5a---denovo_mapsh)). Following the parameter optimization, the
+program `ustacks` can be run to generate a catalog of loci.
+
+### Step 5a - Run `denovo_map.sh`
+
+Stack assembly will differ based on several different aspects of the
+dataset(such as the study species, the RAD-seq method used, and/or the
+quality and quantity of DNA used). So it is important to use parameters
+that will maximize the amount of biological data obtained from stacks.
+
+There are three main parameters to consider when doing this:
+
+1.  *m* = controls the minimum number of raw reads required to form a
+    stack(implemented in `ustacks`)
+
+2.  *M* = controls the number of mismatches between stacks to to merge
+    them into a putative locus (implemented in `ustacks`)
+
+3.  *n* = controls the number of mismatches allowed between stacks to
+    merge into the catalog (implemented in `cstacks`)
+
+There are two main ways to optimize parameterization:
+
+1.  an iterative method were you sequentially change each parameter
+    while keeping the other parameters fixed (described in *Paris et al.
+    2017*), or
+
+2.  an iterative method were you sequentially change the values of *M*
+    and *n*(keeping *M* = *n*) while fixing *m* = 3, and then test *m* =
+    2, 4 once the optimal *M* = *n* is determined(described in *Rochette
+    and Catchen 2017*, *Catchen 2020*).
+
+We performed the second method and used the `denovo_map.sh` script to
+run the `denovo_map.pl` command to perform iterations. This script
+requires that we first choose a subset of samples to run the iterations
+on. The samples should be representative of the overall dataset; meaning
+they should include all populations and have similar read coverage
+numbers. Read coverage numbers can be assessed by looking at the
+descriptive statistics produced from [Step
+4c](#step-4c---assess-the-raw-processed-and-cleaned-data).
+
+Place these samples in a text file (`popmap_test_samples.txt`) with the
+name of the sample and specify that all samples belong to the same
+population. For example, `popmap_test_samples.txt` should look like...
+
+    DS.BA.GA.U.1    A
+    DS.PX.BUF.M.5   A
+    DS.B0.HC4.M.1   A
+    ...
+
+It is important to have all representative samples treated as one
+population because you will assess outputs found across 80% of the
+individuals. The script will read this text file from the `--popmap`
+argument.
+
+The script also requires that you specify an output directory after
+`-o`. This should be unique to the parameter you are testing... for
+example, if you are testing *M* = 3, then you could make a subdirectory
+labeled `stacks.M3` where all outputs from `denovo_map.sh` will be
+placed. Otherwise, for each iteration, the outputs will be overwritten
+and you will lose the log from the previous iteration. The
+`denovo_map.sh` script also requires that you direct it toward where
+your samples are stored, which is your directory built in [Step
+4b](#step-4b---organize-files). Make sure to run the
+`--min-samples-per-pop 0.80` argument.
+
+To decide which parameters to use, examine the following from each
+iteration:
+
+1.  the average sample coverage: This is obtained from the summary log
+    in the `ustacks` section of `denovo_map.log`. If samples have a
+    coverage \<10x, you will have to rethink the parameters you use
+    here.
+
+2.  the number of assembled loci shared by 80% of samples: This can be
+    found in the `haplotypes.tsv` by counting the number of loci:
+    `cat populations.haplotypes.tsv | grep -v ^"#" | wc -l`
+
+3.  the number of polymorphic loci shared by 80% of samples: This can be
+    found in `populations.sumstats.tsv` or by counting
+    `populations.hapstats.tsv`:
+    `cat populations.hapstats.tsv | grep -v "^#" | wc -l`
+
+4.  the number of SNPs per locus shared by 80% of samples: found in
+    `denovo_map.log` or by counting the number of SNPs in
+    `populations.sumstats.tsv`:
+    `populations.sumstats.tsv | grep -v ^"#" | wc -l`
+
+The script `05a-param_opt-figures_script.R` was used to create plots for
+assessing the change in shared loci across parameter iterations.
+
+Based on this optimization step, we used the following parameters:
+
+```{r param_table, echo = FALSE, message = FALSE}
+table_ <-
+  readr::read_csv("output/parameter_opt-final_params_per_species.csv")[, 2:5]
+colnames(table_) <-
+  c("Species",
+    "M (locus mismatches)",
+    "n (catalog mismatches)",
+    "m (minimum reads)")
+knitr::kable(
+  table_,
+  format = "markdown",
+  caption = "Final parameter optimization values for the Stacks pipeline."
+)
+```
+
+### Step 5b - Run `ustacks` {#step-5b---run-ustacks}
+
+`ustacks` builds *de novo* loci in each individual sample. We have
+designed the `ustacks` script so that the process requires three files:
+
+-   `05-ustacks_n.sh` : the shell script that executes `ustacks`
+-   `05-ustacks_id_n.txt` : the sample ID number
+-   `05-ustacks_samples_n.txt` : the sample names that correspond to the
+    sample IDs
+
+The sample ID should be derived from the `order_id` column(first column)
+on the master spreadsheet. It is unique (1-1736) across all of the
+samples.
+
+The sample name is the corresponding name for each sample ID in the
+spreadsheet. E.g., sample ID "9" corresponds to sample name
+"DS.BA.DHI.U.4". Sample naming convention is
+species.city.site.management_type.replicate_plant.
+
+`05-ustacks_n.sh` should have an out_directory (`-o` option) that will
+be used for all samples (e.g., `stacks/ustacks`). Files can be processed
+piecemeal into this directory. There should be three files for every
+sample in the output directory:
+
+-   `<samplename>.alleles.tsv.gz`
+-   `<samplename>.snps.tsv.gz`
+-   `<samplename>.tags.tsv.gz`
+
+Multiple versions of the `05-ustacks_n.sh` script can be run in parallel
+(simply replace n in the three files above with the correct number).
+
+A small number of samples (13) were discarded at this stage as the `ustacks` tool was
+unable to form any primary stacks corresponding to loci. See 
+[output/ustacks-discarded_samples.csv](output/ustacks-discarded_samples.csv).
+
+### Step 5c - Correct File Names {#step-5c---correct-file-names}
+
+This step contains a script `05b-fix_filenames.sh` which uses some
+simple regex to fix filenames that are output in previous steps. Stacks
+adds an extra "1" at some point at the end of the sample name which is
+not meaningful. The following files:
+
+-   DS.MN.L02-DS.M.3.1.alleles.tsv.gz
+-   DS.MN.L03-DS.U.2.1.tags.tsv.gz
+-   DS.MN.L09-DS.U.1.1.snps.tsv.gz
+
+become:
+
+-   DS.MN.L02-DS.M.3.alleles.tsv.gz
+-   DS.MN.L03-DS.U.2.tags.tsv.gz
+-   DS.MN.L09-DS.U.1.snps.tsv.gz
+
+The script currently gives some strange log output, so it can probably
+be optimized/improved. The script should be run from the directory where
+the changes need to be made. Files that have already been fixed will not
+be changed.
+
+### Step 5d - Choose catalog samples/files {#step-5d---choose-catalog-samplesfiles}
+
+In the next step, we will choose the files we want to go into the
+catalog. This involves a few steps:
+
+1.  Create a meaningful directory name. This could be the date (e.g.,
+    `stacks_22_01_25`).
+
+2.  Copy the `ustacks` output for all of the files you want to use in
+    the reference from Step 5b. Remember this includes three files per
+    sample. So if you have 20 samples you want to include in the
+    reference catalog, you will transfer 3 x 20 = 60 files into the
+    meaningful directory name. The three files per sample should follow
+    this convention:
+
+-   `<samplename>.alleles.tsv.gz`
+-   `<samplename>.snps.tsv.gz`
+-   `<samplename>.tags.tsv.gz`
+
+3.  Remember the meaningful directory name. You will need it in Step 6.
+
+## Step 6 - Metapopulation catalog with `cstacks` {#step-6---metapopulation-catalog-with-cstacks}
+
+Files can be found in the `06_cstacks/` directory.
+
+`cstacks` builds the locus catalog from all the samples specified. The
+accompanying script, `cstacks_SPECIES.sh` is relatively simple since it
+points to the directory containing all the sample files. It follows this
+format to point to that directory:
+
+    cstacks -P ~/directory ...
+
+Make sure that you use the meaningful directory from Step 5c and that
+you have copied all the relevant files over. Otherwise this causes
+[problems
+downstream](https://groups.google.com/g/stacks-users/c/q3YYPprmYnU/m/cH5RB5KwBQAJ).
+For example, you might edit the code to point to
+`~/scratch/stacks/stacks_22_01_25`.
+
+    cstacks -P ~/scratch/stacks/stacks_22_01_25 ...
+
+The tricky thing is ensuring enough compute memory to run the entire
+process successfully. There is probably space to optimize this process.
+
+The `cstacks` method uses a "population map" file, which in this project
+is `cstacks_popmap_SPECIES.txt`. This file specifies which samples to build
+the catalog from and categorizes them into your 'populations', or in
+this case, cities using two tab-delimited columns, e.g.:
+
+    DS.BA.GA.U.1    Baltimore
+    DS.BA.GA.U.2    Baltimore
+    DS.BA.GA.U.3    Baltimore
+    DS.BA.GA.U.4    Baltimore
+    DS.BA.GA.U.5    Baltimore
+    ...
+
+Make sure the samples in this file correspond to the input files located
+in e.g., `~/scratch/stacks/stacks_22_01_25`.
+
+`cstacks` builds three files for use in all your samples (in this
+pipeline run), mirroring the sample files output
+by[`ustacks`](#step-5---ustacks):
+
+-   `catalog.alleles.tsv.gz`
+-   `catalog.snps.tsv.gz`
+-   `catalog.tags.tsv.gz`
+
+```{r catalog_samples_table, echo = FALSE, message = FALSE}
+table_ <-
+  readr::read_csv("output/cstacks-metapop-catalog_samples-included.csv")[, 1:3]
+colnames(table_) <- c("Sample", "Species", "City")
+knitr::kable(table_,
+             format = "markdown",
+             caption = "Subset of samples used in SNP catalog creation.")
+```
+
+## Step 7 - Metapopulation locus matching with `sstacks` {#step-7---metapopulation-locus-matching-with-sstacks}
+
+Files can be found in the `07_sstacks/` directory.
+
+All samples in the population (or all samples you want to include in the
+analysis) are matched against the catalog produced in[`cstacks`]
+(#step-6---cstacks) with `sstacks`, run in script `stacks_SPECIES.sh`
+and `stacks_SPECIES_additional.sh`. It runs off of the samples based in
+the output directory *and* the listed samples in
+`sstacks_samples_SPECIES.txt` and
+`sstacks_samples_SPECIES_additional.txt` (respectively), so make sure
+all your files (sample and catalog, etc.) are there and match.
+`sstacks_samples_SPECIES.txt` takes the form:
+
+    DS.BA.GA.U.1
+    DS.BA.GA.U.2
+    DS.BA.GA.U.3
+    DS.BA.GA.U.4
+    DS.BA.GA.U.5
+    ...
+
+There should be a new file produced at this step for every sample in the
+output directory:
+
+-   `<samplename>.matches.tsv.gz`
+
+## Step 8 - Metapopulation oriented by locus `tsv2bam` {#step-8---metapopulation-oriented-by-locus-tsv2bam}
+
+Files can be found in the `08_tsv2bam/` directory.
+
+`tsv2bam` and the proceeding programs in the pipeline use a populations
+map text file to specify which samples to include in the analysis. As
+such, a new population map (that differs from `06-cstacks_popmap.txt`)
+should be created that includes all samples (including those used to
+create your catalog) that you want to include in the analysis. This file
+will include the same samples specified in `sstacks_samples_SPECIES.txt` with
+a colomn specifying population. Here, this file is
+`popmap_SPECIES.txt`.
+
+We run `tsv2bam` using the script `tsv2bam_SPECIES.sh`.
+
+This is the step at which it's usually discovered that some samples are
+bad(don't have any useable matches to the catalog). These samples were
+excluded from `popmap_SPECIES.txt`. For example we might simply cut
+out the following rows:
+
+    DS.MN.L10-DS.M.4    Minneapolis
+    DS.MN.L01-DS.M.4    Minneapolis
+    DS.BO.WL2.M.4   Boston
+    
+The following samples were discarded because they contained less than
+300 sample loci matched to catalog loci:
+
+```{r tsv2bam_discarded_samples_table, echo = FALSE, message = FALSE}
+table_ <- 
+  readr::read_csv("output/tsv2bam-discarded_samples.csv")
+colnames(table_) <- c("Sample", "City")
+knitr::kable(
+  table_,
+  format = "markdown",
+  caption = "Samples discarded at the `tsv2bam` stage of the Stacks pipeline."
+)
+```
+
+## Step 9 - Metapopulation SNP calling with `gstacks` {#step-9---metapopulation-snp-calling-with-gstacks}
+
+Files can be found in the `09_gstacks/` directory.
+
+The script `gstacks_SPECIES.sh` also uses the population map specified in
+[Step 8](#step-8---tsv2bam), `popmap_SPECIES.txt`. The `gstacks`
+program aligns the paired-end reads and assembles the paired-end contigs
+and then calls SNPs.
+
+Produces the following:
+
+-   `catalog.fa.gz` : consensus catalog loci, contains the consensus
+    sequence for each locus as produced by `gstacks` in a standard FASTA
+    file
+-   `catalog.calls` : per-nucleotide genotypes, contains the output of
+
+## Step 10 - Metapopulation summaries with `populations` {#step-10---metapopulation-summaries-with-populations}
+
+Files can be found in the `10_populations/` directory.
+
+The populations program will use the script `species_populations.sh` and
+the population maps specified in 
+[Step 9](#step-9---metapopulation-snp-calling-with-gstacks)
+(`popmap_SPECIES.txt`) to calculate population-level summary
+statistics. Specifically, the script iterates through all species and
+several levels of the parameter `--min-samples-overall`, the minimum
+percentage of individuals across populations required to process a
+locus
+
+You will most likely run the populations program multiple times if you
+are looking at different 'sub-populations'. A new directory should be
+created and the population program should run out of that directory for
+each iteration of the population program. Alternativley, you can
+specify a new directory as the output folder in the script using the
+command `-O`.
+
+Ultimately, the key parameters we used for running `populations` were as
+follows:
+
+- `--write-random-snp`: restrict data analysis to one random SNP per
+  locus
+
+- `--min-samples-overall`: 20 - locus must be in 20% of individuals
+
+- `--min-maf`: 0.05 - minimum minor allele frequency required to process
+  a nucleotide site at a locus
+
+## Step 11 - Examine Within-city Catalogs and Populations {#step-11---examine-within-city-catalogs-and-populations}
+
+Files can be found in the `11_city_catalogs/` directory.
+
+For any given species within city, there is likely to be a slightly
+different set of SNPs compared to the whole metapopulation of five
+cities. We examined 24 sets of species-city combinations. Within the
+folder `11_city_catalogs` there are 24 folders:
+
+    CD_BA_22_09_14
+    CD_LA_22_09_14
+    CD_PX_22_09_14
+    DS_BA_22_09_14
+    DS_BO_22_09_14
+    DS_MN_22_09_14
+    DS_PX_22_09_14
+    EC_BA_22_09_14
+    EC_LA_22_09_14
+    EC_PX_22_09_14
+    LS_BA_22_09_14
+    LS_BO_22_09_14
+    LS_LA_22_09_14
+    LS_MN_22_09_14
+    LS_PX_22_09_14
+    PA_BA_22_09_14
+    PA_BO_22_09_14
+    PA_LA_22_09_14
+    PA_PX_22_09_14
+    TO_BA_22_09_14
+    TO_BO_22_09_14
+    TO_LA_22_09_14
+    TO_MN_22_09_14
+    TO_PX_22_09_14
+
+All folders contain a script and set of samples used to build the
+species-city catalog. Because parameter search had already been
+performed at the metapopulation level, we ran all species-city
+combinations using `denovo_map.pl`. Input samples came from [step
+4](#step-4---demultiplexing-and-sample-filtering). For example, input
+files should look like this:
+
+    CD.BA.AA.U.1.1.fq.gz
+    CD.BA.AA.U.1.2.fq.gz
+    CD.BA.AA.U.1.rem.1.fq.gz
+    CD.BA.AA.U.1.rem.2.fq.gz 
+
+A population map is also included within each directory to ensure only
+appropriate samples (i.e., ok coverage) are included in the catalog.
+
+### Step 11b - City Level Population Analysis {#step-11b---city-level-population-analysis}
+
+The city-level populations program will use the script
+`11-city_catalogs/11-city_populations.sh`. The goal of this script is to
+run the Stacks function `populations` on each city-species combination
+while toggling the `--min-samples-overall` option. Toggling this option
+allows us to hone in on a reasonable number of SNPs while also getting
+rid of SNPs with a lot of missing data, therefore creating a more robust
+population structure snapshot. As described in [step
+11](step-11---examine-within-city-catalogs-and-populations), each
+city-species combination with adequate data is represented by a folder.
+The `11-city_populations.sh` script iterates through folders, within
+which it runs several `--min-samples-overall` levels and outputs each
+parameter permutation to its own new directory. This script uses the
+`11-city_catalogs/11-city_catalog_names.txt` to iterate rather than
+doing all folders by default. This is convenient if you only want to
+iterate through a subset of the folders (city-species combinations).
+
+# Population Statistics
+
+## Fst - Variance among populations
+
+We used `hierfstat::wc()` to calculate an Fst statistic for each species.
+
+```{r Fst_libs, message=FALSE}
+source("R/Fst_rbarD.R")
+```
+
+```{r Fst_code, eval = FALSE, message=FALSE}
+calc_fst()
+```
+
+```{r Fst_table, echo=FALSE, message=FALSE, eval = FALSE}
+# Not generating this table since it's in the main text
+table_ <-
+  readr::read_csv("output/population_stats-fst.csv")
+knitr::kable(
+  table_,
+  format = "markdown",
+  caption = "Fst statistics for species in this study."
+)
+```
+
+```{r Fst_table_readlines, message=FALSE}
+read.csv("output/population_stats-fst.csv")
+```
+
+## rbarD - Clonality of populations
+
+We used `poppr::ia()` to calculate the standardized index of association of loci in the dataset. 
+
+From the documentation:
+
+> It has been widely used as a tool to detect clonal reproduction within populations. Populations whose members are undergoing sexual reproduction, whether it be selfing or out-crossing, will produce gametes via meiosis, and thus have a chance to shuffle alleles in the next generation. Populations whose members are undergoing clonal reproduction, however, generally do so via mitosis. This means that the most likely mechanism for a change in genotype is via mutation. The rate of mutation varies from species to species, but it is rarely sufficiently high to approximate a random shuffling of alleles. The index of association is a calculation based on the ratio of the variance of the raw number of differences between individuals and the sum of those variances over each locus. You can also think of it as the observed variance over the expected variance.
+
+When `p.rD` is small (<0.05) and rbarD is (relatively) higher, that is a sign that the population could be more clonal than sexual.
+
+There is a nice description [here](https://grunwaldlab.github.io/Population_Genetics_in_R/Linkage_disequilibrium.html).
+
+```{r rbarD_code, eval = FALSE, message=FALSE}
+calc_rbarD()
+```
+
+```{r rbarD_table, echo=FALSE, message=FALSE}
+table_ <-
+  readr::read_csv("output/population_stats-rbarD.csv")
+knitr::kable(
+  table_,
+  format = "markdown",
+  caption = "rbarD statistics for species and nested populations in this study."
+)
+```
+
+# Map of samples
+
+## Trim spatial files
+
+From the USGS:
+
+> The U.S. Geological Survey (USGS), in partnership with several federal agencies,
+has developed and released four National Land Cover Database (NLCD) products over
+the past two decades: NLCD 1992, 2001, 2006, and 2011. This one is for data from
+2016 and describes urban imperviousness.
+
+> https://www.mrlc.gov/data/type/urban-imperviousness
+
+> NLCD imperviousness products represent urban impervious surfaces as a percentage of
+developed surface over every 30-meter pixel in the United States. NLCD 2016 updates all
+previously released versions of impervious products for CONUS (NLCD 2001, NLCD 2006,
+NLCD 2011) along with a new date of impervious surface for 2016. New for NLCD 2016 is
+an impervious surface descriptor layer. This descriptor layer identifies types of roads,
+core urban areas, and energy production sites for each impervious pixel to allow deeper
+analysis of developed features.
+
+First, we trimmed the large data. This makes a smaller `.rds` file for each city.
+
+```{r trim_spatial_1, message=FALSE}
+source("R/trim_NLCD_spatial_data.R")
+```
+
+```{r trim_spatial_2, eval = FALSE, message=FALSE}
+create_spatial_rds_files()
+```
+
+## Make Sampling Maps
+
+Next, we made plots for each city's sampling locations. Note that these only include sites that had viable SNPs.
+
+```{r plot_map_1, message=FALSE}
+source("R/plot_map_of_samples.R")
+```
+
+```{r plot_map_2, eval = FALSE, message=FALSE}
+make_all_urban_site_plots()
+```
+
+# Archetypal analysis
+
+We performed archetypal analysis following https://github.com/AI-sandbox/archetypal-analysis.
+
+
+
+# Appendix {#appendix-books}
+
+## `SessionInfo()`
+
+```{r}
+sessionInfo()
+```
+
+## File Organization {#file-organization-bookmark_tabs}
+
+All data files for the Macrosystems project are permanently stored under
+Meghan Avolio's group resources in the Johns Hopkins University Rockfish
+computing cluster. Files are stored under the 'data' directory under the
+following subdirectories:
+
+-   **`01-raw_data`**: This folder contains the raw, unprocessed data
+    files that were obtained directly from the sequencing server. There
+    are eight `fastq.gz` files per sublibrary that correspond to the
+    four sequencing lanes for each read direction.
+
+-   **`02-concatenated_data`**: This folder contains the concatenated,
+    unprocessed files for each sublibrary (i.e., the files containing
+    the sequences for each lane were combined to create one file per
+    read direction).
+
+-   **`03-pcr_filtered_data`**: Here, you will find the resulting data
+    files from the `clone_filter` program, where pcr replicates/clones
+    have been removed from the raw sequences. There are two `fq.gz`
+    files per sublibrary.
+
+-   **`04-process_radtags`**: This folder contains various
+    subdirectories that correspond to the `process_radtags` program that
+    demultiplexes and cleans the data. The `demux_txt_files` folder
+    contains the .txt files used to identify barcodes and separate out
+    the individual samples from each sublibrary. The resulting data
+    files from the `process-radtags` program are separated by individual
+    and can be found in the relevant species folder(i.e., CD, DS, EC,
+    LS, PA, TE, TO). Each individual sample has four data files;
+    `sampleID.1.fq.gz` and `sampleID.2.fq.gz` correspond to the forward
+    and reverse reads for each sample and `sampleID.rem,1/2.fq.gz`
+    contain the remainder reads that were cleaned and removed from the
+    data sequence.
+
+-   **`05-ustacks-denovo_data`**: This folder contains species
+    subdirectories that store the resulting data files from the
+    `ustacks` program for each individual. There are three files per
+    individual; `sampleID.allelles.tsv.gz`, `sampleID.snps.tsv.gz`, and,
+    `sampleID.tags.tsv.gz`. These files should be permanently stored
+    here and copied to a new directory for any new catalogs and/or when
+    a group of samples are being aligned to a new catalog.
+
+-   **`catalogs_by_city`**: For any given species within city, there is
+    likely to be a slightly different set of SNPs compared to the whole
+    metapopulation of five cities. We examined 24 sets of species-city
+    combinations. These catalogs are permanently stored here.
+
+-   **`catalogs_by_species`**: Metapopulation catalogs are stored within
+    this folder for each species. The metapopulation catalog was created
+    using samples from all populations to create a national catalog.
+
+    Some notes about catalog directories:
+
+    -   Catalogs contain three files; `catalog.alleles.tsv.gz`,
+        `catalog.snps.tsv.gz`, and `catalog.tafs.tsv.gz`. If you would
+        like to use the catalog on a new project, you will need to copy
+        all three files to a new project folder.
+    -   You can determine which individuals were used to create the
+        catalog by looking at the `cstacks_popmap.txt` found within each
+        folder. Specifically for the metapopulation catalogs, this
+        information is also found in the
+        [cstacks-metapop-catalog_samples-included.csv](/output/cstacks-metapop-catalog_samples-included.csv)
+    -   You can determine which individuals were subsequently aligned to
+        the catalog and used in the subsequent stacks analysis by
+        looking at the `popmap*.txt` found within each folder.
+    -   Each folder also contains the relevant ustacks and stacks
+        pipeline scripts and output files (i.e., from `cstacks`,
+        `gstacks`, `stacks`, `tsv2bam`, and `populations`),
+
+## Aspera Transfer File Names {#aspera-transfer-file-names}
+
+See [data/aspera_transfer_file_names.csv](data/aspera_transfer_file_names.csv). Preview:
+
+```{r aspera_file_names_table, message=FALSE}
+readLines("data/aspera_transfer_file_names.csv", 10)
+```
+
+## `clone_filter` File Names {#clone_filter-file-names}
+
+See [data/clone_filter_file_names.csv](data/clone_filter_file_names.csv). Preview:
+
+```{r clonefilter_file_names_table, message=FALSE}
+readLines("data/clone_filter_file_names.csv", 10)
+```

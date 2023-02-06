@@ -1,0 +1,45 @@
+CD.BA.LA.U.2	Baltimore
+CD.BA.TRC.U.3	Baltimore
+CD.BA.WGP.M.2	Baltimore
+CD.BA.LH-2.M.2	Baltimore
+CD.BA.LL-4.M.1	Baltimore
+CD.BA.PIK.U.2	Baltimore
+CD.BA.WB.U.2	Baltimore
+CD.BA.CP.U.4	Baltimore
+CD.BA.FH.U.1	Baltimore
+CD.BA.PSP.M.4	Baltimore
+CD.BA.AA.U.4	Baltimore
+CD.BA.RG-1.M.2	Baltimore
+CD.BA.W3.M.3	Baltimore
+CD.BA.GA.U.3	Baltimore
+CD.BA.WBO.U.5	Baltimore
+CD.LA.WHI.M.3	Los Angeles
+CD.LA.SEP.M.3	Los Angeles
+CD.LA.SEP.M.4	Los Angeles
+CD.LA.ROS.M.5	Los Angeles
+CD.LA.MR2.M.2	Los Angeles
+CD.LA.ALL.M.2	Los Angeles
+CD.LA.ALL.M.5	Los Angeles
+CD.LA.VAL.M.5	Los Angeles
+CD.LA.HAR.M.4	Los Angeles
+CD.LA.LUB.M.3	Los Angeles
+CD.LA.GLO.M.4	Los Angeles
+CD.LA.ZOO.M.3	Los Angeles
+CD.LA.NWH.M.5	Los Angeles
+CD.LA.KIN.M.3	Los Angeles
+CD.LA.KIN.M.5	Los Angeles
+CD.PX.CAM.U.5	Phoenix
+CD.PX.MON.U.5	Phoenix
+CD.PX.PKW.U.5	Phoenix
+CD.PX.LAP.M.4	Phoenix
+CD.PX.NES.U.4	Phoenix
+CD.PX.PAL.M.3	Phoenix
+CD.PX.ASU.M.1	Phoenix
+CD.PX.NUE.M.5	Phoenix
+CD.PX.WES.M.3	Phoenix
+CD.PX.MAN.M.4	Phoenix
+CD.PX.CLA.M.3	Phoenix
+CD.PX.DF1.M.5	Phoenix
+CD.PX.COY.M.5	Phoenix
+CD.PX.RPC.M.3	Phoenix
+CD.PX.ENC.M.2	Phoenix

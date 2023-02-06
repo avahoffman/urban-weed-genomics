@@ -35,6 +35,10 @@ This file contains the optimal parameters used for each species to create catalo
 
 The subset of samples for each species that were used to identify optimal parameters are listed here.
 
+#### `populations-number_of_loci.csv`
+
+This file summarizes the number of samples, variant sites, etc. at the end of the `populations` module in Stacks.
+
 #### `process_radtags-discarded_samples.csv`
 
 Samples identified and discarded as part of [Step 4d - Identify low-coverage and low-quality samples from](#step-4d---identify-low-coverage-and-low-quality-samples-from)

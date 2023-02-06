@@ -1,0 +1,45 @@
+TO.BA.WBO.U.4	Baltimore
+TO.BA.CP.U.1	Baltimore
+TO.BA.FH.U.1	Baltimore
+TO.BA.LH-3.M.4	Baltimore
+TO.BA.WGP.M.3	Baltimore
+TO.BA.GA.U.4	Baltimore
+TO.BA.PIK.U.4	Baltimore
+TO.BA.PSP.M.1	Baltimore
+TO.BA.RG-2.M.2	Baltimore
+TO.BO.HC1.M.4	Boston
+TO.BO.HC2.M.5	Boston
+TO.BO.HC3.M.1	Boston
+TO.BO.HC4.M.5	Boston
+TO.BO.LC1.M.1	Boston
+TO.BO.LC2.M.5	Boston
+TO.BO.LC3.M.1	Boston
+TO.BO.WL2.M.1	Boston
+TO.BO.I2.U.3	Boston
+TO.LA.WHI.M.5	Los Angeles
+TO.LA.HAR.M.4	Los Angeles
+TO.LA.MR1.M.1	Los Angeles
+TO.LA.GLO.M.5	Los Angeles
+TO.LA.ZOO.M.1	Los Angeles
+TO.LA.NWH.M.4	Los Angeles
+TO.LA.VNS.M.2	Los Angeles
+TO.LA.PEP.M.5	Los Angeles
+TO.LA.COM.M.4	Los Angeles
+TO.MN.L11-TO.M.3	Minneapolis
+TO.MN.L02-TO.U.1	Minneapolis
+TO.MN.L04-TO.U.1	Minneapolis
+TO.MN.L06-TO.U.2	Minneapolis
+TO.MN.L08-TO.U.5	Minneapolis
+TO.MN.L09-TO.U.2	Minneapolis
+TO.MN.L11-TO.U.3	Minneapolis
+TO.MN.L05-TO.M.5	Minneapolis
+TO.MN.L08-TO.M.5	Minneapolis
+TO.PX.BUF.M.1	Phoenix
+TO.PX.ALA.M.2	Phoenix
+TO.PX.LAP.M.4	Phoenix
+TO.PX.WES.M.1	Phoenix
+TO.PX.CLA.M.1	Phoenix
+TO.PX.DF1.M.1	Phoenix
+TO.PX.DF2.M.1	Phoenix
+TO.PX.COY.M.1	Phoenix
+TO.PX.COY.M.6	Phoenix

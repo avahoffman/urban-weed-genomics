@@ -1,4 +1,9 @@
-# urban-weed-genomics
-For better understanding weedy plant evolution in cities
+## Urban genomics: genetic structure of six cosmopolitan plant species across five US cities
 
-![Baltimore urban cover map](https://github.com/avahoffman/urban-weed-genomics/blob/main/figures/BAurban_zone.jpg)
+This repository is meant to house code and supplementary material. There are both [pdf rendered](Supplement.pdf) and [markdown](Supplement.md) rendered versions of this supplement.
+
+Additional Resources:
+
+- Check out the [output](output/) for this study and associated [notes](output/README.md)
+- Check out the [figures](figures/)
+- Check out some extra code that wasn't used here: [extra](extra/)

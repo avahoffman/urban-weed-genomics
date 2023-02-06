@@ -1,0 +1,38 @@
+gstacks v2.60, executed 2022-10-08 15:47:53 (zlib-1.2.11)
+gstacks -P /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/CD/CD_metapop_catalog -M /home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/CD/CD_metapop_catalog/popmap_CD.txt -t 18
+Locus/sample distributions will be written to '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/CD/CD_metapop_catalog/gstacks.log.distribs'.
+
+Configuration for this run:
+  Input mode: denovo
+  Population map: '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/CD/CD_metapop_catalog/popmap_CD.txt'
+  Input files: 186, e.g. '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/CD/CD_metapop_catalog/CD.BA.AA.U.1.matches.bam'
+  Output to: '/home/jcoccia1/scr4_mavolio2/scratch_JC/stacks/CD/CD_metapop_catalog/'
+  Model: marukilow (var_alpha: 0.01, gt_alpha: 0.05)
+
+Reading BAM headers...
+Processing all loci...
+1%...
+2%...
+5%...
+10%...
+20%...
+50%...
+100%
+
+Attempted to assemble and align paired-end reads for 308508 loci:
+  0 loci had no or almost no paired-end reads (0.0%);
+  1812 loci had paired-end reads that couldn't be assembled into a contig (0.6%);
+  For the remaining 306696 loci (99.4%), a paired-end contig was assembled;
+    Average contig size was 305.7 bp;
+  15307 paired-end contigs overlapped the forward region (5.0%)
+    Mean overlap: 21.7bp; mean size of overlapped loci after merging: 260.4;
+  Out of 149547992 paired-end reads in these loci (mean 480.8 reads per locus),
+    147461343 were successfuly aligned (98.6%);
+  Mean insert length was 302.7, stdev: 82.3 (based on aligned reads in overlapped loci).
+
+Genotyped 306696 loci:
+  effective per-sample coverage: mean=52.2x, stdev=12.5x, min=29.9x, max=96.0x
+  mean number of sites per locus: 296.3
+  a consistent phasing was found for 172679 of out 336488 (51.3%) diploid loci needing phasing
+
+gstacks is done.
