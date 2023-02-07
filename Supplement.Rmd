@@ -921,7 +921,7 @@ source("R/plot_map_of_samples.R")
 make_all_urban_site_plots()
 ```
 
-# Archetypal analysis
+# Archetypal Analysis
 
 We performed archetypal analysis following https://github.com/AI-sandbox/archetypal-analysis.
 
@@ -947,7 +947,7 @@ pip install pandas -U
 source("R/archetype_analysis.R")
 ```
 
-We ran the archetypcal analysis algorithm looking for k = the number of cities in which the species was ID'd as well as k * 2.
+We ran the archetypal analysis algorithm looking for k = the number of cities in which the species was ID'd as well as k * 2.
 
 ```{r archetype_2, eval = FALSE, message=FALSE}
 run_archetype_analysis(spp = "CD", k_vals = c(3,6)) # 3 populations
