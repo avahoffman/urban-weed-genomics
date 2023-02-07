@@ -960,8 +960,25 @@ run_archetype_analysis(spp = "TO", k_vals = c(5,10)) # 5 populations
 
 ## Visualizing Archetypes
 
+Before proceeding, we wanted to extract urban cover from the NLCD data and add it to the site data.
 
+```{r archetype_3, message=FALSE}
+source("R/extract_envt_data.R")
+```
 
+```{r archetype_2, eval = FALSE, message=FALSE}
+write_urban_cover_data()
+```
+
+Plot the archetypes in one big plot.
+
+```{r archetype_3, message=FALSE}
+source("R/plot_archetypes.R")
+```
+
+```{r archetype_2, eval = FALSE, message=FALSE}
+make_archetype_multi_plot()
+```
 
 # Appendix {#appendix-books}
 
