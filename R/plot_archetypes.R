@@ -92,8 +92,11 @@ make_archetype_plot <-
     # Create labels and set palette
     grp.labs <- paste("K =", k_list)
     names(grp.labs) <- k_list
-    my_pal <-
-      rev(RColorBrewer::brewer.pal(n = max(long_df$k), name = "Set3"))
+    # my_pal <-
+    #   rev(RColorBrewer::brewer.pal(n = max(long_df$k), name = "Set3"))
+    colors_ <- viridis::viridis(n = 10, option = "H", begin = 0)
+    my_pal <- setNames(colors_, 
+                       c("X1","X2","X3","X4","X5","X6","X7","X8","X9","X10"))
     
     gg <-
       ggplot(data = long_df, aes(x = sample, y = value, fill = name)) +
