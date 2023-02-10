@@ -2,11 +2,11 @@
 title: "Supplementary Information" 
 author: "Ava Hoffman, Jenny Cocciardi" 
 output: 
+  pdf_document: 
+    toc: true 
   md_document: 
     variant: gfm
     toc: true
-  pdf_document: 
-    toc: true 
 urlcolor: blue 
 editor_options: 
   markdown:
@@ -984,11 +984,11 @@ make_archetype_multi_plot()
 
 # Isolation by State
 
-```{r archetype_5, message=FALSE}
+```{r ibs_1, message=FALSE}
 source("R/plot_isolation_by_state.R")
 ```
 
-```{r archetype_6, eval = FALSE, message=FALSE}
+```{r ibs_2, eval = FALSE, message=FALSE}
 plot_dendrograms()
 ```
 

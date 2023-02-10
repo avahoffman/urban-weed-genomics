@@ -95,6 +95,8 @@
     id="toc-running-archetypal-analysis">Running Archetypal Analysis</a>
   - <a href="#visualizing-archetypes"
     id="toc-visualizing-archetypes">Visualizing Archetypes</a>
+- <a href="#isolation-by-state" id="toc-isolation-by-state">Isolation by
+  State</a>
 - <a href="#appendix-books" id="toc-appendix-books">Appendix</a>
   - <a href="#sessioninfo"
     id="toc-sessioninfo"><code>SessionInfo()</code></a>
@@ -1415,6 +1417,16 @@ source("R/plot_archetypes.R")
 make_archetype_multi_plot()
 ```
 
+# Isolation by State
+
+``` r
+source("R/plot_isolation_by_state.R")
+```
+
+``` r
+plot_dendrograms()
+```
+
 # Appendix
 
 ## `SessionInfo()`
@@ -1438,33 +1450,39 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ##  [1] ggh4x_0.2.3       forcats_0.5.2     here_1.0.1        cowplot_1.1.1    
-    ##  [5] viridis_0.6.2     viridisLite_0.4.1 readr_2.1.3       stringr_1.4.1    
-    ##  [9] raster_3.6-11     sp_1.5-1          poppr_2.9.3       hierfstat_0.5-11 
-    ## [13] adegenet_2.1.8    ade4_1.7-20       dplyr_1.0.10      magrittr_2.0.3   
-    ## [17] tidyr_1.2.1       ggplot2_3.4.0    
+    ##  [1] SNPRelate_1.32.0    gdsfmt_1.34.0       ggrepel_0.9.2      
+    ##  [4] ggtreeExtra_1.6.1   ggtree_3.4.4        treeio_1.20.2      
+    ##  [7] tidytree_0.4.1      ape_5.6-2           treedataverse_0.0.1
+    ## [10] ggh4x_0.2.3         forcats_0.5.2       here_1.0.1         
+    ## [13] cowplot_1.1.1       viridis_0.6.2       viridisLite_0.4.1  
+    ## [16] readr_2.1.3         stringr_1.4.1       raster_3.6-11      
+    ## [19] sp_1.5-1            poppr_2.9.3         hierfstat_0.5-11   
+    ## [22] adegenet_2.1.8      ade4_1.7-20         dplyr_1.0.10       
+    ## [25] magrittr_2.0.3      tidyr_1.2.1         ggplot2_3.4.0      
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] nlme_3.1-160      bit64_4.0.5       rprojroot_2.0.3   tools_4.2.2      
-    ##  [5] polysat_1.7-7     utf8_1.2.2        R6_2.5.1          vegan_2.6-4      
-    ##  [9] DBI_1.1.3         mgcv_1.8-41       colorspace_2.0-3  permute_0.9-7    
-    ## [13] withr_2.5.0       tidyselect_1.2.0  gridExtra_2.3     bit_4.0.5        
-    ## [17] compiler_4.2.2    textshaping_0.3.6 cli_3.4.1         formatR_1.12     
-    ## [21] labeling_0.4.2    scales_1.2.1      systemfonts_1.0.4 digest_0.6.30    
-    ## [25] rmarkdown_2.18    pkgconfig_2.0.3   htmltools_0.5.3   pegas_1.1        
-    ## [29] fastmap_1.1.0     highr_0.9         rlang_1.0.6       rstudioapi_0.14  
-    ## [33] shiny_1.7.3       farver_2.1.1      generics_0.1.3    vroom_1.6.0      
-    ## [37] Matrix_1.5-3      Rcpp_1.0.9        munsell_0.5.0     fansi_1.0.3      
-    ## [41] ape_5.6-2         lifecycle_1.0.3   terra_1.6-41      stringi_1.7.8    
-    ## [45] yaml_2.3.6        MASS_7.3-58.1     plyr_1.8.8        grid_4.2.2       
-    ## [49] parallel_4.2.2    promises_1.2.0.1  crayon_1.5.2      lattice_0.20-45  
-    ## [53] splines_4.2.2     hms_1.1.2         knitr_1.41        pillar_1.8.1     
-    ## [57] igraph_1.3.5      boot_1.3-28.1     seqinr_4.2-23     reshape2_1.4.4   
-    ## [61] codetools_0.2-18  glue_1.6.2        evaluate_0.18     vctrs_0.5.1      
-    ## [65] tzdb_0.3.0        httpuv_1.6.6      gtable_0.3.1      purrr_0.3.5      
-    ## [69] assertthat_0.2.1  xfun_0.35         mime_0.12         xtable_1.8-4     
-    ## [73] later_1.3.0       ragg_1.2.4        tibble_3.1.8      cluster_2.1.4    
-    ## [77] ellipsis_0.3.2
+    ##  [1] nlme_3.1-160       bit64_4.0.5        rprojroot_2.0.3    tools_4.2.2       
+    ##  [5] polysat_1.7-7      utf8_1.2.2         R6_2.5.1           vegan_2.6-4       
+    ##  [9] lazyeval_0.2.2     DBI_1.1.3          mgcv_1.8-41        colorspace_2.0-3  
+    ## [13] permute_0.9-7      withr_2.5.0        tidyselect_1.2.0   gridExtra_2.3     
+    ## [17] bit_4.0.5          compiler_4.2.2     textshaping_0.3.6  cli_3.4.1         
+    ## [21] formatR_1.12       labeling_0.4.2     scales_1.2.1       yulab.utils_0.0.5 
+    ## [25] systemfonts_1.0.4  digest_0.6.30      rmarkdown_2.18     pkgconfig_2.0.3   
+    ## [29] htmltools_0.5.3    pegas_1.1          fastmap_1.1.0      highr_0.9         
+    ## [33] rlang_1.0.6        rstudioapi_0.14    shiny_1.7.3        gridGraphics_0.5-1
+    ## [37] farver_2.1.1       generics_0.1.3     jsonlite_1.8.3     vroom_1.6.0       
+    ## [41] ggplotify_0.1.0    patchwork_1.1.2    Matrix_1.5-3       Rcpp_1.0.9        
+    ## [45] munsell_0.5.0      fansi_1.0.3        ggnewscale_0.4.8   lifecycle_1.0.3   
+    ## [49] terra_1.6-41       stringi_1.7.8      yaml_2.3.6         MASS_7.3-58.1     
+    ## [53] plyr_1.8.8         grid_4.2.2         parallel_4.2.2     promises_1.2.0.1  
+    ## [57] crayon_1.5.2       lattice_0.20-45    splines_4.2.2      hms_1.1.2         
+    ## [61] knitr_1.41         pillar_1.8.1       igraph_1.3.5       boot_1.3-28.1     
+    ## [65] seqinr_4.2-23      reshape2_1.4.4     codetools_0.2-18   glue_1.6.2        
+    ## [69] evaluate_0.18      ggfun_0.0.9        vctrs_0.5.1        tzdb_0.3.0        
+    ## [73] httpuv_1.6.6       gtable_0.3.1       purrr_0.3.5        assertthat_0.2.1  
+    ## [77] xfun_0.35          mime_0.12          xtable_1.8-4       later_1.3.0       
+    ## [81] ragg_1.2.4         tibble_3.1.8       aplot_0.1.9        cluster_2.1.4     
+    ## [85] ellipsis_0.3.2
 
 ## File Organization
 
