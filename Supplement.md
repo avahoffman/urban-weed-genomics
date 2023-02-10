@@ -90,7 +90,11 @@
   - <a href="#make-sampling-maps" id="toc-make-sampling-maps">Make Sampling
     Maps</a>
 - <a href="#archetypal-analysis" id="toc-archetypal-analysis">Archetypal
-  analysis</a>
+  Analysis</a>
+  - <a href="#running-archetypal-analysis"
+    id="toc-running-archetypal-analysis">Running Archetypal Analysis</a>
+  - <a href="#visualizing-archetypes"
+    id="toc-visualizing-archetypes">Visualizing Archetypes</a>
 - <a href="#appendix-books" id="toc-appendix-books">Appendix</a>
   - <a href="#sessioninfo"
     id="toc-sessioninfo"><code>SessionInfo()</code></a>
@@ -1347,9 +1351,69 @@ source("R/plot_map_of_samples.R")
 make_all_urban_site_plots()
 ```
 
-# Archetypal analysis
+# Archetypal Analysis
 
-…
+We performed archetypal analysis following
+<https://github.com/AI-sandbox/archetypal-analysis>.
+
+There does not appear to be versioning for this software, but we used
+the tool by cloning it at this commit point:
+<https://github.com/AI-sandbox/archetypal-analysis/commit/7ae1c25c41bbe97ac2ff2b62c4cbe1814d0dbc27>
+.
+
+## Running Archetypal Analysis
+
+The software does something wonky and loads an old version of pandas
+(1.1.5) but a newer version is required (\>=1.2.0). This has to be
+updated in the `requirements.txt` file and the `setup.py` file in the
+archetypal-analysis repo that is cloned.
+
+    numpy==1.19.5
+    pandas==1.2.0 <<<<< Fix this line when cloned
+    pandas-plink==2.2.4
+
+Update pandas if needed.
+
+    pip install pandas -U 
+
+``` r
+source("R/archetype_analysis.R")
+```
+
+We ran the archetypal analysis algorithm looking for k = the number of
+cities in which the species was ID’d as well as k \* 2.
+
+``` r
+run_archetype_analysis(spp = "CD", k_vals = c(3, 6))  # 3 populations
+run_archetype_analysis(spp = "DS", k_vals = c(4, 8))  # 4 populations
+run_archetype_analysis(spp = "EC", k_vals = c(3, 6))  # 3 populations
+run_archetype_analysis(spp = "LS", k_vals = c(5, 10))  # 5 populations
+run_archetype_analysis(spp = "PA", k_vals = c(5, 10))  # 5 populations
+run_archetype_analysis(spp = "TO", k_vals = c(5, 10))  # 5 populations
+```
+
+## Visualizing Archetypes
+
+Before proceeding, we wanted to extract urban cover from the NLCD data
+and add it to the site data.
+
+``` r
+source("R/extract_envt_data.R")
+```
+
+``` r
+write_urban_cover_data()
+```
+
+Plot the archetypes in one big plot.
+
+``` r
+source("R/plot_archetypes.R")
+```
+
+``` r
+make_archetype_multi_plot()
+```
 
 # Appendix
 
@@ -1374,31 +1438,33 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ##  [1] cowplot_1.1.1     viridis_0.6.2     viridisLite_0.4.1 readr_2.1.3      
-    ##  [5] stringr_1.4.1     raster_3.6-11     sp_1.5-1          poppr_2.9.3      
-    ##  [9] hierfstat_0.5-11  adegenet_2.1.8    ade4_1.7-20       dplyr_1.0.10     
-    ## [13] magrittr_2.0.3    tidyr_1.2.1       ggplot2_3.4.0    
+    ##  [1] ggh4x_0.2.3       forcats_0.5.2     here_1.0.1        cowplot_1.1.1    
+    ##  [5] viridis_0.6.2     viridisLite_0.4.1 readr_2.1.3       stringr_1.4.1    
+    ##  [9] raster_3.6-11     sp_1.5-1          poppr_2.9.3       hierfstat_0.5-11 
+    ## [13] adegenet_2.1.8    ade4_1.7-20       dplyr_1.0.10      magrittr_2.0.3   
+    ## [17] tidyr_1.2.1       ggplot2_3.4.0    
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] bit64_4.0.5       vroom_1.6.0       splines_4.2.2     shiny_1.7.3      
-    ##  [5] assertthat_0.2.1  highr_0.9         yaml_2.3.6        pegas_1.1        
-    ##  [9] pillar_1.8.1      lattice_0.20-45   glue_1.6.2        digest_0.6.30    
-    ## [13] promises_1.2.0.1  colorspace_2.0-3  htmltools_0.5.3   httpuv_1.6.6     
-    ## [17] Matrix_1.5-3      plyr_1.8.8        pkgconfig_2.0.3   purrr_0.3.5      
-    ## [21] xtable_1.8-4      scales_1.2.1      terra_1.6-41      later_1.3.0      
-    ## [25] tzdb_0.3.0        tibble_3.1.8      mgcv_1.8-41       generics_0.1.3   
-    ## [29] farver_2.1.1      ellipsis_0.3.2    withr_2.5.0       cli_3.4.1        
-    ## [33] crayon_1.5.2      mime_0.12         evaluate_0.18     fansi_1.0.3      
-    ## [37] nlme_3.1-160      MASS_7.3-58.1     vegan_2.6-4       textshaping_0.3.6
-    ## [41] tools_4.2.2       hms_1.1.2         formatR_1.12      lifecycle_1.0.3  
-    ## [45] munsell_0.5.0     cluster_2.1.4     compiler_4.2.2    systemfonts_1.0.4
-    ## [49] rlang_1.0.6       grid_4.2.2        rstudioapi_0.14   igraph_1.3.5     
-    ## [53] labeling_0.4.2    rmarkdown_2.18    boot_1.3-28.1     codetools_0.2-18 
-    ## [57] gtable_0.3.1      DBI_1.1.3         reshape2_1.4.4    R6_2.5.1         
-    ## [61] gridExtra_2.3     knitr_1.41        fastmap_1.1.0     seqinr_4.2-23    
-    ## [65] bit_4.0.5         utf8_1.2.2        ragg_1.2.4        permute_0.9-7    
-    ## [69] ape_5.6-2         stringi_1.7.8     parallel_4.2.2    polysat_1.7-7    
-    ## [73] Rcpp_1.0.9        vctrs_0.5.1       tidyselect_1.2.0  xfun_0.35
+    ##  [1] nlme_3.1-160      bit64_4.0.5       rprojroot_2.0.3   tools_4.2.2      
+    ##  [5] polysat_1.7-7     utf8_1.2.2        R6_2.5.1          vegan_2.6-4      
+    ##  [9] DBI_1.1.3         mgcv_1.8-41       colorspace_2.0-3  permute_0.9-7    
+    ## [13] withr_2.5.0       tidyselect_1.2.0  gridExtra_2.3     bit_4.0.5        
+    ## [17] compiler_4.2.2    textshaping_0.3.6 cli_3.4.1         formatR_1.12     
+    ## [21] labeling_0.4.2    scales_1.2.1      systemfonts_1.0.4 digest_0.6.30    
+    ## [25] rmarkdown_2.18    pkgconfig_2.0.3   htmltools_0.5.3   pegas_1.1        
+    ## [29] fastmap_1.1.0     highr_0.9         rlang_1.0.6       rstudioapi_0.14  
+    ## [33] shiny_1.7.3       farver_2.1.1      generics_0.1.3    vroom_1.6.0      
+    ## [37] Matrix_1.5-3      Rcpp_1.0.9        munsell_0.5.0     fansi_1.0.3      
+    ## [41] ape_5.6-2         lifecycle_1.0.3   terra_1.6-41      stringi_1.7.8    
+    ## [45] yaml_2.3.6        MASS_7.3-58.1     plyr_1.8.8        grid_4.2.2       
+    ## [49] parallel_4.2.2    promises_1.2.0.1  crayon_1.5.2      lattice_0.20-45  
+    ## [53] splines_4.2.2     hms_1.1.2         knitr_1.41        pillar_1.8.1     
+    ## [57] igraph_1.3.5      boot_1.3-28.1     seqinr_4.2-23     reshape2_1.4.4   
+    ## [61] codetools_0.2-18  glue_1.6.2        evaluate_0.18     vctrs_0.5.1      
+    ## [65] tzdb_0.3.0        httpuv_1.6.6      gtable_0.3.1      purrr_0.3.5      
+    ## [69] assertthat_0.2.1  xfun_0.35         mime_0.12         xtable_1.8-4     
+    ## [73] later_1.3.0       ragg_1.2.4        tibble_3.1.8      cluster_2.1.4    
+    ## [77] ellipsis_0.3.2
 
 ## File Organization
 

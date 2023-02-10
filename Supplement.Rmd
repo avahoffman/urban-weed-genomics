@@ -2,11 +2,11 @@
 title: "Supplementary Information" 
 author: "Ava Hoffman, Jenny Cocciardi" 
 output: 
-  pdf_document: 
-    toc: true 
   md_document: 
     variant: gfm
     toc: true
+  pdf_document: 
+    toc: true 
 urlcolor: blue 
 editor_options: 
   markdown:
@@ -923,7 +923,9 @@ make_all_urban_site_plots()
 
 # Archetypal Analysis
 
-We performed archetypal analysis following https://github.com/AI-sandbox/archetypal-analysis.
+We performed archetypal analysis following https://github.com/AI-sandbox/archetypal-analysis. 
+
+There does not appear to be versioning for this software, but we used the tool by cloning it at this commit point: https://github.com/AI-sandbox/archetypal-analysis/commit/7ae1c25c41bbe97ac2ff2b62c4cbe1814d0dbc27 . 
 
 ## Running Archetypal Analysis
 
@@ -966,17 +968,17 @@ Before proceeding, we wanted to extract urban cover from the NLCD data and add i
 source("R/extract_envt_data.R")
 ```
 
-```{r archetype_2, eval = FALSE, message=FALSE}
+```{r archetype_4, eval = FALSE, message=FALSE}
 write_urban_cover_data()
 ```
 
 Plot the archetypes in one big plot.
 
-```{r archetype_3, message=FALSE}
+```{r archetype_5, message=FALSE}
 source("R/plot_archetypes.R")
 ```
 
-```{r archetype_2, eval = FALSE, message=FALSE}
+```{r archetype_6, eval = FALSE, message=FALSE}
 make_archetype_multi_plot()
 ```
 

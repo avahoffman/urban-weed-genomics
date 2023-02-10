@@ -1,8 +1,11 @@
-# AA plots
+# Archetype plots
 
+library(here)
 library(tidyr)
 library(readr)
 library(dplyr)
+library(stringr)
+library(forcats)
 library(ggplot2)
 library(ggh4x)
 library(cowplot)
@@ -13,47 +16,42 @@ make_archetype_plot <-
            k_list,
            width = 12,
            height = 3.5) {
-    temp_dir <-
-      paste0(here::here(),
-             "/SNP_data/",
-             spp,
-             "/populations_20_pct")
-    setwd(temp_dir)
+    subdir <- paste0(here(), "/SNP_data/", spp)
+    setwd(paste0(subdir, "/populations_20_pct"))
     
-    path_popmap <-
-      paste0(here::here(),
-             "/SNP_data/",
-             spp,
-             "/popmap_",
-             spp,
-             ".txt")
+    # Get the site info
+    site_info <-
+      read_csv(paste0(here(),
+                             "/data/site_data_urban_cov.csv")) %>%
+      dplyr::select(site_abbv, city, management_type, nlcd_urban_pct) %>% 
+      mutate(site_abbv = str_replace(site_abbv, " ", "_"))
     
-    long_df <- data.frame()
+    # Get samples and spread out the name to get more details
+    # Join to site info to get urban cover
     samp <-
-      readr::read_tsv(path_popmap, col_names = c("sample", "city"))
-    
-    samp <-
-      samp %>%
+      read_tsv(paste0(subdir, "/popmap_", spp, ".txt"),
+                      col_names = c("sample", "city")) %>%
       tidyr::separate(
         sample,
         into = c("spp", "ct", "site_abbv", "management_type", "id"),
         sep = "\\.",
         remove = F
-      )
-    site_info <-
-      readr::read_csv(paste0(primary_dir,
-                             "/data/site_data_urban_cov.csv")) %>%
-      dplyr::select(site_abbv, city, management_type, nlcd_urban_pct)
-    samp <-
-      samp %>% dplyr::left_join(site_info, by = c("city", "site_abbv", "management_type")) %>%
+      ) %>% 
+      left_join(site_info,
+                             by = c("city", "site_abbv", "management_type")) %>%
       dplyr::select(sample, site_abbv, city, nlcd_urban_pct, id, management_type)
+    
+    # Create empty df
+    long_df <- data.frame()
+    
+    # Pull in archetypal analysis results by k
     for (k in k_list) {
       tmp_df <-
-        readr::read_delim(paste0("AA.", k, ".Q"),
+        read_delim(paste0("AA.", k, ".Q"),
                           delim = ' ',
                           col_names = FALSE) %>% mutate(k = k)
       long_df_k <-
-        tidyr::pivot_longer(
+        pivot_longer(
           cbind(samp, tmp_df),
           cols = !c(
             sample,
@@ -67,28 +65,35 @@ make_archetype_plot <-
         )
       long_df <- rbind(long_df, long_df_k)
     }
-    # long_df$name <-
-    #   factor(long_df$name, levels = rev(levels(as.factor(long_df$name))))
-    # long_df$sample <-
-    #   forcats::fct_reorder(factor(long_df$sample), long_df$nlcd_urban_pct)
-    #
+    
+    # Create a new column with cover percent, make a factor, and sort
+    long_df <-
+      long_df %>%
+      mutate(site_n_cov = paste0(round(nlcd_urban_pct, 0), "%")) %>% 
+      mutate(site_n_cov = fct_reorder(site_n_cov, nlcd_urban_pct)) %>% 
+      arrange(city, nlcd_urban_pct)
+    
+    # Create a set of labels for the x axis
+    x_lbl_ <-
+      long_df %>% 
+      select(sample, city, site_n_cov, nlcd_urban_pct) %>% 
+      unique()
+    
+    # Keep only the first label in the list to keep things tidy
+    x_lbl <- x_lbl_ %>% 
+      mutate(dupe = x_lbl_ %>% select(-sample) %>% duplicated()) %>% 
+      mutate(site_n_cov = as.character(site_n_cov)) %>% 
+        mutate(x = case_when(
+        dupe == FALSE ~ site_n_cov,
+        TRUE ~ "-"
+      )) %>% 
+      mutate(x = as_factor(x))
+    
+    # Create labels and set palette
     grp.labs <- paste("K =", k_list)
     names(grp.labs) <- k_list
     my_pal <-
       rev(RColorBrewer::brewer.pal(n = max(long_df$k), name = "Set3"))
-    
-    long_df <-
-      long_df %>%
-      mutate(site_n_cov = paste0(round(nlcd_urban_pct, 0),
-                                 "%"))
-    
-    long_df$site_n_cov <-
-      forcats::fct_reorder(long_df$site_n_cov, long_df$nlcd_urban_pct)
-    
-    long_df <- long_df %>% arrange(city, nlcd_urban_pct)
-    
-    x_lbl <-
-      long_df %>% select(sample, city, site_n_cov, nlcd_urban_pct) %>% unique()
     
     gg <-
       ggplot(data = long_df, aes(x = sample, y = value, fill = name)) +
@@ -103,11 +108,11 @@ make_archetype_plot <-
       theme_classic() +
       facetted_pos_scales(
         x = list(
-          city == "Baltimore" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "Baltimore"), ]$site_n_cov),
-          city == "Boston" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "Boston"), ]$site_n_cov),
-          city == "Los Angeles" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "Los Angeles"), ]$site_n_cov),
-          city == "Minneapolis" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "Minneapolis"), ]$site_n_cov),
-          city == "Phoenix" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "Phoenix"), ]$site_n_cov)
+          city == "Baltimore" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "Baltimore"), ]$x),
+          city == "Boston" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "Boston"), ]$x),
+          city == "Los Angeles" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "Los Angeles"), ]$x),
+          city == "Minneapolis" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "Minneapolis"), ]$x),
+          city == "Phoenix" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "Phoenix"), ]$x)
         )
       ) +
       scale_fill_manual(values = c(my_pal)) +
@@ -131,7 +136,7 @@ make_archetype_plot <-
       ) +
       ggtitle(paste0("  ", species_name))
     
-    setwd(here::here())
+    setwd(here())
     ggsave(
       paste0("figures/genetics/Archetypes_", species_name, ".png"),
       dpi = "print",
@@ -177,7 +182,7 @@ make_archetype_multi_plot <- function(width = 12,
     labels = c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)")
   )
   mega_plot
-  setwd(here::here())
+  setwd(here())
   ggsave(
     paste0("figures/genetics/Archetypes_ALL.png"),
     dpi = "print",
