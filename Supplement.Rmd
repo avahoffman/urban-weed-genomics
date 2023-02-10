@@ -823,7 +823,7 @@ parameter permutation to its own new directory. This script uses the
 doing all folders by default. This is convenient if you only want to
 iterate through a subset of the folders (city-species combinations).
 
-# Population Statistics
+# Analysis
 
 ## Fst - Variance among populations
 
@@ -878,8 +878,6 @@ knitr::kable(
 )
 ```
 
-# Map of samples
-
 ## Trim spatial files
 
 From the USGS:
@@ -921,13 +919,11 @@ source("R/plot_map_of_samples.R")
 make_all_urban_site_plots()
 ```
 
-# Archetypal Analysis
+## Archetypal Analysis
 
 We performed archetypal analysis following https://github.com/AI-sandbox/archetypal-analysis. 
 
 There does not appear to be versioning for this software, but we used the tool by cloning it at this commit point: https://github.com/AI-sandbox/archetypal-analysis/commit/7ae1c25c41bbe97ac2ff2b62c4cbe1814d0dbc27 . 
-
-## Running Archetypal Analysis
 
 The software does something wonky and loads an old version of pandas (1.1.5) but 
 a newer version is required (>=1.2.0). This has to be updated in the `requirements.txt` 
@@ -982,7 +978,7 @@ source("R/plot_archetypes.R")
 make_archetype_multi_plot()
 ```
 
-# Isolation by State
+## Isolation by State
 
 ```{r ibs_1, message=FALSE}
 source("R/plot_isolation_by_state.R")
