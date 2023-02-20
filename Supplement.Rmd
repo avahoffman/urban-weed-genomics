@@ -852,6 +852,18 @@ knitr::kable(
 read.csv("output/population_stats-fst.csv")
 ```
 
+## Fis - Homozygosity within population
+
+We used `hierfstat::basic.stats()` to calculate Fis. This is equal to (expected - observed) / expected, and thus gives a good estimate of whether there are more homozygotes than expected (positive number) or more heterozygotes than expected (negative number).
+
+```{r Fis_code, eval = FALSE, message=FALSE}
+calc_fst()
+```
+
+```{r Fis_table_readlines, message=FALSE}
+read.csv("output/population_stats-Fis.csv")
+```
+
 ## rbarD - Clonality of populations
 
 We used `poppr::ia()` to calculate the standardized index of association of loci in the dataset. 

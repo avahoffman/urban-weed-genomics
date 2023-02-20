@@ -88,3 +88,40 @@ calc_rbarD <- function() {
   
   readr::write_csv(rbarD_dat, "output/population_stats-rbarD.csv")
 }
+
+
+calc_Fis <- function() {
+  genind_ <- read_dat()
+  
+  # Create an empty dataframe so values can be appended
+  Fis_dat <- tibble::tibble()
+  # Loop through species
+  for (i in 1:6) {
+    genind_dat <- genind_[[i]]
+    
+    # Clean up population names 
+    pops_clean <-
+      genind_dat$pop %>%
+      stringr::str_extract("(?<=..)[:alpha:]{2}")
+    genind_dat$pop <-
+      factor(pops_clean,
+             levels = unique(pops_clean))
+    
+    # Loop thru cities in each species
+    for (pop_ in levels(genind_dat$pop)) {
+      genind_dat_city <- popsub(genind_dat, pop_)
+      stats_ <- basic.stats(genind_dat_city)$overall
+      stats_is_ <- cbind(
+        spp = names(genind_)[i],
+        city = pop_,
+        n = length(genind_dat_city$pop),
+        # Drop columns that can only be calculated AMONG populations, not within
+        tibble::tibble(!!!stats_) %>% dplyr::select(-c(Dst, Htp, Dstp, Fst, Fstp, Dest))
+      )
+      # Append data
+      Fis_dat <- Fis_dat %>% rbind(stats_is_)
+    }
+  }
+  
+  readr::write_csv(Fis_dat, "output/population_stats-Fis.csv")
+}
