@@ -76,27 +76,26 @@
     - <a href="#step-11b---city-level-population-analysis"
       id="toc-step-11b---city-level-population-analysis">Step 11b - City Level
       Population Analysis</a>
-- <a href="#population-statistics"
-  id="toc-population-statistics">Population Statistics</a>
+- <a href="#analysis" id="toc-analysis">Analysis</a>
   - <a href="#fst---variance-among-populations"
     id="toc-fst---variance-among-populations">Fst - Variance among
     populations</a>
+  - <a href="#fis---homozygosity-within-population"
+    id="toc-fis---homozygosity-within-population">Fis - Homozygosity within
+    population</a>
   - <a href="#rbard---clonality-of-populations"
     id="toc-rbard---clonality-of-populations">rbarD - Clonality of
     populations</a>
-- <a href="#map-of-samples" id="toc-map-of-samples">Map of samples</a>
   - <a href="#trim-spatial-files" id="toc-trim-spatial-files">Trim spatial
     files</a>
   - <a href="#make-sampling-maps" id="toc-make-sampling-maps">Make Sampling
     Maps</a>
-- <a href="#archetypal-analysis" id="toc-archetypal-analysis">Archetypal
-  Analysis</a>
-  - <a href="#running-archetypal-analysis"
-    id="toc-running-archetypal-analysis">Running Archetypal Analysis</a>
+  - <a href="#archetypal-analysis" id="toc-archetypal-analysis">Archetypal
+    Analysis</a>
   - <a href="#visualizing-archetypes"
     id="toc-visualizing-archetypes">Visualizing Archetypes</a>
-- <a href="#isolation-by-state" id="toc-isolation-by-state">Isolation by
-  State</a>
+  - <a href="#isolation-by-state" id="toc-isolation-by-state">Isolation by
+    State</a>
 - <a href="#appendix-books" id="toc-appendix-books">Appendix</a>
   - <a href="#sessioninfo"
     id="toc-sessioninfo"><code>SessionInfo()</code></a>
@@ -1217,7 +1216,7 @@ parameter permutation to its own new directory. This script uses the
 doing all folders by default. This is convenient if you only want to
 iterate through a subset of the folders (city-species combinations).
 
-# Population Statistics
+# Analysis
 
 ## Fst - Variance among populations
 
@@ -1243,6 +1242,48 @@ read.csv("output/population_stats-fst.csv")
     ## 4  LS    TRUE 0.536
     ## 5  PA   FALSE 0.244
     ## 6  TO   FALSE 0.108
+
+## Fis - Homozygosity within population
+
+We used `hierfstat::basic.stats()` to calculate Fis. This is equal to
+(expected - observed) / expected, and thus gives a good estimate of
+whether there are more homozygotes than expected (positive number) or
+more heterozygotes than expected (negative number).
+
+``` r
+calc_fst()
+```
+
+``` r
+read.csv("output/population_stats-Fis.csv")
+```
+
+    ##    spp city  n     Ho     Hs     Ht     Fis
+    ## 1   CD   BA 56 0.0910 0.1659 0.1659  0.4514
+    ## 2   CD   LA 48 0.1106 0.2427 0.2427  0.5441
+    ## 3   CD   PX 82 0.0951 0.2495 0.2495  0.6187
+    ## 4   DS   BA 55 0.2461 0.3120 0.3120  0.2112
+    ## 5   DS   BO 50 0.2167 0.3122 0.3122  0.3060
+    ## 6   DS   MN 80 0.2139 0.2058 0.2058 -0.0396
+    ## 7   DS   PX 36 0.2151 0.0752 0.0752 -1.8589
+    ## 8   EC   BA 41 0.1433 0.1641 0.1641  0.1270
+    ## 9   EC   PX 29 0.1908 0.1673 0.1673 -0.1406
+    ## 10  EC   LA 37 0.1461 0.1652 0.1652  0.1157
+    ## 11  LS   BA 19 0.1440 0.2085 0.2085  0.3093
+    ## 12  LS   BO 26 0.1307 0.1815 0.1815  0.2798
+    ## 13  LS   LA 59 0.1440 0.2131 0.2131  0.3240
+    ## 14  LS   MN 28 0.1421 0.1903 0.1903  0.2531
+    ## 15  LS   PX 35 0.1455 0.1251 0.1251 -0.1631
+    ## 16  PA   BA 44 0.1250 0.2785 0.2785  0.5512
+    ## 17  PA   BO 58 0.1277 0.2588 0.2588  0.5063
+    ## 18  PA   LA 38 0.1449 0.2494 0.2494  0.4191
+    ## 19  PA   MN  2 0.1136 0.1993 0.1993  0.4301
+    ## 20  PA   PX 28 0.1402 0.2169 0.2169  0.3537
+    ## 21  TO   BA 59 0.1608 0.2235 0.2235  0.2804
+    ## 22  TO   BO 58 0.1585 0.2570 0.2570  0.3831
+    ## 23  TO   LA 28 0.1748 0.2473 0.2473  0.2934
+    ## 24  TO   MN 75 0.1599 0.2271 0.2271  0.2960
+    ## 25  TO   PX 16 0.1744 0.2105 0.2105  0.1715
 
 ## rbarD - Clonality of populations
 
@@ -1275,37 +1316,36 @@ There is a nice description
 calc_rbarD()
 ```
 
-| spp | city |   n |         Ia |  p.Ia |     rbarD |  p.rD |
-|:----|:-----|----:|-----------:|------:|----------:|------:|
-| CD  | BA   |  56 | 21.2938393 | 1.000 | 0.0227603 | 1.000 |
-| CD  | LA   |  48 | 27.6161960 | 0.127 | 0.0152745 | 0.008 |
-| CD  | PX   |  82 | 26.6954409 | 0.001 | 0.0137806 | 0.001 |
-| DS  | BA   |  55 | 29.6256245 | 1.000 | 0.0194295 | 1.000 |
-| DS  | BO   |  50 | 48.6300407 | 1.000 | 0.0299887 | 1.000 |
-| DS  | MN   |  80 | 14.6413798 | 1.000 | 0.0121960 | 1.000 |
-| DS  | PX   |  36 |  0.1930822 | 0.169 | 0.0238413 | 0.063 |
-| EC  | BA   |  41 | 10.3852195 | 1.000 | 0.0147025 | 1.000 |
-| EC  | PX   |  29 |  6.3919146 | 1.000 | 0.0163922 | 1.000 |
-| EC  | LA   |  37 | 14.2293626 | 1.000 | 0.0196589 | 1.000 |
-| LS  | BA   |  19 | 11.0254296 | 1.000 | 0.0241329 | 1.000 |
-| LS  | BO   |  26 | 19.3364324 | 0.056 | 0.1211653 | 0.076 |
-| LS  | LA   |  59 | 14.9797370 | 0.722 | 0.0201264 | 0.001 |
-| LS  | MN   |  28 | 12.9925894 | 0.993 | 0.0262154 | 0.001 |
-| LS  | PX   |  35 |  4.2572897 | 1.000 | 0.0200827 | 1.000 |
-| PA  | BA   |  44 | 11.1791383 | 1.000 | 0.0301568 | 1.000 |
-| PA  | BO   |  58 | 11.3444510 | 1.000 | 0.0379816 | 0.983 |
-| PA  | LA   |  38 | 10.8013156 | 1.000 | 0.0228542 | 1.000 |
-| PA  | MN   |   2 |         NA |    NA |        NA |    NA |
-| PA  | PX   |  28 | 25.1886585 | 1.000 | 0.0785711 | 1.000 |
-| TO  | BA   |  59 |  7.8175800 | 1.000 | 0.0092886 | 0.999 |
-| TO  | BO   |  58 |  9.6635713 | 0.001 | 0.0102150 | 0.001 |
-| TO  | LA   |  28 | 10.8244447 | 0.001 | 0.0156813 | 0.001 |
-| TO  | MN   |  75 |  7.9147773 | 1.000 | 0.0084373 | 1.000 |
-| TO  | PX   |  16 | 13.3835215 | 0.001 | 0.0489003 | 0.001 |
+``` r
+read.csv("output/population_stats-rbarD.csv")
+```
 
-rbarD statistics for species and nested populations in this study.
-
-# Map of samples
+    ##    spp city  n         Ia  p.Ia       rbarD  p.rD
+    ## 1   CD   BA 56 21.2938393 1.000 0.022760349 1.000
+    ## 2   CD   LA 48 27.6161960 0.127 0.015274487 0.008
+    ## 3   CD   PX 82 26.6954409 0.001 0.013780595 0.001
+    ## 4   DS   BA 55 29.6256245 1.000 0.019429461 1.000
+    ## 5   DS   BO 50 48.6300407 1.000 0.029988672 1.000
+    ## 6   DS   MN 80 14.6413798 1.000 0.012196015 1.000
+    ## 7   DS   PX 36  0.1930822 0.169 0.023841307 0.063
+    ## 8   EC   BA 41 10.3852195 1.000 0.014702502 1.000
+    ## 9   EC   PX 29  6.3919146 1.000 0.016392187 1.000
+    ## 10  EC   LA 37 14.2293626 1.000 0.019658931 1.000
+    ## 11  LS   BA 19 11.0254296 1.000 0.024132899 1.000
+    ## 12  LS   BO 26 19.3364324 0.056 0.121165297 0.076
+    ## 13  LS   LA 59 14.9797370 0.722 0.020126443 0.001
+    ## 14  LS   MN 28 12.9925894 0.993 0.026215370 0.001
+    ## 15  LS   PX 35  4.2572897 1.000 0.020082743 1.000
+    ## 16  PA   BA 44 11.1791383 1.000 0.030156848 1.000
+    ## 17  PA   BO 58 11.3444510 1.000 0.037981558 0.983
+    ## 18  PA   LA 38 10.8013156 1.000 0.022854224 1.000
+    ## 19  PA   MN  2         NA    NA          NA    NA
+    ## 20  PA   PX 28 25.1886585 1.000 0.078571123 1.000
+    ## 21  TO   BA 59  7.8175800 1.000 0.009288594 0.999
+    ## 22  TO   BO 58  9.6635713 0.001 0.010215011 0.001
+    ## 23  TO   LA 28 10.8244447 0.001 0.015681325 0.001
+    ## 24  TO   MN 75  7.9147773 1.000 0.008437311 1.000
+    ## 25  TO   PX 16 13.3835215 0.001 0.048900307 0.001
 
 ## Trim spatial files
 
@@ -1353,7 +1393,7 @@ source("R/plot_map_of_samples.R")
 make_all_urban_site_plots()
 ```
 
-# Archetypal Analysis
+## Archetypal Analysis
 
 We performed archetypal analysis following
 <https://github.com/AI-sandbox/archetypal-analysis>.
@@ -1362,8 +1402,6 @@ There does not appear to be versioning for this software, but we used
 the tool by cloning it at this commit point:
 <https://github.com/AI-sandbox/archetypal-analysis/commit/7ae1c25c41bbe97ac2ff2b62c4cbe1814d0dbc27>
 .
-
-## Running Archetypal Analysis
 
 The software does something wonky and loads an old version of pandas
 (1.1.5) but a newer version is required (\>=1.2.0). This has to be
@@ -1417,7 +1455,7 @@ source("R/plot_archetypes.R")
 make_archetype_multi_plot()
 ```
 
-# Isolation by State
+## Isolation by State
 
 ``` r
 source("R/plot_isolation_by_state.R")
