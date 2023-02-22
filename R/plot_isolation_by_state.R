@@ -22,7 +22,7 @@ library(SNPRelate)
 do_ibs <- function(infile_path, genind_spp, species_name) {
   # SNPRelate package used here
   # https://www.bioconductor.org/packages/release/bioc/vignettes/SNPRelate/inst/doc/SNPRelate.html#identity-by-state-analysis
-  # 
+  #
   
   # Read in file / open session
   #set.seed(999)
@@ -34,6 +34,7 @@ do_ibs <- function(infile_path, genind_spp, species_name) {
   # Want to ensure the same samples are used in the genind object as this SNPRelate object.
   genind_samp <- rownames(genind_spp$tab)
   
+  # Calculate the fraction of identity by state for each pair of samples
   ibs <- snpgdsIBS(genofile, num.thread = 2,
                    sample.id = genind_samp)
   
@@ -48,36 +49,47 @@ do_ibs <- function(infile_path, genind_spp, species_name) {
   
   # ggplot prep
   hc <- ibs.hc$hclust
- # clus <- cutree(hc, 3)
-  #g <- split(names(clus), clus)
   p <- ggtree(hc)
   #clades <- sapply(g, function(n) MRCA(p, n))
   #p <- groupClade(p, clades, group_name='subtree')
   d <- data.frame(label = hc$labels,
                   city = pop(genind_spp))
-
+  
   # colors_ <- RColorBrewer::brewer.pal(n = 5, name = "Set3")
-  colors_ <- viridis::viridis(n = 5, option = "H", begin = 0.2)
-  my_pal <- setNames(colors_, 
-           c("Baltimore", "Boston", "Los Angeles", "Minneapolis", "Phoenix"))
+  colors_ <- viridis::viridis(n = 5,
+                              option = "H",
+                              begin = 0.2)
+  my_pal <- setNames(colors_,
+                     c(
+                       "Baltimore",
+                       "Boston",
+                       "Los Angeles",
+                       "Minneapolis",
+                       "Phoenix"
+                     ))
   
   # Create plot
   gg <- p %<+% d +
     layout_dendrogram() +
-    geom_tippoint(aes(fill=factor(city), x=x),
-                  size=2, shape=21, color='black') +
+    geom_tippoint(
+      aes(fill = factor(city), x = x),
+      size = 2,
+      shape = 21,
+      color = 'black'
+    ) +
     scale_fill_manual(values = my_pal) +
     guides(fill = guide_legend(title = "")) +
-    theme(legend.position="none") +
-    ggtitle(paste0("      ", species_name)) 
+    theme(legend.position = "none",
+          legend.text=element_text(size=20)) +
+    ggtitle(paste0("      ", species_name))
   
   # Save plot
-  ggsave(
-    paste0(paste0("figures/trees/tree_", species_name, ".png")),
-    dpi = "print",
-    width = 12,
-    height = 3
-  )
+  ggsave(paste0(paste0(
+    "figures/trees/tree_", species_name, ".png"
+  )),
+  dpi = "print",
+  width = 12,
+  height = 3)
   
   return(gg)
 }
@@ -85,7 +97,7 @@ do_ibs <- function(infile_path, genind_spp, species_name) {
 
 fix_pop_names <- function(x) {
   # x is a genind object
-
+  
   # Replace sample name with actual city name
   pop(x) <-
     str_replace(pop(x), "(..).BA.(.+)", "Baltimore")
@@ -97,7 +109,7 @@ fix_pop_names <- function(x) {
     str_replace(pop(x), "(..).MN.(.+)", "Minneapolis")
   pop(x) <-
     str_replace(pop(x), "(..).PX.(.+)", "Phoenix")
-
+  
   return(x)
 }
 
@@ -118,67 +130,96 @@ plot_dendrograms <- function(width = 12, height = 12) {
     read.genepop("SNP_data/CD/populations_20_pct/populations.snps.gen")
   
   # Create GDS files from the vcf files (only needs to be done once)
-  if (!file.exists("SNP_data/DS/populations_20_pct/snps.gds")){
-  snpgdsVCF2GDS(
-    "SNP_data/DS/populations_20_pct/populations.snps.vcf",
-    "SNP_data/DS/populations_20_pct/snps.gds"
-  )}
-  if (!file.exists("SNP_data/LS/populations_20_pct/snps.gds")){
-  snpgdsVCF2GDS(
-    "SNP_data/LS/populations_20_pct/populations.snps.vcf",
-    "SNP_data/LS/populations_20_pct/snps.gds"
-  )}
-  if (!file.exists("SNP_data/PA/populations_20_pct/snps.gds")){
-  snpgdsVCF2GDS(
-    "SNP_data/PA/populations_20_pct/populations.snps.vcf",
-    "SNP_data/PA/populations_20_pct/snps.gds"
-  )}
-  if (!file.exists("SNP_data/TO/populations_20_pct/snps.gds")){
-  snpgdsVCF2GDS(
-    "SNP_data/TO/populations_20_pct/populations.snps.vcf",
-    "SNP_data/TO/populations_20_pct/snps.gds"
-  )}
-  if (!file.exists("SNP_data/CD/populations_20_pct/snps.gds")){
-  snpgdsVCF2GDS(
-    "SNP_data/CD/populations_20_pct/populations.snps.vcf",
-    "SNP_data/CD/populations_20_pct/snps.gds"
-  )}
-  if (!file.exists("SNP_data/EC/populations_20_pct/snps.gds")){
-  snpgdsVCF2GDS(
-    "SNP_data/EC/populations_20_pct/populations.snps.vcf",
-    "SNP_data/EC/populations_20_pct/snps.gds"
-  )}
+  if (!file.exists("SNP_data/DS/populations_20_pct/snps.gds")) {
+    snpgdsVCF2GDS(
+      "SNP_data/DS/populations_20_pct/populations.snps.vcf",
+      "SNP_data/DS/populations_20_pct/snps.gds"
+    )
+  }
+  if (!file.exists("SNP_data/LS/populations_20_pct/snps.gds")) {
+    snpgdsVCF2GDS(
+      "SNP_data/LS/populations_20_pct/populations.snps.vcf",
+      "SNP_data/LS/populations_20_pct/snps.gds"
+    )
+  }
+  if (!file.exists("SNP_data/PA/populations_20_pct/snps.gds")) {
+    snpgdsVCF2GDS(
+      "SNP_data/PA/populations_20_pct/populations.snps.vcf",
+      "SNP_data/PA/populations_20_pct/snps.gds"
+    )
+  }
+  if (!file.exists("SNP_data/TO/populations_20_pct/snps.gds")) {
+    snpgdsVCF2GDS(
+      "SNP_data/TO/populations_20_pct/populations.snps.vcf",
+      "SNP_data/TO/populations_20_pct/snps.gds"
+    )
+  }
+  if (!file.exists("SNP_data/CD/populations_20_pct/snps.gds")) {
+    snpgdsVCF2GDS(
+      "SNP_data/CD/populations_20_pct/populations.snps.vcf",
+      "SNP_data/CD/populations_20_pct/snps.gds"
+    )
+  }
+  if (!file.exists("SNP_data/EC/populations_20_pct/snps.gds")) {
+    snpgdsVCF2GDS(
+      "SNP_data/EC/populations_20_pct/populations.snps.vcf",
+      "SNP_data/EC/populations_20_pct/snps.gds"
+    )
+  }
   
   # Do Isolation by state
-  p1 <- do_ibs(infile_path = "SNP_data/CD/populations_20_pct/snps.gds",
-         genind_spp = gen_cd,
-         species_name = "Bermuda grass")
+  p1 <-
+    do_ibs(
+      infile_path = "SNP_data/CD/populations_20_pct/snps.gds",
+      genind_spp = gen_cd,
+      species_name = "Bermuda grass"
+    )
   
-  p2 <- do_ibs(infile_path = "SNP_data/DS/populations_20_pct/snps.gds",
-         genind_spp = gen_ds,
-         species_name = "crabgrass")
-
-  p3 <- do_ibs(infile_path = "SNP_data/EC/populations_20_pct/snps.gds",
-         genind_spp = gen_ec,
-         species_name = "horseweed")
+  p2 <-
+    do_ibs(
+      infile_path = "SNP_data/DS/populations_20_pct/snps.gds",
+      genind_spp = gen_ds,
+      species_name = "crabgrass"
+    )
   
-  p4 <- do_ibs(infile_path = "SNP_data/LS/populations_20_pct/snps.gds",
-         genind_spp = gen_ls,
-         species_name = "prickly lettuce")
+  p3 <-
+    do_ibs(
+      infile_path = "SNP_data/EC/populations_20_pct/snps.gds",
+      genind_spp = gen_ec,
+      species_name = "horseweed"
+    )
   
-  p5 <- do_ibs(infile_path = "SNP_data/PA/populations_20_pct/snps.gds",
-         genind_spp = gen_pa,
-         species_name = "bluegrass")
+  p4 <-
+    do_ibs(
+      infile_path = "SNP_data/LS/populations_20_pct/snps.gds",
+      genind_spp = gen_ls,
+      species_name = "prickly lettuce"
+    )
   
-  p6 <- do_ibs(infile_path = "SNP_data/TO/populations_20_pct/snps.gds",
-         genind_spp = gen_to,
-         species_name = "dandelion")
+  p5 <-
+    do_ibs(
+      infile_path = "SNP_data/PA/populations_20_pct/snps.gds",
+      genind_spp = gen_pa,
+      species_name = "bluegrass"
+    )
   
-  legend <- get_legend(
-    # create some space to the left of the legend
+  p6 <-
+    do_ibs(
+      infile_path = "SNP_data/TO/populations_20_pct/snps.gds",
+      genind_spp = gen_to,
+      species_name = "dandelion"
+    )
+  
+  legend <- get_legend(# create some space to the left of the legend
     p6 + theme(legend.position = "bottom",
-               legend.direction = "horizontal")
-  )
+               legend.direction = "horizontal") +
+      geom_tippoint(
+        aes(fill = factor(city), x = x),
+        size = 5,
+        shape = 21,
+        color = 'black'
+      )
+    )
   
   mega_plot <- plot_grid(
     p1,
@@ -192,10 +233,11 @@ plot_dendrograms <- function(width = 12, height = 12) {
     axis = "l",
     #hjust = -1,
     ncol = 1,
+    rel_heights = c(1,1,1,1,1,1,0.5),
     labels = c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)")
   )
   mega_plot
-  setwd(here())
+  setwd(here::here())
   ggsave(
     paste0("figures/trees/tree_all.png"),
     dpi = "print",

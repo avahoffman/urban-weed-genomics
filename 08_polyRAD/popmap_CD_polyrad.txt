@@ -1,0 +1,190 @@
+CD.BA.RG-1.M.4	Baltimore
+CD.BA.RG-1.M.5	Baltimore
+CD.BA.DHI.U.2	Baltimore
+CD.BA.DHI.U.3	Baltimore
+CD.BA.AA.U.1	Baltimore
+CD.BA.AA.U.3	Baltimore
+CD.BA.AA.U.4	Baltimore
+CD.BA.CP.U.2	Baltimore
+CD.BA.CP.U.4	Baltimore
+CD.BA.CP.U.5	Baltimore
+CD.BA.FH.U.1	Baltimore
+CD.BA.FH.U.3	Baltimore
+CD.BA.FH.U.4	Baltimore
+CD.BA.FH.U.5	Baltimore
+CD.BA.GA.U.1	Baltimore
+CD.BA.GA.U.3	Baltimore
+CD.BA.GA.U.4	Baltimore
+CD.BA.GA.U.5	Baltimore
+CD.BA.LA.U.1	Baltimore
+CD.BA.LA.U.2	Baltimore
+CD.BA.LA.U.3	Baltimore
+CD.BA.LA.U.4	Baltimore
+CD.BA.LH-2.M.2	Baltimore
+CD.BA.LH-2.M.3	Baltimore
+CD.BA.LH-2.M.4	Baltimore
+CD.BA.LH-2.M.5	Baltimore
+CD.BA.LL-4.M.1	Baltimore
+CD.BA.LL-4.M.2	Baltimore
+CD.BA.LL-4.M.4	Baltimore
+CD.BA.PIK.U.1	Baltimore
+CD.BA.PIK.U.2	Baltimore
+CD.BA.PIK.U.4	Baltimore
+CD.BA.PIK.U.5	Baltimore
+CD.BA.PSP.M.1	Baltimore
+CD.BA.PSP.M.4	Baltimore
+CD.BA.RG-1.M.1	Baltimore
+CD.BA.RG-1.M.2	Baltimore
+CD.BA.TRC.U.1	Baltimore
+CD.BA.TRC.U.2	Baltimore
+CD.BA.TRC.U.3	Baltimore
+CD.BA.TRC.U.5	Baltimore
+CD.BA.W3.M.1	Baltimore
+CD.BA.W3.M.3	Baltimore
+CD.BA.W3.M.4	Baltimore
+CD.BA.W3.M.5	Baltimore
+CD.BA.WB.U.1	Baltimore
+CD.BA.WB.U.2	Baltimore
+CD.BA.WB.U.3	Baltimore
+CD.BA.WB.U.4	Baltimore
+CD.BA.WB.U.5	Baltimore
+CD.BA.WBO.U.1	Baltimore
+CD.BA.WBO.U.2	Baltimore
+CD.BA.WBO.U.3	Baltimore
+CD.BA.WBO.U.4	Baltimore
+CD.BA.WBO.U.5	Baltimore
+CD.BA.WGP.M.1	Baltimore
+CD.BA.WGP.M.2	Baltimore
+CD.BA.WGP.M.3	Baltimore
+CD.BA.WGP.M.4	Baltimore
+CD.BA.WGP.M.5	Baltimore
+CD.LA.ALL.M.1	Los Angeles
+CD.LA.ALL.M.2	Los Angeles
+CD.LA.ALL.M.3	Los Angeles
+CD.LA.ALL.M.4	Los Angeles
+CD.LA.ALL.M.5	Los Angeles
+CD.LA.GLO.M.2	Los Angeles
+CD.LA.GLO.M.4	Los Angeles
+CD.LA.GLO.M.5	Los Angeles
+CD.LA.HAR.M.1	Los Angeles
+CD.LA.HAR.M.3	Los Angeles
+CD.LA.HAR.M.4	Los Angeles
+CD.LA.HAR.M.5	Los Angeles
+CD.LA.KIN.M.1	Los Angeles
+CD.LA.KIN.M.2	Los Angeles
+CD.LA.KIN.M.3	Los Angeles
+CD.LA.KIN.M.4	Los Angeles
+CD.LA.KIN.M.5	Los Angeles
+CD.LA.LUB.M.2	Los Angeles
+CD.LA.LUB.M.3	Los Angeles
+CD.LA.LUB.M.5	Los Angeles
+CD.LA.MR2.M.1	Los Angeles
+CD.LA.MR2.M.2	Los Angeles
+CD.LA.MR2.M.3	Los Angeles
+CD.LA.MR2.M.4	Los Angeles
+CD.LA.MR2.M.5	Los Angeles
+CD.LA.NWH.M.1	Los Angeles
+CD.LA.NWH.M.2	Los Angeles
+CD.LA.NWH.M.3	Los Angeles
+CD.LA.NWH.M.4	Los Angeles
+CD.LA.NWH.M.5	Los Angeles
+CD.LA.ROS.M.1	Los Angeles
+CD.LA.ROS.M.3	Los Angeles
+CD.LA.ROS.M.5	Los Angeles
+CD.LA.SEP.M.1	Los Angeles
+CD.LA.SEP.M.2	Los Angeles
+CD.LA.SEP.M.3	Los Angeles
+CD.LA.SEP.M.4	Los Angeles
+CD.LA.SEP.M.5	Los Angeles
+CD.LA.VAL.M.2	Los Angeles
+CD.LA.VAL.M.3	Los Angeles
+CD.LA.VAL.M.4	Los Angeles
+CD.LA.VAL.M.5	Los Angeles
+CD.LA.WHI.M.1	Los Angeles
+CD.LA.WHI.M.2	Los Angeles
+CD.LA.WHI.M.3	Los Angeles
+CD.LA.ZOO.M.2	Los Angeles
+CD.LA.ZOO.M.3	Los Angeles
+CD.LA.ZOO.M.5	Los Angeles
+CD.PX.ALA.M.1	Phoenix
+CD.PX.ALA.M.2	Phoenix
+CD.PX.ALA.M.4	Phoenix
+CD.PX.ASH.U.1	Phoenix
+CD.PX.ASH.U.3	Phoenix
+CD.PX.ASH.U.4	Phoenix
+CD.PX.ASH.U.5	Phoenix
+CD.PX.ASU.M.1	Phoenix
+CD.PX.ASU.M.2	Phoenix
+CD.PX.ASU.M.3	Phoenix
+CD.PX.ASU.M.4	Phoenix
+CD.PX.ASU.M.5	Phoenix
+CD.PX.BUF.M.1	Phoenix
+CD.PX.BUF.M.2	Phoenix
+CD.PX.BUF.M.3	Phoenix
+CD.PX.BUF.M.5	Phoenix
+CD.PX.CAM.U.1	Phoenix
+CD.PX.CAM.U.3	Phoenix
+CD.PX.CAM.U.5	Phoenix
+CD.PX.CLA.M.1	Phoenix
+CD.PX.CLA.M.2	Phoenix
+CD.PX.CLA.M.3	Phoenix
+CD.PX.CLA.M.4	Phoenix
+CD.PX.COY.M.1	Phoenix
+CD.PX.COY.M.2	Phoenix
+CD.PX.COY.M.4	Phoenix
+CD.PX.COY.M.5	Phoenix
+CD.PX.DF1.M.2	Phoenix
+CD.PX.DF1.M.3	Phoenix
+CD.PX.DF1.M.4	Phoenix
+CD.PX.DF1.M.5	Phoenix
+CD.PX.ENC.M.1	Phoenix
+CD.PX.ENC.M.2	Phoenix
+CD.PX.ENC.M.3	Phoenix
+CD.PX.ENC.M.5	Phoenix
+CD.PX.LAP.M.1	Phoenix
+CD.PX.LAP.M.3	Phoenix
+CD.PX.LAP.M.4	Phoenix
+CD.PX.LAP.M.5	Phoenix
+CD.PX.MAN.M.1	Phoenix
+CD.PX.MAN.M.2	Phoenix
+CD.PX.MAN.M.3	Phoenix
+CD.PX.MAN.M.4	Phoenix
+CD.PX.MAN.M.5	Phoenix
+CD.PX.MON.U.2	Phoenix
+CD.PX.MON.U.4	Phoenix
+CD.PX.MON.U.5	Phoenix
+CD.PX.MTN.M.2	Phoenix
+CD.PX.MTN.M.3	Phoenix
+CD.PX.MTN.M.4	Phoenix
+CD.PX.MTN.M.5	Phoenix
+CD.PX.NES.U.1	Phoenix
+CD.PX.NES.U.2	Phoenix
+CD.PX.NES.U.3	Phoenix
+CD.PX.NES.U.4	Phoenix
+CD.PX.NES.U.5	Phoenix
+CD.PX.NET.U.2	Phoenix
+CD.PX.NET.U.4	Phoenix
+CD.PX.NUE.M.2	Phoenix
+CD.PX.NUE.M.5	Phoenix
+CD.PX.PAL.M.1	Phoenix
+CD.PX.PAL.M.3	Phoenix
+CD.PX.PAL.M.4	Phoenix
+CD.PX.PAL.M.5	Phoenix
+CD.PX.PKW.U.2	Phoenix
+CD.PX.PKW.U.3	Phoenix
+CD.PX.PKW.U.4	Phoenix
+CD.PX.PKW.U.5	Phoenix
+CD.PX.PSC.M.1	Phoenix
+CD.PX.PSC.M.3	Phoenix
+CD.PX.PSC.M.5	Phoenix
+CD.PX.RPC.M.1	Phoenix
+CD.PX.RPC.M.3	Phoenix
+CD.PX.RPC.M.4	Phoenix
+CD.PX.RPC.M.5	Phoenix
+CD.PX.RRT.U.2	Phoenix
+CD.PX.RRT.U.4	Phoenix
+CD.PX.RRT.U.5	Phoenix
+CD.PX.WES.M.1	Phoenix
+CD.PX.WES.M.3	Phoenix
+CD.PX.WES.M.4	Phoenix
+CD.PX.WES.M.5	Phoenix

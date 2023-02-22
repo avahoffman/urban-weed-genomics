@@ -1,0 +1,108 @@
+EC.BO.R4.U.1	Boston
+EC.BA.LH-2.M.1	Baltimore
+EC.BA.LH-2.M.2	Baltimore
+EC.PX.BUF.M.1	Phoenix
+EC.PX.BUF.M.3	Phoenix
+EC.PX.BUF.M.6	Phoenix
+EC.PX.ALA.M.2	Phoenix
+EC.PX.ALA.M.3	Phoenix
+EC.PX.ALA.M.5	Phoenix
+EC.PX.MTN.M.2	Phoenix
+EC.PX.MTN.M.3	Phoenix
+EC.PX.NUE.M.2	Phoenix
+EC.PX.WES.M.1	Phoenix
+EC.PX.WES.M.2	Phoenix
+EC.PX.WES.M.3	Phoenix
+EC.PX.WES.M.4	Phoenix
+EC.PX.MAN.M.1	Phoenix
+EC.PX.MAN.M.4	Phoenix
+EC.PX.CLA.M.1	Phoenix
+EC.PX.PSC.M.1	Phoenix
+EC.PX.PSC.M.2	Phoenix
+EC.PX.PSC.M.4	Phoenix
+EC.PX.DF1.M.1	Phoenix
+EC.PX.DF1.M.2	Phoenix
+EC.PX.DOW.M.1	Phoenix
+EC.PX.DOW.M.2	Phoenix
+EC.PX.DOW.M.3	Phoenix
+EC.PX.DOW.M.4	Phoenix
+EC.PX.COY.M.1	Phoenix
+EC.PX.COY.M.2	Phoenix
+EC.PX.COY.M.3	Phoenix
+EC.PX.COY.M.5	Phoenix
+EC.BA.WBO.U.4	Baltimore
+EC.BA.WB.U.4	Baltimore
+EC.BA.WB.U.5	Baltimore
+EC.BA.FH.U.1	Baltimore
+EC.BA.FH.U.2	Baltimore
+EC.BA.FH.U.3	Baltimore
+EC.BA.FH.U.4	Baltimore
+EC.BA.FH.U.5	Baltimore
+EC.BA.CP.U.2	Baltimore
+EC.BA.CP.U.4	Baltimore
+EC.BA.TRC.U.1	Baltimore
+EC.BA.TRC.U.2	Baltimore
+EC.BA.TRC.U.3	Baltimore
+EC.BA.TRC.U.4	Baltimore
+EC.BA.TRC.U.5	Baltimore
+EC.BA.LL-4.M.1	Baltimore
+EC.BA.LL-4.M.2	Baltimore
+EC.BA.LL-4.M.4	Baltimore
+EC.BA.WB.U.1	Baltimore
+EC.BA.WB.U.3	Baltimore
+EC.BA.PIK.U.2	Baltimore
+EC.BA.PIK.U.3	Baltimore
+EC.BA.PIK.U.5	Baltimore
+EC.BA.LH-3.M.1	Baltimore
+EC.BA.LH-3.M.5	Baltimore
+EC.BA.PSP.M.1	Baltimore
+EC.BA.PSP.M.4	Baltimore
+EC.BA.PSP.M.5	Baltimore
+EC.BA.GA.U.1	Baltimore
+EC.BA.GA.U.2	Baltimore
+EC.BA.GA.U.3	Baltimore
+EC.BA.GA.U.4	Baltimore
+EC.BA.GA.U.5	Baltimore
+EC.BA.LL-3.M.3	Baltimore
+EC.BA.LL-3.M.5	Baltimore
+EC.BA.ML.U.1	Baltimore
+EC.BA.ML.U.3	Baltimore
+EC.LA.SGB.U.1	Los Angeles
+EC.LA.SGB.U.2	Los Angeles
+EC.LA.SGB.U.3	Los Angeles
+EC.LA.SGB.U.4	Los Angeles
+EC.LA.SGB.U.5	Los Angeles
+EC.LA.DUR.U.1	Los Angeles
+EC.LA.DUR.U.2	Los Angeles
+EC.LA.DUR.U.4	Los Angeles
+EC.LA.HOW.U.1	Los Angeles
+EC.LA.HOW.U.2	Los Angeles
+EC.LA.HOW.U.3	Los Angeles
+EC.LA.HOW.U.4	Los Angeles
+EC.LA.SAN.U.2	Los Angeles
+EC.LA.SAN.U.4	Los Angeles
+EC.LA.SAN.U.5	Los Angeles
+EC.LA.VER.U.1	Los Angeles
+EC.LA.VER.U.2	Los Angeles
+EC.LA.VER.U.3	Los Angeles
+EC.LA.VER.U.4	Los Angeles
+EC.LA.VB2.U.1	Los Angeles
+EC.LA.VB2.U.4	Los Angeles
+EC.LA.AC2.U.1	Los Angeles
+EC.LA.AC2.U.2	Los Angeles
+EC.LA.AC2.U.4	Los Angeles
+EC.LA.AC1.U.1	Los Angeles
+EC.LA.AC1.U.2	Los Angeles
+EC.LA.AC1.U.3	Los Angeles
+EC.LA.AC1.U.4	Los Angeles
+EC.LA.VB1.U.1	Los Angeles
+EC.LA.VB1.U.3	Los Angeles
+EC.LA.VB1.U.4	Los Angeles
+EC.LA.VB1.U.5	Los Angeles
+EC.LA.SGR.U.2	Los Angeles
+EC.LA.SGR.U.3	Los Angeles
+EC.LA.SGR.U.4	Los Angeles
+EC.LA.SGR.U.5	Los Angeles
+EC.BA.CP.U.5	Baltimore
+EC.BA.ML.U.4	Baltimore
+EC.LA.HOW.U.5	Los Angeles
