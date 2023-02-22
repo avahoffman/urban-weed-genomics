@@ -671,6 +671,69 @@ output directory:
 
 -   `<samplename>.matches.tsv.gz`
 
+## Step 8 - `polyRAD` {#step-8---polyrad}
+
+We used the [polyRAD package](https://github.com/lvclark/polyRAD) to call genotypes because many of our species are polyploid or have historical genome duplication. We found the following resources helpful:
+
+- Publication: https://academic.oup.com/g3journal/article/9/3/663/6026786
+- Documentation: https://cran.r-project.org/web/packages/polyRAD/polyRAD.pdf
+- Tutorial: https://lvclark.r-universe.dev/articles/polyRAD/polyRADtutorial.html
+- Tutorial: https://lvclark.r-universe.dev/articles/polyRADtutorials/population_genetics.html
+
+### Make `RADdata` object
+
+PolyRAD takes the output from sstacks, e.g.:
+
+```
+CD.BA.AA.U.1.alleles.tsv.gz
+CD.BA.AA.U.1.matches.bam
+CD.BA.AA.U.1.matches.tsv.gz
+CD.BA.AA.U.1.snps.tsv.gz
+CD.BA.AA.U.1.tags.tsv.gz 
+```
+
+We used these files to create a RADdata object class with the `make_polyRAD_<spp>.R` script, wrapped by `polyrad_make_<spp>.sh` to submit the script to the SLURM scheduler.
+
+Requires: 
+
+- `popmap_<spp>_polyrad.txt`, a list of samples and population
+- output from sstacks
+
+Outputs:
+
+- `<spp>_polyRADdata.rds`, RDS object (the RADdata object) 
+
+### Calculate overdispersion
+
+Next, we calculated overdispersion using the `polyRAD_overdispersion_<spp>.R` script, wrapped by `polyrad_overd_<spp>.sh` to submit the script to the SLURM scheduler.
+
+Requires: 
+
+- `popmap_<spp>_polyrad.txt`, a list of samples and population
+- `<spp>_polyRADdata.rds`, RDS object (the RADdata object) output from the previous step
+
+Outputs:
+
+- `<spp>_overdispersion.rds`, RDS object (the overdispersion test output) 
+
+### Estimate genotypes
+
+Next, we calculated filtered loci based on the expected Hind/He statistic and estimated population structure/genotypes using the `polyRAD_filter_<spp>.R` script, wrapped by `polyrad_filt_<spp>.sh` to submit the script to the SLURM scheduler.
+
+We used the table in [this tutorial](https://lvclark.r-universe.dev/articles/polyRAD/polyRADtutorial.html), which estimated an inbreeding based on the ploidy, optimal overdispersion value, and mean Hind/He. These values are hardcoded in `polyRAD_filter_<spp>.R`.
+
+Requires: 
+
+- `popmap_<spp>_polyrad.txt`, a list of samples and population
+- `<spp>_polyRADdata.rds`, RDS object (the RADdata object) output from the previous step
+- `<spp>_overdispersion.rds`, RDS object (the overdispersion test output) output from the previous step
+
+Outputs:
+
+- `<spp>_filtered_RADdata.rds`, RDS object (RADdata object filtered for appropriate Hind/He)
+- `<spp>_IteratePopStructPCA.csv`, data output from the genotype estimate PCA, suitable for plotting
+- `<spp>_estimatedgeno_RADdata.rds`, RDS object (RADdata object with genotype estimates)
+
 ## Step 8 - Metapopulation oriented by locus `tsv2bam` {#step-8---metapopulation-oriented-by-locus-tsv2bam}
 
 Files can be found in the `08_tsv2bam/` directory.

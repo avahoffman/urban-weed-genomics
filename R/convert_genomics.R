@@ -19,13 +19,28 @@ convert_spp <- function(spp_){
     Export_Structure(polyrad_dat, file = paste0(wd_, "_estimatedgeno.structure"))
   }
   
-  vcf_dat <- RADdata2VCF(polyrad_dat)
-  genotype_dat <- GetProbableGenotypes(polyrad_dat)
+  df <- ExportGAPIT(polyrad_dat, onePloidyPerAllele = FALSE)
+  RADdata2VCF(polyrad_dat, reference = )
+  d <- polyrad_dat$alleleNucleotides
+  attr(exampleRAD$alleleNucleotides, "Variable_sites_only")
+  
+  
   snowcrab <- genomic_converter(
     data =  genind_format_dat, 
     strata = read_delim(paste0("SNP_data/", spp_, "/popmap_", spp_, ".txt"), col_names = c("INDIVIDUALS", "STRATA"), delim = "\t"),
-    output = c("vcf")
+    output = c("plink")
   )
+  
+  
+  
+  df <- genind2genpop(
+    genind_format_dat,
+    pop = read_delim(paste0("SNP_data/", spp_, "/popmap_", spp_, ".txt"), col_names = c("INDIVIDUALS", "STRATA"), delim = "\t"),
+    quiet = FALSE,
+    process.other = FALSE,
+    other.action = mean
+  )
+  
 }
 
 
@@ -37,3 +52,16 @@ convert_all <- function(){
   convert_spp("PA")
   convert_spp("TO")
 }
+
+
+
+read.delim("/Users/avahoffman/Dropbox/Research/Urban_evo/Macrosystems/urban-weed-genomics/08_polyRAD/sstacks_samples_PA.txt")
+read.delim("/Users/avahoffman/Dropbox/Research/Urban_evo/Macrosystems/urban-weed-genomics/08_polyRAD/sstacks_samples_PA.txt")
+
+
+d1 <- names(polyrad_dat$taxaPloidy)
+d2 <- read.table("/Users/avahoffman/Dropbox/Research/Urban_evo/Macrosystems/urban-weed-genomics/08_tsv2bam/popmap_CD.txt", sep = "\t")$V1
+
+setdiff(d1,d2)
+
+

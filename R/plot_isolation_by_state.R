@@ -116,18 +116,35 @@ fix_pop_names <- function(x) {
 
 plot_dendrograms <- function(width = 12, height = 12) {
   # Read in data
+  # gen_ds <-
+  #   read.genepop("SNP_data/DS/populations_20_pct/populations.snps.gen")
+  # gen_ls <-
+  #   read.genepop("SNP_data/LS/populations_20_pct/populations.snps.gen")
+  # gen_pa <-
+  #   read.genepop("SNP_data/PA/populations_20_pct/populations.snps.gen")
+  # gen_to <-
+  #   read.genepop("SNP_data/TO/populations_20_pct/populations.snps.gen")
+  # gen_ec <-
+  #   read.genepop("SNP_data/EC/populations_20_pct/populations.snps.gen")
+  # gen_cd <-
+  #   read.genepop("SNP_data/CD/populations_20_pct/populations.snps.gen")
   gen_ds <-
-    read.genepop("SNP_data/DS/populations_20_pct/populations.snps.gen")
+    Export_adegenet_genind(readRDS("08_polyRAD/DS_estimatedgeno_RADdata.rds"))
   gen_ls <-
-    read.genepop("SNP_data/LS/populations_20_pct/populations.snps.gen")
+    Export_adegenet_genind(readRDS("08_polyRAD/LS_estimatedgeno_RADdata.rds"))
   gen_pa <-
-    read.genepop("SNP_data/PA/populations_20_pct/populations.snps.gen")
+    Export_adegenet_genind(readRDS("08_polyRAD/PA_estimatedgeno_RADdata.rds"))
   gen_to <-
-    read.genepop("SNP_data/TO/populations_20_pct/populations.snps.gen")
+    Export_adegenet_genind(readRDS("08_polyRAD/TO_estimatedgeno_RADdata.rds"))
   gen_ec <-
-    read.genepop("SNP_data/EC/populations_20_pct/populations.snps.gen")
+    Export_adegenet_genind(readRDS("08_polyRAD/EC_estimatedgeno_RADdata.rds"))
   gen_cd <-
-    read.genepop("SNP_data/CD/populations_20_pct/populations.snps.gen")
+    Export_adegenet_genind(readRDS("08_polyRAD/CD_estimatedgeno_RADdata.rds"))
+  
+  strata_ <- data.frame(
+    "INDIVIDUALS" = rownames(gen_ec@tab), 
+    "STRATA" = as.character(fix_pop_names(gen_ec)@pop))
+  genomic_converter(gen_ec, strata = strata_, ".gds")
   
   # Create GDS files from the vcf files (only needs to be done once)
   if (!file.exists("SNP_data/DS/populations_20_pct/snps.gds")) {
