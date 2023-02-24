@@ -737,6 +737,8 @@ convert_all()
 
 Files can be found in the `09_structure/` directory.
 
+Structure documentation can be found [here](https://web.stanford.edu/group/pritchardlab/structure_software/release_versions/v2.3.4/structure_doc.pdf).
+
 <!-- ## Step 8 - Metapopulation oriented by locus `tsv2bam` {#step-8---metapopulation-oriented-by-locus-tsv2bam} -->
 
 <!-- Files can be found in the `08_tsv2bam/` directory. -->

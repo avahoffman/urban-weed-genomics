@@ -18,14 +18,14 @@ Basic Program Parameters
 
 Input/Output files
 
-#define INFILE   LS_estimatedgeno.structure   // (str) name of input data file
-#define OUTFILE  structure_out_LS  // (str) name of output data file
+#define INFILE   TO_estimatedgeno.structure   // (str) name of input data file
+#define OUTFILE  structure_out_TO  // (str) name of output data file
 
 Data file format
 
-#define NUMINDS    188    // (int) number of diploid individuals in data file
-#define NUMLOCI    559    // (int) number of loci in data file
-#define PLOIDY       2    // (int) ploidy of data
+#define NUMINDS    244    // (int) number of diploid individuals in data file
+#define NUMLOCI    676    // (int) number of loci in data file
+#define PLOIDY       3    // (int) ploidy of data
 #define MISSING     -9    // (int) value given to missing genotype data
 #define ONEROWPERIND 0    // (B) store data for individuals in a single line
 

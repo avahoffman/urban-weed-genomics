@@ -34,8 +34,6 @@ convert_spp <- function(spp_){
     if(any(popmap$V2 == "Phoenix")) popmap[popmap$V2 == "Phoenix",]$V2 <- 5
     
     struct_w_pop <- merge(popmap, struct_, all = TRUE)
-    struct_w_pop$V1 <- str_replace_all(struct_w_pop$V1, pattern = "\\.", replacement = "")
-    struct_w_pop$V1 <- str_replace_all(struct_w_pop$V1, pattern = "-", replacement = "")
     
     # Structure doesn't want column names for non-locus info
     colnames(struct_w_pop)[1:2] <- c("", "")
