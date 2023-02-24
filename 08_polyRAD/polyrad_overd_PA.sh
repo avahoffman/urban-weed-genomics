@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --time=0:20:00
+#SBATCH --time=0:05:00
 #SBATCH --job-name=pa_OD
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=avamariehoffman@gmail.com

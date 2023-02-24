@@ -2,7 +2,7 @@ library(polyRAD)
 
 spp_ <- "LS"
 
-setwd("/scratch4/mavolio2/scratch_AH/")
+setwd("/scratch4/mavolio2/scratch_AH/polyRAD/")
 samps <- read.table(paste0("popmap_", spp_, "_polyrad.txt"), sep = "\t")
 
 #####

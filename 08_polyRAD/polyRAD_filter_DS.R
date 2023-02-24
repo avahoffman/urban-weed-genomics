@@ -1,7 +1,7 @@
 library(polyRAD)
 
 spp_ <- "DS"
-inbreeding_ <- 0.3
+inbreeding_ <- 0.3 # overdisp = 9
 
 #####
 

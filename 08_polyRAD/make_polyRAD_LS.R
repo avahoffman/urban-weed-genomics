@@ -1,8 +1,14 @@
+#' Excellent resources for polyRAD:
+#' Publication: https://academic.oup.com/g3journal/article/9/3/663/6026786
+#' Documentation: https://cran.r-project.org/web/packages/polyRAD/polyRAD.pdf
+#' Tutorial: https://lvclark.r-universe.dev/articles/polyRAD/polyRADtutorial.html
+#' Tutorial: https://lvclark.r-universe.dev/articles/polyRADtutorials/population_genetics.html
+#'  
 library(polyRAD)
 
-setwd("/data/mavolio2/catalogs_by_species/LS_metapop_catalog/")
+setwd("/home/ahoffm31/scratch4-mavolio2/scratch_AH/polyRAD/LS_matches_for_polyrad/")
 
-samps <- read.table("/scratch4/mavolio2/scratch_AH/popmap_LS_polyrad.txt", sep = "\t")
+samps <- read.table("/scratch4/mavolio2/scratch_AH/polyRAD/popmap_LS_polyrad.txt", sep = "\t")
 samps_crit <- ceiling(c(nrow(samps)*0.2)) # 20% threshold, round up to nearest integer
 
 myStacks <- readStacks("catalog.alleles.tsv.gz",
@@ -13,4 +19,4 @@ myStacks <- readStacks("catalog.alleles.tsv.gz",
                        min.ind.with.minor.allele = 2,
                        readAlignmentData = F)
 
-saveRDS(myStacks, "/scratch4/mavolio2/scratch_AH/LS_polyRADdata.rds")
+saveRDS(myStacks, "/scratch4/mavolio2/scratch_AH/polyRAD/LS_polyRADdata.rds")

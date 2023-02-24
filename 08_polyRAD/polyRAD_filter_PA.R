@@ -1,12 +1,12 @@
 library(polyRAD)
 
 spp_ <- "PA"
-inbreeding_ <- 0.3
+inbreeding_ <- 0.3 # overdisp = 5
 
 #####
 
-mydata <- readRDS(paste0("/scratch4/mavolio2/scratch_AH/", spp_, "_polyRADdata.rds"))
-od <- readRDS(paste0("/scratch4/mavolio2/scratch_AH/", spp_, "_overdispersion.rds"))
+mydata <- readRDS(paste0("/scratch4/mavolio2/scratch_AH/polyRAD/", spp_, "_polyRADdata.rds"))
+od <- readRDS(paste0("/scratch4/mavolio2/scratch_AH/polyRAD/", spp_, "_overdispersion.rds"))
 samps <- read.table(paste0(spp_, "_HindHe.csv"), sep = ",", header = T)
 
 #####
@@ -28,13 +28,13 @@ thresh_ <- quantile(expHindHe, probs = c(0.005, 0.995), na.rm = T)
 keeploci <- names(hhByLoc)[ hhByLoc > thresh_[1] & hhByLoc < thresh_[2] ]
 mydata2 <- SubsetByLocus(mydata, keeploci)
 mydata2
-saveRDS(mydata2, paste0("/scratch4/mavolio2/scratch_AH/", spp_, "_filtered_RADdata.rds"))
+saveRDS(mydata2, paste0("/scratch4/mavolio2/scratch_AH/polyRAD/", spp_, "_filtered_RADdata.rds"))
 
 set.seed(420)
 mydataPopStruct <- IteratePopStruct(mydata2, overdispersion = od$optimal)
 mydata2_pca <- cbind(samps, mydataPopStruct$PCA[samps$V1,])
-write.csv(mydata2_pca, paste0("/scratch4/mavolio2/scratch_AH/", spp_, "_IteratePopStructPCA.csv"))
-saveRDS(mydataPopStruct, paste0("/scratch4/mavolio2/scratch_AH/", spp_, "_estimatedgeno_RADdata.rds"))
+write.csv(mydata2_pca, paste0("/scratch4/mavolio2/scratch_AH/polyRAD/", spp_, "_IteratePopStructPCA.csv"))
+saveRDS(mydataPopStruct, paste0("/scratch4/mavolio2/scratch_AH/polyRAD/", spp_, "_estimatedgeno_RADdata.rds"))
 
 #####
 

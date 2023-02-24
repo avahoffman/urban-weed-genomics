@@ -1,3 +1,9 @@
+#' Excellent resources for polyRAD:
+#' Publication: https://academic.oup.com/g3journal/article/9/3/663/6026786
+#' Documentation: https://cran.r-project.org/web/packages/polyRAD/polyRAD.pdf
+#' Tutorial: https://lvclark.r-universe.dev/articles/polyRAD/polyRADtutorial.html
+#' Tutorial: https://lvclark.r-universe.dev/articles/polyRADtutorials/population_genetics.html
+#'  
 library(polyRAD)
 
 setwd("/data/mavolio2/catalogs_by_species/DS_metapop_catalog/")

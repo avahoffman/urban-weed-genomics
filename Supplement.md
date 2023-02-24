@@ -1,119 +1,119 @@
-- <a href="#introduction" id="toc-introduction">Introduction</a>
+- <a href="#introduction" id="toc-introduction">1 Introduction</a>
   - <a href="#raw-data-file-naming---sublibraries"
-    id="toc-raw-data-file-naming---sublibraries">Raw Data File Naming -
+    id="toc-raw-data-file-naming---sublibraries">1.1 Raw Data File Naming -
     Sublibraries</a>
-  - <a href="#a-note-on-file-transfers" id="toc-a-note-on-file-transfers">A
-    Note on File Transfers</a>
-- <a href="#preprocessing-wrench"
-  id="toc-preprocessing-wrench">Preprocessing</a>
-  - <a href="#step-1---transfer-files" id="toc-step-1---transfer-files">Step
-    1 - Transfer Files</a>
+  - <a href="#a-note-on-file-transfers"
+    id="toc-a-note-on-file-transfers">1.2 A Note on File Transfers</a>
+- <a href="#preprocessing-wrench" id="toc-preprocessing-wrench">2
+  Preprocessing</a>
+  - <a href="#step-1---transfer-files" id="toc-step-1---transfer-files">2.1
+    Transfer Files [01_transfer_files]</a>
   - <a href="#step-2---concatenate-files-and-install-stacks"
-    id="toc-step-2---concatenate-files-and-install-stacks">Step 2 -
+    id="toc-step-2---concatenate-files-and-install-stacks">2.2 Step 2 -
     Concatenate Files and Install Stacks</a>
     - <a href="#step-2a---concatenate-files-for-each-sublibrary"
-      id="toc-step-2a---concatenate-files-for-each-sublibrary">Step 2a -
+      id="toc-step-2a---concatenate-files-for-each-sublibrary">2.2.1 Step 2a -
       Concatenate Files for each Sublibrary</a>
     - <a href="#step-2b-download-and-install-stacks"
-      id="toc-step-2b-download-and-install-stacks">Step 2b – Download and
-      Install Stacks</a>
+      id="toc-step-2b-download-and-install-stacks">2.2.2 Step 2b – Download
+      and Install Stacks</a>
   - <a href="#step-3---remove-pcr-clones"
-    id="toc-step-3---remove-pcr-clones">Step 3 - Remove PCR Clones</a>
+    id="toc-step-3---remove-pcr-clones">2.3 Step 3 - Remove PCR Clones</a>
     - <a href="#step-3a---run-pcr-clone-removal-script"
-      id="toc-step-3a---run-pcr-clone-removal-script">Step 3a - Run PCR Clone
-      Removal Script</a>
+      id="toc-step-3a---run-pcr-clone-removal-script">2.3.1 Step 3a - Run PCR
+      Clone Removal Script</a>
     - <a href="#step-3b---parse-pcr-clone-removal-results"
-      id="toc-step-3b---parse-pcr-clone-removal-results">Step 3b - Parse PCR
-      Clone Removal Results</a>
+      id="toc-step-3b---parse-pcr-clone-removal-results">2.3.2 Step 3b - Parse
+      PCR Clone Removal Results</a>
   - <a href="#step-4---demultiplexing-and-sample-filtering"
-    id="toc-step-4---demultiplexing-and-sample-filtering">Step 4 -
+    id="toc-step-4---demultiplexing-and-sample-filtering">2.4 Step 4 -
     Demultiplexing and Sample Filtering</a>
     - <a href="#step-4a---demultiplex-and-filter"
-      id="toc-step-4a---demultiplex-and-filter">Step 4a - Demultiplex and
-      Filter</a>
+      id="toc-step-4a---demultiplex-and-filter">2.4.1 Step 4a - Demultiplex
+      and Filter</a>
     - <a href="#step-4b---organize-files"
-      id="toc-step-4b---organize-files">Step 4b - Organize files</a>
+      id="toc-step-4b---organize-files">2.4.2 Step 4b - Organize files</a>
     - <a href="#step-4c---assess-the-raw-processed-and-cleaned-data"
-      id="toc-step-4c---assess-the-raw-processed-and-cleaned-data">Step 4c -
-      Assess the raw, processed, and cleaned data</a>
+      id="toc-step-4c---assess-the-raw-processed-and-cleaned-data">2.4.3 Step
+      4c - Assess the raw, processed, and cleaned data</a>
     - <a href="#step-4d---identify-low-coverage-and-low-quality-samples-from"
-      id="toc-step-4d---identify-low-coverage-and-low-quality-samples-from">Step
-      4d - Identify low-coverage and low-quality samples from</a>
+      id="toc-step-4d---identify-low-coverage-and-low-quality-samples-from">2.4.4
+      Step 4d - Identify low-coverage and low-quality samples from</a>
 - <a href="#generating-stacks-catalogs-and-calling-snps-mag"
-  id="toc-generating-stacks-catalogs-and-calling-snps-mag">Generating
+  id="toc-generating-stacks-catalogs-and-calling-snps-mag">3 Generating
   Stacks Catalogs and Calling SNPs</a>
   - <a href="#step-5---metapopulation-catalog-building-and-parameter-search"
-    id="toc-step-5---metapopulation-catalog-building-and-parameter-search">Step
-    5 - Metapopulation Catalog Building and Parameter Search</a>
+    id="toc-step-5---metapopulation-catalog-building-and-parameter-search">3.1
+    Step 5 - Metapopulation Catalog Building and Parameter Search</a>
     - <a href="#step-5a---run-denovo_map.sh"
-      id="toc-step-5a---run-denovo_map.sh">Step 5a - Run
+      id="toc-step-5a---run-denovo_map.sh">3.1.1 Step 5a - Run
       <code>denovo_map.sh</code></a>
-    - <a href="#step-5b---run-ustacks" id="toc-step-5b---run-ustacks">Step 5b
-      - Run <code>ustacks</code></a>
+    - <a href="#step-5b---run-ustacks" id="toc-step-5b---run-ustacks">3.1.2
+      Step 5b - Run <code>ustacks</code></a>
     - <a href="#step-5c---correct-file-names"
-      id="toc-step-5c---correct-file-names">Step 5c - Correct File Names</a>
+      id="toc-step-5c---correct-file-names">3.1.3 Step 5c - Correct File
+      Names</a>
     - <a href="#step-5d---choose-catalog-samplesfiles"
-      id="toc-step-5d---choose-catalog-samplesfiles">Step 5d - Choose catalog
-      samples/files</a>
+      id="toc-step-5d---choose-catalog-samplesfiles">3.1.4 Step 5d - Choose
+      catalog samples/files</a>
   - <a href="#step-6---metapopulation-catalog-with-cstacks"
-    id="toc-step-6---metapopulation-catalog-with-cstacks">Step 6 -
+    id="toc-step-6---metapopulation-catalog-with-cstacks">3.2 Step 6 -
     Metapopulation catalog with <code>cstacks</code></a>
   - <a href="#step-7---metapopulation-locus-matching-with-sstacks"
-    id="toc-step-7---metapopulation-locus-matching-with-sstacks">Step 7 -
-    Metapopulation locus matching with <code>sstacks</code></a>
-  - <a href="#step-8---metapopulation-oriented-by-locus-tsv2bam"
-    id="toc-step-8---metapopulation-oriented-by-locus-tsv2bam">Step 8 -
-    Metapopulation oriented by locus <code>tsv2bam</code></a>
-  - <a href="#step-9---metapopulation-snp-calling-with-gstacks"
-    id="toc-step-9---metapopulation-snp-calling-with-gstacks">Step 9 -
-    Metapopulation SNP calling with <code>gstacks</code></a>
-  - <a href="#step-10---metapopulation-summaries-with-populations"
-    id="toc-step-10---metapopulation-summaries-with-populations">Step 10 -
-    Metapopulation summaries with <code>populations</code></a>
-  - <a href="#step-11---examine-within-city-catalogs-and-populations"
-    id="toc-step-11---examine-within-city-catalogs-and-populations">Step 11
-    - Examine Within-city Catalogs and Populations</a>
-    - <a href="#step-11b---city-level-population-analysis"
-      id="toc-step-11b---city-level-population-analysis">Step 11b - City Level
-      Population Analysis</a>
-- <a href="#analysis" id="toc-analysis">Analysis</a>
-  - <a href="#fst---variance-among-populations"
-    id="toc-fst---variance-among-populations">Fst - Variance among
-    populations</a>
-  - <a href="#fis---homozygosity-within-population"
-    id="toc-fis---homozygosity-within-population">Fis - Homozygosity within
-    population</a>
-  - <a href="#rbard---clonality-of-populations"
-    id="toc-rbard---clonality-of-populations">rbarD - Clonality of
-    populations</a>
-  - <a href="#trim-spatial-files" id="toc-trim-spatial-files">Trim spatial
-    files</a>
-  - <a href="#make-sampling-maps" id="toc-make-sampling-maps">Make Sampling
-    Maps</a>
-  - <a href="#archetypal-analysis" id="toc-archetypal-analysis">Archetypal
-    Analysis</a>
-  - <a href="#visualizing-archetypes"
-    id="toc-visualizing-archetypes">Visualizing Archetypes</a>
-  - <a href="#isolation-by-state" id="toc-isolation-by-state">Isolation by
-    State</a>
-- <a href="#appendix-books" id="toc-appendix-books">Appendix</a>
-  - <a href="#sessioninfo"
-    id="toc-sessioninfo"><code>SessionInfo()</code></a>
+    id="toc-step-7---metapopulation-locus-matching-with-sstacks">3.3 Step 7
+    - Metapopulation locus matching with <code>sstacks</code></a>
+  - <a href="#step-8---polyrad" id="toc-step-8---polyrad">3.4 Step 8 -
+    Genotype probabilities with <code>polyRAD</code></a>
+    - <a href="#make-raddata-object" id="toc-make-raddata-object">3.4.1 Make
+      <code>RADdata</code> object</a>
+    - <a href="#calculate-overdispersion"
+      id="toc-calculate-overdispersion">3.4.2 Calculate overdispersion</a>
+    - <a href="#estimate-genotypes" id="toc-estimate-genotypes">3.4.3 Estimate
+      genotypes</a>
+    - <a href="#file-cleanup" id="toc-file-cleanup">3.4.4 File cleanup</a>
+  - <a href="#step-9---populations-with-structure"
+    id="toc-step-9---populations-with-structure">3.5 Step 9 - Populations
+    with <code>Structure</code></a>
+- <a href="#analysis" id="toc-analysis">4 Analysis</a>
+  - <a href="#f_st---variance-among-populations"
+    id="toc-f_st---variance-among-populations">4.1 <span
+    class="math inline"><em>F</em><sub><em>S</em><em>T</em></sub></span> -
+    Variance among populations</a>
+  - <a href="#f_is---homozygosity-within-population"
+    id="toc-f_is---homozygosity-within-population">4.2 <span
+    class="math inline"><em>F</em><sub><em>I</em><em>S</em></sub></span> -
+    Homozygosity within population</a>
+  - <a href="#barr_d---linkage-disequilibrium"
+    id="toc-barr_d---linkage-disequilibrium">4.3 <span
+    class="math inline"><em>r̄</em><sub><em>d</em></sub></span> - Linkage
+    disequilibrium</a>
+  - <a href="#trim-spatial-files" id="toc-trim-spatial-files">4.4 Trim
+    spatial files</a>
+  - <a href="#make-sampling-maps" id="toc-make-sampling-maps">4.5 Make
+    Sampling Maps</a>
+  - <a href="#archetypal-analysis" id="toc-archetypal-analysis">4.6
+    Archetypal Analysis</a>
+  - <a href="#visualizing-archetypes" id="toc-visualizing-archetypes">4.7
+    Visualizing Archetypes</a>
+  - <a href="#isolation-by-state" id="toc-isolation-by-state">4.8 Isolation
+    by State</a>
+- <a href="#appendix-books" id="toc-appendix-books">5 Appendix</a>
+  - <a href="#sessioninfo" id="toc-sessioninfo">5.1
+    <code>SessionInfo()</code></a>
   - <a href="#file-organization-bookmark_tabs"
-    id="toc-file-organization-bookmark_tabs">File Organization</a>
+    id="toc-file-organization-bookmark_tabs">5.2 File Organization</a>
   - <a href="#aspera-transfer-file-names"
-    id="toc-aspera-transfer-file-names">Aspera Transfer File Names</a>
-  - <a href="#clone_filter-file-names"
-    id="toc-clone_filter-file-names"><code>clone_filter</code> File
-    Names</a>
+    id="toc-aspera-transfer-file-names">5.3 Aspera Transfer File Names</a>
+  - <a href="#clone_filter-file-names" id="toc-clone_filter-file-names">5.4
+    <code>clone_filter</code> File Names</a>
 
 <!-- To nicely format this markdown doc, I recommend using
 Sublime Text editor. Highlight the text in question and select Edit >
 Wrap > Wrap paragraph at 72 characters. --> 
-<!-- Allow S labeling on Figs and Tables  -->
+<!-- Allow "S" labeling on Figs and Tables  -->
 <!-- End -->
 
-# Introduction
+# 1 Introduction
 
 In this experiment, we used quaddRAD library prep to prepare the sample
 DNA. This means that there were both two unique outer barcodes (typical
@@ -126,7 +126,7 @@ still contains a mix of the inner barcodes. We will refer to these as
 “sublibraries” because they are sort of halfway demultiplexed. We
 separate them out bioinformatically later.
 
-## Raw Data File Naming - Sublibraries
+## 1.1 Raw Data File Naming - Sublibraries
 
 Here’s a bit of information on the file name convention. The typical raw
 file looks like this:
@@ -170,7 +170,7 @@ file looks like this:
 
   `001.fastq.gz`
 
-## A Note on File Transfers
+## 1.2 A Note on File Transfers
 
 There are three main systems at play for file transfer: the local
 machine, the sequencing facility’s (GRCF) Aspera server, and
@@ -187,9 +187,9 @@ to adjust the file paths accordingly.
 
 ![File transfer schematic](figures/file_transfer.jpg)  
 
-# Preprocessing
+# 2 Preprocessing
 
-## Step 1 - Transfer Files
+## 2.1 Transfer Files \[01_transfer_files\]
 
 Files can be found in the `01_transfer_files/` directory.
 
@@ -219,11 +219,11 @@ Initiate the transfer from within your scratch directory:
     --file-list=01-aspera_transfer_n.txt
     --mode=recv --user=<aspera-user> --host=<aspera-IP> /scratch/users/<me>@jhu.edu
 
-## Step 2 - Concatenate Files and Install Stacks
+## 2.2 Step 2 - Concatenate Files and Install Stacks
 
 Files can be found in the `02_concatenate_and_check/` directory.
 
-### Step 2a - Concatenate Files for each Sublibrary
+### 2.2.1 Step 2a - Concatenate Files for each Sublibrary
 
 We ran my samples across the whole flow cell of the NovaSeq, so results
 came in 8 files for each demultiplexed sublibrary (4 lanes \* paired
@@ -257,7 +257,7 @@ will look for and pull the script from the code directory. This will
 concatenate all files within the current directory that match the loop
 pattern.
 
-### Step 2b – Download and Install Stacks
+### 2.2.2 Step 2b – Download and Install Stacks
 
 On Rockfish, [Stacks](https://catchenlab.life.illinois.edu/stacks/) will
 need to be downloaded to each user’s code directory. Stacks, and
@@ -283,11 +283,11 @@ Next, go into the stacks-2.60 directory and run the following commands:
 The filesystem patterns on your cluster might be different, and you
 should change these file paths accordingly.
 
-## Step 3 - Remove PCR Clones
+## 2.3 Step 3 - Remove PCR Clones
 
 Files can be found in the `03_clone_filter/` directory.
 
-### Step 3a - Run PCR Clone Removal Script
+### 2.3.1 Step 3a - Run PCR Clone Removal Script
 
 The `03-clone_filter.sh` script runs `clone_filter` from
 [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was
@@ -299,7 +299,7 @@ single sub-pooled library in `03-clone_filter_file_names.txt` and loops
 to run `clone_filter` on all of them. Possible file names shown in
 [`clone_filter` File Names](#clone_filter-file-names).
 
-### Step 3b - Parse PCR Clone Removal Results
+### 2.3.2 Step 3b - Parse PCR Clone Removal Results
 
 If you want to extract descriptive statistics from the `clone_filter`
 output, you can use the `03.5-parse_clone_filter.py` script to do so. It
@@ -314,11 +314,11 @@ make_cloneplot()
 ![PCR clone removal
 statistics](Supplement_files/figure-gfm/PCR_clones-1.png)
 
-## Step 4 - Demultiplexing and Sample Filtering
+## 2.4 Step 4 - Demultiplexing and Sample Filtering
 
 Files can be found in the `04_demux_filter/` directory.
 
-### Step 4a - Demultiplex and Filter
+### 2.4.1 Step 4a - Demultiplex and Filter
 
 The `04-process_radtags.sh` script runs `process_radtags` from
 [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was
@@ -355,7 +355,7 @@ out each sublibrary into the individual samples. It will then clean the
 data, and will remove low quality reads and discard reads where a
 barcode was not found.
 
-### Step 4b - Organize files
+### 2.4.2 Step 4b - Organize files
 
 In a new directory, make sure the files are organized by species. In the
 `process_radtags` script, we specified that files be sent to
@@ -369,7 +369,7 @@ example, the file “DS.MN.L01-DS.M.1.1.fq.gz” should be sent to the
 Note: this is not automated at this point but it would be nice to
 automate the file moving process so it’s not forgotten at this point.
 
-### Step 4c - Assess the raw, processed, and cleaned data
+### 2.4.3 Step 4c - Assess the raw, processed, and cleaned data
 
 In the script for [Step 4](#step-4---demultiplex-and-filter), we have
 specified that a new output folder be created for each sublibrary. The
@@ -435,7 +435,7 @@ make_filterplot()
 ![RAD tag processing
 statistics](Supplement_files/figure-gfm/radtag_stats-1.png)
 
-### Step 4d - Identify low-coverage and low-quality samples from
+### 2.4.4 Step 4d - Identify low-coverage and low-quality samples from
 
     downstream analysis
 
@@ -471,9 +471,9 @@ Note: At this point, we started using Stacks 2.62 for its
 multi-threading capabilities. Functionality of the previous steps should
 be the same, however.
 
-# Generating Stacks Catalogs and Calling SNPs
+# 3 Generating Stacks Catalogs and Calling SNPs
 
-## Step 5 - Metapopulation Catalog Building and Parameter Search
+## 3.1 Step 5 - Metapopulation Catalog Building and Parameter Search
 
 Files can be found in the `05_ustacks_and_params/` directory.
 
@@ -486,7 +486,7 @@ optimal set of parameters for the dataset (see [Step
 5a](#step-5a---denovo_mapsh)). Following the parameter optimization, the
 program `ustacks` can be run to generate a catalog of loci.
 
-### Step 5a - Run `denovo_map.sh`
+### 3.1.1 Step 5a - Run `denovo_map.sh`
 
 Stack assembly will differ based on several different aspects of the
 dataset(such as the study species, the RAD-seq method used, and/or the
@@ -587,7 +587,7 @@ Based on this optimization step, we used the following parameters:
 
 Final parameter optimization values for the Stacks pipeline.
 
-### Step 5b - Run `ustacks`
+### 3.1.2 Step 5b - Run `ustacks`
 
 `ustacks` builds *de novo* loci in each individual sample. We have
 designed the `ustacks` script so that the process requires three files:
@@ -623,7 +623,7 @@ A small number of samples (13) were discarded at this stage as the
 loci. See
 [output/ustacks-discarded_samples.csv](output/ustacks-discarded_samples.csv).
 
-### Step 5c - Correct File Names
+### 3.1.3 Step 5c - Correct File Names
 
 This step contains a script `05b-fix_filenames.sh` which uses some
 simple regex to fix filenames that are output in previous steps. Stacks
@@ -645,7 +645,7 @@ be optimized/improved. The script should be run from the directory where
 the changes need to be made. Files that have already been fixed will not
 be changed.
 
-### Step 5d - Choose catalog samples/files
+### 3.1.4 Step 5d - Choose catalog samples/files
 
 In the next step, we will choose the files we want to go into the
 catalog. This involves a few steps:
@@ -666,7 +666,7 @@ catalog. This involves a few steps:
 
 3.  Remember the meaningful directory name. You will need it in Step 6.
 
-## Step 6 - Metapopulation catalog with `cstacks`
+## 3.2 Step 6 - Metapopulation catalog with `cstacks`
 
 Files can be found in the `06_cstacks/` directory.
 
@@ -993,7 +993,7 @@ by[`ustacks`](#step-5---ustacks):
 
 Subset of samples used in SNP catalog creation.
 
-## Step 7 - Metapopulation locus matching with `sstacks`
+## 3.3 Step 7 - Metapopulation locus matching with `sstacks`
 
 Files can be found in the `07_sstacks/` directory.
 
@@ -1019,208 +1019,239 @@ output directory:
 
 - `<samplename>.matches.tsv.gz`
 
-## Step 8 - Metapopulation oriented by locus `tsv2bam`
+A small number of samples generated very few matches to the catalog
+(such as only 4 loci matching, obviously not enough to draw any
+conclusions) and therefore aren’t used in the next step. See
+[output/sstacks-discarded_samples.csv](output/sstacks-discarded_samples.csv).
 
-Files can be found in the `08_tsv2bam/` directory.
+## 3.4 Step 8 - Genotype probabilities with `polyRAD`
 
-`tsv2bam` and the proceeding programs in the pipeline use a populations
-map text file to specify which samples to include in the analysis. As
-such, a new population map (that differs from `06-cstacks_popmap.txt`)
-should be created that includes all samples (including those used to
-create your catalog) that you want to include in the analysis. This file
-will include the same samples specified in `sstacks_samples_SPECIES.txt`
-with a colomn specifying population. Here, this file is
-`popmap_SPECIES.txt`.
+We used the [polyRAD package](https://github.com/lvclark/polyRAD) to
+call genotypes because many of our species are polyploid or have
+historical genome duplication. We found the following resources helpful:
 
-We run `tsv2bam` using the script `tsv2bam_SPECIES.sh`.
+- Publication:
+  <https://academic.oup.com/g3journal/article/9/3/663/6026786>
+- Documentation:
+  <https://cran.r-project.org/web/packages/polyRAD/polyRAD.pdf>
+- Tutorial:
+  <https://lvclark.r-universe.dev/articles/polyRAD/polyRADtutorial.html>
+- Tutorial:
+  <https://lvclark.r-universe.dev/articles/polyRADtutorials/population_genetics.html>
 
-This is the step at which it’s usually discovered that some samples are
-bad(don’t have any useable matches to the catalog). These samples were
-excluded from `popmap_SPECIES.txt`. For example we might simply cut out
-the following rows:
+### 3.4.1 Make `RADdata` object
 
-    DS.MN.L10-DS.M.4    Minneapolis
-    DS.MN.L01-DS.M.4    Minneapolis
-    DS.BO.WL2.M.4   Boston
+PolyRAD takes the catalog output (`catalog.alleles.tsv.gz`) and
+accompanying matches to the catalog (e.g.,
+`CD.BA.AA.U.1.matches.tsv.gz`) to create genotype likelihoods for
+species with diploidy and/or polyploidy. We used the catalog and match
+files to create a RADdata object class in R for each species. We ran
+this on the Rockfish compute cluster, with the `make_polyRAD_<spp>.R`
+script doing the brunt of the work. The R script was wrapped by
+`polyrad_make_<spp>.sh` to submit the script to the SLURM scheduler.
 
-The following samples were discarded because they contained less than
-300 sample loci matched to catalog loci:
+*Requires:*
 
-| Sample           | City        |
-|:-----------------|:------------|
-| CD.BA.RG-1.M.4   | Baltimore   |
-| CD.BA.RG-1.M.5   | Baltimore   |
-| CD.BA.DHI.U.2    | Baltimore   |
-| CD.BA.DHI.U.3    | Baltimore   |
-| DS.MN.L04-DS.U.2 | Minneapolis |
-| DS.BO.WL3.M.4    | Boston      |
-| DS.BO.WL1.M.4    | Boston      |
-| DS.BO.LC1.M.2    | Boston      |
-| DS.BO.HC4.M.4    | Boston      |
-| EC.BO.R4.U.1     | Boston      |
-| LS.PX.PAL.M.5    | Phoenix     |
-| LS.PX.PAL.M.2    | Phoenix     |
-| LS.PX.PAL.M.1    | Phoenix     |
-| LS.MN.L01-LS.M.1 | Minneapolis |
-| LS.PX.PKW.U.3    | Phoenix     |
-| LS.PX.ENC.M.2    | Phoenix     |
-| LS.MN.L01-LS.U.1 | Minneapolis |
-| LS.LA.ARR.U.4    | Los Angeles |
-| LS.BO.WL2.M.3    | Boston      |
-| LS.BO.WL2.M.1    | Boston      |
-| LS.BO.R4.U.4     | Boston      |
-| LS.BO.R4.U.2     | Boston      |
-| LS.BO.R4.U.1     | Boston      |
-| LS.BO.R3.U.2     | Boston      |
-| LS.BO.R2.U.1     | Boston      |
-| LS.BO.LC4.M.5    | Boston      |
-| LS.BO.LC2.M.1    | Boston      |
-| LS.BO.I4.U.1     | Boston      |
-| LS.BO.HC4.M.4    | Boston      |
-| LS.BO.HC4.M.2    | Boston      |
-| LS.BA.WB.U.5     | Baltimore   |
-| PA.BA.AA.U.3     | Baltimore   |
-| PA.BA.AA.U.4     | Baltimore   |
-| PA.BA.LH-3.M.1   | Baltimore   |
-| PA.BA.LH-3.M.4   | Baltimore   |
-| PA.BA.LL-4.M.1   | Baltimore   |
-| PA.BA.RG-1.M.1   | Baltimore   |
-| PA.BO.HC2.M.4    | Boston      |
-| PA.BO.LC2.M.3    | Boston      |
-| PA.BO.LC2.M.4    | Boston      |
-| PA.BO.R3.U.3     | Boston      |
-| PA.PX.ALA.M.2    | Phoenix     |
-| PA.PX.ALA.M.3    | Phoenix     |
-| PA.PX.RPP.U.1    | Phoenix     |
-| PA.PX.RPP.U.2    | Phoenix     |
-| TO.BA.DHI.U.5    | Baltimore   |
-| TO.BA.TRC.U.1    | Baltimore   |
-| TO.BA.TRC.U.2    | Baltimore   |
-| TO.BA.TRC.U.3    | Baltimore   |
-| TO.BO.R2.U.2     | Boston      |
-| TO.BO.R4.U.1     | Boston      |
-| TO.BO.R4.U.2     | Boston      |
+- `popmap_<spp>_polyrad.txt`, a list of samples and population
+- output from sstacks
 
-Samples discarded at the `tsv2bam` stage of the Stacks pipeline.
+*Outputs:*
 
-## Step 9 - Metapopulation SNP calling with `gstacks`
+- `<spp>_polyRADdata.rds`, RDS object (the RADdata object)
 
-Files can be found in the `09_gstacks/` directory.
+### 3.4.2 Calculate overdispersion
 
-The script `gstacks_SPECIES.sh` also uses the population map specified
-in [Step 8](#step-8---tsv2bam), `popmap_SPECIES.txt`. The `gstacks`
-program aligns the paired-end reads and assembles the paired-end contigs
-and then calls SNPs.
+Next, we calculated overdispersion using the
+`polyRAD_overdispersion_<spp>.R` script, wrapped by
+`polyrad_overd_<spp>.sh` to submit the script to the SLURM scheduler.
 
-Produces the following:
+Requires:
 
-- `catalog.fa.gz` : consensus catalog loci, contains the consensus
-  sequence for each locus as produced by `gstacks` in a standard FASTA
-  file
-- `catalog.calls` : per-nucleotide genotypes, contains the output of
+- `popmap_<spp>_polyrad.txt`, a list of samples and population
+- `<spp>_polyRADdata.rds`, RDS object (the RADdata object) output from
+  the previous step
 
-## Step 10 - Metapopulation summaries with `populations`
+Outputs:
 
-Files can be found in the `10_populations/` directory.
+- `<spp>_overdispersion.rds`, RDS object (the overdispersion test
+  output)
 
-The populations program will use the script `species_populations.sh` and
-the population maps specified in [Step
-9](#step-9---metapopulation-snp-calling-with-gstacks)
-(`popmap_SPECIES.txt`) to calculate population-level summary statistics.
-Specifically, the script iterates through all species and several levels
-of the parameter `--min-samples-overall`, the minimum percentage of
-individuals across populations required to process a locus
+### 3.4.3 Estimate genotypes
 
-You will most likely run the populations program multiple times if you
-are looking at different ‘sub-populations’. A new directory should be
-created and the population program should run out of that directory for
-each iteration of the population program. Alternativley, you can specify
-a new directory as the output folder in the script using the command
-`-O`.
+Next, we calculated filtered loci based on the expected Hind/He
+statistic and estimated population structure/genotypes using the
+`polyRAD_filter_<spp>.R` script, wrapped by `polyrad_filt_<spp>.sh` to
+submit the script to the SLURM scheduler.
 
-Ultimately, the key parameters we used for running `populations` were as
-follows:
+We used the table in [this
+tutorial](https://lvclark.r-universe.dev/articles/polyRAD/polyRADtutorial.html),
+which estimated an inbreeding based on the ploidy, optimal
+overdispersion value, and mean Hind/He. These values are hardcoded in
+`polyRAD_filter_<spp>.R`.
 
-- `--write-random-snp`: restrict data analysis to one random SNP per
-  locus
+Requires:
 
-- `--min-samples-overall`: 20 - locus must be in 20% of individuals
+- `popmap_<spp>_polyrad.txt`, a list of samples and population
+- `<spp>_polyRADdata.rds`, RDS object (the RADdata object) output from
+  the previous step
+- `<spp>_overdispersion.rds`, RDS object (the overdispersion test
+  output) output from the previous step
 
-- `--min-maf`: 0.05 - minimum minor allele frequency required to process
-  a nucleotide site at a locus
+Outputs:
 
-## Step 11 - Examine Within-city Catalogs and Populations
+- `<spp>_filtered_RADdata.rds`, RDS object (RADdata object filtered for
+  appropriate Hind/He)
+- `<spp>_IteratePopStructPCA.csv`, data output from the genotype
+  estimate PCA, suitable for plotting
+- `<spp>_estimatedgeno_RADdata.rds`, RDS object (RADdata object with
+  genotype estimates)
 
-Files can be found in the `11_city_catalogs/` directory.
+### 3.4.4 File cleanup
 
-For any given species within city, there is likely to be a slightly
-different set of SNPs compared to the whole metapopulation of five
-cities. We examined 24 sets of species-city combinations. Within the
-folder `11_city_catalogs` there are 24 folders:
+The output `<spp>_estimatedgeno_RADdata.rds` needs to be converted to
+genind and structure format for further analysis and steps. There is a
+little cleanup involved so the population information is retained. For
+example, Structure needs the population identity to be an integer, not a
+string.
 
-    CD_BA_22_09_14
-    CD_LA_22_09_14
-    CD_PX_22_09_14
-    DS_BA_22_09_14
-    DS_BO_22_09_14
-    DS_MN_22_09_14
-    DS_PX_22_09_14
-    EC_BA_22_09_14
-    EC_LA_22_09_14
-    EC_PX_22_09_14
-    LS_BA_22_09_14
-    LS_BO_22_09_14
-    LS_LA_22_09_14
-    LS_MN_22_09_14
-    LS_PX_22_09_14
-    PA_BA_22_09_14
-    PA_BO_22_09_14
-    PA_LA_22_09_14
-    PA_PX_22_09_14
-    TO_BA_22_09_14
-    TO_BO_22_09_14
-    TO_LA_22_09_14
-    TO_MN_22_09_14
-    TO_PX_22_09_14
+``` r
+source("08_polyRAD/convert_genomics.R")
+```
 
-All folders contain a script and set of samples used to build the
-species-city catalog. Because parameter search had already been
-performed at the metapopulation level, we ran all species-city
-combinations using `denovo_map.pl`. Input samples came from [step
-4](#step-4---demultiplexing-and-sample-filtering). For example, input
-files should look like this:
+``` r
+convert_all()
+```
 
-    CD.BA.AA.U.1.1.fq.gz
-    CD.BA.AA.U.1.2.fq.gz
-    CD.BA.AA.U.1.rem.1.fq.gz
-    CD.BA.AA.U.1.rem.2.fq.gz 
+## 3.5 Step 9 - Populations with `Structure`
 
-A population map is also included within each directory to ensure only
-appropriate samples (i.e., ok coverage) are included in the catalog.
+<!-- ## Step 8 - Metapopulation oriented by locus `tsv2bam` {#step-8---metapopulation-oriented-by-locus-tsv2bam} -->
+<!-- Files can be found in the `08_tsv2bam/` directory. -->
+<!-- `tsv2bam` and the proceeding programs in the pipeline use a populations -->
+<!-- map text file to specify which samples to include in the analysis. As -->
+<!-- such, a new population map (that differs from `06-cstacks_popmap.txt`) -->
+<!-- should be created that includes all samples (including those used to -->
+<!-- create your catalog) that you want to include in the analysis. This file -->
+<!-- will include the same samples specified in `sstacks_samples_SPECIES.txt` with -->
+<!-- a colomn specifying population. Here, this file is -->
+<!-- `popmap_SPECIES.txt`. -->
+<!-- We run `tsv2bam` using the script `tsv2bam_SPECIES.sh`. -->
+<!-- This is the step at which it's usually discovered that some samples are -->
+<!-- bad(don't have any useable matches to the catalog). These samples were -->
+<!-- excluded from `popmap_SPECIES.txt`. For example we might simply cut -->
+<!-- out the following rows: -->
+<!--     DS.MN.L10-DS.M.4    Minneapolis -->
+<!--     DS.MN.L01-DS.M.4    Minneapolis -->
+<!--     DS.BO.WL2.M.4   Boston -->
+<!-- The following samples were discarded because they contained less than -->
+<!-- 300 sample loci matched to catalog loci: -->
+<!-- ```{r tsv2bam_discarded_samples_table, echo = FALSE, message = FALSE} -->
+<!-- table_ <-  -->
+<!--   readr::read_csv("output/tsv2bam-discarded_samples.csv") -->
+<!-- colnames(table_) <- c("Sample", "City") -->
+<!-- knitr::kable( -->
+<!--   table_, -->
+<!--   format = "markdown", -->
+<!--   caption = "Samples discarded at the `tsv2bam` stage of the Stacks pipeline." -->
+<!-- ) -->
+<!-- ``` -->
+<!-- ## Step 9 - Metapopulation SNP calling with `gstacks` {#step-9---metapopulation-snp-calling-with-gstacks} -->
+<!-- Files can be found in the `09_gstacks/` directory. -->
+<!-- The script `gstacks_SPECIES.sh` also uses the population map specified in -->
+<!-- [Step 8](#step-8---tsv2bam), `popmap_SPECIES.txt`. The `gstacks` -->
+<!-- program aligns the paired-end reads and assembles the paired-end contigs -->
+<!-- and then calls SNPs. -->
+<!-- Produces the following: -->
+<!-- -   `catalog.fa.gz` : consensus catalog loci, contains the consensus -->
+<!--     sequence for each locus as produced by `gstacks` in a standard FASTA -->
+<!--     file -->
+<!-- -   `catalog.calls` : per-nucleotide genotypes, contains the output of -->
+<!-- ## Step 10 - Metapopulation summaries with `populations` {#step-10---metapopulation-summaries-with-populations} -->
+<!-- Files can be found in the `10_populations/` directory. -->
+<!-- The populations program will use the script `species_populations.sh` and -->
+<!-- the population maps specified in  -->
+<!-- [Step 9](#step-9---metapopulation-snp-calling-with-gstacks) -->
+<!-- (`popmap_SPECIES.txt`) to calculate population-level summary -->
+<!-- statistics. Specifically, the script iterates through all species and -->
+<!-- several levels of the parameter `--min-samples-overall`, the minimum -->
+<!-- percentage of individuals across populations required to process a -->
+<!-- locus -->
+<!-- You will most likely run the populations program multiple times if you -->
+<!-- are looking at different 'sub-populations'. A new directory should be -->
+<!-- created and the population program should run out of that directory for -->
+<!-- each iteration of the population program. Alternativley, you can -->
+<!-- specify a new directory as the output folder in the script using the -->
+<!-- command `-O`. -->
+<!-- Ultimately, the key parameters we used for running `populations` were as -->
+<!-- follows: -->
+<!-- - `--write-random-snp`: restrict data analysis to one random SNP per -->
+<!--   locus -->
+<!-- - `--min-samples-overall`: 20 - locus must be in 20% of individuals -->
+<!-- - `--min-maf`: 0.05 - minimum minor allele frequency required to process -->
+<!--   a nucleotide site at a locus -->
+<!-- ## Step 11 - Examine Within-city Catalogs and Populations {#step-11---examine-within-city-catalogs-and-populations} -->
+<!-- Files can be found in the `11_city_catalogs/` directory. -->
+<!-- For any given species within city, there is likely to be a slightly -->
+<!-- different set of SNPs compared to the whole metapopulation of five -->
+<!-- cities. We examined 24 sets of species-city combinations. Within the -->
+<!-- folder `11_city_catalogs` there are 24 folders: -->
+<!--     CD_BA_22_09_14 -->
+<!--     CD_LA_22_09_14 -->
+<!--     CD_PX_22_09_14 -->
+<!--     DS_BA_22_09_14 -->
+<!--     DS_BO_22_09_14 -->
+<!--     DS_MN_22_09_14 -->
+<!--     DS_PX_22_09_14 -->
+<!--     EC_BA_22_09_14 -->
+<!--     EC_LA_22_09_14 -->
+<!--     EC_PX_22_09_14 -->
+<!--     LS_BA_22_09_14 -->
+<!--     LS_BO_22_09_14 -->
+<!--     LS_LA_22_09_14 -->
+<!--     LS_MN_22_09_14 -->
+<!--     LS_PX_22_09_14 -->
+<!--     PA_BA_22_09_14 -->
+<!--     PA_BO_22_09_14 -->
+<!--     PA_LA_22_09_14 -->
+<!--     PA_PX_22_09_14 -->
+<!--     TO_BA_22_09_14 -->
+<!--     TO_BO_22_09_14 -->
+<!--     TO_LA_22_09_14 -->
+<!--     TO_MN_22_09_14 -->
+<!--     TO_PX_22_09_14 -->
+<!-- All folders contain a script and set of samples used to build the -->
+<!-- species-city catalog. Because parameter search had already been -->
+<!-- performed at the metapopulation level, we ran all species-city -->
+<!-- combinations using `denovo_map.pl`. Input samples came from [step -->
+<!-- 4](#step-4---demultiplexing-and-sample-filtering). For example, input -->
+<!-- files should look like this: -->
+<!--     CD.BA.AA.U.1.1.fq.gz -->
+<!--     CD.BA.AA.U.1.2.fq.gz -->
+<!--     CD.BA.AA.U.1.rem.1.fq.gz -->
+<!--     CD.BA.AA.U.1.rem.2.fq.gz  -->
+<!-- A population map is also included within each directory to ensure only -->
+<!-- appropriate samples (i.e., ok coverage) are included in the catalog. -->
+<!-- ### Step 11b - City Level Population Analysis {#step-11b---city-level-population-analysis} -->
+<!-- The city-level populations program will use the script -->
+<!-- `11-city_catalogs/11-city_populations.sh`. The goal of this script is to -->
+<!-- run the Stacks function `populations` on each city-species combination -->
+<!-- while toggling the `--min-samples-overall` option. Toggling this option -->
+<!-- allows us to hone in on a reasonable number of SNPs while also getting -->
+<!-- rid of SNPs with a lot of missing data, therefore creating a more robust -->
+<!-- population structure snapshot. As described in [step -->
+<!-- 11](step-11---examine-within-city-catalogs-and-populations), each -->
+<!-- city-species combination with adequate data is represented by a folder. -->
+<!-- The `11-city_populations.sh` script iterates through folders, within -->
+<!-- which it runs several `--min-samples-overall` levels and outputs each -->
+<!-- parameter permutation to its own new directory. This script uses the -->
+<!-- `11-city_catalogs/11-city_catalog_names.txt` to iterate rather than -->
+<!-- doing all folders by default. This is convenient if you only want to -->
+<!-- iterate through a subset of the folders (city-species combinations). -->
 
-### Step 11b - City Level Population Analysis
+# 4 Analysis
 
-The city-level populations program will use the script
-`11-city_catalogs/11-city_populations.sh`. The goal of this script is to
-run the Stacks function `populations` on each city-species combination
-while toggling the `--min-samples-overall` option. Toggling this option
-allows us to hone in on a reasonable number of SNPs while also getting
-rid of SNPs with a lot of missing data, therefore creating a more robust
-population structure snapshot. As described in [step
-11](step-11---examine-within-city-catalogs-and-populations), each
-city-species combination with adequate data is represented by a folder.
-The `11-city_populations.sh` script iterates through folders, within
-which it runs several `--min-samples-overall` levels and outputs each
-parameter permutation to its own new directory. This script uses the
-`11-city_catalogs/11-city_catalog_names.txt` to iterate rather than
-doing all folders by default. This is convenient if you only want to
-iterate through a subset of the folders (city-species combinations).
+## 4.1 $F_{ST}$ - Variance among populations
 
-# Analysis
-
-## Fst - Variance among populations
-
-We used `hierfstat::wc()` to calculate an Fst statistic for each
+We used `hierfstat::wc()` to calculate an $F_{ST}$ statistic for each
 species.
 
 ``` r
@@ -1243,10 +1274,10 @@ read.csv("output/population_stats-fst.csv")
     ## 5  PA   FALSE 0.244
     ## 6  TO   FALSE 0.108
 
-## Fis - Homozygosity within population
+## 4.2 $F_{IS}$ - Homozygosity within population
 
-We used `hierfstat::basic.stats()` to calculate Fis. This is equal to
-(expected - observed) / expected, and thus gives a good estimate of
+We used `hierfstat::basic.stats()` to calculate $F_{IS}$. This is equal
+to (expected - observed) / expected, and thus gives a good estimate of
 whether there are more homozygotes than expected (positive number) or
 more heterozygotes than expected (negative number).
 
@@ -1285,12 +1316,18 @@ read.csv("output/population_stats-Fis.csv")
     ## 24  TO   MN 75 0.1599 0.2271 0.2271  0.2960
     ## 25  TO   PX 16 0.1744 0.2105 0.2105  0.1715
 
-## rbarD - Clonality of populations
+## 4.3 $\bar{r}_d$ - Linkage disequilibrium
 
 We used `poppr::ia()` to calculate the standardized index of association
-of loci in the dataset.
+of loci in the dataset ($\bar{r}_d$ or `rbarD`). We use the standardized
+index of association to avoid the influence of different sample sizes,
+as described by [Agapow and Burt
+2001](https://doi.org/10.1046/j.1471-8278.2000.00014.x).
 
-From the documentation:
+When `p.rD` is small (\<0.05) and rbarD is (relatively) higher, that is
+a sign that the population could be in linkage disequilibrium.
+
+An interesting note from the documentation:
 
 > It has been widely used as a tool to detect clonal reproduction within
 > populations. Populations whose members are undergoing sexual
@@ -1305,9 +1342,6 @@ From the documentation:
 > variance of the raw number of differences between individuals and the
 > sum of those variances over each locus. You can also think of it as
 > the observed variance over the expected variance.
-
-When `p.rD` is small (\<0.05) and rbarD is (relatively) higher, that is
-a sign that the population could be more clonal than sexual.
 
 There is a nice description
 [here](https://grunwaldlab.github.io/Population_Genetics_in_R/Linkage_disequilibrium.html).
@@ -1347,7 +1381,7 @@ read.csv("output/population_stats-rbarD.csv")
     ## 24  TO   MN 75  7.9147773 1.000 0.008437311 1.000
     ## 25  TO   PX 16 13.3835215 0.001 0.048900307 0.001
 
-## Trim spatial files
+## 4.4 Trim spatial files
 
 From the USGS:
 
@@ -1380,7 +1414,7 @@ source("R/trim_NLCD_spatial_data.R")
 create_spatial_rds_files()
 ```
 
-## Make Sampling Maps
+## 4.5 Make Sampling Maps
 
 Next, we made plots for each city’s sampling locations. Note that these
 only include sites that had viable SNPs.
@@ -1393,7 +1427,7 @@ source("R/plot_map_of_samples.R")
 make_all_urban_site_plots()
 ```
 
-## Archetypal Analysis
+## 4.6 Archetypal Analysis
 
 We performed archetypal analysis following
 <https://github.com/AI-sandbox/archetypal-analysis>.
@@ -1432,7 +1466,7 @@ run_archetype_analysis(spp = "PA", k_vals = c(5, 10))  # 5 populations
 run_archetype_analysis(spp = "TO", k_vals = c(5, 10))  # 5 populations
 ```
 
-## Visualizing Archetypes
+## 4.7 Visualizing Archetypes
 
 Before proceeding, we wanted to extract urban cover from the NLCD data
 and add it to the site data.
@@ -1455,7 +1489,7 @@ source("R/plot_archetypes.R")
 make_archetype_multi_plot()
 ```
 
-## Isolation by State
+## 4.8 Isolation by State
 
 ``` r
 source("R/plot_isolation_by_state.R")
@@ -1465,9 +1499,9 @@ source("R/plot_isolation_by_state.R")
 plot_dendrograms()
 ```
 
-# Appendix
+# 5 Appendix
 
-## `SessionInfo()`
+## 5.1 `SessionInfo()`
 
 ``` r
 sessionInfo()
@@ -1493,36 +1527,37 @@ sessionInfo()
     ##  [7] tidytree_0.4.1      ape_5.6-2           treedataverse_0.0.1
     ## [10] ggh4x_0.2.3         forcats_0.5.2       here_1.0.1         
     ## [13] cowplot_1.1.1       viridis_0.6.2       viridisLite_0.4.1  
-    ## [16] readr_2.1.3         stringr_1.4.1       raster_3.6-11      
-    ## [19] sp_1.5-1            poppr_2.9.3         hierfstat_0.5-11   
-    ## [22] adegenet_2.1.8      ade4_1.7-20         dplyr_1.0.10       
-    ## [25] magrittr_2.0.3      tidyr_1.2.1         ggplot2_3.4.0      
+    ## [16] raster_3.6-11       sp_1.5-1            poppr_2.9.3        
+    ## [19] hierfstat_0.5-11    adegenet_2.1.8      ade4_1.7-20        
+    ## [22] stringr_1.4.1       readr_2.1.3         polyRAD_2.0.0.9001 
+    ## [25] dplyr_1.0.10        magrittr_2.0.3      tidyr_1.2.1        
+    ## [28] ggplot2_3.4.0      
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] nlme_3.1-160       bit64_4.0.5        rprojroot_2.0.3    tools_4.2.2       
-    ##  [5] polysat_1.7-7      utf8_1.2.2         R6_2.5.1           vegan_2.6-4       
-    ##  [9] lazyeval_0.2.2     DBI_1.1.3          mgcv_1.8-41        colorspace_2.0-3  
-    ## [13] permute_0.9-7      withr_2.5.0        tidyselect_1.2.0   gridExtra_2.3     
-    ## [17] bit_4.0.5          compiler_4.2.2     textshaping_0.3.6  cli_3.4.1         
-    ## [21] formatR_1.12       labeling_0.4.2     scales_1.2.1       yulab.utils_0.0.5 
-    ## [25] systemfonts_1.0.4  digest_0.6.30      rmarkdown_2.18     pkgconfig_2.0.3   
-    ## [29] htmltools_0.5.3    pegas_1.1          fastmap_1.1.0      highr_0.9         
-    ## [33] rlang_1.0.6        rstudioapi_0.14    shiny_1.7.3        gridGraphics_0.5-1
-    ## [37] farver_2.1.1       generics_0.1.3     jsonlite_1.8.3     vroom_1.6.0       
-    ## [41] ggplotify_0.1.0    patchwork_1.1.2    Matrix_1.5-3       Rcpp_1.0.9        
-    ## [45] munsell_0.5.0      fansi_1.0.3        ggnewscale_0.4.8   lifecycle_1.0.3   
-    ## [49] terra_1.6-41       stringi_1.7.8      yaml_2.3.6         MASS_7.3-58.1     
-    ## [53] plyr_1.8.8         grid_4.2.2         parallel_4.2.2     promises_1.2.0.1  
-    ## [57] crayon_1.5.2       lattice_0.20-45    splines_4.2.2      hms_1.1.2         
-    ## [61] knitr_1.41         pillar_1.8.1       igraph_1.3.5       boot_1.3-28.1     
-    ## [65] seqinr_4.2-23      reshape2_1.4.4     codetools_0.2-18   glue_1.6.2        
-    ## [69] evaluate_0.18      ggfun_0.0.9        vctrs_0.5.1        tzdb_0.3.0        
-    ## [73] httpuv_1.6.6       gtable_0.3.1       purrr_0.3.5        assertthat_0.2.1  
-    ## [77] xfun_0.35          mime_0.12          xtable_1.8-4       later_1.3.0       
-    ## [81] ragg_1.2.4         tibble_3.1.8       aplot_0.1.9        cluster_2.1.4     
-    ## [85] ellipsis_0.3.2
+    ##  [1] ggnewscale_0.4.8   colorspace_2.0-3   seqinr_4.2-23      ellipsis_0.3.2    
+    ##  [5] rprojroot_2.0.3    aplot_0.1.9        rstudioapi_0.14    farver_2.1.1      
+    ##  [9] bit64_4.0.5        fansi_1.0.3        codetools_0.2-18   splines_4.2.2     
+    ## [13] knitr_1.41         pegas_1.1          jsonlite_1.8.3     cluster_2.1.4     
+    ## [17] shiny_1.7.3        compiler_4.2.2     assertthat_0.2.1   Matrix_1.5-3      
+    ## [21] fastmap_1.1.0      lazyeval_0.2.2     cli_3.4.1          later_1.3.0       
+    ## [25] formatR_1.12       htmltools_0.5.3    tools_4.2.2        igraph_1.3.5      
+    ## [29] gtable_0.3.1       glue_1.6.2         reshape2_1.4.4     fastmatch_1.1-3   
+    ## [33] Rcpp_1.0.9         vctrs_0.5.1        nlme_3.1-160       xfun_0.35         
+    ## [37] mime_0.12          lifecycle_1.0.3    terra_1.6-41       MASS_7.3-58.1     
+    ## [41] scales_1.2.1       vroom_1.6.0        ragg_1.2.4         hms_1.1.2         
+    ## [45] promises_1.2.0.1   parallel_4.2.2     yaml_2.3.6         gridExtra_2.3     
+    ## [49] ggfun_0.0.9        yulab.utils_0.0.5  stringi_1.7.8      highr_0.9         
+    ## [53] permute_0.9-7      boot_1.3-28.1      rlang_1.0.6        pkgconfig_2.0.3   
+    ## [57] systemfonts_1.0.4  polysat_1.7-7      evaluate_0.18      lattice_0.20-45   
+    ## [61] purrr_0.3.5        patchwork_1.1.2    labeling_0.4.2     bit_4.0.5         
+    ## [65] tidyselect_1.2.0   plyr_1.8.8         R6_2.5.1           generics_0.1.3    
+    ## [69] DBI_1.1.3          pillar_1.8.1       withr_2.5.0        mgcv_1.8-41       
+    ## [73] tibble_3.1.8       crayon_1.5.2       utf8_1.2.2         tzdb_0.3.0        
+    ## [77] rmarkdown_2.18     grid_4.2.2         vegan_2.6-4        digest_0.6.30     
+    ## [81] xtable_1.8-4       httpuv_1.6.6       gridGraphics_0.5-1 textshaping_0.3.6 
+    ## [85] munsell_0.5.0      ggplotify_0.1.0
 
-## File Organization
+## 5.2 File Organization
 
 All data files for the Macrosystems project are permanently stored under
 Meghan Avolio’s group resources in the Johns Hopkins University Rockfish
@@ -1591,7 +1626,7 @@ following subdirectories:
     scripts and output files (i.e., from `cstacks`, `gstacks`, `stacks`,
     `tsv2bam`, and `populations`),
 
-## Aspera Transfer File Names
+## 5.3 Aspera Transfer File Names
 
 See
 [data/aspera_transfer_file_names.csv](data/aspera_transfer_file_names.csv).
@@ -1612,7 +1647,7 @@ readLines("data/aspera_transfer_file_names.csv", 10)
     ##  [9] "/Hoffman_macrosystems/AMH_macro_1_10_8px_S10_L001_R1_001.fastq.gz"
     ## [10] "/Hoffman_macrosystems/AMH_macro_1_10_8px_S10_L001_R2_001.fastq.gz"
 
-## `clone_filter` File Names
+## 5.4 `clone_filter` File Names
 
 See
 [data/clone_filter_file_names.csv](data/clone_filter_file_names.csv).
