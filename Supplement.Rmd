@@ -727,7 +727,7 @@ Outputs:
 
 ### File cleanup
 
-The output `<spp>_estimatedgeno_RADdata.rds` needs to be converted to genind and structure format for further analysis and steps. There is a little cleanup involved so the population information is retained. For example, Structure needs the population identity to be an integer, not a string.
+The output `<spp>_estimatedgeno_RADdata.rds` needs to be converted to genind and structure format for further analysis and steps. There is a little cleanup involved so the population information is retained. For example, Structure needs the population identity to be an integer, not a string. This set of functions can be run on a laptop.
 
 ```{r convert_1, message=FALSE}
 source("08_polyRAD/convert_genomics.R")

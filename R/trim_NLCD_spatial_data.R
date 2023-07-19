@@ -52,12 +52,12 @@ trim_site_data <-
       # sites that had no remaining samples, so it doesn't make sense to plot
       # them..
       final_samples <- rbind(
-        read.delim("SNP_data/CD/popmap_CD.txt", sep = '\t', header = F),
-        read.delim("SNP_data/DS/popmap_DS.txt", sep = '\t', header = F),
-        read.delim("SNP_data/EC/popmap_EC.txt", sep = '\t', header = F),
-        read.delim("SNP_data/LS/popmap_LS.txt", sep = '\t', header = F),
-        read.delim("SNP_data/PA/popmap_PA.txt", sep = '\t', header = F),
-        read.delim("SNP_data/TO/popmap_TO.txt", sep = '\t', header = F)
+        read.delim("SNP_data/CD/popmap_CD_polyrad.txt", sep = '\t', header = F),
+        read.delim("SNP_data/DS/popmap_DS_polyrad.txt", sep = '\t', header = F),
+        read.delim("SNP_data/EC/popmap_EC_polyrad.txt", sep = '\t', header = F),
+        read.delim("SNP_data/LS/popmap_LS_polyrad.txt", sep = '\t', header = F),
+        read.delim("SNP_data/PA/popmap_PA_polyrad.txt", sep = '\t', header = F),
+        read.delim("SNP_data/TO/popmap_TO_polyrad.txt", sep = '\t', header = F)
       )
       # Pull out city, site, management combination
       final_samples$site <-

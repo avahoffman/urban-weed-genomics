@@ -89,7 +89,7 @@ plot_urban_cover_and_sites <-
     
     gg
     ggsave(paste0("figures/sampling_map/sites_", city, ".png"),
-           dpi = "screen")
+           dpi = "print")
     return(gg)
   }
 
@@ -134,7 +134,10 @@ make_all_urban_site_plots <-
     )
     mega_plot
     ggsave(paste0("figures/sampling_map/sites_ALL.png"),
-           dpi = "screen")
+           dpi = "print",
+           height = 7,
+           width = 9,
+           units = "in")
     rm(g1,g2,g3,g4,g5,legend,mega_plot)
   }
 
