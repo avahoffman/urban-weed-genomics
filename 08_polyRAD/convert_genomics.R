@@ -12,8 +12,9 @@ convert_spp <- function(spp_){
   if (!file.exists(paste0(wd_, "_estimatedgeno_genind.rds"))) {
     genind_format_dat <-
       Export_adegenet_genind(polyrad_dat)
-    # Import population information
-    popmap <- read.table(paste0("SNP_data/", spp_, "/popmap_", spp_, "_polyrad.txt"), sep = "\t")
+    # Extract population information (two character abbreviation)
+    popmap <- stringr::str_extract(names(polyrad_dat$taxaPloidy), "(?<=...)[:graph:]{2,4}(?=\\..)")
+    pop(genind_format_dat) <- popmap
     write_rds(genind_format_dat, paste0(wd_, "_estimatedgeno_genind.rds"))
   }
   
@@ -26,14 +27,14 @@ convert_spp <- function(spp_){
     colnames(struct_)[1] <- "V1"
     
     # Import population information
-    popmap <- read.table(paste0("SNP_data/", spp_, "/popmap_", spp_, "_polyrad.txt"), sep = "\t")
+    popmap <- stringr::str_extract(names(polyrad_dat$taxaPloidy), "(?<=...)[:graph:]{2,4}(?=\\..)")
     
     # Recode (Structure wants integers)
-    if(any(popmap$V2 == "Baltimore")) popmap[popmap$V2 == "Baltimore",]$V2 <- 1
-    if(any(popmap$V2 == "Boston")) popmap[popmap$V2 == "Boston",]$V2 <- 2
-    if(any(popmap$V2 == "Los Angeles")) popmap[popmap$V2 == "Los Angeles",]$V2 <- 3
-    if(any(popmap$V2 == "Minneapolis")) popmap[popmap$V2 == "Minneapolis",]$V2 <- 4
-    if(any(popmap$V2 == "Phoenix")) popmap[popmap$V2 == "Phoenix",]$V2 <- 5
+    if(any(popmap == "BA")) popmap[popmap == "BA"] <- 1
+    if(any(popmap == "BO")) popmap[popmap == "BO"] <- 2
+    if(any(popmap == "LA")) popmap[popmap == "LA"] <- 3
+    if(any(popmap == "MN")) popmap[popmap == "MN"] <- 4
+    if(any(popmap == "PX")) popmap[popmap == "PX"] <- 5
     
     struct_w_pop <- merge(popmap, struct_, all = TRUE)
     
