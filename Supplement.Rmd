@@ -650,8 +650,7 @@ knitr::kable(table_,
 Files can be found in the `07_sstacks/` directory.
 
 All samples in the population (or all samples you want to include in the
-analysis) are matched against the catalog produced in[`cstacks`]
-(#step-6---cstacks) with `sstacks`, run in script `stacks_SPECIES.sh`
+analysis) are matched against the catalog produced in [`cstacks`](#step-6---cstacks) with `sstacks`, run in script `stacks_SPECIES.sh`
 and `stacks_SPECIES_additional.sh`. It runs off of the samples based in
 the output directory *and* the listed samples in
 `sstacks_samples_SPECIES.txt` and
