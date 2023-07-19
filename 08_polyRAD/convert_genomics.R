@@ -12,6 +12,8 @@ convert_spp <- function(spp_){
   if (!file.exists(paste0(wd_, "_estimatedgeno_genind.rds"))) {
     genind_format_dat <-
       Export_adegenet_genind(polyrad_dat)
+    # Import population information
+    popmap <- read.table(paste0("SNP_data/", spp_, "/popmap_", spp_, "_polyrad.txt"), sep = "\t")
     write_rds(genind_format_dat, paste0(wd_, "_estimatedgeno_genind.rds"))
   }
   
