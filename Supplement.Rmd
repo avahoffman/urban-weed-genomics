@@ -678,7 +678,12 @@ Files can be found in the `08_polyRAD/` directory.
 
 ### Make `RADdata` object
 
-We used the [polyRAD package](https://github.com/lvclark/polyRAD) to call genotypes because many of our species are polyploid or have historical genome duplication. PolyRAD takes the catalog output (`catalog.alleles.tsv.gz`) and accompanying matches to the catalog (e.g., `CD.BA.AA.U.1.matches.tsv.gz`) to create genotype likelihoods for species with diploidy and/or polyploidy. We used the catalog and match files to create a RADdata object class in R for each species. We ran this on the Rockfish compute cluster, with the `make_polyRAD_<spp>.R` script doing the brunt of the work. The R script was wrapped by `polyrad_make_<spp>.sh` to submit the script to the SLURM scheduler.
+We used the [polyRAD package](https://github.com/lvclark/polyRAD) to call genotypes because many of our species are polyploid or have historical genome duplication. PolyRAD takes the catalog output (`catalog.alleles.tsv.gz`) and accompanying matches to the catalog (e.g., `CD.BA.AA.U.1.matches.tsv.gz`) to create genotype likelihoods for species with diploidy and/or polyploidy. We used the catalog and match files to create a RADdata object class in R for each species. We ran this on the Rockfish compute cluster, with the `make_polyRAD_<spp>.R` script doing the brunt of the work. The R script was wrapped by `polyrad_make_<spp>.sh` to submit the script to the SLURM scheduler. 
+
+_Relevant Parameters:_
+
+- `min.ind.with.reads` was set to 20% of samples. This means we discarded any loci not found in at least 20% of samples for each species.
+- `min.ind.with.minor.allele` was set to `2`. This means a locus must have at least this many samples with reads for the minor allele in order to be retained.
 
 _Requires:_
 
@@ -691,7 +696,7 @@ _Outputs:_
 
 ### Calculate overdispersion
 
-Next, we calculated overdispersion using the `polyRAD_overdispersion_<spp>.R` script, wrapped by `polyrad_overd_<spp>.sh` to submit the script to the SLURM scheduler.
+Next, we calculated overdispersion using the `polyRAD_overdispersion_<spp>.R` script, wrapped by `polyrad_overd_<spp>.sh` to submit the script to the SLURM scheduler. 
 
 Requires: 
 
