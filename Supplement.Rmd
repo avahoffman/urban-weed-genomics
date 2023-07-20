@@ -907,43 +907,31 @@ Structure documentation can be found [here](https://web.stanford.edu/group/pritc
 
 # Analysis
 
-## $F_{ST}$ - Variance among populations
+## Global population statistics by species
 
-We used `hierfstat::wc()` to calculate an $F_{ST}$ statistic for each species.
+We used `polyrad::calcPopDiff()` to calculate global population statistics for each species.
 
-```{r Fst_libs, message=FALSE}
-source("R/Fst_rbarD.R")
+```{r global_stats_libs, message=FALSE}
+source("R/calc_global_stats.R")
 ```
 
-```{r Fst_code, eval = FALSE, message=FALSE}
-calc_fst()
+```{r global_stats_code, eval = FALSE, message=FALSE}
+do_all_global_stats()
 ```
 
-```{r Fst_table, echo=FALSE, message=FALSE, eval = FALSE}
-# Not generating this table since it's in the main text
-table_ <-
-  readr::read_csv("output/population_stats-fst.csv")
-knitr::kable(
-  table_,
-  format = "markdown",
-  caption = "Fst statistics for species in this study."
-)
-```
-
-```{r Fst_table_readlines, message=FALSE}
-read.csv("output/population_stats-fst.csv")
+```{r global_stats_table_readlines, message=FALSE}
+# CD as an example
+read.csv("output/population_stats/CD_global_stats.csv")
 ```
 
 ## $F_{IS}$ - Homozygosity within population
 
-We used `hierfstat::basic.stats()` to calculate $F_{IS}$. This is equal to (expected - observed) / expected, and thus gives a good estimate of whether there are more homozygotes than expected (positive number) or more heterozygotes than expected (negative number).
-
-```{r Fis_code, eval = FALSE, message=FALSE}
-calc_fst()
-```
+We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate $F_{IS}$. This gives a good estimate of whether there are more homozygotes than expected (positive number) or more heterozygotes than expected (negative number). Notably, GenoDive accommodates polyploids and reduces the bias on $F_{IS}$ by performing a permutation test. By default, there are 999 permutations.
 
 ```{r Fis_table_readlines, message=FALSE}
-read.csv("output/population_stats-Fis.csv")
+head(
+  read.csv("output/population_stats/genodive_Fis.csv")
+)
 ```
 
 ## $\bar{r}_d$ - Linkage disequilibrium
@@ -1018,64 +1006,64 @@ source("R/plot_map_of_samples.R")
 make_all_urban_site_plots()
 ```
 
-## Archetypal Analysis
+<!-- ## Archetypal Analysis -->
 
-We performed archetypal analysis following https://github.com/AI-sandbox/archetypal-analysis. 
+<!-- We performed archetypal analysis following https://github.com/AI-sandbox/archetypal-analysis.  -->
 
-There does not appear to be versioning for this software, but we used the tool by cloning it at this commit point: https://github.com/AI-sandbox/archetypal-analysis/commit/7ae1c25c41bbe97ac2ff2b62c4cbe1814d0dbc27 . 
+<!-- There does not appear to be versioning for this software, but we used the tool by cloning it at this commit point: https://github.com/AI-sandbox/archetypal-analysis/commit/7ae1c25c41bbe97ac2ff2b62c4cbe1814d0dbc27 .  -->
 
-The software does something wonky and loads an old version of pandas (1.1.5) but 
-a newer version is required (>=1.2.0). This has to be updated in the `requirements.txt` 
-file and the `setup.py` file in the archetypal-analysis repo that is cloned.
+<!-- The software does something wonky and loads an old version of pandas (1.1.5) but  -->
+<!-- a newer version is required (>=1.2.0). This has to be updated in the `requirements.txt`  -->
+<!-- file and the `setup.py` file in the archetypal-analysis repo that is cloned. -->
 
-```
-numpy==1.19.5
-pandas==1.2.0 <<<<< Fix this line when cloned
-pandas-plink==2.2.4
-```
+<!-- ``` -->
+<!-- numpy==1.19.5 -->
+<!-- pandas==1.2.0 <<<<< Fix this line when cloned -->
+<!-- pandas-plink==2.2.4 -->
+<!-- ``` -->
 
-Update pandas if needed. 
+<!-- Update pandas if needed.  -->
 
-```
-pip install pandas -U 
-```
+<!-- ``` -->
+<!-- pip install pandas -U  -->
+<!-- ``` -->
 
-```{r archetype_1, message=FALSE}
-source("R/archetype_analysis.R")
-```
+<!-- ```{r archetype_1, message=FALSE} -->
+<!-- source("R/archetype_analysis.R") -->
+<!-- ``` -->
 
-We ran the archetypal analysis algorithm looking for k = the number of cities in which the species was ID'd as well as k * 2.
+<!-- We ran the archetypal analysis algorithm looking for k = the number of cities in which the species was ID'd as well as k * 2. -->
 
-```{r archetype_2, eval = FALSE, message=FALSE}
-run_archetype_analysis(spp = "CD", k_vals = c(3,6)) # 3 populations
-run_archetype_analysis(spp = "DS", k_vals = c(4,8)) # 4 populations
-run_archetype_analysis(spp = "EC", k_vals = c(3,6)) # 3 populations
-run_archetype_analysis(spp = "LS", k_vals = c(5,10)) # 5 populations
-run_archetype_analysis(spp = "PA", k_vals = c(5,10)) # 5 populations
-run_archetype_analysis(spp = "TO", k_vals = c(5,10)) # 5 populations
-```
+<!-- ```{r archetype_2, eval = FALSE, message=FALSE} -->
+<!-- run_archetype_analysis(spp = "CD", k_vals = c(3,6)) # 3 populations -->
+<!-- run_archetype_analysis(spp = "DS", k_vals = c(4,8)) # 4 populations -->
+<!-- run_archetype_analysis(spp = "EC", k_vals = c(3,6)) # 3 populations -->
+<!-- run_archetype_analysis(spp = "LS", k_vals = c(5,10)) # 5 populations -->
+<!-- run_archetype_analysis(spp = "PA", k_vals = c(5,10)) # 5 populations -->
+<!-- run_archetype_analysis(spp = "TO", k_vals = c(5,10)) # 5 populations -->
+<!-- ``` -->
 
-## Visualizing Archetypes
+<!-- ## Visualizing Archetypes -->
 
-Before proceeding, we wanted to extract urban cover from the NLCD data and add it to the site data.
+<!-- Before proceeding, we wanted to extract urban cover from the NLCD data and add it to the site data. -->
 
-```{r archetype_3, message=FALSE}
-source("R/extract_envt_data.R")
-```
+<!-- ```{r archetype_3, message=FALSE} -->
+<!-- source("R/extract_envt_data.R") -->
+<!-- ``` -->
 
-```{r archetype_4, eval = FALSE, message=FALSE}
-write_urban_cover_data()
-```
+<!-- ```{r archetype_4, eval = FALSE, message=FALSE} -->
+<!-- write_urban_cover_data() -->
+<!-- ``` -->
 
-Plot the archetypes in one big plot.
+<!-- Plot the archetypes in one big plot. -->
 
-```{r archetype_5, message=FALSE}
-source("R/plot_archetypes.R")
-```
+<!-- ```{r archetype_5, message=FALSE} -->
+<!-- source("R/plot_archetypes.R") -->
+<!-- ``` -->
 
-```{r archetype_6, eval = FALSE, message=FALSE}
-make_archetype_multi_plot()
-```
+<!-- ```{r archetype_6, eval = FALSE, message=FALSE} -->
+<!-- make_archetype_multi_plot() -->
+<!-- ``` -->
 
 ## Isolation by State
 
@@ -1086,6 +1074,11 @@ source("R/plot_isolation_by_state.R")
 ```{r ibs_2, eval = FALSE, message=FALSE}
 plot_dendrograms()
 ```
+
+
+
+
+
 
 # Appendix {#appendix-books}
 

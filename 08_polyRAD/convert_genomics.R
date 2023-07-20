@@ -81,17 +81,19 @@ convert_spp <- function(spp_){
       read.delim(paste0(wd_, "_estimatedgeno.structure"), sep = "\t", check.names = F)
     colnames(struct_)[1] <- "V1"
     
-    # Import population information
-    popmap <- stringr::str_extract(names(polyrad_dat$taxaPloidy), "(?<=...)[:graph:]{2,4}(?=\\..)")
+    # Extract population information
+    struct_$pop <- stringr::str_extract(struct_$V1, "(?<=...)[:graph:]{2,4}(?=\\..)")
+    struct_ <- struct_ %>% dplyr::relocate(pop, .after = V1)
     
     # Recode (Structure wants integers)
-    if(any(popmap == "BA")) popmap[popmap == "BA"] <- 1
-    if(any(popmap == "BO")) popmap[popmap == "BO"] <- 2
-    if(any(popmap == "LA")) popmap[popmap == "LA"] <- 3
-    if(any(popmap == "MN")) popmap[popmap == "MN"] <- 4
-    if(any(popmap == "PX")) popmap[popmap == "PX"] <- 5
-    
-    struct_w_pop <- merge(popmap, struct_, all = TRUE)
+    struct_w_pop <- struct_ %>% 
+      dplyr::mutate(pop = dplyr::case_when(
+        pop == "BA" ~ 1,
+        pop == "BO" ~ 2,
+        pop == "LA" ~ 3,
+        pop == "MN" ~ 4,
+        pop == "PX" ~ 5
+      ))
     
     # Structure doesn't want column names for non-locus info
     colnames(struct_w_pop)[1:2] <- c("", "")
