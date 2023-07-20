@@ -725,9 +725,19 @@ Outputs:
 - `<spp>_IteratePopStructPCA.csv`, data output from the genotype estimate PCA, suitable for plotting
 - `<spp>_estimatedgeno_RADdata.rds`, RDS object (RADdata object with genotype estimates)
 
-### File cleanup
+### Final filter and file cleanup
 
 The output `<spp>_estimatedgeno_RADdata.rds` needs to be converted to genind and structure format for further analysis and steps. There is a little cleanup involved so the population information is retained. For example, Structure needs the population identity to be an integer, not a string. This set of functions can be run on a laptop.
+
+At this stage, we also visually assessed the $H_{ind}/H_e$ statistic versus the locus depth (see `check_coverage` inside the `convert_genomics.R` script). We removed the following samples from further analysis:
+
+```{r polyrad_filtered_table, echo = FALSE, message = FALSE}
+table_ <-
+  readr::read_csv("output/HindHe/polyrad_discarded.csv")
+knitr::kable(table_,
+             format = "markdown",
+             caption = "Subset of samples discarded after genotype estimation using polyRAD.")
+```
 
 ```{r convert_1, message=FALSE}
 source("08_polyRAD/convert_genomics.R")
