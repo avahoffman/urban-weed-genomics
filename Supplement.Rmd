@@ -507,7 +507,7 @@ colnames(table_) <-
     "m (minimum reads)")
 knitr::kable(
   table_,
-  format = "markdown",
+  format = "simple",
   caption = "Final parameter optimization values for the Stacks pipeline."
 )
 ```
@@ -641,7 +641,7 @@ table_ <-
   readr::read_csv("output/cstacks-metapop-catalog_samples-included.csv")[, 1:3]
 colnames(table_) <- c("Sample", "Species", "City")
 knitr::kable(table_,
-             format = "markdown",
+             format = "simple",
              caption = "Subset of samples used in SNP catalog creation.")
 ```
 
@@ -735,7 +735,7 @@ At this stage, we also visually assessed the $H_{ind}/H_e$ statistic versus the 
 table_ <-
   readr::read_csv("output/HindHe/polyrad_discarded.csv")
 knitr::kable(table_,
-             format = "markdown",
+             format = "simple",
              caption = "Subset of samples discarded after genotype estimation using polyRAD.")
 ```
 
@@ -786,7 +786,7 @@ Structure documentation can be found [here](https://web.stanford.edu/group/pritc
 <!-- colnames(table_) <- c("Sample", "City") -->
 <!-- knitr::kable( -->
 <!--   table_, -->
-<!--   format = "markdown", -->
+<!--   format = "simple", -->
 <!--   caption = "Samples discarded at the `tsv2bam` stage of the Stacks pipeline." -->
 <!-- ) -->
 <!-- ``` -->
@@ -947,22 +947,25 @@ An interesting note from the documentation:
 There is a nice description [here](https://grunwaldlab.github.io/Population_Genetics_in_R/Linkage_disequilibrium.html).
 
 ```{r rbarD_code, eval = FALSE, message=FALSE}
+source("R/rbarD.R")
 calc_rbarD()
 ```
 
-```{r rbarD_table, echo=FALSE, message=FALSE, eval = FALSE}
+```{r rbarD_table, echo=FALSE, message=FALSE}
 # Not generating this table since it's in the main text
 table_ <-
-  readr::read_csv("output/population_stats-rbarD.csv")
+  readr::read_csv("output/population_stats/rbarD.csv")
 knitr::kable(
   table_,
-  format = "markdown",
-  caption = "rbarD statistics for species and nested populations in this study."
+  format = "simple",
+  caption = "rbarD statistics for species and cities in this study."
 )
 ```
 
 ```{r rbarD_table_readlines, message=FALSE}
-read.csv("output/population_stats-rbarD.csv")
+head(
+  read.csv("output/population_stats/rbarD.csv")
+)
 ```
 
 ## Trim spatial files
@@ -1006,64 +1009,17 @@ source("R/plot_map_of_samples.R")
 make_all_urban_site_plots()
 ```
 
-<!-- ## Archetypal Analysis -->
 
-<!-- We performed archetypal analysis following https://github.com/AI-sandbox/archetypal-analysis.  -->
+## Plot Structure results
 
-<!-- There does not appear to be versioning for this software, but we used the tool by cloning it at this commit point: https://github.com/AI-sandbox/archetypal-analysis/commit/7ae1c25c41bbe97ac2ff2b62c4cbe1814d0dbc27 .  -->
+```{r plot_map_1, message=FALSE}
+source("R/plot_structure.R")
+```
 
-<!-- The software does something wonky and loads an old version of pandas (1.1.5) but  -->
-<!-- a newer version is required (>=1.2.0). This has to be updated in the `requirements.txt`  -->
-<!-- file and the `setup.py` file in the archetypal-analysis repo that is cloned. -->
+```{r plot_map_2, eval = FALSE, message=FALSE}
+make_structure_multi_plot()
+```
 
-<!-- ``` -->
-<!-- numpy==1.19.5 -->
-<!-- pandas==1.2.0 <<<<< Fix this line when cloned -->
-<!-- pandas-plink==2.2.4 -->
-<!-- ``` -->
-
-<!-- Update pandas if needed.  -->
-
-<!-- ``` -->
-<!-- pip install pandas -U  -->
-<!-- ``` -->
-
-<!-- ```{r archetype_1, message=FALSE} -->
-<!-- source("R/archetype_analysis.R") -->
-<!-- ``` -->
-
-<!-- We ran the archetypal analysis algorithm looking for k = the number of cities in which the species was ID'd as well as k * 2. -->
-
-<!-- ```{r archetype_2, eval = FALSE, message=FALSE} -->
-<!-- run_archetype_analysis(spp = "CD", k_vals = c(3,6)) # 3 populations -->
-<!-- run_archetype_analysis(spp = "DS", k_vals = c(4,8)) # 4 populations -->
-<!-- run_archetype_analysis(spp = "EC", k_vals = c(3,6)) # 3 populations -->
-<!-- run_archetype_analysis(spp = "LS", k_vals = c(5,10)) # 5 populations -->
-<!-- run_archetype_analysis(spp = "PA", k_vals = c(5,10)) # 5 populations -->
-<!-- run_archetype_analysis(spp = "TO", k_vals = c(5,10)) # 5 populations -->
-<!-- ``` -->
-
-<!-- ## Visualizing Archetypes -->
-
-<!-- Before proceeding, we wanted to extract urban cover from the NLCD data and add it to the site data. -->
-
-<!-- ```{r archetype_3, message=FALSE} -->
-<!-- source("R/extract_envt_data.R") -->
-<!-- ``` -->
-
-<!-- ```{r archetype_4, eval = FALSE, message=FALSE} -->
-<!-- write_urban_cover_data() -->
-<!-- ``` -->
-
-<!-- Plot the archetypes in one big plot. -->
-
-<!-- ```{r archetype_5, message=FALSE} -->
-<!-- source("R/plot_archetypes.R") -->
-<!-- ``` -->
-
-<!-- ```{r archetype_6, eval = FALSE, message=FALSE} -->
-<!-- make_archetype_multi_plot() -->
-<!-- ``` -->
 
 ## Isolation by State
 

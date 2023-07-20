@@ -1,4 +1,6 @@
-
+library(tidyverse)
+library(ggh4x)
+library(cowplot)
 
 parseStructure <- function(file) {
   # initial parse
@@ -92,6 +94,20 @@ make_structure_plot <- function(spp_,
     mutate(site_n_cov = fct_reorder(site_n_cov, nlcd_urban_pct)) %>% 
     arrange(city, nlcd_urban_pct)
   
+  # Remove an outlying sample
+  long_df <- long_df %>% filter(sample != "EC.BO.R4.U.1")
+  
+  # Only 2 PA from Minneapolis. Looks bad on the plot. Replace with asterisk!
+  long_df <- long_df %>% 
+    mutate(city = case_when(
+      sample %in% c("PA.MN.L01-TO_PA.M.4","PA.MN.L01-TO_PA.M.5") ~ "*",
+      TRUE ~ city
+    ))
+  
+  if(spp_ == "PA") long_df$city <- 
+    factor(long_df$city, 
+           levels = c("Baltimore", "Boston", "Los Angeles", "*", "Phoenix"))
+  
   # Create a set of labels for the x axis
   x_lbl_ <-
     long_df %>% 
@@ -128,6 +144,7 @@ make_structure_plot <- function(spp_,
         city == "Boston" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "Boston"), ]$x),
         city == "Los Angeles" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "Los Angeles"), ]$x),
         city == "Minneapolis" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "Minneapolis"), ]$x),
+        city == "*" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "*"), ]$x),
         city == "Phoenix" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "Phoenix"), ]$x)
       )
     ) +
@@ -168,8 +185,8 @@ make_structure_multi_plot <- function(width = 12,
                                       height = 12) {
   p1 <- make_structure_plot(spp = "CD",
                             species_name = "Bermuda grass")
-  p2 <- make_structure_plot(spp = "EC",
-                            species_name = "crabgrass")
+  # p2 <- make_structure_plot(spp = "DS",
+  #                           species_name = "crabgrass")
   p3 <- make_structure_plot(spp = "EC",
                             species_name = "horseweed")
   p4 <- make_structure_plot(spp = "LS",
@@ -181,7 +198,8 @@ make_structure_multi_plot <- function(width = 12,
   
   mega_plot <- plot_grid(
     p1,
-    p2,
+    #p2,
+    p1,
     p3,
     p4,
     p5,
