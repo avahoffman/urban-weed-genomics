@@ -124,10 +124,20 @@ make_structure_plot <- function(spp_,
     )) %>% 
     mutate(x = as_factor(x))
   
+  # Create a palette order by Phoenix. I want them to be red :) 
+  new_order <- 
+    long_df %>% 
+    filter(city == "Phoenix") %>% 
+    group_by(name) %>% 
+    summarize(tot = sum(value)) %>%
+    full_join(tibble(name = c("K1","K2","K3","K5","K4"))) %>% 
+    replace_na(list(tot = 0)) %>% 
+    arrange(tot)
+  
   # Create labels and set palette
   colors_ <- viridis::viridis(n = 5, option = "H", begin = 0.2)
   my_pal <- setNames(colors_, 
-                     c("K1","K2","K3","K4","K5"))
+                     new_order$name)
   
   gg <- ggplot(data = long_df, aes(x = sample, y = value, fill = name)) +
     geom_col(width = 1, color = NA) +
@@ -185,8 +195,8 @@ make_structure_multi_plot <- function(width = 12,
                                       height = 12) {
   p1 <- make_structure_plot(spp = "CD",
                             species_name = "Bermuda grass")
-  # p2 <- make_structure_plot(spp = "DS",
-  #                           species_name = "crabgrass")
+  p2 <- make_structure_plot(spp = "DS",
+                            species_name = "crabgrass")
   p3 <- make_structure_plot(spp = "EC",
                             species_name = "horseweed")
   p4 <- make_structure_plot(spp = "LS",
@@ -198,8 +208,7 @@ make_structure_multi_plot <- function(width = 12,
   
   mega_plot <- plot_grid(
     p1,
-    #p2,
-    p1,
+    p2,
     p3,
     p4,
     p5,
