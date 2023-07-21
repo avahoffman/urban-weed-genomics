@@ -1012,28 +1012,40 @@ make_all_urban_site_plots()
 
 ## Plot Structure results
 
-```{r plot_map_1, message=FALSE}
+```{r plot_struct_1, message=FALSE}
 source("R/plot_structure.R")
 ```
 
-```{r plot_map_2, eval = FALSE, message=FALSE}
+```{r plot_struct_2, eval = FALSE, message=FALSE}
 make_structure_multi_plot()
 ```
 
 
-## Isolation by State
+## Isolation by distance
 
-```{r ibs_1, message=FALSE}
-source("R/plot_isolation_by_state.R")
+We assessed isolation by distance by comparing genetic distance to geographic distance. Specifically, we took the traditional approach of comparing a geographic dissimilarity matrix (based on latitude and longitude) to a genetic dissimilarity matrix. We calculated the genetic dissimilarity matrix with the `dist.genpop` function int the adegenet package. We use the [Cavalli-Sforza](https://doi.org/10.2307/2406616) distance metric, or `method = 2` argument for the `dist.genpop` function.
+
+Note that for this analysis, we treated each *sampling site* as a distinct location. There would not be enough power to do a distance matrix among 3-5 cities.
+
+```{r ibd_1, message=FALSE}
+source("R/isolation_by_distance.R")
 ```
 
-```{r ibs_2, eval = FALSE, message=FALSE}
-plot_dendrograms()
+```{r ibd_2, eval = FALSE, message=FALSE}
+extract_ibd_stats_and_plots()
 ```
 
+Here are the results of the mantel test:
 
-
-
+```{r ibd_3, echo = FALSE, message=FALSE}
+table_ <-
+  readr::read_csv("output/isolation-by-distance-mantel-test.csv")
+knitr::kable(
+  table_,
+  format = "simple",
+  caption = "Statistics from running 9999 permutations via mantel test."
+)
+```
 
 
 # Appendix {#appendix-books}
