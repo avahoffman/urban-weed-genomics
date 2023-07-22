@@ -1,7 +1,11 @@
-# Test for isolation by distance
-# Mantel test for correlation between two distance matrices
-# https://www.uwyo.edu/dbmcd/molmark/lect06/lect6.html has a nice summary of
-# distance metrics in genomics.
+#' Test for isolation by distance
+#' Mantel test for correlation between two distance matrices
+#' https://www.uwyo.edu/dbmcd/molmark/lect06/lect6.html has a nice summary of
+#' distance metrics in genomics.
+#'
+#' Also found the adegenet docs helpful! 
+#' https://adegenet.r-forge.r-project.org/files/tutorial-basics.pdf
+
 library(adegenet)
 library(tidyverse)
 
