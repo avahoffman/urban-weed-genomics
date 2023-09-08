@@ -1,4 +1,4 @@
-# # Archetype plots
+# # pca plots
 #
 library(here)
 library(readr)
@@ -42,7 +42,7 @@ make_pca_plot <- function(spp_, species_name) {
         fill = V2,
         shape = V2
       ),
-      size = 3
+      size = 2
     ) +
     scale_fill_manual(values = my_pal) +
     scale_shape_manual(values = shape_pal) +
@@ -87,21 +87,25 @@ plot_pcas <- function() {
     p4,
     p5,
     p6,
-    legend,
-    align = 'v',
-    axis = "l",
-    hjust = -1,
-    ncol = 1,
-    rel_heights = c(1, 1, 1, 1, 1, 1, 0.5),
+    align = 'vh',
+    #hjust = -1,
+    ncol = 3,
+    rel_heights = c(1, 1, 1),
     labels = c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)")
   )
-  mega_plot
+  mega_plot_legend <- plot_grid(
+    mega_plot,
+    legend,
+    ncol = 1,
+    rel_heights = c(1, 0.1)
+  )
+  mega_plot_legend
   setwd(here::here())
   ggsave(
     paste0("figures/pca/pca_all.png"),
     dpi = "print",
-    width = 5,
-    height = 18
+    width = 7,
+    height = 5
   )
   
 }
