@@ -110,19 +110,35 @@ make_structure_plot <- function(spp_,
   
   # Create a set of labels for the x axis
   x_lbl_ <-
-    long_df %>% 
-    select(sample, city, site_n_cov, nlcd_urban_pct) %>% 
+    long_df %>%
+    select(sample, city, site_n_cov, nlcd_urban_pct) %>%
     unique()
   
+  # Toggle to label with management type
+  # x_lbl_ <-
+  #   long_df %>% 
+  #   select(sample, city, site_n_cov, management_type) %>% 
+  #   unique()
+  
   # Keep only the first label in the list to keep things tidy
-  x_lbl <- x_lbl_ %>% 
-    mutate(dupe = x_lbl_ %>% select(-sample) %>% duplicated()) %>% 
-    mutate(site_n_cov = as.character(site_n_cov)) %>% 
+  x_lbl <- x_lbl_ %>%
+    mutate(dupe = x_lbl_ %>% select(-sample) %>% duplicated()) %>%
+    mutate(site_n_cov = as.character(site_n_cov)) %>%
     mutate(x = case_when(
       dupe == FALSE ~ site_n_cov,
       TRUE ~ "-"
-    )) %>% 
+    )) %>%
     mutate(x = as_factor(x))
+  
+  # Toggle to label with management type
+  # x_lbl <- x_lbl_ %>%
+  #   mutate(dupe = x_lbl_ %>% select(-sample) %>% duplicated()) %>%
+  #   mutate(site_n_cov = as.character(management_type)) %>%
+  #   mutate(x = case_when(
+  #     dupe == FALSE ~ management_type,
+  #     TRUE ~ "-"
+  #   )) %>%
+  #   mutate(x = as_factor(x))
   
   # Create a palette order by Phoenix. I want them to be red :) 
   new_order <- 
