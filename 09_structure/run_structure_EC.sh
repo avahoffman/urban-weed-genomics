@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --time=0:50:00
+#SBATCH --time=5:00:00
 #SBATCH --job-name=EC_STRUCT
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=avamariehoffman@gmail.com
@@ -16,5 +16,9 @@
 
 export PATH=$PATH:/home/ahoffm31/scratch4-mavolio2/scratch_AH/structure_run
 
-structure -m mainparams_ec -e extraparams_naive -o structure_out_EC_naive
-structure -m mainparams_ec -e extraparams_usepop -o structure_out_EC_popprior
+structure -m mainparams_ec1 -e extraparams_naive -o structure_out_EC1_naive
+#structure -m mainparams_ec -e extraparams_usepop -o structure_out_EC_popprior
+structure -m mainparams_ec2 -e extraparams_naive -o structure_out_EC2_naive
+structure -m mainparams_ec3 -e extraparams_naive -o structure_out_EC3_naive
+structure -m mainparams_ec4 -e extraparams_naive -o structure_out_EC4_naive
+structure -m mainparams_ec5 -e extraparams_naive -o structure_out_EC5_naive

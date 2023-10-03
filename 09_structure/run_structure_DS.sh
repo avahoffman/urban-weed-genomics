@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --time=0:90:00
+#SBATCH --time=15:00:00
 #SBATCH --job-name=DS_STRUCT
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=avamariehoffman@gmail.com
@@ -16,4 +16,8 @@
 
 export PATH=$PATH:/home/ahoffm31/scratch4-mavolio2/scratch_AH/structure_run
 
-structure -m mainparams_ds -e extraparams_naive -o structure_out_DS_naive
+structure -m mainparams_ds1 -e extraparams_naive -o structure_out_DS1_naive
+structure -m mainparams_ds2 -e extraparams_naive -o structure_out_DS2_naive
+structure -m mainparams_ds3 -e extraparams_naive -o structure_out_DS3_naive
+structure -m mainparams_ds4 -e extraparams_naive -o structure_out_DS4_naive
+structure -m mainparams_ds5 -e extraparams_naive -o structure_out_DS5_naive
