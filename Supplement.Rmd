@@ -749,226 +749,28 @@ convert_all()
 
 ## Step 9 - Populations with `Structure`
 
-Files can be found in the `09_structure/` directory.
+Files, inlcuding model parameters, can be found in the `09_structure/` directory.
 
 Structure documentation can be found [here](https://web.stanford.edu/group/pritchardlab/structure_software/release_versions/v2.3.4/structure_doc.pdf).
 
-<!-- ## Step 8 - Metapopulation oriented by locus `tsv2bam` {#step-8---metapopulation-oriented-by-locus-tsv2bam} -->
+### Running Structure
 
-<!-- Files can be found in the `08_tsv2bam/` directory. -->
+`polyRAD` outputs genotype probabilites in a format suitable for Structure. 
+These files were named as:
 
-<!-- `tsv2bam` and the proceeding programs in the pipeline use a populations -->
-<!-- map text file to specify which samples to include in the analysis. As -->
-<!-- such, a new population map (that differs from `06-cstacks_popmap.txt`) -->
-<!-- should be created that includes all samples (including those used to -->
-<!-- create your catalog) that you want to include in the analysis. This file -->
-<!-- will include the same samples specified in `sstacks_samples_SPECIES.txt` with -->
-<!-- a colomn specifying population. Here, this file is -->
-<!-- `popmap_SPECIES.txt`. -->
+    CD_estimatedgeno.structure
+    DS_estimatedgeno.structure
+    EC_estimatedgeno.structure
+    LS_estimatedgeno.structure
+    PA_estimatedgeno.structure
+    TO_estimatedgeno.structure
 
-<!-- We run `tsv2bam` using the script `tsv2bam_SPECIES.sh`. -->
-
-<!-- This is the step at which it's usually discovered that some samples are -->
-<!-- bad(don't have any useable matches to the catalog). These samples were -->
-<!-- excluded from `popmap_SPECIES.txt`. For example we might simply cut -->
-<!-- out the following rows: -->
-
-<!--     DS.MN.L10-DS.M.4    Minneapolis -->
-<!--     DS.MN.L01-DS.M.4    Minneapolis -->
-<!--     DS.BO.WL2.M.4   Boston -->
-
-<!-- The following samples were discarded because they contained less than -->
-<!-- 300 sample loci matched to catalog loci: -->
-
-<!-- ```{r tsv2bam_discarded_samples_table, echo = FALSE, message = FALSE} -->
-<!-- table_ <-  -->
-<!--   readr::read_csv("output/tsv2bam-discarded_samples.csv") -->
-<!-- colnames(table_) <- c("Sample", "City") -->
-<!-- knitr::kable( -->
-<!--   table_, -->
-<!--   format = "simple", -->
-<!--   caption = "Samples discarded at the `tsv2bam` stage of the Stacks pipeline." -->
-<!-- ) -->
-<!-- ``` -->
-
-<!-- ## Step 9 - Metapopulation SNP calling with `gstacks` {#step-9---metapopulation-snp-calling-with-gstacks} -->
-
-<!-- Files can be found in the `09_gstacks/` directory. -->
-
-<!-- The script `gstacks_SPECIES.sh` also uses the population map specified in -->
-<!-- [Step 8](#step-8---tsv2bam), `popmap_SPECIES.txt`. The `gstacks` -->
-<!-- program aligns the paired-end reads and assembles the paired-end contigs -->
-<!-- and then calls SNPs. -->
-
-<!-- Produces the following: -->
-
-<!-- -   `catalog.fa.gz` : consensus catalog loci, contains the consensus -->
-<!--     sequence for each locus as produced by `gstacks` in a standard FASTA -->
-<!--     file -->
-<!-- -   `catalog.calls` : per-nucleotide genotypes, contains the output of -->
-
-<!-- ## Step 10 - Metapopulation summaries with `populations` {#step-10---metapopulation-summaries-with-populations} -->
-
-<!-- Files can be found in the `10_populations/` directory. -->
-
-<!-- The populations program will use the script `species_populations.sh` and -->
-<!-- the population maps specified in  -->
-<!-- [Step 9](#step-9---metapopulation-snp-calling-with-gstacks) -->
-<!-- (`popmap_SPECIES.txt`) to calculate population-level summary -->
-<!-- statistics. Specifically, the script iterates through all species and -->
-<!-- several levels of the parameter `--min-samples-overall`, the minimum -->
-<!-- percentage of individuals across populations required to process a -->
-<!-- locus -->
-
-<!-- You will most likely run the populations program multiple times if you -->
-<!-- are looking at different 'sub-populations'. A new directory should be -->
-<!-- created and the population program should run out of that directory for -->
-<!-- each iteration of the population program. Alternativley, you can -->
-<!-- specify a new directory as the output folder in the script using the -->
-<!-- command `-O`. -->
-
-<!-- Ultimately, the key parameters we used for running `populations` were as -->
-<!-- follows: -->
-
-<!-- - `--write-random-snp`: restrict data analysis to one random SNP per -->
-<!--   locus -->
-
-<!-- - `--min-samples-overall`: 20 - locus must be in 20% of individuals -->
-
-<!-- - `--min-maf`: 0.05 - minimum minor allele frequency required to process -->
-<!--   a nucleotide site at a locus -->
-
-<!-- ## Step 11 - Examine Within-city Catalogs and Populations {#step-11---examine-within-city-catalogs-and-populations} -->
-
-<!-- Files can be found in the `11_city_catalogs/` directory. -->
-
-<!-- For any given species within city, there is likely to be a slightly -->
-<!-- different set of SNPs compared to the whole metapopulation of five -->
-<!-- cities. We examined 24 sets of species-city combinations. Within the -->
-<!-- folder `11_city_catalogs` there are 24 folders: -->
-
-<!--     CD_BA_22_09_14 -->
-<!--     CD_LA_22_09_14 -->
-<!--     CD_PX_22_09_14 -->
-<!--     DS_BA_22_09_14 -->
-<!--     DS_BO_22_09_14 -->
-<!--     DS_MN_22_09_14 -->
-<!--     DS_PX_22_09_14 -->
-<!--     EC_BA_22_09_14 -->
-<!--     EC_LA_22_09_14 -->
-<!--     EC_PX_22_09_14 -->
-<!--     LS_BA_22_09_14 -->
-<!--     LS_BO_22_09_14 -->
-<!--     LS_LA_22_09_14 -->
-<!--     LS_MN_22_09_14 -->
-<!--     LS_PX_22_09_14 -->
-<!--     PA_BA_22_09_14 -->
-<!--     PA_BO_22_09_14 -->
-<!--     PA_LA_22_09_14 -->
-<!--     PA_PX_22_09_14 -->
-<!--     TO_BA_22_09_14 -->
-<!--     TO_BO_22_09_14 -->
-<!--     TO_LA_22_09_14 -->
-<!--     TO_MN_22_09_14 -->
-<!--     TO_PX_22_09_14 -->
-
-<!-- All folders contain a script and set of samples used to build the -->
-<!-- species-city catalog. Because parameter search had already been -->
-<!-- performed at the metapopulation level, we ran all species-city -->
-<!-- combinations using `denovo_map.pl`. Input samples came from [step -->
-<!-- 4](#step-4---demultiplexing-and-sample-filtering). For example, input -->
-<!-- files should look like this: -->
-
-<!--     CD.BA.AA.U.1.1.fq.gz -->
-<!--     CD.BA.AA.U.1.2.fq.gz -->
-<!--     CD.BA.AA.U.1.rem.1.fq.gz -->
-<!--     CD.BA.AA.U.1.rem.2.fq.gz  -->
-
-<!-- A population map is also included within each directory to ensure only -->
-<!-- appropriate samples (i.e., ok coverage) are included in the catalog. -->
-
-<!-- ### Step 11b - City Level Population Analysis {#step-11b---city-level-population-analysis} -->
-
-<!-- The city-level populations program will use the script -->
-<!-- `11-city_catalogs/11-city_populations.sh`. The goal of this script is to -->
-<!-- run the Stacks function `populations` on each city-species combination -->
-<!-- while toggling the `--min-samples-overall` option. Toggling this option -->
-<!-- allows us to hone in on a reasonable number of SNPs while also getting -->
-<!-- rid of SNPs with a lot of missing data, therefore creating a more robust -->
-<!-- population structure snapshot. As described in [step -->
-<!-- 11](step-11---examine-within-city-catalogs-and-populations), each -->
-<!-- city-species combination with adequate data is represented by a folder. -->
-<!-- The `11-city_populations.sh` script iterates through folders, within -->
-<!-- which it runs several `--min-samples-overall` levels and outputs each -->
-<!-- parameter permutation to its own new directory. This script uses the -->
-<!-- `11-city_catalogs/11-city_catalog_names.txt` to iterate rather than -->
-<!-- doing all folders by default. This is convenient if you only want to -->
-<!-- iterate through a subset of the folders (city-species combinations). -->
+We ran all species using a naive approach (not using prior information) with 
+$K={1,2,3,4,5}$ (`MAXPOPS` argument). 
 
 # Analysis
 
-## Global population statistics by species
-
-We used `polyrad::calcPopDiff()` to calculate global population statistics for each species.
-
-```{r global_stats_libs, message=FALSE}
-source("R/calc_global_stats.R")
-```
-
-```{r global_stats_code, eval = FALSE, message=FALSE}
-do_all_global_stats()
-```
-
-```{r global_stats_table_readlines, message=FALSE}
-# CD as an example
-read.csv("output/population_stats/CD_global_stats.csv")
-```
-
-## $F_{IS}$ - Homozygosity within population
-
-We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate $F_{IS}$. This gives a good estimate of whether there are more homozygotes than expected (positive number) or more heterozygotes than expected (negative number). Notably, GenoDive accommodates polyploids and reduces the bias on $F_{IS}$ by performing a permutation test. By default, there are 999 permutations.
-
-```{r Fis_table_readlines, message=FALSE}
-head(
-  read.csv("output/population_stats/genodive_Fis.csv")
-)
-```
-
-## $\bar{r}_d$ - Linkage disequilibrium
-
-We used `poppr::ia()` to calculate the standardized index of association of loci in the dataset ($\bar{r}_d$ or `rbarD`). We use the standardized index of association to avoid the influence of different sample sizes, as described by [Agapow and Burt 2001](https://doi.org/10.1046/j.1471-8278.2000.00014.x). 
-
-When `p.rD` is small (<0.05) and rbarD is (relatively) higher, that is a sign that the population could be in linkage disequilibrium.
-
-An interesting note from the documentation:
-
-> It has been widely used as a tool to detect clonal reproduction within populations. Populations whose members are undergoing sexual reproduction, whether it be selfing or out-crossing, will produce gametes via meiosis, and thus have a chance to shuffle alleles in the next generation. Populations whose members are undergoing clonal reproduction, however, generally do so via mitosis. This means that the most likely mechanism for a change in genotype is via mutation. The rate of mutation varies from species to species, but it is rarely sufficiently high to approximate a random shuffling of alleles. The index of association is a calculation based on the ratio of the variance of the raw number of differences between individuals and the sum of those variances over each locus. You can also think of it as the observed variance over the expected variance.
-
-There is a nice description [here](https://grunwaldlab.github.io/Population_Genetics_in_R/Linkage_disequilibrium.html).
-
-```{r rbarD_code, eval = FALSE, message=FALSE}
-source("R/rbarD.R")
-calc_rbarD()
-```
-
-```{r rbarD_table, echo=FALSE, message=FALSE}
-# Not generating this table since it's in the main text
-table_ <-
-  readr::read_csv("output/population_stats/rbarD.csv")
-knitr::kable(
-  table_,
-  format = "simple",
-  caption = "rbarD statistics for species and cities in this study."
-)
-```
-
-```{r rbarD_table_readlines, message=FALSE}
-head(
-  read.csv("output/population_stats/rbarD.csv")
-)
-```
-
-## Trim spatial files
+## Trimming NLCD Data
 
 From the USGS:
 
@@ -997,7 +799,7 @@ source("R/trim_NLCD_spatial_data.R")
 create_spatial_rds_files()
 ```
 
-## Make Sampling Maps
+## Make maps of sampling locations
 
 Next, we made plots for each city's sampling locations. Note that these only include sites that had viable SNPs.
 
@@ -1009,8 +811,35 @@ source("R/plot_map_of_samples.R")
 make_all_urban_site_plots()
 ```
 
+## Global population structure: population statistics by species
 
-## Plot Structure results
+We used `polyrad::calcPopDiff()` to calculate global population statistics for each species.
+
+```{r global_stats_libs, message=FALSE}
+source("R/calc_global_stats.R")
+```
+
+```{r global_stats_code, eval = FALSE, message=FALSE}
+do_all_global_stats()
+```
+
+```{r global_stats_table_readlines, message=FALSE}
+# CD as an example
+read.csv("output/population_stats/CD_global_stats.csv")
+```
+
+## Global population structure: Structure software results
+
+We ran all species using a naive approach (not using prior information) with 
+$K={1,2,3,4,5}$ (`MAXPOPS` argument). Structure returns a value $lnPr(X|K)$, 
+shown below. Greater values indicate a greater relative likelihood.
+
+```{r struct_k_2, message=FALSE}
+# This file contains output from various K from Structure..
+read_csv("output/structure/structure_k_Pr.csv")
+```
+
+## Global population structure: Structure plots
 
 ```{r plot_struct_1, message=FALSE}
 source("R/plot_structure.R")
@@ -1018,6 +847,45 @@ source("R/plot_structure.R")
 
 ```{r plot_struct_2, eval = FALSE, message=FALSE}
 make_structure_multi_plot()
+```
+
+## $F_{IS}$ - Homozygosity within population
+
+We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate $F_{IS}$. This gives a good estimate of whether there are more homozygotes than expected (positive number) or more heterozygotes than expected (negative number). Notably, GenoDive accommodates polyploids and reduces the bias on $F_{IS}$ by performing a permutation test. By default, there are 999 permutations.
+
+```{r Fis_table_readlines, message=FALSE}
+head(read.csv("output/population_stats/genodive_output_Fis.csv"))
+```
+
+## $\bar{r}_d$ - Linkage disequilibrium
+
+We used `poppr::ia()` to calculate the standardized index of association of loci in the dataset ($\bar{r}_d$ or `rbarD`). We use the standardized index of association to avoid the influence of different sample sizes, as described by [Agapow and Burt 2001](https://doi.org/10.1046/j.1471-8278.2000.00014.x). 
+
+When `p.rD` is small (<0.05) and rbarD is (relatively) higher, that is a sign that the population could be in linkage disequilibrium.
+
+An interesting note from the documentation:
+
+> It has been widely used as a tool to detect clonal reproduction within populations. Populations whose members are undergoing sexual reproduction, whether it be selfing or out-crossing, will produce gametes via meiosis, and thus have a chance to shuffle alleles in the next generation. Populations whose members are undergoing clonal reproduction, however, generally do so via mitosis. This means that the most likely mechanism for a change in genotype is via mutation. The rate of mutation varies from species to species, but it is rarely sufficiently high to approximate a random shuffling of alleles. The index of association is a calculation based on the ratio of the variance of the raw number of differences between individuals and the sum of those variances over each locus. You can also think of it as the observed variance over the expected variance.
+
+There is a nice description [here](https://grunwaldlab.github.io/Population_Genetics_in_R/Linkage_disequilibrium.html).
+
+```{r rbarD_code, eval = FALSE, message=FALSE}
+source("R/rbarD.R")
+calc_rbarD()
+```
+
+```{r rbarD_table, echo=FALSE, message=FALSE}
+# Not generating this table since it's in the main text
+table_ <- readr::read_csv("output/population_stats/rbarD.csv")
+knitr::kable(
+  table_,
+  format = "simple",
+  caption = "rbarD statistics for species and cities in this study."
+)
+```
+
+```{r rbarD_table_readlines, message=FALSE}
+head(read.csv("output/population_stats/rbarD.csv"))
 ```
 
 
@@ -1038,8 +906,7 @@ extract_ibd_stats_and_plots()
 Here are the results of the mantel test:
 
 ```{r ibd_3, echo = FALSE, message=FALSE}
-table_ <-
-  readr::read_csv("output/isolation-by-distance-mantel-test.csv")
+table_ <- readr::read_csv("output/isolation-by-distance-mantel-test.csv")
 knitr::kable(
   table_,
   format = "simple",
