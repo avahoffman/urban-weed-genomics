@@ -766,7 +766,24 @@ These files were named as:
     TO_estimatedgeno.structure
 
 We ran all species using a naive approach (not using prior information) with 
-$K={1,2,3,4,5}$ (`MAXPOPS` argument). 
+$K={1,2,3,4,5}$ (`MAXPOPS` argument). We ran each structure run with 10000 
+iterations discarded as burn-in and retained 20000 iterations. For each 
+combination of species and $K$, we ran Structure 5 times. These runs create files 
+that look like:
+
+    structure_out_CD1_naive_f         // K = 1, rep 1
+    structure_out_CD1_naive_rep2_f    // K = 1, rep 2
+    structure_out_CD1_naive_rep3_f    // K = 1, rep 3
+    structure_out_CD1_naive_rep4_f    // K = 1, rep 4
+    structure_out_CD1_naive_rep5_f    // K = 1, rep 5
+    structure_out_CD2_naive_f         // K = 2, rep 1
+    structure_out_CD2_naive_rep2_f    // K = 2, rep 2
+    structure_out_CD2_naive_rep3_f    // K = 2, rep 3
+    ...
+    
+Within each species, we compressed the result files for all K and reps and 
+submitted to [Structure Harvester](https://taylor0.biology.ucla.edu/structureHarvester/) 
+to choose the optimal K using the Delta-K method.
 
 # Analysis
 
@@ -830,14 +847,14 @@ read.csv("output/population_stats/CD_global_stats.csv")
 
 ## Global population structure: Structure software results
 
-We ran all species using a naive approach (not using prior information) with 
-$K={1,2,3,4,5}$ (`MAXPOPS` argument). Structure returns a value $lnPr(X|K)$, 
-shown below. Greater values indicate a greater relative likelihood.
+<!-- We ran all species using a naive approach (not using prior information) with  -->
+<!-- $K={1,2,3,4,5}$ (`MAXPOPS` argument). Structure returns a value $lnPr(X|K)$,  -->
+<!-- shown below. Greater values indicate a greater relative likelihood. -->
 
-```{r struct_k_2, message=FALSE}
-# This file contains output from various K from Structure..
-read_csv("output/structure/structure_k_Pr.csv")
-```
+<!-- ```{r struct_k_2, message=FALSE} -->
+<!-- # This file contains output from various K from Structure.. -->
+<!-- read_csv("output/structure/structure_k_Pr.csv") -->
+<!-- ``` -->
 
 ## Global population structure: Structure plots
 

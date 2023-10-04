@@ -16,8 +16,8 @@
 
 export PATH=$PATH:/home/ahoffm31/scratch4-mavolio2/scratch_AH/structure_run
 
-structure -m mainparams_cd1 -e extraparams_naive -o structure_out_CD1_naive_rep2
-structure -m mainparams_cd2 -e extraparams_naive -o structure_out_CD2_naive_rep2
-structure -m mainparams_cd3 -e extraparams_naive -o structure_out_CD3_naive_rep2
-structure -m mainparams_cd4 -e extraparams_naive -o structure_out_CD4_naive_rep2
-structure -m mainparams_cd5 -e extraparams_naive -o structure_out_CD5_naive_rep2
+structure -m mainparams_cd1 -e extraparams_naive -o structure_out_CD1_naive_rep3
+structure -m mainparams_cd2 -e extraparams_naive -o structure_out_CD2_naive_rep3
+structure -m mainparams_cd3 -e extraparams_naive -o structure_out_CD3_naive_rep3
+structure -m mainparams_cd4 -e extraparams_naive -o structure_out_CD4_naive_rep3
+structure -m mainparams_cd5 -e extraparams_naive -o structure_out_CD5_naive_rep3
