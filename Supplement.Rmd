@@ -766,10 +766,10 @@ These files were named as:
     TO_estimatedgeno.structure
 
 We ran all species using a naive approach (not using prior information) with 
-$K={1,2,3,4,5}$ (`MAXPOPS` argument). We ran each structure run with 10000 
-iterations discarded as burn-in and retained 20000 iterations. For each 
-combination of species and $K$, we ran Structure 5 times. These runs create files 
-that look like:
+$K={1,2,3,4,5}$ (`MAXPOPS` argument). To search for the most appropriate K, We 
+ran Structure through 5 replicate runs for each combination of species and K, 
+with 10000 iterations discarded as burn-in and retained 20000 iterations. These 
+runs created files that look like:
 
     structure_out_CD1_naive_f         // K = 1, rep 1
     structure_out_CD1_naive_rep2_f    // K = 1, rep 2
@@ -783,11 +783,14 @@ that look like:
     
 Within each species, we compressed the result files for all K and reps and 
 submitted to [Structure Harvester](https://taylor0.biology.ucla.edu/structureHarvester/) 
-to choose the optimal K using the Delta-K method.
+to choose the optimal K using the Delta-K method 
+(see https://link.springer.com/article/10.1007/s12686-011-9548-7). Once the 
+optimal K was selected per species, we re-ran Structure using a greater number 
+of iterations (100000) for final output and plotting.
 
 # Analysis
 
-## Trimming NLCD Data
+## NLCD Data
 
 From the USGS:
 
@@ -828,24 +831,38 @@ source("R/plot_map_of_samples.R")
 make_all_urban_site_plots()
 ```
 
-## Global population structure: population statistics by species
+## Continental population structure: population statistics by species
 
-We used `polyrad::calcPopDiff()` to calculate global population statistics for each species.
+We used `polyrad::calcPopDiff()` to calculate continental population statistics for each species.
 
-```{r global_stats_libs, message=FALSE}
-source("R/calc_global_stats.R")
+```{r continental_stats_libs, message=FALSE}
+source("R/calc_continental_stats.R")
 ```
 
-```{r global_stats_code, eval = FALSE, message=FALSE}
-do_all_global_stats()
+```{r continental_stats_code, eval = FALSE, message=FALSE}
+do_all_continental_stats()
 ```
 
-```{r global_stats_table_readlines, message=FALSE}
+```{r continental_stats_table_readlines, message=FALSE}
 # CD as an example
-read.csv("output/population_stats/CD_global_stats.csv")
+read.csv("output/population_stats/CD_continental_stats.csv")
 ```
 
-## Global population structure: Structure software results
+## Continental population structure: Structure software results
+
+Within each species, we compressed the result files for all K and reps and 
+submitted to [Structure Harvester](https://taylor0.biology.ucla.edu/structureHarvester/) 
+to choose the optimal K using the Delta-K method 
+(see https://link.springer.com/article/10.1007/s12686-011-9548-7). 
+
+The results were:
+
+CD: K=3
+DS: K=3
+EC: K=2
+LS: K=3
+PA: K=4
+TO: K=3
 
 <!-- We ran all species using a naive approach (not using prior information) with  -->
 <!-- $K={1,2,3,4,5}$ (`MAXPOPS` argument). Structure returns a value $lnPr(X|K)$,  -->
@@ -856,7 +873,7 @@ read.csv("output/population_stats/CD_global_stats.csv")
 <!-- read_csv("output/structure/structure_k_Pr.csv") -->
 <!-- ``` -->
 
-## Global population structure: Structure plots
+## Continental population structure: Structure plots
 
 ```{r plot_struct_1, message=FALSE}
 source("R/plot_structure.R")
@@ -866,7 +883,7 @@ source("R/plot_structure.R")
 make_structure_multi_plot()
 ```
 
-## $F_{IS}$ - Homozygosity within population
+## Local: $F_{IS}$ - Homozygosity within population
 
 We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate $F_{IS}$. This gives a good estimate of whether there are more homozygotes than expected (positive number) or more heterozygotes than expected (negative number). Notably, GenoDive accommodates polyploids and reduces the bias on $F_{IS}$ by performing a permutation test. By default, there are 999 permutations.
 
@@ -874,7 +891,21 @@ We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculat
 head(read.csv("output/population_stats/genodive_output_Fis.csv"))
 ```
 
-## $\bar{r}_d$ - Linkage disequilibrium
+## Local: $\rho$ - Pairwise comparison
+
+We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate pairise $\rho$ (rho) among cities within species. We used the following script to clean up the results.
+
+```{r rho_code, eval = FALSE, message=FALSE}
+source("R/rho.R")
+compile_rho_table()
+```
+
+```{r Fis_table_readlines, message=FALSE}
+# LS as an example
+read.csv("output/population_stats/rho_all.csv")
+```
+
+## Local: $\bar{r}_d$ - Linkage disequilibrium
 
 We used `poppr::ia()` to calculate the standardized index of association of loci in the dataset ($\bar{r}_d$ or `rbarD`). We use the standardized index of association to avoid the influence of different sample sizes, as described by [Agapow and Burt 2001](https://doi.org/10.1046/j.1471-8278.2000.00014.x). 
 
@@ -918,6 +949,13 @@ source("R/isolation_by_distance.R")
 
 ```{r ibd_2, eval = FALSE, message=FALSE}
 extract_ibd_stats_and_plots()
+
+# Across all cities
+extract_ibd_stats_and_plots(TRUE, "BA")
+extract_ibd_stats_and_plots(TRUE, "PX")
+extract_ibd_stats_and_plots(TRUE, "LA")
+extract_ibd_stats_and_plots(TRUE, "BO")
+extract_ibd_stats_and_plots(TRUE, "MN")
 ```
 
 Here are the results of the mantel test:
@@ -930,6 +968,22 @@ knitr::kable(
   caption = "Statistics from running 9999 permutations via mantel test."
 )
 ```
+
+We also repeated this within city. Code for generating stats from the Mantel test and creating network plots can be found in the source code below.
+
+```{r ibd_1, eval = FALSE}
+source("R/isolation_by_distance_by_city.R")
+```
+
+```{r ibd_4, echo = FALSE, message=FALSE}
+table_ <- readr::read_csv("output/isolation-by-distance-by-city-mantel-test.csv")
+knitr::kable(
+  table_,
+  format = "simple",
+  caption = "Statistics from running 9999 permutations via mantel test, limited to within city."
+)
+```
+
 
 
 # Appendix {#appendix-books}

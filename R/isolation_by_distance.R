@@ -18,7 +18,8 @@ do_ibd <- function(spp_) {
   # Extract site names (Will use these as pops)
   cities_ <- pop(gen_)
   pop(gen_) <-
-    str_replace(rownames(gen_$tab), "......", "") %>% str_replace("..$", "")
+    paste0(pop(gen_), ".", str_replace(rownames(gen_$tab), "......", "") %>% str_replace("..$", ""))
+  pop(gen_)
   site_city <-
     data.frame(city_abbv = cities_, site_abbv = pop(gen_))
   
@@ -34,7 +35,7 @@ do_ibd <- function(spp_) {
                   lat,
                   long) %>%
     mutate(site_abbv = str_replace(site_abbv, " ", "_"))  %>%
-    unite("site_abbv", site_abbv, management_type, sep = ".")
+    unite("site_abbv", city_abbv, site_abbv, management_type, sep = ".")
   
   # Clean and order geographic data
   d_geo <-
@@ -68,7 +69,7 @@ make_matrix_df <- function(spp_, Dgeo, Dgen) {
 }
 
 
-extract_ibd_stats_and_plots <- function() {
+extract_ibd_stats_and_plots <- function(city_level = FALSE, city_choice = "BA") {
   CD <- do_ibd(spp_ = "CD")
   CD_ <- CD[[1]]
   CD_ <- c(CD_$obs, CD_$alter, CD_$rep, CD_$expvar, CD_$pvalue)
@@ -107,7 +108,7 @@ extract_ibd_stats_and_plots <- function() {
       "Species"
     )
   out <- relocate(out, "Species", .before = "Observation")
-  readr::write_csv(out, "output/isolation-by-distance-mantel-test.csv")
+  #readr::write_csv(out, "output/isolation-by-distance-mantel-test.csv")
   
   df <- rbind(
     make_matrix_df("CD", CD[[2]], CD[[3]]),
@@ -132,7 +133,25 @@ extract_ibd_stats_and_plots <- function() {
     levels = c("Bermuda grass", "crabgrass", "horseweed", "prickly lettuce", "bluegrass", "dandelion")
   )
   
-  ggplot(data = df, aes(Dgeo, Dgen)) +
+  site_info <-
+    read_csv("data/site_data_urban_cov.csv") %>%
+    dplyr::select(site_abbv,
+                  city_abbv,
+                  management_type,
+                  nlcd_urban_pct,
+                  lat,
+                  long) %>%
+    mutate(site_abbv = str_replace(site_abbv, " ", "_"))  %>%
+    unite("site_abbv", city_abbv, site_abbv, management_type, sep = ".", remove = F)
+  
+  if(city_level){
+    only_one_city_sites <- site_info %>% filter(city_abbv == city_choice) %>% pull(site_abbv)
+    df <- df %>% 
+      filter(Var1 %in% only_one_city_sites, Var2 %in% only_one_city_sites) %>% 
+      filter(Dgeo > 0)
+  }
+  
+  gg <- ggplot(data = df, aes(Dgeo, Dgen)) +
     geom_density_2d_filled() +
     facet_wrap(~spp) +
     geom_point(shape = 1) +
@@ -144,8 +163,10 @@ extract_ibd_stats_and_plots <- function() {
       x = "Geographic distance",
       y = "Genetic distance"
     )
- 
-  ggsave(paste0("figures/isolation_by_distance.png"),
+
+  gg
+   
+  ggsave(paste0("figures/IBD/isolation_by_distance_", city_level, "_", city_choice, ".png"),
          dpi = "print",
          height = 5,
          width = 8,

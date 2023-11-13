@@ -1,4 +1,5 @@
 library(tidyverse)
+library(here)
 library(ggh4x)
 library(cowplot)
 
@@ -82,7 +83,7 @@ make_structure_plot <- function(spp_,
                                 height = 3.5) {
   # Read in structure results
   file <-
-    paste0("output/structure/structure_out_", spp_, k, "_naive_f")
+    paste0("output/structure/structure_out_", spp_, k, "_naive_final_f")
   df <- parseStructure(file)
   
   # Import population information / fix sample names
@@ -249,80 +250,56 @@ make_structure_plot <- function(spp_,
 }
 
 
-make_structure_multi_plot <- function(width = 12,
-                                      height = 12) {
+make_structure_multi_plot <- function(width = 12, height = 12) {
+  # Optimal K=3
   p1 <- plot_grid(
-    make_structure_plot(
-      spp = "CD",
-      k = 3,
-      structure_plot = F,
-      species_name = "Bermuda grass"
-    ),
-    make_structure_plot(
-      spp = "CD",
-      k = 3,
-      species_name = "Bermuda grass"
-    ),
+    make_structure_plot(spp = "CD", k = 3, structure_plot = F, species_name = "Bermuda grass"),
+    make_structure_plot(spp = "CD", k = 3, species_name = "Bermuda grass"),
     ncol = 1,
     align = "v",
     rel_heights = c(30, 100)
   )
   
+  # Optimal K=3
   p2 <- plot_grid(
-    make_structure_plot(spp = "DS", k = 5, structure_plot = F, species_name = "crabgrass"),
-    make_structure_plot(spp = "DS", k = 5, species_name = "crabgrass"),
+    make_structure_plot(spp = "DS", k = 3, structure_plot = F, species_name = "crabgrass"),
+    make_structure_plot(spp = "DS", k = 3, species_name = "crabgrass"),
     ncol = 1,
     align = "v",
     rel_heights = c(30, 100)
   )
   
+  # Optimal K=2
   p3 <- plot_grid(
-    make_structure_plot(spp = "EC",
-                        k = 3,
-                        structure_plot = F,
-                        species_name = "horseweed"),
-    make_structure_plot(spp = "EC",
-                        k = 3,
-                        species_name = "horseweed"),
+    make_structure_plot(spp = "EC", k = 2, structure_plot = F, species_name = "horseweed"),
+    make_structure_plot(spp = "EC", k = 2, species_name = "horseweed"),
     ncol = 1,
     align = "v",
     rel_heights = c(30, 100)
   )
   
+  # Optimal K=3
   p4 <- plot_grid(
-    make_structure_plot(spp = "LS",
-                        k = 3,
-                        structure_plot = F,
-                        species_name = "prickly lettuce"),
-    make_structure_plot(spp = "LS",
-                        k = 3,
-                        species_name = "prickly lettuce"),
+    make_structure_plot(spp = "LS", k = 3, structure_plot = F, species_name = "prickly lettuce"),
+    make_structure_plot(spp = "LS", k = 3, species_name = "prickly lettuce"),
     ncol = 1,
     align = "v",
     rel_heights = c(30, 100)
   )
   
+  # Optimal K=4
   p5 <- plot_grid(
-    make_structure_plot(spp = "PA",
-                        k = 4,
-                        structure_plot = F,
-                        species_name = "bluegrass"),
-    make_structure_plot(spp = "PA",
-                        k = 4,
-                        species_name = "bluegrass"),
+    make_structure_plot(spp = "PA", k = 4, structure_plot = F, species_name = "bluegrass"),
+    make_structure_plot(spp = "PA", k = 4, species_name = "bluegrass"),
     ncol = 1,
     align = "v",
     rel_heights = c(30, 100)
   )
   
+  # Optimal K=3
   p6 <- plot_grid(
-    make_structure_plot(spp = "TO",
-                        k = 3,
-                        structure_plot = F,
-                        species_name = "dandelion"),
-    make_structure_plot(spp = "TO",
-                        k = 3,
-                        species_name = "dandelion"),
+    make_structure_plot(spp = "TO", k = 3, structure_plot = F, species_name = "dandelion"),
+    make_structure_plot(spp = "TO", k = 3, species_name = "dandelion"),
     ncol = 1,
     align = "v",
     rel_heights = c(30, 100)
