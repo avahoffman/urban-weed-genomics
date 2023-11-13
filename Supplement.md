@@ -2,19 +2,19 @@
   - [1.1 Raw Data File Naming -
     Sublibraries](#11-raw-data-file-naming---sublibraries)
   - [1.2 A Note on File Transfers](#12-a-note-on-file-transfers)
-- [2 Preprocessing](#preprocessing-wrench)
-  - [2.1 Step 1 - Transfer Files](#step-1---transfer-files)
-  - [2.2 Step 2 - Concatenate Files and Install
-    Stacks](#step-2---concatenate-files-and-install-stacks)
-    - [2.2.1 Step 2a - Concatenate Files for each
-      Sublibrary](#step-2a---concatenate-files-for-each-sublibrary)
-    - [2.2.2 Step 2b – Download and Install
-      Stacks](#step-2b-download-and-install-stacks)
-  - [2.3 Step 3 - Remove PCR Clones](#step-3---remove-pcr-clones)
-    - [2.3.1 Step 3a - Run PCR Clone Removal
-      Script](#step-3a---run-pcr-clone-removal-script)
-    - [2.3.2 Step 3b - Parse PCR Clone Removal
-      Results](#step-3b---parse-pcr-clone-removal-results)
+- [2 Preprocessing](#2-preprocessing)
+  - [2.1 Transfer Files](#21-transfer-files)
+  - [2.2 Concatenate Files and Install
+    Stacks](#22-concatenate-files-and-install-stacks)
+    - [2.2.1 Concatenate Files for each
+      Sublibrary](#221-concatenate-files-for-each-sublibrary)
+    - [2.2.2 Download and Install
+      Stacks](#222-download-and-install-stacks)
+  - [2.3 Remove PCR Clones](#23-remove-pcr-clones)
+    - [2.3.1 Run PCR Clone Removal
+      Script](#231-run-pcr-clone-removal-script)
+    - [2.3.2 Parse PCR Clone Removal
+      Results](#232-parse-pcr-clone-removal-results)
   - [2.4 Step 4 - Demultiplexing and Sample
     Filtering](#step-4---demultiplexing-and-sample-filtering)
     - [2.4.1 Step 4a - Demultiplex and
@@ -154,9 +154,10 @@ to adjust the file paths accordingly.
 
 # 2 Preprocessing
 
-## 2.1 Step 1 - Transfer Files
+## 2.1 Transfer Files
 
-Files can be found in the `01_transfer_files/` directory.
+Referred to through files as “Step 1”. Files can be found in the
+`01_transfer_files/` directory.
 
 This directory contains files named in this convention:
 `01-aspera_transfer_n.txt`. These are text files containing the *names*
@@ -183,15 +184,17 @@ Initiate the transfer from within your scratch directory:
     --file-list=01-aspera_transfer_n.txt
     --mode=recv --user=<aspera-user> --host=<aspera-IP> /scratch/users/<me>@jhu.edu
 
-## 2.2 Step 2 - Concatenate Files and Install Stacks
+## 2.2 Concatenate Files and Install Stacks
 
-Files can be found in the `02_concatenate_and_check/` directory.
+Referred to through files as “Step 2”. Files can be found in the
+`02_concatenate_and_check/` directory.
 
-### 2.2.1 Step 2a - Concatenate Files for each Sublibrary
+### 2.2.1 Concatenate Files for each Sublibrary
 
-We ran my samples across the whole flow cell of the NovaSeq, so results
-came in 8 files for each demultiplexed sublibrary (4 lanes \* paired
-reads). For example, for sublibrary 1_1, we’d see the following 8 files:
+**Step 2a**. We ran my samples across the whole flow cell of the
+NovaSeq, so results came in 8 files for each demultiplexed sublibrary (4
+lanes \* paired reads). For example, for sublibrary 1_1, we’d see the
+following 8 files:
 
     AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz
     AMH_macro_1_1_12px_S1_L001_R2_001.fastq.gz
@@ -221,13 +224,13 @@ will look for and pull the script from the code directory. This will
 concatenate all files within the current directory that match the loop
 pattern.
 
-### 2.2.2 Step 2b – Download and Install Stacks
+### 2.2.2 Download and Install Stacks
 
-On Rockfish, [Stacks](https://catchenlab.life.illinois.edu/stacks/) will
-need to be downloaded to each user’s code directory. Stacks, and
-software in general, should be compiled in an interactive mode or loaded
-via module. For more information on interactive mode, see
-`interact --usage`.
+**Step 2b**. On Rockfish,
+[Stacks](https://catchenlab.life.illinois.edu/stacks/) will need to be
+downloaded to each user’s code directory. Stacks, and software in
+general, should be compiled in an interactive mode or loaded via module.
+For more information on interactive mode, see `interact --usage`.
 
     interact -p debug -g 1 -n 1 -c 1
     module load gcc
@@ -247,13 +250,14 @@ Next, go into the stacks-2.60 directory and run the following commands:
 The filesystem patterns on your cluster might be different, and you
 should change these file paths accordingly.
 
-## 2.3 Step 3 - Remove PCR Clones
+## 2.3 Remove PCR Clones
 
-Files can be found in the `03_clone_filter/` directory.
+Referred to through files as “Step 3”. Files can be found in the
+`03_clone_filter/` directory.
 
-### 2.3.1 Step 3a - Run PCR Clone Removal Script
+### 2.3.1 Run PCR Clone Removal Script
 
-The `03-clone_filter.sh` script runs `clone_filter` from
+**Step 3a**. The `03-clone_filter.sh` script runs `clone_filter` from
 [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was
 run with options `--inline_inline --oligo_len_1 4 --oligo_len_2 4`. The
 `--oligo_len_x 4` options indicate the 4-base pair degenerate sequence
@@ -263,12 +267,12 @@ single sub-pooled library in `03-clone_filter_file_names.txt` and loops
 to run `clone_filter` on all of them. Possible file names shown in
 [`clone_filter` File Names](#clone_filter-file-names).
 
-### 2.3.2 Step 3b - Parse PCR Clone Removal Results
+### 2.3.2 Parse PCR Clone Removal Results
 
-If you want to extract descriptive statistics from the `clone_filter`
-output, you can use the `03.5-parse_clone_filter.py` script to do so. It
-can be run on your local terminal after transferring the
-`clone_filter.out` logs to your local computer.
+**Step 3b**. If you want to extract descriptive statistics from the
+`clone_filter` output, you can use the `03.5-parse_clone_filter.py`
+script to do so. It can be run on your local terminal after transferring
+the `clone_filter.out` logs to your local computer.
 
 ``` r
 source("03_clone_filter/examine_clones.R") 

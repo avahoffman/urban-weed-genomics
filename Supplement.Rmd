@@ -2,12 +2,12 @@
 title: "Supplementary Information" 
 author: "Ava Hoffman, Jenny Cocciardi" 
 output: 
+  pdf_document: 
+    toc: true 
+    number_sections: true
   md_document: 
     variant: gfm
     toc: true
-    number_sections: true
-  pdf_document: 
-    toc: true 
     number_sections: true
 urlcolor: blue 
 editor_options: 
@@ -113,11 +113,11 @@ to adjust the file paths accordingly.
 
 ![File transfer schematic](figures/file_transfer.jpg)\
 
-# Preprocessing {#preprocessing-wrench}
+# Preprocessing {#2-preprocessing}
 
-## Step 1 - Transfer Files {#step-1---transfer-files}
+## Transfer Files {#21-transfer-files}
 
-Files can be found in the `01_transfer_files/` directory.
+Referred to through files as "Step 1". Files can be found in the `01_transfer_files/` directory.
 
 This directory contains files named in this convention: `01-aspera_transfer_n.txt`. These are text files containing the *names* of `fastq.gz` files that we
 wanted to transfer from the sequencing facility's Aspera server to the
@@ -148,13 +148,13 @@ ascp -T -l8G -i /software/apps/aspera/3.9.1/etc/asperaweb_id_dsa.openssh
 --mode=recv --user=<aspera-user> --host=<aspera-IP> /scratch/users/<me>@jhu.edu
 ```
 
-## Step 2 - Concatenate Files and Install Stacks {#step-2---concatenate-files-and-install-stacks}
+## Concatenate Files and Install Stacks {#22-concatenate-files-and-install-stacks}
 
-Files can be found in the `02_concatenate_and_check/` directory.
+Referred to through files as "Step 2". Files can be found in the `02_concatenate_and_check/` directory.
 
-### Step 2a - Concatenate Files for each Sublibrary {#step-2a---concatenate-files-for-each-sublibrary}
+### Concatenate Files for each Sublibrary {#221-concatenate-files-for-each-sublibrary}
 
-We ran my samples across the whole flow cell of the NovaSeq, so results
+**Step 2a**. We ran my samples across the whole flow cell of the NovaSeq, so results
 came in 8 files for each demultiplexed sublibrary (4 lanes \* paired
 reads). For example, for sublibrary 1_1, we'd see the following 8 files:
 
@@ -187,9 +187,9 @@ will look for and pull the script from the code directory. This will
 concatenate all files within the current directory that match the loop
 pattern.
 
-### Step 2b -- Download and Install Stacks
+### Download and Install Stacks {#222-download-and-install-stacks}
 
-On Rockfish, [Stacks](https://catchenlab.life.illinois.edu/stacks/) will
+**Step 2b**. On Rockfish, [Stacks](https://catchenlab.life.illinois.edu/stacks/) will
 need to be downloaded to each user's code directory. Stacks, and
 software in general, should be compiled in an interactive mode or loaded via module. For more
 information on interactive mode, see `interact --usage`.
@@ -212,13 +212,13 @@ Next, go into the stacks-2.60 directory and run the following commands:
 The filesystem patterns on your cluster might be different, and you
 should change these file paths accordingly.
 
-## Step 3 - Remove PCR Clones {#step-3---remove-pcr-clones}
+## Remove PCR Clones {#23-remove-pcr-clones}
 
-Files can be found in the `03_clone_filter/` directory.
+Referred to through files as "Step 3". Files can be found in the `03_clone_filter/` directory.
 
-### Step 3a - Run PCR Clone Removal Script {#step-3a---run-pcr-clone-removal-script}
+### Run PCR Clone Removal Script {#231-run-pcr-clone-removal-script}
 
-The `03-clone_filter.sh` script runs `clone_filter` from
+**Step 3a**. The `03-clone_filter.sh` script runs `clone_filter` from
 [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was
 run with options `--inline_inline --oligo_len_1 4 --oligo_len_2 4`. The
 `--oligo_len_x 4` options indicate the 4-base pair degenerate sequence
@@ -228,9 +228,9 @@ single sub-pooled library in `03-clone_filter_file_names.txt` and loops
 to run `clone_filter` on all of them. Possible file names shown in
 [`clone_filter` File Names](#clone_filter-file-names).
 
-### Step 3b - Parse PCR Clone Removal Results {#step-3b---parse-pcr-clone-removal-results}
+### Parse PCR Clone Removal Results {#232-parse-pcr-clone-removal-results}
 
-If you want to extract descriptive statistics from the `clone_filter`
+**Step 3b**. If you want to extract descriptive statistics from the `clone_filter`
 output, you can use the `03.5-parse_clone_filter.py` script to do so. It
 can be run on your local terminal after transferring the
 `clone_filter.out` logs to your local computer.
