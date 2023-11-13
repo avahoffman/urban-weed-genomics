@@ -2,12 +2,12 @@
 title: "Supplementary Information" 
 author: "Ava Hoffman, Jenny Cocciardi" 
 output: 
-  pdf_document: 
-    toc: true 
-    number_sections: true
   md_document: 
     variant: gfm
     toc: true
+    number_sections: true
+  pdf_document: 
+    toc: true 
     number_sections: true
 urlcolor: blue 
 editor_options: 
@@ -37,7 +37,7 @@ Wrap > Wrap paragraph at 72 characters. -->
 \beginsupplement
 <!-- End -->
 
-# Introduction {#introduction}
+# Introduction {#1-introduction}
 
 In this experiment, we used quaddRAD library prep to prepare the sample
 DNA. This means that there were both two unique outer barcodes 
@@ -51,7 +51,7 @@ still contains a mix of the inner barcodes. We will refer to these as
 "sublibraries" because they are sort of halfway demultiplexed. We
  separate them out bioinformatically later.
 
-## Raw Data File Naming - Sublibraries{#raw-data-file-naming---sublibraries}
+## Raw Data File Naming - Sublibraries {#11-raw-data-file-naming---sublibraries}
 
 Here's a bit of information on the file name convention. The typical raw
 file looks like this:
@@ -96,7 +96,7 @@ file looks like this:
 
     `001.fastq.gz`
     
-## A Note on File Transfers {#a-note-on-file-transfers}
+## A Note on File Transfers {#12-a-note-on-file-transfers}
 
 There are three main systems at play for file transfer: the local
 machine, the sequencing facility's (GRCF) Aspera server, and 
@@ -900,7 +900,7 @@ source("R/rho.R")
 compile_rho_table()
 ```
 
-```{r Fis_table_readlines, message=FALSE}
+```{r rho_table_readlines, message=FALSE}
 # LS as an example
 read.csv("output/population_stats/rho_all.csv")
 ```
@@ -971,11 +971,11 @@ knitr::kable(
 
 We also repeated this within city. Code for generating stats from the Mantel test and creating network plots can be found in the source code below.
 
-```{r ibd_1, eval = FALSE}
+```{r ibd_4, eval = FALSE}
 source("R/isolation_by_distance_by_city.R")
 ```
 
-```{r ibd_4, echo = FALSE, message=FALSE}
+```{r ibd_5, echo = FALSE, message=FALSE}
 table_ <- readr::read_csv("output/isolation-by-distance-by-city-mantel-test.csv")
 knitr::kable(
   table_,
