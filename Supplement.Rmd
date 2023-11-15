@@ -883,6 +883,12 @@ source("R/plot_structure.R")
 make_structure_multi_plot()
 ```
 
+## Validation of Structure results with sNMF
+
+```{r snmf_1, message=FALSE}
+source("R/sNMF.R")
+```
+
 ## Local: $F_{IS}$ - Homozygosity within population
 
 We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate $F_{IS}$. This gives a good estimate of whether there are more homozygotes than expected (positive number) or more heterozygotes than expected (negative number). Notably, GenoDive accommodates polyploids and reduces the bias on $F_{IS}$ by performing a permutation test. By default, there are 999 permutations.
@@ -936,7 +942,6 @@ knitr::kable(
 head(read.csv("output/population_stats/rbarD.csv"))
 ```
 
-
 ## Isolation by distance
 
 We assessed isolation by distance by comparing genetic distance to geographic distance. Specifically, we took the traditional approach of comparing a geographic dissimilarity matrix (based on latitude and longitude) to a genetic dissimilarity matrix. We calculated the genetic dissimilarity matrix with the `dist.genpop` function int the adegenet package. We use the [Cavalli-Sforza](https://doi.org/10.2307/2406616) distance metric, or `method = 2` argument for the `dist.genpop` function.
@@ -982,12 +987,6 @@ knitr::kable(
   format = "simple",
   caption = "Statistics from running 9999 permutations via mantel test, limited to within city."
 )
-```
-
-## Validation of Structure results with sNMF
-
-```{r snmf_1, message=FALSE}
-source("R/sNMF.R")
 ```
 
 # Appendix {#appendix-books}
