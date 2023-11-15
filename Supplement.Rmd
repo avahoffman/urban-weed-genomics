@@ -984,7 +984,11 @@ knitr::kable(
 )
 ```
 
+## Validation of Structure results with sNMF
 
+```{r snmf_1, message=FALSE}
+source("R/sNMF.R")
+```
 
 # Appendix {#appendix-books}
 

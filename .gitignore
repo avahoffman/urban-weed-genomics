@@ -53,3 +53,7 @@ figures/*.pdf
 Notes.Rmd
 archive/*
 *.pptx
+
+# Archetypal Analysis software
+/archetypal-analysis/*
+archetypal-analysis/
