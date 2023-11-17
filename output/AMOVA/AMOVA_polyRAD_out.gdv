@@ -1,0 +1,198 @@
+
+___________________________________________________________________
+
+GenoDive 3.06, 2023-11-15 17:44:34 +0000
+Amova: Analysis of Molecular Variance (Excoffier et al., 1995)
+File: PA_estimatedgeno.structure
+178 of 178 individuals included, 746 of 746 loci included
+Note that missing dosage information for polyploids has been replaced with randomly drawn alleles based on estimated allele frequencies assuming HWE.
+
+Used a ploidy independent Infinite Allele Model, so the reported statistics are equivalent to Rho
+Significance was tested using 999 permutations
+
+
+– AMOVA summary:
+
+Source of Variation	Nested in	%var	F-stat	F-value	Std.Dev.	c.i.2.5%	c.i.97.5%	P-value
+Within Population 	--	0.278	Rho_st	0.722	--	--	--	--
+Among Population 	City	0.593	Rho_sc	0.681	--	--	--	0.001
+Among City    	--	0.129	Rho_ct	0.129	--	--	--	0.002
+
+Estimation of the standard deviations through jackknifing over loci was not possible.
+Estimation of the 95% confidence intervals through bootstrapping over loci was not possible.
+
+
+– Full AMOVA table:
+
+Locus	Source of Variation	Nested in	SSD	d.f.	MS	Var-comp	%Var	F-stat	F-value	P-value
+Overall	Within Population   	--	10167.015	129	78.814	78.814	0.278	Rho_st	0.722	--
+	Among Population   	City	30922.681	44	702.788	168.366	0.593	Rho_sc	0.681	0.001
+	Among City  	--	6999.878	4	1749.970	36.750	0.129	Rho_ct	0.129	0.002
+
+
+___________________________________________________________________
+
+___________________________________________________________________
+
+GenoDive 3.06, 2023-11-15 19:56:59 +0000
+Amova: Analysis of Molecular Variance (Excoffier et al., 1995)
+File: TO_estimatedgeno_bysite.structure
+238 of 238 individuals included, 676 of 676 loci included
+Note that missing dosage information for polyploids has been replaced with randomly drawn alleles based on estimated allele frequencies assuming HWE.
+
+Used a ploidy independent Infinite Allele Model, so the reported statistics are equivalent to Rho
+Significance was tested using 999 permutations
+
+
+– AMOVA summary:
+
+Source of Variation	Nested in	%var	F-stat	F-value	Std.Dev.	c.i.2.5%	c.i.97.5%	P-value
+Within Population 	--	0.314	Rho_st	0.686	--	--	--	--
+Among Population 	City	0.655	Rho_sc	0.676	--	--	--	0.001
+Among City    	--	0.031	Rho_ct	0.031	--	--	--	0.001
+
+Estimation of the standard deviations through jackknifing over loci was not possible.
+Estimation of the 95% confidence intervals through bootstrapping over loci was not possible.
+
+
+– Full AMOVA table:
+
+Locus	Source of Variation	Nested in	SSD	d.f.	MS	Var-comp	%Var	F-stat	F-value	P-value
+Overall	Within Population   	--	15727.071	162	97.081	97.081	0.314	Rho_st	0.686	--
+	Among Population   	City	51744.430	71	728.795	202.502	0.655	Rho_sc	0.676	0.001
+	Among City  	--	4740.183	4	1185.046	9.469	0.031	Rho_ct	0.031	0.001
+
+
+___________________________________________________________________
+
+___________________________________________________________________
+
+GenoDive 3.06, 2023-11-15 20:27:22 +0000
+Amova: Analysis of Molecular Variance (Excoffier et al., 1995)
+File: EC_estimatedgeno_bysite.structure
+107 of 107 individuals included, 1314 of 1314 loci included
+Note that missing dosage information for polyploids has been replaced with randomly drawn alleles based on estimated allele frequencies assuming HWE.
+
+Used a ploidy independent Infinite Allele Model, so the reported statistics are equivalent to Rho
+Significance was tested using 999 permutations
+
+
+– AMOVA summary:
+
+Source of Variation	Nested in	%var	F-stat	F-value	Std.Dev.	c.i.2.5%	c.i.97.5%	P-value
+Within Population 	--	0.302	Rho_st	0.698	--	--	--	--
+Among Population 	City	0.546	Rho_sc	0.644	--	--	--	0.001
+Among City    	--	0.152	Rho_ct	0.152	--	--	--	0.001
+
+Estimation of the standard deviations through jackknifing over loci was not possible.
+Estimation of the 95% confidence intervals through bootstrapping over loci was not possible.
+
+
+– Full AMOVA table:
+
+Locus	Source of Variation	Nested in	SSD	d.f.	MS	Var-comp	%Var	F-stat	F-value	P-value
+Overall	Within Population   	--	15832.596	73	216.885	216.885	0.302	Rho_st	0.698	--
+	Among Population   	City	44957.413	31	1450.239	391.507	0.546	Rho_sc	0.644	0.001
+	Among City  	--	10368.036	2	5184.018	108.704	0.152	Rho_ct	0.152	0.001
+
+
+___________________________________________________________________
+
+___________________________________________________________________
+
+GenoDive 3.06, 2023-11-15 21:22:45 +0000
+Amova: Analysis of Molecular Variance (Excoffier et al., 1995)
+File: CD_estimatedgeno_bysite.structure
+185 of 185 individuals included, 2292 of 2292 loci included
+Note that missing dosage information for polyploids has been replaced with randomly drawn alleles based on estimated allele frequencies assuming HWE.
+
+Used a ploidy independent Infinite Allele Model, so the reported statistics are equivalent to Rho
+Significance was tested using 999 permutations
+
+
+– AMOVA summary:
+
+Source of Variation	Nested in	%var	F-stat	F-value	Std.Dev.	c.i.2.5%	c.i.97.5%	P-value
+Within Population 	--	0.235	Rho_st	0.765	--	--	--	--
+Among Population 	City	0.678	Rho_sc	0.743	--	--	--	0.001
+Among City    	--	0.087	Rho_ct	0.087	--	--	--	0.001
+
+Estimation of the standard deviations through jackknifing over loci was not possible.
+Estimation of the 95% confidence intervals through bootstrapping over loci was not possible.
+
+
+– Full AMOVA table:
+
+Locus	Source of Variation	Nested in	SSD	d.f.	MS	Var-comp	%Var	F-stat	F-value	P-value
+Overall	Within Population   	--	34441.923	136	253.249	253.249	0.235	Rho_st	0.765	--
+	Among Population   	City	137243.842	46	2983.562	732.212	0.678	Rho_sc	0.743	0.001
+	Among City  	--	18722.905	2	9361.452	94.155	0.087	Rho_ct	0.087	0.001
+
+
+___________________________________________________________________
+
+___________________________________________________________________
+
+GenoDive 3.06, 2023-11-15 21:47:42 +0000
+Amova: Analysis of Molecular Variance (Excoffier et al., 1995)
+File: DS_estimatedgeno_bysite.structure
+224 of 224 individuals included, 2665 of 2665 loci included
+Note that missing dosage information for polyploids has been replaced with randomly drawn alleles based on estimated allele frequencies assuming HWE.
+
+Used a ploidy independent Infinite Allele Model, so the reported statistics are equivalent to Rho
+Significance was tested using 999 permutations
+
+
+– AMOVA summary:
+
+Source of Variation	Nested in	%var	F-stat	F-value	Std.Dev.	c.i.2.5%	c.i.97.5%	P-value
+Within Population 	--	0.224	Rho_st	0.776	--	--	--	--
+Among Population 	City	0.561	Rho_sc	0.715	--	--	--	0.001
+Among City    	--	0.215	Rho_ct	0.215	--	--	--	0.001
+
+Estimation of the standard deviations through jackknifing over loci was not possible.
+Estimation of the 95% confidence intervals through bootstrapping over loci was not possible.
+
+
+– Full AMOVA table:
+
+Locus	Source of Variation	Nested in	SSD	d.f.	MS	Var-comp	%Var	F-stat	F-value	P-value
+Overall	Within Population   	--	39458.473	155	254.571	254.571	0.224	Rho_st	0.776	--
+	Among Population   	City	149988.556	65	2307.516	638.534	0.561	Rho_sc	0.715	0.001
+	Among City  	--	47958.337	3	15986.112	244.451	0.215	Rho_ct	0.215	0.001
+
+
+___________________________________________________________________
+
+___________________________________________________________________
+
+GenoDive 3.06, 2023-11-16 01:34:54 +0000
+Amova: Analysis of Molecular Variance (Excoffier et al., 1995)
+File: LS_estimatedgeno_bysite.structure
+184 of 184 individuals included, 559 of 559 loci included
+Note that missing dosage information for polyploids has been replaced with randomly drawn alleles based on estimated allele frequencies assuming HWE.
+
+Used a ploidy independent Infinite Allele Model, so the reported statistics are equivalent to Rho
+Significance was tested using 999 permutations
+
+
+– AMOVA summary:
+
+Source of Variation	Nested in	%var	F-stat	F-value	Std.Dev.	c.i.2.5%	c.i.97.5%	P-value
+Within Population 	--	0.308	Rho_st	0.692	--	--	--	--
+Among Population 	city	0.544	Rho_sc	0.638	--	--	--	0.001
+Among city    	--	0.148	Rho_ct	0.148	--	--	--	0.001
+
+Estimation of the standard deviations through jackknifing over loci was not possible.
+Estimation of the 95% confidence intervals through bootstrapping over loci was not possible.
+
+
+– Full AMOVA table:
+
+Locus	Source of Variation	Nested in	SSD	d.f.	MS	Var-comp	%Var	F-stat	F-value	P-value
+Overall	Within Population   	--	10889.549	120	90.746	90.746	0.308	Rho_st	0.692	--
+	Among Population   	city	32081.032	59	543.746	159.914	0.544	Rho_sc	0.638	0.001
+	Among city  	--	8721.721	4	2180.430	43.569	0.148	Rho_ct	0.148	0.001
+
+
+___________________________________________________________________

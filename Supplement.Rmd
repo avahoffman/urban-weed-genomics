@@ -119,7 +119,8 @@ to adjust the file paths accordingly.
 
 Referred to through files as "Step 1". Files can be found in the `01_transfer_files/` directory.
 
-This directory contains files named in this convention: `01-aspera_transfer_n.txt`. These are text files containing the *names* of `fastq.gz` files that we
+This directory contains files named in this convention: `01-aspera_transfer_n.txt`. 
+These are text files containing the *names* of `fastq.gz` files that we
 wanted to transfer from the sequencing facility's Aspera server to the
 computing cluster ([MARCC](https://www.marcc.jhu.edu/)). This was to
 maximize ease of transferring only certain files over at once, since
@@ -888,6 +889,12 @@ make_structure_multi_plot()
 ```{r snmf_1, message=FALSE}
 source("R/sNMF.R")
 ```
+
+## AMOVA
+
+We performed heirarchical analysis of molecular variance (AMOVA; using GenoDrive) based on the Rho-statistics, which is based on a Ploidy independent Infinite Allele Model.
+
+
 
 ## Local: $F_{IS}$ - Homozygosity within population
 

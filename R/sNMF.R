@@ -132,6 +132,8 @@ do_all_sNMF <- function(){
   # EC
   sNMF_EC_K2 <- do_sNMF(K_ = 2, infile_base = "EC/EC_estimatedgeno_noheader.structure")
   p1 <- do_sNMF_plot(sNMF_EC_K2)
+  sNMF_EC_K3 <- do_sNMF(K_ = 3, infile_base = "EC/EC_estimatedgeno_noheader.structure")
+  p1a <- do_sNMF_plot(sNMF_EC_K3)
   #.LS
   sNMF_LS_K3 <- do_sNMF(K_ = 3, infile_base = "LS/LS_estimatedgeno_noheader.structure")
   p2 <- do_sNMF_plot(sNMF_LS_K3)
