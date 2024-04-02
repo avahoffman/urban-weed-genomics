@@ -858,12 +858,12 @@ to choose the optimal K using the Delta-K method
 
 The results were:
 
-CD: K=3
-DS: K=3
-EC: K=2
-LS: K=3
-PA: K=4
-TO: K=3
+CD: K=3  
+DS: K=3  
+EC: K=2  
+LS: K=3  
+PA: K=4  
+TO: K=3  
 
 <!-- We ran all species using a naive approach (not using prior information) with  -->
 <!-- $K={1,2,3,4,5}$ (`MAXPOPS` argument). Structure returns a value $lnPr(X|K)$,  -->
@@ -888,6 +888,27 @@ make_structure_multi_plot()
 
 ```{r snmf_1, message=FALSE}
 source("R/sNMF.R")
+```
+
+## Correlation between Urbanness and Admixture
+
+calculation info here...
+
+```{r admix_cor_1, message=FALSE}
+source("R/plot_structure.R")
+```
+
+```{r admix_cor_2, eval = FALSE, message=FALSE}
+run_make_urban_admix_corr()
+```
+
+```{r admix_cor_3, echo = FALSE, message = FALSE}
+table_ <-
+  readr::read_csv("output/structure/urban_admix_cor.csv")
+table_ <- table_[,-7]
+knitr::kable(table_,
+             format = "simple",
+             caption = "Pearson’s product-moment correlation test results comparing percent impervious surface and extent of admixture.")
 ```
 
 ## AMOVA

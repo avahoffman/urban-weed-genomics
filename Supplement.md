@@ -59,13 +59,18 @@
     results](#continental-population-structure-structure-software-results)
   - [4.5 Continental population structure: Structure
     plots](#continental-population-structure-structure-plots)
-  - [4.6 Local: $F_{IS}$ - Homozygosity within
+  - [4.6 Validation of Structure results with
+    sNMF](#validation-of-structure-results-with-snmf)
+  - [4.7 Correlation between Urbanness and
+    Admixture](#correlation-between-urbanness-and-admixture)
+  - [4.8 AMOVA](#amova)
+  - [4.9 Local: $F_{IS}$ - Homozygosity within
     population](#local-f_is---homozygosity-within-population)
-  - [4.7 Local: $\rho$ - Pairwise
+  - [4.10 Local: $\rho$ - Pairwise
     comparison](#local-rho---pairwise-comparison)
-  - [4.8 Local: $\bar{r}_d$ - Linkage
+  - [4.11 Local: $\bar{r}_d$ - Linkage
     disequilibrium](#local-barr_d---linkage-disequilibrium)
-  - [4.9 Isolation by distance](#isolation-by-distance)
+  - [4.12 Isolation by distance](#isolation-by-distance)
 - [5 Appendix](#appendix-books)
   - [5.1 `SessionInfo()`](#sessioninfo)
   - [5.2 File Organization](#file-organization-bookmark_tabs)
@@ -1280,7 +1285,39 @@ source("R/plot_structure.R")
 make_structure_multi_plot()
 ```
 
-## 4.6 Local: $F_{IS}$ - Homozygosity within population
+## 4.6 Validation of Structure results with sNMF
+
+``` r
+source("R/sNMF.R")
+```
+
+## 4.7 Correlation between Urbanness and Admixture
+
+calculation info here…
+
+``` r
+source("R/plot_structure.R")
+```
+
+``` r
+run_make_urban_admix_corr()
+```
+
+``` r
+table_ <-
+  readr::read_csv("output/structure/urban_admix_cor.csv")
+knitr::kable(table_,
+             format = "simple",
+             caption = "Correlation test results comparing percent impervious surface and extent of admixture.")
+```
+
+## 4.8 AMOVA
+
+We performed heirarchical analysis of molecular variance (AMOVA; using
+GenoDrive) based on the Rho-statistics, which is based on a Ploidy
+independent Infinite Allele Model.
+
+## 4.9 Local: $F_{IS}$ - Homozygosity within population
 
 We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to
 calculate $F_{IS}$. This gives a good estimate of whether there are more
@@ -1301,7 +1338,7 @@ head(read.csv("output/population_stats/genodive_output_Fis.csv"))
     ## 5      DS         BA 0.208
     ## 6      DS         BO 0.252
 
-## 4.7 Local: $\rho$ - Pairwise comparison
+## 4.10 Local: $\rho$ - Pairwise comparison
 
 We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to
 calculate pairise $\rho$ (rho) among cities within species. We used the
@@ -1357,7 +1394,7 @@ read.csv("output/population_stats/rho_all.csv")
     ## 37      PX  TO       LA  0.009
     ## 38      PX  TO       MN  0.015
 
-## 4.8 Local: $\bar{r}_d$ - Linkage disequilibrium
+## 4.11 Local: $\bar{r}_d$ - Linkage disequilibrium
 
 We used `poppr::ia()` to calculate the standardized index of association
 of loci in the dataset ($\bar{r}_d$ or `rbarD`). We use the standardized
@@ -1434,7 +1471,7 @@ head(read.csv("output/population_stats/rbarD.csv"))
     ## 5  DS   BO 52 896.0906 0.001 0.3398873 0.001
     ## 6  DS   MN 81 578.2494 0.001 0.2192197 0.001
 
-## 4.9 Isolation by distance
+## 4.12 Isolation by distance
 
 We assessed isolation by distance by comparing genetic distance to
 geographic distance. Specifically, we took the traditional approach of
@@ -1541,32 +1578,32 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ##  [1] adegenet_2.1.10   ade4_1.7-22       ggh4x_0.2.5       here_1.0.1       
-    ##  [5] lubridate_1.9.2   forcats_1.0.0     purrr_1.0.1       tibble_3.2.1     
-    ##  [9] tidyverse_2.0.0   polysat_1.7-7     cowplot_1.1.1     viridis_0.6.3    
-    ## [13] viridisLite_0.4.2 raster_3.6-20     sp_1.6-1          stringr_1.5.0    
-    ## [17] readr_2.1.4       polyRAD_2.0.0     dplyr_1.1.2       magrittr_2.0.3   
-    ## [21] tidyr_1.3.0       ggplot2_3.4.2    
+    ##  [1] adegenet_2.1.10   ade4_1.7-22       LEA_3.12.2        ggh4x_0.2.6      
+    ##  [5] here_1.0.1        lubridate_1.9.3   forcats_1.0.0     purrr_1.0.2      
+    ##  [9] tibble_3.2.1      tidyverse_2.0.0   polysat_1.7-7     cowplot_1.1.1    
+    ## [13] viridis_0.6.4     viridisLite_0.4.2 raster_3.6-26     sp_2.1-1         
+    ## [17] stringr_1.5.0     readr_2.1.4       polyRAD_2.0.0     dplyr_1.1.3      
+    ## [21] magrittr_2.0.3    tidyr_1.3.0       ggplot2_3.4.4    
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] tidyselect_1.2.0  farver_2.1.1      fastmap_1.1.1     promises_1.2.0.1 
-    ##  [5] digest_0.6.31     timechange_0.2.0  mime_0.12         lifecycle_1.0.3  
-    ##  [9] cluster_2.1.4     ellipsis_0.3.2    terra_1.7-29      compiler_4.3.1   
-    ## [13] rlang_1.1.1       tools_4.3.1       igraph_1.5.0      utf8_1.2.3       
-    ## [17] yaml_2.3.7        knitr_1.43        labeling_0.4.2    bit_4.0.5        
-    ## [21] plyr_1.8.8        withr_2.5.0       grid_4.3.1        fansi_1.0.4      
+    ##  [1] tidyselect_1.2.0  farver_2.1.1      fastmap_1.1.1     promises_1.2.1   
+    ##  [5] digest_0.6.33     timechange_0.2.0  mime_0.12         lifecycle_1.0.3  
+    ##  [9] cluster_2.1.4     ellipsis_0.3.2    terra_1.7-55      compiler_4.3.1   
+    ## [13] rlang_1.1.1       tools_4.3.1       igraph_1.5.1      utf8_1.2.4       
+    ## [17] yaml_2.3.7        knitr_1.45        labeling_0.4.3    bit_4.0.5        
+    ## [21] plyr_1.8.9        withr_2.5.2       grid_4.3.1        fansi_1.0.5      
     ## [25] xtable_1.8-4      colorspace_2.1-0  scales_1.2.1      MASS_7.3-60      
-    ## [29] cli_3.6.1         rmarkdown_2.22    vegan_2.6-4       crayon_1.5.2     
-    ## [33] ragg_1.2.5        generics_0.1.3    rstudioapi_0.14   reshape2_1.4.4   
+    ## [29] cli_3.6.1         vegan_2.6-4       rmarkdown_2.25    crayon_1.5.2     
+    ## [33] ragg_1.2.6        generics_0.1.3    rstudioapi_0.15.0 reshape2_1.4.4   
     ## [37] tzdb_0.4.0        ape_5.7-1         splines_4.3.1     parallel_4.3.1   
-    ## [41] vctrs_0.6.2       Matrix_1.5-4.1    hms_1.1.3         bit64_4.0.5      
-    ## [45] seqinr_4.2-30     systemfonts_1.0.4 glue_1.6.2        codetools_0.2-19 
-    ## [49] stringi_1.7.12    gtable_0.3.3      later_1.3.1       munsell_0.5.0    
-    ## [53] pillar_1.9.0      htmltools_0.5.5   R6_2.5.1          textshaping_0.3.6
-    ## [57] rprojroot_2.0.3   vroom_1.6.3       evaluate_0.21     shiny_1.7.4      
-    ## [61] lattice_0.21-8    highr_0.10        httpuv_1.6.11     Rcpp_1.0.10      
-    ## [65] fastmatch_1.1-3   permute_0.9-7     gridExtra_2.3     nlme_3.1-162     
-    ## [69] mgcv_1.8-42       xfun_0.39         pkgconfig_2.0.3
+    ## [41] vctrs_0.6.4       Matrix_1.6-1.1    hms_1.1.3         bit64_4.0.5      
+    ## [45] seqinr_4.2-30     systemfonts_1.0.5 glue_1.6.2        codetools_0.2-19 
+    ## [49] stringi_1.7.12    gtable_0.3.4      later_1.3.1       munsell_0.5.0    
+    ## [53] pillar_1.9.0      htmltools_0.5.7   R6_2.5.1          textshaping_0.3.7
+    ## [57] rprojroot_2.0.3   vroom_1.6.4       evaluate_0.23     shiny_1.7.5.1    
+    ## [61] lattice_0.22-5    highr_0.10        httpuv_1.6.12     Rcpp_1.0.11      
+    ## [65] fastmatch_1.1-4   permute_0.9-7     gridExtra_2.3     nlme_3.1-163     
+    ## [69] mgcv_1.9-0        xfun_0.41         pkgconfig_2.0.3
 
 ## 5.2 File Organization
 
