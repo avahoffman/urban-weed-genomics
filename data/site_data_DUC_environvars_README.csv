@@ -1,0 +1,5 @@
+﻿Notes,
+*soiltemp:,avg soil temp for each month (typical day) at 2.5 cm below surface and at middle of day (12pm/noon)
+*airtemp:,avg air temp for each month (typical day) at 5 cm above surface and at middle of day (12pm/noon)
+*:,assumes 0% shade - will need to check on this and change according to site
+*:,assumes monthly average cloud clover for that area

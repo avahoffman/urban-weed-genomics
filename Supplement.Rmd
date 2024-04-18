@@ -987,19 +987,12 @@ source("R/isolation_by_distance.R")
 
 ```{r ibd_2, eval = FALSE, message=FALSE}
 extract_ibd_stats_and_plots()
-
-# Across all cities
-extract_ibd_stats_and_plots(TRUE, "BA")
-extract_ibd_stats_and_plots(TRUE, "PX")
-extract_ibd_stats_and_plots(TRUE, "LA")
-extract_ibd_stats_and_plots(TRUE, "BO")
-extract_ibd_stats_and_plots(TRUE, "MN")
 ```
 
 Here are the results of the mantel test:
 
 ```{r ibd_3, echo = FALSE, message=FALSE}
-table_ <- readr::read_csv("output/isolation-by-distance-mantel-test.csv")
+table_ <- readr::read_csv("output/IBD/isolation-by-distance-mantel-test.csv")
 knitr::kable(
   table_,
   format = "simple",
@@ -1007,14 +1000,14 @@ knitr::kable(
 )
 ```
 
-We also repeated this within city. Code for generating stats from the Mantel test and creating network plots can be found in the source code below.
+We also repeated this within city. Code for generating stats from the Mantel test can be found in the source code below.
 
 ```{r ibd_4, eval = FALSE}
-source("R/isolation_by_distance_by_city.R")
+source("R/isolation_by_distance.R")
 ```
 
 ```{r ibd_5, echo = FALSE, message=FALSE}
-table_ <- readr::read_csv("output/isolation-by-distance-by-city-mantel-test.csv")
+table_ <- readr::read_csv("output/IBD/isolation-by-distance-within-city-mantel-test.csv")
 knitr::kable(
   table_,
   format = "simple",
@@ -1022,12 +1015,42 @@ knitr::kable(
 )
 ```
 
+## Isolation by environment
 
+```{r ibe_1, message=FALSE}
+source("R/isolation_by_environment.R")
+```
 
+```{r ibd_2, eval = FALSE, message=FALSE}
+# Run for "nlcd_urban_pct" which is the percent urban cover of a site within city.
+extract_ibe_stats_and_plots()
 
+# Across all cities
+extract_ibe_stats_and_plots(TRUE, "BA")
+extract_ibe_stats_and_plots(TRUE, "PX")
+extract_ibe_stats_and_plots(TRUE, "LA")
+extract_ibe_stats_and_plots(TRUE, "BO")
+extract_ibe_stats_and_plots(TRUE, "MN")
+```
 
+```{r ibd_3, eval = FALSE, message=FALSE}
+# Run for other vars..
+extract_ibe_stats_and_plots(env_var_to_use = "distance_to_city_center_km")
+extract_ibe_stats_and_plots(env_var_to_use = "soiltemp_2.5cm_Jul_12pm")
+extract_ibe_stats_and_plots(env_var_to_use = "airtemp_1.2m_Jul_12pm")
+extract_ibe_stats_and_plots(env_var_to_use = "soiltemp_2.5cm_Jun_12pm")
+extract_ibe_stats_and_plots(env_var_to_use = "airtemp_1.2m_Jun_12pm")
+extract_ibe_stats_and_plots(env_var_to_use = "soiltemp_2.5cm_Aug_12pm")
+extract_ibe_stats_and_plots(env_var_to_use = "airtemp_1.2m_Aug_12pm")
+extract_ibe_stats_and_plots(env_var_to_use = "RH_1.2m_Jul_12pm")
 
-
+extract_ibe_stats_and_plots(env_var_to_use = "airtemp_1.2m_Jul_12pm")
+extract_ibe_stats_and_plots(TRUE, "BA", env_var_to_use = "airtemp_1.2m_Jul_12pm")
+extract_ibe_stats_and_plots(TRUE, "PX", env_var_to_use = "airtemp_1.2m_Jul_12pm")
+extract_ibe_stats_and_plots(TRUE, "LA", env_var_to_use = "airtemp_1.2m_Jul_12pm")
+extract_ibe_stats_and_plots(TRUE, "BO", env_var_to_use = "airtemp_1.2m_Jul_12pm")
+extract_ibe_stats_and_plots(TRUE, "MN", env_var_to_use = "airtemp_1.2m_Jul_12pm")
+```
 
 
 
