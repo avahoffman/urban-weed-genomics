@@ -865,16 +865,14 @@ LS: K=3
 PA: K=4  
 TO: K=3  
 
-<!-- We ran all species using a naive approach (not using prior information) with  -->
-<!-- $K={1,2,3,4,5}$ (`MAXPOPS` argument). Structure returns a value $lnPr(X|K)$,  -->
-<!-- shown below. Greater values indicate a greater relative likelihood. -->
-
-<!-- ```{r struct_k_2, message=FALSE} -->
-<!-- # This file contains output from various K from Structure.. -->
-<!-- read_csv("output/structure/structure_k_Pr.csv") -->
-<!-- ``` -->
+```{r struct_k_2, message=FALSE, eval=FALSE}
+# This file contains output from various K from Structure..
+read_csv("output/structure/structure_k_Pr.csv")
+```
 
 ## Continental population structure: Structure plots
+
+The code below generates plots for Structure results.
 
 ```{r plot_struct_1, message=FALSE}
 source("R/plot_structure.R")
@@ -884,15 +882,9 @@ source("R/plot_structure.R")
 make_structure_multi_plot()
 ```
 
-## Validation of Structure results with sNMF
-
-```{r snmf_1, message=FALSE}
-source("R/sNMF.R")
-```
-
 ## Correlation between Urbanness and Admixture
 
-calculation info here...
+We tested the relationship between urbanness and the extent of admixture by running a correlation test between percent impervious surface and $1 - sd(K_i)$, where $sd(K_i)$ represents the standard deviation of the cluster assignment values for any given individual. We used the `cor.test()` function.
 
 ```{r admix_cor_1, message=FALSE}
 source("R/plot_structure.R")
@@ -909,6 +901,19 @@ table_ <- table_[,-7]
 knitr::kable(table_,
              format = "simple",
              caption = "Pearson’s product-moment correlation test results comparing percent impervious surface and extent of admixture.")
+```
+
+## Validation of Structure results with sNMF
+
+We ran sNMF as an alternative to Structure to validate the results. We coerced all polyploid data to diploid data to make the file types compatible with the sNMF function in R. The snmf() function computes an entropy criterion that evaluates the quality of fit of the statistical model to the data by using a cross-validation technique. We plotted the cross-entropy criterion for K=[2:10] for all species. Using the best K, we then selected the best of 10 runs in each K using the `which.min()` function.
+
+```{r snmf_1, message=FALSE}
+source("R/sNMF.R")
+```
+
+```{r snmf_2, message=FALSE, fig.cap = "Ancestry coefficients obtained using `snmf()`", fig.height=9}
+# Run sNMF if not done already; generate figure
+do_all_sNMF()
 ```
 
 ## AMOVA
@@ -1016,6 +1021,29 @@ knitr::kable(
   caption = "Statistics from running 9999 permutations via mantel test, limited to within city."
 )
 ```
+
+
+
+
+
+
+
+
+
+
+
+<!-- #### -->
+<!-- #### -->
+<!-- #### -->
+<!-- #### -->
+<!-- #### -->
+<!-- #### -->
+<!-- #### -->
+<!-- #### -->
+<!-- #### -->
+<!-- #### -->
+<!-- #### -->
+<!-- #### -->
 
 # Appendix {#appendix-books}
 
