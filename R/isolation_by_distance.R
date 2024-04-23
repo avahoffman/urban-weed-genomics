@@ -54,6 +54,7 @@ do_ibd <- function(spp_) {
   
   # Run monte-carlo mantel test
   message("Running mantel test...")
+  set.seed(444)
   ibd <- mantel.randtest(Dgen, Dgeo, nrepet = 9999)
   
   # subsetting so that the mantel test can be run by city - the matrix values themselves don't change.
@@ -69,6 +70,7 @@ do_ibd <- function(spp_) {
       Dgen_city <- dist.genpop(gen_genpop_city, method = 2)
       Dgeo_city <- dist(total_geos)
       
+      set.seed(444)
       ibd_city <- mantel.randtest(Dgen_city, Dgeo_city, nrepet = 9999)
       ibd_results[[levels(cities_)[city_i]]] <- ibd_city
     } else {
@@ -185,7 +187,7 @@ extract_ibd_stats_and_plots <- function() {
 
   gg <- ggplot(data = df, aes(Dgeo, Dgen)) +
     geom_density_2d_filled() +
-    #geom_text(x = max(df$Dgeo) * 0.75, y = max(df$Dgen) * 0.2, aes(label = paste0("r = ", r)), data = mantel_stat_lab) +
+    geom_text(x = max(df$Dgeo) * 0.75, y = max(df$Dgen) * 0.2, aes(label = paste0("r = ", r)), data = mantel_stat_lab) +
     facet_wrap(~spp) +
     geom_point(shape = 1, alpha = 0.1) +
     scale_fill_manual(values = c("white",  rev(viridisLite::magma(n = 13)))) +

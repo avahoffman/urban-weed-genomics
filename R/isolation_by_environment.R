@@ -52,6 +52,7 @@ do_ibe <- function(spp_, env_var_to_use) {
   
   # Run monte-carlo mantel test
   message("Running mantel test...")
+  set.seed(444)
   ibe <- mantel.randtest(Dgen, Denv, nrepet = 9999)
   
   # subsetting so that the mantel test can be run by city - the matrix values themselves don't change.
@@ -67,6 +68,7 @@ do_ibe <- function(spp_, env_var_to_use) {
       Dgen_city <- dist.genpop(gen_genpop_city, method = 2)
       Denv_city <- dist(total_envs)
       
+      set.seed(444)
       ibe_city <- mantel.randtest(Dgen_city, Denv_city, nrepet = 9999)
       ibe_results[[levels(cities_)[city_i]]] <- ibe_city
     } else {
