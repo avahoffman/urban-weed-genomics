@@ -83,9 +83,16 @@ do_ibd <- function(spp_) {
 }
 
 make_matrix_df <- function(spp_, Dgeo, Dgen) {
-  Dgeo_df <- reshape2::melt(as.matrix(Dgeo)) %>% rename(Dgeo = value)
-  Dgen_df <-
-    reshape2::melt(as.matrix(Dgen)) %>% rename(Dgen = value)
+  Dgeo_df <- 
+    reshape2::melt(as.matrix(Dgeo)) %>% 
+    filter(as.numeric(Var1) > as.numeric(Var2)) %>% 
+    rename(Dgeo = value)
+  
+  Dgen_df <- 
+    reshape2::melt(as.matrix(Dgen)) %>% 
+    filter(as.numeric(Var1) > as.numeric(Var2)) %>% 
+    rename(Dgen = value)
+  
   df <- full_join(Dgeo_df, Dgen_df)
   df$spp <- spp_
   
@@ -178,13 +185,13 @@ extract_ibd_stats_and_plots <- function() {
 
   gg <- ggplot(data = df, aes(Dgeo, Dgen)) +
     geom_density_2d_filled() +
-    geom_text(x = max(df$Dgeo) * 0.75, y = max(df$Dgen) * 0.1, aes(label = paste0("r = ", r)), data = mantel_stat_lab) +
+    #geom_text(x = max(df$Dgeo) * 0.75, y = max(df$Dgen) * 0.2, aes(label = paste0("r = ", r)), data = mantel_stat_lab) +
     facet_wrap(~spp) +
     geom_point(shape = 1, alpha = 0.1) +
     scale_fill_manual(values = c("white",  rev(viridisLite::magma(n = 13)))) +
     theme_classic() +
     theme(legend.position = "none") +
-    geom_smooth(formula = y~x, se = FALSE, linetype = 2) +
+    geom_smooth(formula = y~x, se = FALSE, color = "red") +
     labs(
       x = "Geographic distance",
       y = "Genetic distance"
@@ -192,7 +199,7 @@ extract_ibd_stats_and_plots <- function() {
 
   gg
    
-  ggsave(paste0("figures/IBD/isolation_by_distance_.png"),
+  ggsave(paste0("figures/IBD/isolation_by_distance.png"),
          dpi = "print",
          height = 5,
          width = 8,
