@@ -1024,32 +1024,11 @@ source("R/isolation_by_environment.R")
 ```{r ibd_2, eval = FALSE, message=FALSE}
 # Run for "nlcd_urban_pct" which is the percent urban cover of a site within city.
 extract_ibe_stats_and_plots()
-
-# Across all cities
-extract_ibe_stats_and_plots(TRUE, "BA")
-extract_ibe_stats_and_plots(TRUE, "PX")
-extract_ibe_stats_and_plots(TRUE, "LA")
-extract_ibe_stats_and_plots(TRUE, "BO")
-extract_ibe_stats_and_plots(TRUE, "MN")
-```
-
-```{r ibd_3, eval = FALSE, message=FALSE}
-# Run for other vars..
 extract_ibe_stats_and_plots(env_var_to_use = "distance_to_city_center_km")
 extract_ibe_stats_and_plots(env_var_to_use = "soiltemp_2.5cm_Jul_12pm")
-extract_ibe_stats_and_plots(env_var_to_use = "airtemp_1.2m_Jul_12pm")
-extract_ibe_stats_and_plots(env_var_to_use = "soiltemp_2.5cm_Jun_12pm")
-extract_ibe_stats_and_plots(env_var_to_use = "airtemp_1.2m_Jun_12pm")
-extract_ibe_stats_and_plots(env_var_to_use = "soiltemp_2.5cm_Aug_12pm")
-extract_ibe_stats_and_plots(env_var_to_use = "airtemp_1.2m_Aug_12pm")
-extract_ibe_stats_and_plots(env_var_to_use = "RH_1.2m_Jul_12pm")
+extract_ibe_stats_and_plots(env_var_to_use = "soiltemp_2.5cm_Apr_12pm")
 
-extract_ibe_stats_and_plots(env_var_to_use = "airtemp_1.2m_Jul_12pm")
-extract_ibe_stats_and_plots(TRUE, "BA", env_var_to_use = "airtemp_1.2m_Jul_12pm")
-extract_ibe_stats_and_plots(TRUE, "PX", env_var_to_use = "airtemp_1.2m_Jul_12pm")
-extract_ibe_stats_and_plots(TRUE, "LA", env_var_to_use = "airtemp_1.2m_Jul_12pm")
-extract_ibe_stats_and_plots(TRUE, "BO", env_var_to_use = "airtemp_1.2m_Jul_12pm")
-extract_ibe_stats_and_plots(TRUE, "MN", env_var_to_use = "airtemp_1.2m_Jul_12pm")
+ibe_mega_plot()
 ```
 
 
