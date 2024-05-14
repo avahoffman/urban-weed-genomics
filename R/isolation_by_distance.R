@@ -241,7 +241,17 @@ extract_ibd_stats_and_plots <- function() {
   
   out <- data.frame(rbind(CD_BA, CD_LA, CD_PX, DS_BA, DS_BO, DS_MN, DS_PX, EC_BA, EC_LA, EC_PX, 
                           LS_BA, LS_BO, LS_LA, LS_MN, LS_PX, PA_BA, PA_BO, PA_LA, PA_PX, TO_BA, TO_BO, TO_LA, TO_MN, TO_PX))
-  out$padj <- p.adjust(out$V7, method = "BH")
+  
+  # Do p-value adjustment for however many cities, not across species since they are independent.
+  
+  out$padj <- c(
+    p.adjust(out$V7[1:3], method = "BH"), # CD
+    p.adjust(out$V7[4:7], method = "BH"), # DS
+    p.adjust(out$V7[8:10], method = "BH"), # EC
+    p.adjust(out$V7[11:15], method = "BH"), # LS
+    p.adjust(out$V7[16:19], method = "BH"), # PA
+    p.adjust(out$V7[20:24], method = "BH") # TO
+  )
   out$spp <- c(
     rep("Bermuda grass (CD)", 3), 
     rep("crabgrass (DS)", 4), 
