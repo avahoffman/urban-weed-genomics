@@ -1017,12 +1017,31 @@ knitr::kable(
 
 ## Isolation by environment
 
+### Environmental data
+
+Environmental variables include the monthly averages in the middle of the day for:
+
+- air temperature at 5cm above ground
+- air temperature at 1.2m above ground
+- soil temperature at 2.5cm below ground
+- RH (relative humidity) at 5cm above ground
+- RH at 1.2m above ground
+
+Variables were extracted from historic datasets and modeled using a microclimate model. More information can be found on the [NicheMapR website](https://mrke.github.io/) (how the model works, what variables can be manipulated and what you can model, vignettes for running models in R). 
+
+This method was chosen because it takes data from global datasets (you can use both historic and current or pick specific years) but then accounts for site-specific variables (we can change the % shade, the slope or aspect of the landscape, and it considers elevation, average cloud cover, etc.). [Here’s the list](https://mrke.github.io/models/MicroClimate-Models) of all the different models/datasets we’re able to can pull from.. It’s meant for mechanistic niche modeling.
+
+Variables in the file `site_data_DUC_environvars.csv` are all for the monthly averages at noon (12pm - hottest part of the day!) and are extreme. In other words, they are maximums. 
+
+### IBE analysis
+
 ```{r ibe_1, message=FALSE}
 source("R/isolation_by_environment.R")
 ```
 
-```{r ibd_2, eval = FALSE, message=FALSE}
-# Run for "nlcd_urban_pct" which is the percent urban cover of a site within city.
+```{r ibe_2, eval = FALSE, message=FALSE}
+# Default runs for "nlcd_urban_pct" which is the percent urban cover of a site within city.
+# These are the four environmental variables mentioned in the main manuscript
 extract_ibe_stats_and_plots()
 extract_ibe_stats_and_plots(env_var_to_use = "distance_to_city_center_km")
 extract_ibe_stats_and_plots(env_var_to_use = "soiltemp_2.5cm_Jul_12pm")
@@ -1031,7 +1050,20 @@ extract_ibe_stats_and_plots(env_var_to_use = "soiltemp_2.5cm_Apr_12pm")
 ibe_mega_plot()
 ```
 
+We also repeated this within city. Code for generating stats from the Mantel test can be found in the source code below.
 
+```{r ibe_3, eval = FALSE}
+source("R/isolation_by_environment.R")
+```
+
+```{r ib3_4, echo = FALSE, message=FALSE}
+table_ <- readr::read_csv("output/IBD/isolation-by-distance-within-city-mantel-test.csv")
+knitr::kable(
+  table_,
+  format = "simple",
+  caption = "Statistics from running 9999 permutations via mantel test, limited to within city."
+)
+```
 
 
 <!-- #### -->

@@ -59,10 +59,10 @@
     results](#continental-population-structure-structure-software-results)
   - [4.5 Continental population structure: Structure
     plots](#continental-population-structure-structure-plots)
-  - [4.6 Validation of Structure results with
-    sNMF](#validation-of-structure-results-with-snmf)
-  - [4.7 Correlation between Urbanness and
+  - [4.6 Correlation between Urbanness and
     Admixture](#correlation-between-urbanness-and-admixture)
+  - [4.7 Validation of Structure results with
+    sNMF](#validation-of-structure-results-with-snmf)
   - [4.8 AMOVA](#amova)
   - [4.9 Local: $F_{IS}$ - Homozygosity within
     population](#local-f_is---homozygosity-within-population)
@@ -71,6 +71,9 @@
   - [4.11 Local: $\bar{r}_d$ - Linkage
     disequilibrium](#local-barr_d---linkage-disequilibrium)
   - [4.12 Isolation by distance](#isolation-by-distance)
+  - [4.13 Isolation by environment](#isolation-by-environment)
+    - [4.13.1 Environmental data](#environmental-data)
+    - [4.13.2 IBE analysis](#ibe-analysis)
 - [5 Appendix](#appendix-books)
   - [5.1 `SessionInfo()`](#sessioninfo)
   - [5.2 File Organization](#file-organization-bookmark_tabs)
@@ -1265,17 +1268,21 @@ choose the optimal K using the Delta-K method (see
 
 The results were:
 
-CD: K=3 DS: K=3 EC: K=2 LS: K=3 PA: K=4 TO: K=3
+CD: K=3  
+DS: K=3  
+EC: K=2  
+LS: K=3  
+PA: K=4  
+TO: K=3
 
-<!-- We ran all species using a naive approach (not using prior information) with  -->
-<!-- $K={1,2,3,4,5}$ (`MAXPOPS` argument). Structure returns a value $lnPr(X|K)$,  -->
-<!-- shown below. Greater values indicate a greater relative likelihood. -->
-<!-- ```{r struct_k_2, message=FALSE} -->
-<!-- # This file contains output from various K from Structure.. -->
-<!-- read_csv("output/structure/structure_k_Pr.csv") -->
-<!-- ``` -->
+``` r
+# This file contains output from various K from Structure..
+read_csv("output/structure/structure_k_Pr.csv")
+```
 
 ## 4.5 Continental population structure: Structure plots
+
+The code below generates plots for Structure results.
 
 ``` r
 source("R/plot_structure.R")
@@ -1285,15 +1292,13 @@ source("R/plot_structure.R")
 make_structure_multi_plot()
 ```
 
-## 4.6 Validation of Structure results with sNMF
+## 4.6 Correlation between Urbanness and Admixture
 
-``` r
-source("R/sNMF.R")
-```
-
-## 4.7 Correlation between Urbanness and Admixture
-
-calculation info here…
+We tested the relationship between urbanness and the extent of admixture
+by running a correlation test between percent impervious surface and
+$1 - sd(K_i)$, where $sd(K_i)$ represents the standard deviation of the
+cluster assignment values for any given individual. We used the
+`cor.test()` function.
 
 ``` r
 source("R/plot_structure.R")
@@ -1303,13 +1308,44 @@ source("R/plot_structure.R")
 run_make_urban_admix_corr()
 ```
 
+|   estimate |  statistic |   p.value | parameter |   conf.low | conf.high | alternative |
+|-----------:|-----------:|----------:|----------:|-----------:|----------:|:------------|
+| -0.1107532 | -1.5279720 | 0.1282002 |       188 | -0.2491780 | 0.0321063 | two.sided   |
+| -0.0460642 | -0.6901589 | 0.4908087 |       224 | -0.1755096 | 0.0849468 | two.sided   |
+| -0.1165779 | -1.2084826 | 0.2295507 |       106 | -0.2989656 | 0.0740269 | two.sided   |
+| -0.0569564 | -0.7780453 | 0.4375309 |       186 | -0.1984491 | 0.0868618 | two.sided   |
+| -0.0498366 | -0.6731691 | 0.5016936 |       182 | -0.1931055 | 0.0955130 | two.sided   |
+|  0.0285504 |  0.4443212 | 0.6572074 |       242 | -0.0973846 | 0.1535855 | two.sided   |
+
+Pearson’s product-moment correlation test results comparing percent
+impervious surface and extent of admixture.
+
+## 4.7 Validation of Structure results with sNMF
+
+We ran sNMF as an alternative to Structure to validate the results. We
+coerced all polyploid data to diploid data to make the file types
+compatible with the sNMF function in R. The snmf() function computes an
+entropy criterion that evaluates the quality of fit of the statistical
+model to the data by using a cross-validation technique. We plotted the
+cross-entropy criterion for K=\[2:10\] for all species. Using the best
+K, we then selected the best of 10 runs in each K using the
+`which.min()` function.
+
 ``` r
-table_ <-
-  readr::read_csv("output/structure/urban_admix_cor.csv")
-knitr::kable(table_,
-             format = "simple",
-             caption = "Correlation test results comparing percent impervious surface and extent of admixture.")
+source("R/sNMF.R")
 ```
+
+``` r
+# Run sNMF if not done already; generate figure
+do_all_sNMF()
+```
+
+<figure>
+<img src="Supplement_files/figure-gfm/snmf_2-1.png"
+alt="Ancestry coefficients obtained using snmf()" />
+<figcaption aria-hidden="true">Ancestry coefficients obtained using
+<code>snmf()</code></figcaption>
+</figure>
 
 ## 4.8 AMOVA
 
@@ -1492,65 +1528,156 @@ source("R/isolation_by_distance.R")
 
 ``` r
 extract_ibd_stats_and_plots()
-
-# Across all cities
-extract_ibd_stats_and_plots(TRUE, "BA")
-extract_ibd_stats_and_plots(TRUE, "PX")
-extract_ibd_stats_and_plots(TRUE, "LA")
-extract_ibd_stats_and_plots(TRUE, "BO")
-extract_ibd_stats_and_plots(TRUE, "MN")
 ```
 
 Here are the results of the mantel test:
 
 | Species              | Observation | Hypothesis | Reps |   Std.Obs | Expectation |  Variance | p-value |
 |:---------------------|------------:|:-----------|-----:|----------:|------------:|----------:|--------:|
-| Bermuda grass (CD)   |   0.4476430 | greater    | 9999 | 12.305181 |  -0.0005079 | 0.0013264 |   1e-04 |
-| crabgrass (DS)       |   0.3299992 | greater    | 9999 |  8.314767 |  -0.0001454 | 0.0015766 |   1e-04 |
-| horseweed (EC)       |   0.4028339 | greater    | 9999 |  9.109720 |   0.0000800 | 0.0019547 |   1e-04 |
-| prickly lettuce (LS) |   0.1939607 | greater    | 9999 |  7.705054 |   0.0000806 | 0.0006332 |   1e-04 |
-| bluegrass (PA)       |   0.2821562 | greater    | 9999 |  8.227910 |  -0.0001475 | 0.0011772 |   2e-04 |
-| dandelion (TO)       |   0.3101457 | greater    | 9999 |  7.283013 |   0.0000965 | 0.0018123 |   1e-04 |
+| Bermuda grass (CD)   |   0.4476430 | greater    | 9999 | 11.782345 |   0.0004658 | 0.0014404 |   1e-04 |
+| crabgrass (DS)       |   0.3299992 | greater    | 9999 |  8.210204 |   0.0009116 | 0.0016066 |   1e-04 |
+| horseweed (EC)       |   0.4028339 | greater    | 9999 |  9.240682 |  -0.0000991 | 0.0019013 |   1e-04 |
+| prickly lettuce (LS) |   0.1939607 | greater    | 9999 |  7.794608 |  -0.0000002 | 0.0006192 |   1e-04 |
+| bluegrass (PA)       |   0.2821562 | greater    | 9999 |  8.264578 |  -0.0006003 | 0.0011705 |   1e-04 |
+| dandelion (TO)       |   0.3101457 | greater    | 9999 |  7.250584 |  -0.0000930 | 0.0018308 |   1e-04 |
 
 Statistics from running 9999 permutations via mantel test.
 
 We also repeated this within city. Code for generating stats from the
-Mantel test and creating network plots can be found in the source code
-below.
+Mantel test can be found in the source code below.
 
 ``` r
-source("R/isolation_by_distance_by_city.R")
+source("R/isolation_by_distance.R")
 ```
 
-| Observation | Hypothesis | Reps |    Std.Obs | Expectation |  Variance | p.value | spp | city |
-|------------:|:-----------|-----:|-----------:|------------:|----------:|--------:|:----|:-----|
-|   0.0772829 | greater    | 9999 |  0.4913316 |   0.0017290 | 0.0236464 |  0.2617 | CD  | BA   |
-|   0.0233043 | greater    | 9999 |  0.1719811 |  -0.0022465 | 0.0220723 |  0.2689 | CD  | LA   |
-|   0.0959610 | greater    | 9999 |  0.7582701 |   0.0005926 | 0.0158183 |  0.2162 | CD  | PX   |
-|  -0.0399862 | greater    | 9999 | -0.3088894 |  -0.0002184 | 0.0165752 |  0.5243 | DS  | BA   |
-|  -0.0958390 | greater    | 9999 | -0.5390954 |   0.0005071 | 0.0319402 |  0.6478 | DS  | BO   |
-|  -0.0920704 | greater    | 9999 | -0.5427566 |  -0.0007803 | 0.0282903 |  0.6489 | DS  | MN   |
-|  -0.1214396 | greater    | 9999 | -0.5656858 |  -0.0008503 | 0.0454430 |  0.6200 | DS  | PX   |
-|  -0.1086321 | greater    | 9999 | -0.5396215 |  -0.0012475 | 0.0396009 |  0.6214 | EC  | BA   |
-|   0.0192066 | greater    | 9999 |  0.1302304 |  -0.0012068 | 0.0245701 |  0.4168 | EC  | LA   |
-|  -0.2059353 | greater    | 9999 | -1.1259800 |   0.0004167 | 0.0335858 |  0.9493 | EC  | PX   |
-|   0.1417600 | greater    | 9999 |  0.5926773 |  -0.0045816 | 0.0609676 |  0.3399 | LS  | BA   |
-|  -0.1144810 | greater    | 9999 | -0.7579351 |   0.0000753 | 0.0228441 |  0.7559 | LS  | BO   |
-|   0.1899000 | greater    | 9999 |  1.2753662 |  -0.0001752 | 0.0222117 |  0.0747 | LS  | LA   |
-|   0.0093208 | greater    | 9999 |  0.0431229 |   0.0015094 | 0.0328129 |  0.3584 | LS  | MN   |
-|  -0.1887409 | greater    | 9999 | -0.8855957 |   0.0003189 | 0.0455751 |  0.8656 | LS  | PX   |
-|   0.0177684 | greater    | 9999 |  0.1524460 |  -0.0006379 | 0.0145782 |  0.3930 | PA  | BA   |
-|  -0.0932886 | greater    | 9999 | -0.8697657 |  -0.0004552 | 0.0113921 |  0.8896 | PA  | BO   |
-|  -0.0178809 | greater    | 9999 | -0.0896877 |  -0.0014221 | 0.0336767 |  0.3976 | PA  | LA   |
-|   0.3215745 | greater    | 9999 |  1.6008704 |   0.0010999 | 0.0400751 |  0.0705 | PA  | PX   |
-|  -0.1141184 | greater    | 9999 | -0.6790755 |  -0.0003391 | 0.0280731 |  0.8038 | TO  | BA   |
-|  -0.1540646 | greater    | 9999 | -0.8420713 |  -0.0013214 | 0.0329023 |  0.8708 | TO  | BO   |
-|   0.1380763 | greater    | 9999 |  0.7578447 |   0.0005027 | 0.0329541 |  0.2443 | TO  | LA   |
-|   0.0443237 | greater    | 9999 |  0.7413905 |  -0.0002560 | 0.0036156 |  0.2118 | TO  | MN   |
-|  -0.1136297 | greater    | 9999 | -0.5078763 |  -0.0002439 | 0.0498427 |  0.6079 | TO  | PX   |
+| Species              | Observation | Hypothesis | Reps |    Std.Obs | Expectation |  Variance | p-value | Adjusted p-value | City |
+|:---------------------|------------:|:-----------|-----:|-----------:|------------:|----------:|--------:|-----------------:|:-----|
+| Bermuda grass (CD)   |   0.2945315 | greater    | 9999 |  1.9546056 |  -0.0029856 | 0.0231689 |  0.0436 |        0.3180000 | BA   |
+| Bermuda grass (CD)   |  -0.1400172 | greater    | 9999 | -0.8703840 |  -0.0020079 | 0.0251417 |  0.7907 |        0.9405714 | LA   |
+| Bermuda grass (CD)   |   0.3063556 | greater    | 9999 |  2.5384776 |   0.0026243 | 0.0143164 |  0.0128 |        0.3072000 | PX   |
+| crabgrass (DS)       |   0.1864927 | greater    | 9999 |  1.3126728 |   0.0012624 | 0.0199118 |  0.1142 |        0.4568000 | BA   |
+| crabgrass (DS)       |  -0.1472240 | greater    | 9999 | -0.9380806 |   0.0012481 | 0.0250501 |  0.8230 |        0.9405714 | BO   |
+| crabgrass (DS)       |   0.0756460 | greater    | 9999 |  0.5534710 |  -0.0004163 | 0.0188864 |  0.2807 |        0.7984000 | MN   |
+| crabgrass (DS)       |  -0.2825720 | greater    | 9999 | -1.2882736 |  -0.0015179 | 0.0475953 |  0.9188 |        0.9748174 | PX   |
+| horseweed (EC)       |   0.1702378 | greater    | 9999 |  0.9531766 |   0.0005356 | 0.0316977 |  0.1752 |        0.6006857 | BA   |
+| horseweed (EC)       |  -0.1334229 | greater    | 9999 | -0.8704015 |  -0.0005180 | 0.0233154 |  0.8025 |        0.9405714 | LA   |
+| horseweed (EC)       |   0.0106386 | greater    | 9999 |  0.0858594 |  -0.0031786 | 0.0258977 |  0.4472 |        0.8377600 | PX   |
+| prickly lettuce (LS) |   0.1456205 | greater    | 9999 |  0.5659122 |   0.0018806 | 0.0645144 |  0.2994 |        0.7984000 | BA   |
+| prickly lettuce (LS) |  -0.0725099 | greater    | 9999 | -0.4629508 |  -0.0004308 | 0.0242409 |  0.6496 |        0.9405714 | BO   |
+| prickly lettuce (LS) |   0.4413406 | greater    | 9999 |  2.2995233 |   0.0001766 | 0.0368065 |  0.0530 |        0.3180000 | LA   |
+| prickly lettuce (LS) |   0.0845050 | greater    | 9999 |  0.4603606 |  -0.0014208 | 0.0348378 |  0.3343 |        0.8023200 | MN   |
+| prickly lettuce (LS) |  -0.1679338 | greater    | 9999 | -0.8275834 |   0.0000745 | 0.0412133 |  0.7684 |        0.9405714 | PX   |
+| bluegrass (PA)       |  -0.0149195 | greater    | 9999 | -0.1337558 |   0.0007146 | 0.0136622 |  0.5099 |        0.8377600 | BA   |
+| bluegrass (PA)       |  -0.2168452 | greater    | 9999 | -1.6352688 |   0.0023646 | 0.0179697 |  0.9988 |        0.9988000 | BO   |
+| bluegrass (PA)       |  -0.0431048 | greater    | 9999 | -0.2310866 |   0.0020106 | 0.0381153 |  0.5236 |        0.8377600 | LA   |
+| bluegrass (PA)       |   0.3830110 | greater    | 9999 |  1.7229224 |  -0.0029655 | 0.0501869 |  0.0286 |        0.3180000 | PX   |
+| dandelion (TO)       |  -0.0020598 | greater    | 9999 | -0.0233426 |   0.0016880 | 0.0257782 |  0.4539 |        0.8377600 | BA   |
+| dandelion (TO)       |  -0.1937755 | greater    | 9999 | -1.2563379 |  -0.0007760 | 0.0235993 |  0.9342 |        0.9748174 | BO   |
+| dandelion (TO)       |   0.1682753 | greater    | 9999 |  1.2689800 |   0.0003895 | 0.0175032 |  0.1023 |        0.4568000 | LA   |
+| dandelion (TO)       |   0.0036501 | greater    | 9999 |  0.0644593 |  -0.0009095 | 0.0050035 |  0.4581 |        0.8377600 | MN   |
+| dandelion (TO)       |  -0.1823350 | greater    | 9999 | -0.7473653 |   0.0000244 | 0.0595375 |  0.7378 |        0.9405714 | PX   |
 
 Statistics from running 9999 permutations via mantel test, limited to
 within city.
+
+## 4.13 Isolation by environment
+
+### 4.13.1 Environmental data
+
+Environmental variables include the monthly averages in the middle of
+the day for:
+
+- air temperature at 5cm above ground
+- air temperature at 1.2m above ground
+- soil temperature at 2.5cm below ground
+- RH (relative humidity) at 5cm above ground
+- RH at 1.2m above ground
+
+Variables were extracted from historic datasets and modeled using a
+microclimate model. More information can be found on the [NicheMapR
+website](https://mrke.github.io/) (how the model works, what variables
+can be manipulated and what you can model, vignettes for running models
+in R).
+
+This method was chosen because it takes data from global datasets (you
+can use both historic and current or pick specific years) but then
+accounts for site-specific variables (we can change the % shade, the
+slope or aspect of the landscape, and it considers elevation, average
+cloud cover, etc.). [Here’s the
+list](https://mrke.github.io/models/MicroClimate-Models) of all the
+different models/datasets we’re able to can pull from.. It’s meant for
+mechanistic niche modeling.
+
+Variables in the file `site_data_DUC_environvars.csv` are all for the
+monthly averages at noon (12pm - hottest part of the day!) and are
+extreme. In other words, they are maximums.
+
+### 4.13.2 IBE analysis
+
+``` r
+source("R/isolation_by_environment.R")
+```
+
+``` r
+# Default runs for "nlcd_urban_pct" which is the percent urban cover of a site within city.
+# These are the four environmental variables mentioned in the main manuscript
+extract_ibe_stats_and_plots()
+extract_ibe_stats_and_plots(env_var_to_use = "distance_to_city_center_km")
+extract_ibe_stats_and_plots(env_var_to_use = "soiltemp_2.5cm_Jul_12pm")
+extract_ibe_stats_and_plots(env_var_to_use = "soiltemp_2.5cm_Apr_12pm")
+
+ibe_mega_plot()
+```
+
+We also repeated this within city. Code for generating stats from the
+Mantel test can be found in the source code below.
+
+``` r
+source("R/isolation_by_environment.R")
+```
+
+| Species              | Observation | Hypothesis | Reps |    Std.Obs | Expectation |  Variance | p-value | Adjusted p-value | City |
+|:---------------------|------------:|:-----------|-----:|-----------:|------------:|----------:|--------:|-----------------:|:-----|
+| Bermuda grass (CD)   |   0.2945315 | greater    | 9999 |  1.9546056 |  -0.0029856 | 0.0231689 |  0.0436 |        0.3180000 | BA   |
+| Bermuda grass (CD)   |  -0.1400172 | greater    | 9999 | -0.8703840 |  -0.0020079 | 0.0251417 |  0.7907 |        0.9405714 | LA   |
+| Bermuda grass (CD)   |   0.3063556 | greater    | 9999 |  2.5384776 |   0.0026243 | 0.0143164 |  0.0128 |        0.3072000 | PX   |
+| crabgrass (DS)       |   0.1864927 | greater    | 9999 |  1.3126728 |   0.0012624 | 0.0199118 |  0.1142 |        0.4568000 | BA   |
+| crabgrass (DS)       |  -0.1472240 | greater    | 9999 | -0.9380806 |   0.0012481 | 0.0250501 |  0.8230 |        0.9405714 | BO   |
+| crabgrass (DS)       |   0.0756460 | greater    | 9999 |  0.5534710 |  -0.0004163 | 0.0188864 |  0.2807 |        0.7984000 | MN   |
+| crabgrass (DS)       |  -0.2825720 | greater    | 9999 | -1.2882736 |  -0.0015179 | 0.0475953 |  0.9188 |        0.9748174 | PX   |
+| horseweed (EC)       |   0.1702378 | greater    | 9999 |  0.9531766 |   0.0005356 | 0.0316977 |  0.1752 |        0.6006857 | BA   |
+| horseweed (EC)       |  -0.1334229 | greater    | 9999 | -0.8704015 |  -0.0005180 | 0.0233154 |  0.8025 |        0.9405714 | LA   |
+| horseweed (EC)       |   0.0106386 | greater    | 9999 |  0.0858594 |  -0.0031786 | 0.0258977 |  0.4472 |        0.8377600 | PX   |
+| prickly lettuce (LS) |   0.1456205 | greater    | 9999 |  0.5659122 |   0.0018806 | 0.0645144 |  0.2994 |        0.7984000 | BA   |
+| prickly lettuce (LS) |  -0.0725099 | greater    | 9999 | -0.4629508 |  -0.0004308 | 0.0242409 |  0.6496 |        0.9405714 | BO   |
+| prickly lettuce (LS) |   0.4413406 | greater    | 9999 |  2.2995233 |   0.0001766 | 0.0368065 |  0.0530 |        0.3180000 | LA   |
+| prickly lettuce (LS) |   0.0845050 | greater    | 9999 |  0.4603606 |  -0.0014208 | 0.0348378 |  0.3343 |        0.8023200 | MN   |
+| prickly lettuce (LS) |  -0.1679338 | greater    | 9999 | -0.8275834 |   0.0000745 | 0.0412133 |  0.7684 |        0.9405714 | PX   |
+| bluegrass (PA)       |  -0.0149195 | greater    | 9999 | -0.1337558 |   0.0007146 | 0.0136622 |  0.5099 |        0.8377600 | BA   |
+| bluegrass (PA)       |  -0.2168452 | greater    | 9999 | -1.6352688 |   0.0023646 | 0.0179697 |  0.9988 |        0.9988000 | BO   |
+| bluegrass (PA)       |  -0.0431048 | greater    | 9999 | -0.2310866 |   0.0020106 | 0.0381153 |  0.5236 |        0.8377600 | LA   |
+| bluegrass (PA)       |   0.3830110 | greater    | 9999 |  1.7229224 |  -0.0029655 | 0.0501869 |  0.0286 |        0.3180000 | PX   |
+| dandelion (TO)       |  -0.0020598 | greater    | 9999 | -0.0233426 |   0.0016880 | 0.0257782 |  0.4539 |        0.8377600 | BA   |
+| dandelion (TO)       |  -0.1937755 | greater    | 9999 | -1.2563379 |  -0.0007760 | 0.0235993 |  0.9342 |        0.9748174 | BO   |
+| dandelion (TO)       |   0.1682753 | greater    | 9999 |  1.2689800 |   0.0003895 | 0.0175032 |  0.1023 |        0.4568000 | LA   |
+| dandelion (TO)       |   0.0036501 | greater    | 9999 |  0.0644593 |  -0.0009095 | 0.0050035 |  0.4581 |        0.8377600 | MN   |
+| dandelion (TO)       |  -0.1823350 | greater    | 9999 | -0.7473653 |   0.0000244 | 0.0595375 |  0.7378 |        0.9405714 | PX   |
+
+Statistics from running 9999 permutations via mantel test, limited to
+within city.
+
+<!-- #### -->
+<!-- #### -->
+<!-- #### -->
+<!-- #### -->
+<!-- #### -->
+<!-- #### -->
+<!-- #### -->
+<!-- #### -->
+<!-- #### -->
+<!-- #### -->
+<!-- #### -->
+<!-- #### -->
 
 # 5 Appendix
 
@@ -1560,9 +1687,9 @@ within city.
 sessionInfo()
 ```
 
-    ## R version 4.3.1 (2023-06-16)
+    ## R version 4.3.2 (2023-10-31)
     ## Platform: aarch64-apple-darwin20 (64-bit)
-    ## Running under: macOS Ventura 13.4.1
+    ## Running under: macOS Sonoma 14.4.1
     ## 
     ## Matrix products: default
     ## BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
@@ -1580,28 +1707,28 @@ sessionInfo()
     ## other attached packages:
     ##  [1] adegenet_2.1.10   ade4_1.7-22       LEA_3.12.2        ggh4x_0.2.6      
     ##  [5] here_1.0.1        lubridate_1.9.3   forcats_1.0.0     purrr_1.0.2      
-    ##  [9] tibble_3.2.1      tidyverse_2.0.0   polysat_1.7-7     cowplot_1.1.1    
-    ## [13] viridis_0.6.4     viridisLite_0.4.2 raster_3.6-26     sp_2.1-1         
-    ## [17] stringr_1.5.0     readr_2.1.4       polyRAD_2.0.0     dplyr_1.1.3      
+    ##  [9] tibble_3.2.1      tidyverse_2.0.0   polysat_1.7-7     cowplot_1.1.2    
+    ## [13] viridis_0.6.4     viridisLite_0.4.2 raster_3.6-26     sp_2.1-2         
+    ## [17] stringr_1.5.1     readr_2.1.4       polyRAD_2.0.0     dplyr_1.1.4      
     ## [21] magrittr_2.0.3    tidyr_1.3.0       ggplot2_3.4.4    
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] tidyselect_1.2.0  farver_2.1.1      fastmap_1.1.1     promises_1.2.1   
-    ##  [5] digest_0.6.33     timechange_0.2.0  mime_0.12         lifecycle_1.0.3  
-    ##  [9] cluster_2.1.4     ellipsis_0.3.2    terra_1.7-55      compiler_4.3.1   
-    ## [13] rlang_1.1.1       tools_4.3.1       igraph_1.5.1      utf8_1.2.4       
-    ## [17] yaml_2.3.7        knitr_1.45        labeling_0.4.3    bit_4.0.5        
-    ## [21] plyr_1.8.9        withr_2.5.2       grid_4.3.1        fansi_1.0.5      
-    ## [25] xtable_1.8-4      colorspace_2.1-0  scales_1.2.1      MASS_7.3-60      
-    ## [29] cli_3.6.1         vegan_2.6-4       rmarkdown_2.25    crayon_1.5.2     
-    ## [33] ragg_1.2.6        generics_0.1.3    rstudioapi_0.15.0 reshape2_1.4.4   
-    ## [37] tzdb_0.4.0        ape_5.7-1         splines_4.3.1     parallel_4.3.1   
-    ## [41] vctrs_0.6.4       Matrix_1.6-1.1    hms_1.1.3         bit64_4.0.5      
-    ## [45] seqinr_4.2-30     systemfonts_1.0.5 glue_1.6.2        codetools_0.2-19 
-    ## [49] stringi_1.7.12    gtable_0.3.4      later_1.3.1       munsell_0.5.0    
+    ##  [5] digest_0.6.33     timechange_0.2.0  mime_0.12         lifecycle_1.0.4  
+    ##  [9] cluster_2.1.4     ellipsis_0.3.2    terra_1.7-65      compiler_4.3.2   
+    ## [13] rlang_1.1.2       tools_4.3.2       igraph_1.6.0      utf8_1.2.4       
+    ## [17] yaml_2.3.8        knitr_1.45        labeling_0.4.3    bit_4.0.5        
+    ## [21] plyr_1.8.9        withr_2.5.2       grid_4.3.2        fansi_1.0.6      
+    ## [25] xtable_1.8-4      colorspace_2.1-0  scales_1.3.0      MASS_7.3-60      
+    ## [29] cli_3.6.2         vegan_2.6-4       rmarkdown_2.25    crayon_1.5.2     
+    ## [33] ragg_1.2.7        generics_0.1.3    rstudioapi_0.15.0 reshape2_1.4.4   
+    ## [37] tzdb_0.4.0        ape_5.7-1         splines_4.3.2     parallel_4.3.2   
+    ## [41] vctrs_0.6.5       Matrix_1.6-5      hms_1.1.3         bit64_4.0.5      
+    ## [45] seqinr_4.2-36     systemfonts_1.0.5 glue_1.6.2        codetools_0.2-19 
+    ## [49] stringi_1.8.3     gtable_0.3.4      later_1.3.2       munsell_0.5.0    
     ## [53] pillar_1.9.0      htmltools_0.5.7   R6_2.5.1          textshaping_0.3.7
-    ## [57] rprojroot_2.0.3   vroom_1.6.4       evaluate_0.23     shiny_1.7.5.1    
-    ## [61] lattice_0.22-5    highr_0.10        httpuv_1.6.12     Rcpp_1.0.11      
+    ## [57] rprojroot_2.0.4   vroom_1.6.5       evaluate_0.23     shiny_1.8.0      
+    ## [61] lattice_0.21-9    highr_0.10        httpuv_1.6.14     Rcpp_1.0.11      
     ## [65] fastmatch_1.1-4   permute_0.9-7     gridExtra_2.3     nlme_3.1-163     
     ## [69] mgcv_1.9-0        xfun_0.41         pkgconfig_2.0.3
 
