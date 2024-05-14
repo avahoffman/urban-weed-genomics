@@ -1520,7 +1520,8 @@ function.
 
 Note that for this analysis, we treated each *sampling site* as a
 distinct location. There would not be enough power to do a distance
-matrix among 3-5 cities.
+matrix among 3-5 cities. Code for generating stats and figures from the
+Mantel test can be found in the source code below.
 
 ``` r
 source("R/isolation_by_distance.R")
@@ -1530,55 +1531,57 @@ source("R/isolation_by_distance.R")
 extract_ibd_stats_and_plots()
 ```
 
-Here are the results of the mantel test:
+Below are the results of the mantel test. Note that there is a p-value
+correction for testing multiple cities (species are treated as
+independent, however).
 
-| Species              | Observation | Hypothesis | Reps |   Std.Obs | Expectation |  Variance | p-value |
-|:---------------------|------------:|:-----------|-----:|----------:|------------:|----------:|--------:|
-| Bermuda grass (CD)   |   0.4476430 | greater    | 9999 | 11.782345 |   0.0004658 | 0.0014404 |   1e-04 |
-| crabgrass (DS)       |   0.3299992 | greater    | 9999 |  8.210204 |   0.0009116 | 0.0016066 |   1e-04 |
-| horseweed (EC)       |   0.4028339 | greater    | 9999 |  9.240682 |  -0.0000991 | 0.0019013 |   1e-04 |
-| prickly lettuce (LS) |   0.1939607 | greater    | 9999 |  7.794608 |  -0.0000002 | 0.0006192 |   1e-04 |
-| bluegrass (PA)       |   0.2821562 | greater    | 9999 |  8.264578 |  -0.0006003 | 0.0011705 |   1e-04 |
-| dandelion (TO)       |   0.3101457 | greater    | 9999 |  7.250584 |  -0.0000930 | 0.0018308 |   1e-04 |
+| Species              | Observation |   Std.Obs | Expectation |  Variance | p-value |
+|:---------------------|------------:|----------:|------------:|----------:|--------:|
+| Bermuda grass (CD)   |   0.4476430 | 11.782345 |   0.0004658 | 0.0014404 |   1e-04 |
+| crabgrass (DS)       |   0.3299992 |  8.210204 |   0.0009116 | 0.0016066 |   1e-04 |
+| horseweed (EC)       |   0.4028339 |  9.240682 |  -0.0000991 | 0.0019013 |   1e-04 |
+| prickly lettuce (LS) |   0.1939607 |  7.794608 |  -0.0000002 | 0.0006192 |   1e-04 |
+| bluegrass (PA)       |   0.2821562 |  8.264578 |  -0.0006003 | 0.0011705 |   1e-04 |
+| dandelion (TO)       |   0.3101457 |  7.250584 |  -0.0000930 | 0.0018308 |   1e-04 |
 
-Statistics from running 9999 permutations via mantel test.
+Statistics from running 9999 permutations (‘Reps’) via mantel test,
+limited to genomic versus distance comparisons. Hypothesis for all tests
+is ‘greater’.
 
-We also repeated this within city. Code for generating stats from the
-Mantel test can be found in the source code below.
+We also repeated this within city. Note that there is a p-value
+correction for testing multiple environmental variables and cities
+(species are treated as independent, however).
 
-``` r
-source("R/isolation_by_distance.R")
-```
+| Species              | Observation |    Std.Obs | Expectation |  Variance | p-value | Adjusted p-value | City |
+|:---------------------|------------:|-----------:|------------:|----------:|--------:|-----------------:|:-----|
+| Bermuda grass (CD)   |   0.2945315 |  1.9546056 |  -0.0029856 | 0.0231689 |  0.0436 |        0.0654000 | BA   |
+| Bermuda grass (CD)   |  -0.1400172 | -0.8703840 |  -0.0020079 | 0.0251417 |  0.7907 |        0.7907000 | LA   |
+| Bermuda grass (CD)   |   0.3063556 |  2.5384776 |   0.0026243 | 0.0143164 |  0.0128 |        0.0384000 | PX   |
+| crabgrass (DS)       |   0.1864927 |  1.3126728 |   0.0012624 | 0.0199118 |  0.1142 |        0.4568000 | BA   |
+| crabgrass (DS)       |  -0.1472240 | -0.9380806 |   0.0012481 | 0.0250501 |  0.8230 |        0.9188000 | BO   |
+| crabgrass (DS)       |   0.0756460 |  0.5534710 |  -0.0004163 | 0.0188864 |  0.2807 |        0.5614000 | MN   |
+| crabgrass (DS)       |  -0.2825720 | -1.2882736 |  -0.0015179 | 0.0475953 |  0.9188 |        0.9188000 | PX   |
+| horseweed (EC)       |   0.1702378 |  0.9531766 |   0.0005356 | 0.0316977 |  0.1752 |        0.5256000 | BA   |
+| horseweed (EC)       |  -0.1334229 | -0.8704015 |  -0.0005180 | 0.0233154 |  0.8025 |        0.8025000 | LA   |
+| horseweed (EC)       |   0.0106386 |  0.0858594 |  -0.0031786 | 0.0258977 |  0.4472 |        0.6708000 | PX   |
+| prickly lettuce (LS) |   0.1456205 |  0.5659122 |   0.0018806 | 0.0645144 |  0.2994 |        0.5571667 | BA   |
+| prickly lettuce (LS) |  -0.0725099 | -0.4629508 |  -0.0004308 | 0.0242409 |  0.6496 |        0.7684000 | BO   |
+| prickly lettuce (LS) |   0.4413406 |  2.2995233 |   0.0001766 | 0.0368065 |  0.0530 |        0.2650000 | LA   |
+| prickly lettuce (LS) |   0.0845050 |  0.4603606 |  -0.0014208 | 0.0348378 |  0.3343 |        0.5571667 | MN   |
+| prickly lettuce (LS) |  -0.1679338 | -0.8275834 |   0.0000745 | 0.0412133 |  0.7684 |        0.7684000 | PX   |
+| bluegrass (PA)       |  -0.0149195 | -0.1337558 |   0.0007146 | 0.0136622 |  0.5099 |        0.6981333 | BA   |
+| bluegrass (PA)       |  -0.2168452 | -1.6352688 |   0.0023646 | 0.0179697 |  0.9988 |        0.9988000 | BO   |
+| bluegrass (PA)       |  -0.0431048 | -0.2310866 |   0.0020106 | 0.0381153 |  0.5236 |        0.6981333 | LA   |
+| bluegrass (PA)       |   0.3830110 |  1.7229224 |  -0.0029655 | 0.0501869 |  0.0286 |        0.1144000 | PX   |
+| dandelion (TO)       |  -0.0020598 | -0.0233426 |   0.0016880 | 0.0257782 |  0.4539 |        0.7635000 | BA   |
+| dandelion (TO)       |  -0.1937755 | -1.2563379 |  -0.0007760 | 0.0235993 |  0.9342 |        0.9342000 | BO   |
+| dandelion (TO)       |   0.1682753 |  1.2689800 |   0.0003895 | 0.0175032 |  0.1023 |        0.5115000 | LA   |
+| dandelion (TO)       |   0.0036501 |  0.0644593 |  -0.0009095 | 0.0050035 |  0.4581 |        0.7635000 | MN   |
+| dandelion (TO)       |  -0.1823350 | -0.7473653 |   0.0000244 | 0.0595375 |  0.7378 |        0.9222500 | PX   |
 
-| Species              | Observation | Hypothesis | Reps |    Std.Obs | Expectation |  Variance | p-value | Adjusted p-value | City |
-|:---------------------|------------:|:-----------|-----:|-----------:|------------:|----------:|--------:|-----------------:|:-----|
-| Bermuda grass (CD)   |   0.2945315 | greater    | 9999 |  1.9546056 |  -0.0029856 | 0.0231689 |  0.0436 |        0.3180000 | BA   |
-| Bermuda grass (CD)   |  -0.1400172 | greater    | 9999 | -0.8703840 |  -0.0020079 | 0.0251417 |  0.7907 |        0.9405714 | LA   |
-| Bermuda grass (CD)   |   0.3063556 | greater    | 9999 |  2.5384776 |   0.0026243 | 0.0143164 |  0.0128 |        0.3072000 | PX   |
-| crabgrass (DS)       |   0.1864927 | greater    | 9999 |  1.3126728 |   0.0012624 | 0.0199118 |  0.1142 |        0.4568000 | BA   |
-| crabgrass (DS)       |  -0.1472240 | greater    | 9999 | -0.9380806 |   0.0012481 | 0.0250501 |  0.8230 |        0.9405714 | BO   |
-| crabgrass (DS)       |   0.0756460 | greater    | 9999 |  0.5534710 |  -0.0004163 | 0.0188864 |  0.2807 |        0.7984000 | MN   |
-| crabgrass (DS)       |  -0.2825720 | greater    | 9999 | -1.2882736 |  -0.0015179 | 0.0475953 |  0.9188 |        0.9748174 | PX   |
-| horseweed (EC)       |   0.1702378 | greater    | 9999 |  0.9531766 |   0.0005356 | 0.0316977 |  0.1752 |        0.6006857 | BA   |
-| horseweed (EC)       |  -0.1334229 | greater    | 9999 | -0.8704015 |  -0.0005180 | 0.0233154 |  0.8025 |        0.9405714 | LA   |
-| horseweed (EC)       |   0.0106386 | greater    | 9999 |  0.0858594 |  -0.0031786 | 0.0258977 |  0.4472 |        0.8377600 | PX   |
-| prickly lettuce (LS) |   0.1456205 | greater    | 9999 |  0.5659122 |   0.0018806 | 0.0645144 |  0.2994 |        0.7984000 | BA   |
-| prickly lettuce (LS) |  -0.0725099 | greater    | 9999 | -0.4629508 |  -0.0004308 | 0.0242409 |  0.6496 |        0.9405714 | BO   |
-| prickly lettuce (LS) |   0.4413406 | greater    | 9999 |  2.2995233 |   0.0001766 | 0.0368065 |  0.0530 |        0.3180000 | LA   |
-| prickly lettuce (LS) |   0.0845050 | greater    | 9999 |  0.4603606 |  -0.0014208 | 0.0348378 |  0.3343 |        0.8023200 | MN   |
-| prickly lettuce (LS) |  -0.1679338 | greater    | 9999 | -0.8275834 |   0.0000745 | 0.0412133 |  0.7684 |        0.9405714 | PX   |
-| bluegrass (PA)       |  -0.0149195 | greater    | 9999 | -0.1337558 |   0.0007146 | 0.0136622 |  0.5099 |        0.8377600 | BA   |
-| bluegrass (PA)       |  -0.2168452 | greater    | 9999 | -1.6352688 |   0.0023646 | 0.0179697 |  0.9988 |        0.9988000 | BO   |
-| bluegrass (PA)       |  -0.0431048 | greater    | 9999 | -0.2310866 |   0.0020106 | 0.0381153 |  0.5236 |        0.8377600 | LA   |
-| bluegrass (PA)       |   0.3830110 | greater    | 9999 |  1.7229224 |  -0.0029655 | 0.0501869 |  0.0286 |        0.3180000 | PX   |
-| dandelion (TO)       |  -0.0020598 | greater    | 9999 | -0.0233426 |   0.0016880 | 0.0257782 |  0.4539 |        0.8377600 | BA   |
-| dandelion (TO)       |  -0.1937755 | greater    | 9999 | -1.2563379 |  -0.0007760 | 0.0235993 |  0.9342 |        0.9748174 | BO   |
-| dandelion (TO)       |   0.1682753 | greater    | 9999 |  1.2689800 |   0.0003895 | 0.0175032 |  0.1023 |        0.4568000 | LA   |
-| dandelion (TO)       |   0.0036501 | greater    | 9999 |  0.0644593 |  -0.0009095 | 0.0050035 |  0.4581 |        0.8377600 | MN   |
-| dandelion (TO)       |  -0.1823350 | greater    | 9999 | -0.7473653 |   0.0000244 | 0.0595375 |  0.7378 |        0.9405714 | PX   |
-
-Statistics from running 9999 permutations via mantel test, limited to
-within city.
+Statistics from running 9999 permutations (‘Reps’) via mantel test,
+limited to within city for genomic versus distance comparisons.
+Hypothesis for all tests is ‘greater’.
 
 ## 4.13 Isolation by environment
 
@@ -1605,7 +1608,7 @@ accounts for site-specific variables (we can change the % shade, the
 slope or aspect of the landscape, and it considers elevation, average
 cloud cover, etc.). [Here’s the
 list](https://mrke.github.io/models/MicroClimate-Models) of all the
-different models/datasets we’re able to can pull from.. It’s meant for
+different models/datasets we’re able to can pull from. It’s meant for
 mechanistic niche modeling.
 
 Variables in the file `site_data_DUC_environvars.csv` are all for the
@@ -1614,57 +1617,177 @@ extreme. In other words, they are maximums.
 
 ### 4.13.2 IBE analysis
 
+We assessed isolation by environment by comparing genetic distance to
+environmental distance, or the difference among sites. Genetic distance
+was generated the same way as isolation by distance (IBD) above. Code
+for generating stats from the Mantel test can be found in the source
+code below.
+
 ``` r
 source("R/isolation_by_environment.R")
 ```
 
+The following functions are used to generate statistics for all
+environmental variables. Default of the function runs for
+“nlcd_urban_pct” which is the percent urban cover of a site within city.
+These are the four environmental variables mentioned in the main
+manuscript, although more environmental variables are present in the raw
+data.
+
 ``` r
-# Default runs for "nlcd_urban_pct" which is the percent urban cover of a site within city.
-# These are the four environmental variables mentioned in the main manuscript
 extract_ibe_stats_and_plots()
 extract_ibe_stats_and_plots(env_var_to_use = "distance_to_city_center_km")
 extract_ibe_stats_and_plots(env_var_to_use = "soiltemp_2.5cm_Jul_12pm")
 extract_ibe_stats_and_plots(env_var_to_use = "soiltemp_2.5cm_Apr_12pm")
-
-ibe_mega_plot()
 ```
 
-We also repeated this within city. Code for generating stats from the
-Mantel test can be found in the source code below.
+Below are the results of the mantel test. Note that there is a p-value
+correction for testing multiple environmental variables (species are
+treated as independent, however).
+
+| Species              | Observation |    Std.Obs | Expectation |  Variance | p-value | Adjusted p-value | Env.Var                    |
+|:---------------------|------------:|-----------:|------------:|----------:|--------:|-----------------:|:---------------------------|
+| Bermuda grass (CD)   |   0.0063593 |  0.1835877 |  -0.0005072 | 0.0013989 |  0.3941 |        0.3941000 | nlcd_urban_pct             |
+| Bermuda grass (CD)   |   0.1376533 |  3.0448142 |   0.0002070 | 0.0020377 |  0.0040 |        0.0053333 | distance_to_city_center_km |
+| Bermuda grass (CD)   |   0.4752489 | 13.8424955 |   0.0006095 | 0.0011757 |  0.0001 |        0.0002000 | soiltemp_2.5cm_Apr_12pm    |
+| Bermuda grass (CD)   |   0.4323268 | 14.6854153 |   0.0004020 | 0.0008651 |  0.0001 |        0.0002000 | soiltemp_2.5cm_Jul_12pm    |
+| bluegrass (PA)       |   0.0002138 |  0.0011500 |   0.0001657 | 0.0017543 |  0.4588 |        0.4737000 | nlcd_urban_pct             |
+| bluegrass (PA)       |  -0.0069195 | -0.0996185 |   0.0000543 | 0.0049007 |  0.4737 |        0.4737000 | distance_to_city_center_km |
+| bluegrass (PA)       |   0.2551951 |  6.3497889 |  -0.0000994 | 0.0016165 |  0.0001 |        0.0004000 | soiltemp_2.5cm_Apr_12pm    |
+| bluegrass (PA)       |   0.2065044 |  3.9951073 |   0.0002376 | 0.0026656 |  0.0008 |        0.0016000 | soiltemp_2.5cm_Jul_12pm    |
+| crabgrass (DS)       |   0.0084529 |  0.2008775 |  -0.0000271 | 0.0017821 |  0.3993 |        0.5324000 | nlcd_urban_pct             |
+| crabgrass (DS)       |  -0.1048469 | -1.5781202 |   0.0001499 | 0.0044266 |  0.9724 |        0.9724000 | distance_to_city_center_km |
+| crabgrass (DS)       |   0.3342972 |  6.0271540 |   0.0011639 | 0.0030550 |  0.0001 |        0.0002000 | soiltemp_2.5cm_Apr_12pm    |
+| crabgrass (DS)       |   0.3007634 |  5.2868618 |   0.0011398 | 0.0032119 |  0.0001 |        0.0002000 | soiltemp_2.5cm_Jul_12pm    |
+| dandelion (TO)       |  -0.0799521 | -1.5694516 |  -0.0002883 | 0.0025765 |  0.9486 |        0.9486000 | nlcd_urban_pct             |
+| dandelion (TO)       |   0.0153535 |  0.1977167 |  -0.0012246 | 0.0070304 |  0.3992 |        0.5322667 | distance_to_city_center_km |
+| dandelion (TO)       |   0.4279786 |  7.0596781 |   0.0001653 | 0.0036723 |  0.0001 |        0.0002000 | soiltemp_2.5cm_Apr_12pm    |
+| dandelion (TO)       |   0.4638919 |  6.4145637 |   0.0006164 | 0.0052161 |  0.0001 |        0.0002000 | soiltemp_2.5cm_Jul_12pm    |
+| horseweed (EC)       |   0.0159108 |  0.3024347 |   0.0008836 | 0.0024688 |  0.3163 |        0.3163000 | nlcd_urban_pct             |
+| horseweed (EC)       |   0.0946052 |  1.7061014 |   0.0003245 | 0.0030538 |  0.0619 |        0.0825333 | distance_to_city_center_km |
+| horseweed (EC)       |   0.7172402 | 17.0412662 |   0.0002351 | 0.0017703 |  0.0001 |        0.0002000 | soiltemp_2.5cm_Apr_12pm    |
+| horseweed (EC)       |   0.8921599 | 19.8503117 |   0.0003372 | 0.0020185 |  0.0001 |        0.0002000 | soiltemp_2.5cm_Jul_12pm    |
+| prickly lettuce (LS) |   0.0430785 |  1.0699199 |  -0.0004009 | 0.0016515 |  0.1371 |        0.1828000 | nlcd_urban_pct             |
+| prickly lettuce (LS) |  -0.0891865 | -1.1853224 |  -0.0007151 | 0.0055710 |  0.8831 |        0.8831000 | distance_to_city_center_km |
+| prickly lettuce (LS) |   0.4268723 | 14.7446772 |   0.0000286 | 0.0008380 |  0.0001 |        0.0002000 | soiltemp_2.5cm_Apr_12pm    |
+| prickly lettuce (LS) |   0.5214303 | 10.8973662 |  -0.0000095 | 0.0022896 |  0.0001 |        0.0002000 | soiltemp_2.5cm_Jul_12pm    |
+
+Statistics from running 9999 permutations (‘Reps’) via mantel test, for
+genomic versus environmental comparisons. Hypothesis for all tests is
+‘greater’.
+
+We also repeated the mantel tests within city. Note that there is a
+p-value correction for testing multiple environmental variables and
+cities (species are treated as independent, however).
+
+| Species              | Observation |    Std.Obs | Expectation |  Variance | p-value | Adjusted p-value | Env.Var                    | City |
+|:---------------------|------------:|-----------:|------------:|----------:|--------:|-----------------:|:---------------------------|:-----|
+| Bermuda grass (CD)   |   0.3372190 |  2.8474161 |  -0.0012071 | 0.0141262 |  0.0091 |        0.0546000 | nlcd_urban_pct             | BA   |
+| Bermuda grass (CD)   |   0.1188409 |  0.9270429 |  -0.0023793 | 0.0170982 |  0.1821 |        0.4370400 | distance_to_city_center_km | BA   |
+| Bermuda grass (CD)   |  -0.2441035 | -1.4754900 |  -0.0008758 | 0.0271740 |  0.9656 |        0.9656000 | soiltemp_2.5cm_Jul_12pm    | BA   |
+| Bermuda grass (CD)   |  -0.1570643 | -1.0130521 |   0.0002126 | 0.0241027 |  0.8431 |        0.9197455 | soiltemp_2.5cm_Apr_12pm    | BA   |
+| Bermuda grass (CD)   |   0.0802221 |  0.4793677 |   0.0009244 | 0.0273643 |  0.3174 |        0.4761000 | nlcd_urban_pct             | LA   |
+| Bermuda grass (CD)   |   0.1995251 |  1.4117523 |  -0.0014271 | 0.0202613 |  0.0952 |        0.3808000 | distance_to_city_center_km | LA   |
+| Bermuda grass (CD)   |  -0.0061106 | -0.0151598 |  -0.0031778 | 0.0374262 |  0.4586 |        0.6114667 | soiltemp_2.5cm_Jul_12pm    | LA   |
+| Bermuda grass (CD)   |  -0.0805969 | -0.6239987 |  -0.0007061 | 0.0163918 |  0.7126 |        0.8551200 | soiltemp_2.5cm_Apr_12pm    | LA   |
+| Bermuda grass (CD)   |   0.0906880 |  0.9167417 |   0.0007042 | 0.0096346 |  0.1746 |        0.4370400 | nlcd_urban_pct             | PX   |
+| Bermuda grass (CD)   |   0.3757125 |  3.0579121 |   0.0019998 | 0.0149357 |  0.0049 |        0.0546000 | distance_to_city_center_km | PX   |
+| Bermuda grass (CD)   |   0.0395164 |  0.3334686 |   0.0005637 | 0.0136448 |  0.3078 |        0.4761000 | soiltemp_2.5cm_Jul_12pm    | PX   |
+| Bermuda grass (CD)   |   0.0417285 |  0.3405412 |   0.0005393 | 0.0146294 |  0.2844 |        0.4761000 | soiltemp_2.5cm_Apr_12pm    | PX   |
+| crabgrass (DS)       |   0.1601026 |  1.2452588 |   0.0013308 | 0.0162565 |  0.1173 |        0.6256000 | nlcd_urban_pct             | BA   |
+| crabgrass (DS)       |  -0.1187959 | -0.6719382 |   0.0028106 | 0.0327533 |  0.7248 |        0.9411000 | distance_to_city_center_km | BA   |
+| crabgrass (DS)       |  -0.1582690 | -0.8561975 |   0.0027774 | 0.0353797 |  0.7854 |        0.9411000 | soiltemp_2.5cm_Jul_12pm    | BA   |
+| crabgrass (DS)       |  -0.2451437 | -1.3695752 |   0.0005281 | 0.0321765 |  0.9337 |        0.9411000 | soiltemp_2.5cm_Apr_12pm    | BA   |
+| crabgrass (DS)       |   0.0241445 |  0.2053813 |  -0.0009766 | 0.0149608 |  0.3947 |        0.9411000 | nlcd_urban_pct             | BO   |
+| crabgrass (DS)       |  -0.1112305 | -0.6469967 |   0.0018740 | 0.0305602 |  0.7065 |        0.9411000 | distance_to_city_center_km | BO   |
+| crabgrass (DS)       |  -0.0427338 | -0.2772193 |  -0.0011589 | 0.0224914 |  0.5703 |        0.9411000 | soiltemp_2.5cm_Jul_12pm    | BO   |
+| crabgrass (DS)       |  -0.0600640 | -0.4084107 |  -0.0003231 | 0.0213968 |  0.6217 |        0.9411000 | soiltemp_2.5cm_Apr_12pm    | BO   |
+| crabgrass (DS)       |   0.0480884 |  0.4750376 |  -0.0007043 | 0.0105500 |  0.3085 |        0.9411000 | nlcd_urban_pct             | MN   |
+| crabgrass (DS)       |   0.0823907 |  0.5522340 |  -0.0009400 | 0.0227701 |  0.2734 |        0.9411000 | distance_to_city_center_km | MN   |
+| crabgrass (DS)       |   0.3191330 |  2.1117687 |   0.0028693 | 0.0224288 |  0.0229 |        0.3664000 | soiltemp_2.5cm_Jul_12pm    | MN   |
+| crabgrass (DS)       |   0.2069916 |  1.2882169 |   0.0053125 | 0.0245100 |  0.1127 |        0.6256000 | soiltemp_2.5cm_Apr_12pm    | MN   |
+| crabgrass (DS)       |  -0.0614409 | -0.2643071 |  -0.0013096 | 0.0517588 |  0.4933 |        0.9411000 | nlcd_urban_pct             | PX   |
+| crabgrass (DS)       |  -0.2758803 | -1.3193515 |  -0.0028122 | 0.0428372 |  0.9230 |        0.9411000 | distance_to_city_center_km | PX   |
+| crabgrass (DS)       |  -0.2275997 | -1.0754253 |  -0.0032313 | 0.0435274 |  0.8600 |        0.9411000 | soiltemp_2.5cm_Jul_12pm    | PX   |
+| crabgrass (DS)       |  -0.2533099 | -1.2102037 |  -0.0027972 | 0.0428492 |  0.9411 |        0.9411000 | soiltemp_2.5cm_Apr_12pm    | PX   |
+| horseweed (EC)       |  -0.1903379 | -1.1707289 |   0.0019864 | 0.0269871 |  0.8784 |        0.9861000 | nlcd_urban_pct             | BA   |
+| horseweed (EC)       |   0.1148969 |  0.6372828 |   0.0008399 | 0.0320316 |  0.2403 |        0.9861000 | distance_to_city_center_km | BA   |
+| horseweed (EC)       |  -0.2773508 | -1.7132248 |  -0.0010091 | 0.0260174 |  0.9805 |        0.9861000 | soiltemp_2.5cm_Jul_12pm    | BA   |
+| horseweed (EC)       |  -0.3260510 | -1.7866924 |  -0.0014809 | 0.0330003 |  0.9861 |        0.9861000 | soiltemp_2.5cm_Apr_12pm    | BA   |
+| horseweed (EC)       |  -0.0694567 | -0.5193465 |   0.0002874 | 0.0180344 |  0.6319 |        0.9861000 | nlcd_urban_pct             | LA   |
+| horseweed (EC)       |  -0.1854615 | -1.2016425 |   0.0001369 | 0.0238560 |  0.9058 |        0.9861000 | distance_to_city_center_km | LA   |
+| horseweed (EC)       |  -0.3092654 | -1.5703327 |   0.0019847 | 0.0392858 |  0.9581 |        0.9861000 | soiltemp_2.5cm_Jul_12pm    | LA   |
+| horseweed (EC)       |   0.0814879 |  0.4078862 |   0.0014242 | 0.0385294 |  0.2957 |        0.9861000 | soiltemp_2.5cm_Apr_12pm    | LA   |
+| horseweed (EC)       |   0.0533446 |  0.3463454 |  -0.0014662 | 0.0250445 |  0.3303 |        0.9861000 | nlcd_urban_pct             | PX   |
+| horseweed (EC)       |   0.2460485 |  1.4670912 |  -0.0023983 | 0.0286783 |  0.0795 |        0.9540000 | distance_to_city_center_km | PX   |
+| horseweed (EC)       |  -0.0941541 | -0.4764958 |  -0.0008660 | 0.0383296 |  0.6275 |        0.9861000 | soiltemp_2.5cm_Jul_12pm    | PX   |
+| horseweed (EC)       |  -0.1007252 | -0.5128665 |  -0.0014423 | 0.0374749 |  0.6366 |        0.9861000 | soiltemp_2.5cm_Apr_12pm    | PX   |
+| prickly lettuce (LS) |   0.2275756 |  0.8970634 |  -0.0005680 | 0.0646801 |  0.2049 |        0.8528421 | nlcd_urban_pct             | BA   |
+| prickly lettuce (LS) |  -0.0007177 | -0.0050873 |   0.0004469 | 0.0524045 |  0.5032 |        0.8528421 | distance_to_city_center_km | BA   |
+| prickly lettuce (LS) |  -0.0230189 | -0.1469705 |  -0.0002974 | 0.0239010 |  0.5440 |        0.8528421 | soiltemp_2.5cm_Jul_12pm    | BA   |
+| prickly lettuce (LS) |  -0.2125019 | -0.8382982 |  -0.0005803 | 0.0639077 |  0.7748 |        0.8528421 | soiltemp_2.5cm_Apr_12pm    | BA   |
+| prickly lettuce (LS) |  -0.1076683 | -0.8169817 |   0.0019126 | 0.0179906 |  0.7839 |        0.8528421 | nlcd_urban_pct             | BO   |
+| prickly lettuce (LS) |  -0.0764992 | -0.4279106 |  -0.0003930 | 0.0316325 |  0.6318 |        0.8528421 | distance_to_city_center_km | BO   |
+| prickly lettuce (LS) |   0.0019421 |  0.0116429 |  -0.0000526 | 0.0293529 |  0.4734 |        0.8528421 | soiltemp_2.5cm_Jul_12pm    | BO   |
+| prickly lettuce (LS) |  -0.1207036 | -0.7310420 |   0.0008312 | 0.0276386 |  0.7451 |        0.8528421 | soiltemp_2.5cm_Apr_12pm    | BO   |
+| prickly lettuce (LS) |  -0.0772755 | -0.5237519 |  -0.0025257 | 0.0203690 |  0.6499 |        0.8528421 | nlcd_urban_pct             | LA   |
+| prickly lettuce (LS) |   0.2393495 |  1.4098461 |   0.0000782 | 0.0288030 |  0.1068 |        0.8100000 | distance_to_city_center_km | LA   |
+| prickly lettuce (LS) |   0.5090590 |  3.0381437 |  -0.0005762 | 0.0281386 |  0.0042 |        0.0840000 | soiltemp_2.5cm_Jul_12pm    | LA   |
+| prickly lettuce (LS) |   0.0502661 |  0.3156152 |  -0.0040791 | 0.0296488 |  0.3191 |        0.8528421 | soiltemp_2.5cm_Apr_12pm    | LA   |
+| prickly lettuce (LS) |   0.0596842 |  0.3218968 |   0.0017251 | 0.0324198 |  0.3751 |        0.8528421 | nlcd_urban_pct             | MN   |
+| prickly lettuce (LS) |   0.2307428 |  1.2084445 |  -0.0013445 | 0.0368850 |  0.1215 |        0.8100000 | distance_to_city_center_km | MN   |
+| prickly lettuce (LS) |  -0.1463485 | -0.9646066 |  -0.0015993 | 0.0225181 |  0.8102 |        0.8528421 | soiltemp_2.5cm_Jul_12pm    | MN   |
+| prickly lettuce (LS) |  -0.1569714 | -0.9013417 |  -0.0006673 | 0.0300720 |  0.7874 |        0.8528421 | soiltemp_2.5cm_Apr_12pm    | MN   |
+| prickly lettuce (LS) |   0.0048140 |  0.0371630 |  -0.0000159 | 0.0168916 |  0.4261 |        0.8528421 | nlcd_urban_pct             | PX   |
+| prickly lettuce (LS) |  -0.2384487 | -1.5636104 |   0.0012078 | 0.0234921 |  0.9841 |        0.9841000 | distance_to_city_center_km | PX   |
+| prickly lettuce (LS) |  -0.0884762 | -0.4310103 |  -0.0017385 | 0.0404986 |  0.5993 |        0.8528421 | soiltemp_2.5cm_Jul_12pm    | PX   |
+| prickly lettuce (LS) |  -0.1131637 | -0.5322267 |  -0.0015588 | 0.0439717 |  0.6554 |        0.8528421 | soiltemp_2.5cm_Apr_12pm    | PX   |
+| bluegrass (PA)       |   0.2590523 |  1.7915057 |  -0.0003314 | 0.0209628 |  0.0504 |        0.6586667 | nlcd_urban_pct             | BA   |
+| bluegrass (PA)       |   0.0837403 |  0.4954254 |  -0.0006743 | 0.0290321 |  0.3140 |        0.7319273 | distance_to_city_center_km | BA   |
+| bluegrass (PA)       |   0.0474162 |  0.2515628 |   0.0006727 | 0.0345263 |  0.3951 |        0.7319273 | soiltemp_2.5cm_Jul_12pm    | BA   |
+| bluegrass (PA)       |  -0.0469166 | -0.3069994 |   0.0000839 | 0.0234385 |  0.5914 |        0.7885333 | soiltemp_2.5cm_Apr_12pm    | BA   |
+| bluegrass (PA)       |  -0.0211154 | -0.1686075 |  -0.0016706 | 0.0133001 |  0.5032 |        0.7319273 | nlcd_urban_pct             | BO   |
+| bluegrass (PA)       |  -0.1839908 | -1.2359879 |   0.0020825 | 0.0226641 |  0.9591 |        0.9591000 | distance_to_city_center_km | BO   |
+| bluegrass (PA)       |   0.0497172 |  0.3308238 |   0.0014752 | 0.0212646 |  0.3519 |        0.7319273 | soiltemp_2.5cm_Jul_12pm    | BO   |
+| bluegrass (PA)       |   0.1285994 |  0.8795620 |   0.0008966 | 0.0210799 |  0.1880 |        0.7319273 | soiltemp_2.5cm_Apr_12pm    | BO   |
+| bluegrass (PA)       |  -0.1798066 | -1.1444740 |  -0.0016225 | 0.0242396 |  0.8360 |        0.8917333 | nlcd_urban_pct             | LA   |
+| bluegrass (PA)       |   0.0298291 |  0.1604297 |   0.0022274 | 0.0296008 |  0.4126 |        0.7319273 | distance_to_city_center_km | LA   |
+| bluegrass (PA)       |  -0.0614415 | -0.2935904 |   0.0015465 | 0.0460291 |  0.4510 |        0.7319273 | soiltemp_2.5cm_Jul_12pm    | LA   |
+| bluegrass (PA)       |  -0.1578118 | -0.8920280 |   0.0013053 | 0.0318183 |  0.7664 |        0.8917333 | soiltemp_2.5cm_Apr_12pm    | LA   |
+| bluegrass (PA)       |  -0.1804107 | -0.7813029 |  -0.0041644 | 0.0508863 |  0.8055 |        0.8917333 | nlcd_urban_pct             | PX   |
+| bluegrass (PA)       |  -0.0252203 | -0.1243909 |   0.0012535 | 0.0452954 |  0.4579 |        0.7319273 | distance_to_city_center_km | PX   |
+| bluegrass (PA)       |   0.4310886 |  1.5503133 |  -0.0027320 | 0.0783035 |  0.1186 |        0.6586667 | soiltemp_2.5cm_Jul_12pm    | PX   |
+| bluegrass (PA)       |   0.4553606 |  1.5631826 |  -0.0006383 | 0.0850958 |  0.1235 |        0.6586667 | soiltemp_2.5cm_Apr_12pm    | PX   |
+| dandelion (TO)       |  -0.2054537 | -1.6876982 |  -0.0019329 | 0.0145421 |  0.9770 |        0.9841000 | nlcd_urban_pct             | BA   |
+| dandelion (TO)       |  -0.1162303 | -0.6877884 |   0.0009578 | 0.0290307 |  0.7455 |        0.9841000 | distance_to_city_center_km | BA   |
+| dandelion (TO)       |  -0.2552180 | -1.7044053 |  -0.0004910 | 0.0223359 |  0.9841 |        0.9841000 | soiltemp_2.5cm_Jul_12pm    | BA   |
+| dandelion (TO)       |  -0.1781216 | -1.2260365 |  -0.0000668 | 0.0210912 |  0.9035 |        0.9841000 | soiltemp_2.5cm_Apr_12pm    | BA   |
+| dandelion (TO)       |   0.0264439 |  0.2249632 |   0.0005884 | 0.0132094 |  0.3798 |        0.7596000 | nlcd_urban_pct             | BO   |
+| dandelion (TO)       |  -0.1317608 | -0.7825541 |  -0.0007820 | 0.0280139 |  0.7562 |        0.9841000 | distance_to_city_center_km | BO   |
+| dandelion (TO)       |   0.0495102 |  0.3167951 |  -0.0017255 | 0.0261570 |  0.3347 |        0.7596000 | soiltemp_2.5cm_Jul_12pm    | BO   |
+| dandelion (TO)       |   0.0566830 |  0.3766265 |  -0.0016718 | 0.0240066 |  0.3146 |        0.7596000 | soiltemp_2.5cm_Apr_12pm    | BO   |
+| dandelion (TO)       |   0.0429612 |  0.3098228 |   0.0005572 | 0.0187321 |  0.3507 |        0.7596000 | nlcd_urban_pct             | LA   |
+| dandelion (TO)       |   0.1619736 |  1.2080728 |   0.0005408 | 0.0178565 |  0.1118 |        0.7596000 | distance_to_city_center_km | LA   |
+| dandelion (TO)       |   0.0498208 |  0.3481755 |  -0.0008254 | 0.0211592 |  0.3337 |        0.7596000 | soiltemp_2.5cm_Jul_12pm    | LA   |
+| dandelion (TO)       |   0.0396090 |  0.2603843 |   0.0008168 | 0.0221953 |  0.3376 |        0.7596000 | soiltemp_2.5cm_Apr_12pm    | LA   |
+| dandelion (TO)       |  -0.0259176 | -0.1965684 |  -0.0002874 | 0.0170011 |  0.5574 |        0.9841000 | nlcd_urban_pct             | MN   |
+| dandelion (TO)       |  -0.0689391 | -0.7453822 |  -0.0003591 | 0.0084652 |  0.7590 |        0.9841000 | distance_to_city_center_km | MN   |
+| dandelion (TO)       |  -0.1163927 | -0.9129396 |   0.0016218 | 0.0167104 |  0.8052 |        0.9841000 | soiltemp_2.5cm_Jul_12pm    | MN   |
+| dandelion (TO)       |   0.1077444 |  0.8015352 |   0.0004217 | 0.0179283 |  0.2205 |        0.7596000 | soiltemp_2.5cm_Apr_12pm    | MN   |
+| dandelion (TO)       |  -0.2898283 | -1.4806284 |   0.0001428 | 0.0383546 |  0.9451 |        0.9841000 | nlcd_urban_pct             | PX   |
+| dandelion (TO)       |  -0.2290678 | -1.2581586 |   0.0012770 | 0.0335186 |  0.9379 |        0.9841000 | distance_to_city_center_km | PX   |
+| dandelion (TO)       |   0.0834362 |  0.2591188 |   0.0014711 | 0.1000599 |  0.3051 |        0.7596000 | soiltemp_2.5cm_Jul_12pm    | PX   |
+| dandelion (TO)       |   0.1422441 |  0.4269951 |   0.0004292 | 0.1103057 |  0.2530 |        0.7596000 | soiltemp_2.5cm_Apr_12pm    | PX   |
+
+Statistics from running 9999 permutations (‘Reps’) via mantel test,
+limited to within city for genomic environmental comparisons. Hypothesis
+for all tests is ‘greater’.
+
+The following function makes the main text figure.
 
 ``` r
-source("R/isolation_by_environment.R")
+ibe_mega_plot()
 ```
-
-| Species              | Observation | Hypothesis | Reps |    Std.Obs | Expectation |  Variance | p-value | Adjusted p-value | City |
-|:---------------------|------------:|:-----------|-----:|-----------:|------------:|----------:|--------:|-----------------:|:-----|
-| Bermuda grass (CD)   |   0.2945315 | greater    | 9999 |  1.9546056 |  -0.0029856 | 0.0231689 |  0.0436 |        0.3180000 | BA   |
-| Bermuda grass (CD)   |  -0.1400172 | greater    | 9999 | -0.8703840 |  -0.0020079 | 0.0251417 |  0.7907 |        0.9405714 | LA   |
-| Bermuda grass (CD)   |   0.3063556 | greater    | 9999 |  2.5384776 |   0.0026243 | 0.0143164 |  0.0128 |        0.3072000 | PX   |
-| crabgrass (DS)       |   0.1864927 | greater    | 9999 |  1.3126728 |   0.0012624 | 0.0199118 |  0.1142 |        0.4568000 | BA   |
-| crabgrass (DS)       |  -0.1472240 | greater    | 9999 | -0.9380806 |   0.0012481 | 0.0250501 |  0.8230 |        0.9405714 | BO   |
-| crabgrass (DS)       |   0.0756460 | greater    | 9999 |  0.5534710 |  -0.0004163 | 0.0188864 |  0.2807 |        0.7984000 | MN   |
-| crabgrass (DS)       |  -0.2825720 | greater    | 9999 | -1.2882736 |  -0.0015179 | 0.0475953 |  0.9188 |        0.9748174 | PX   |
-| horseweed (EC)       |   0.1702378 | greater    | 9999 |  0.9531766 |   0.0005356 | 0.0316977 |  0.1752 |        0.6006857 | BA   |
-| horseweed (EC)       |  -0.1334229 | greater    | 9999 | -0.8704015 |  -0.0005180 | 0.0233154 |  0.8025 |        0.9405714 | LA   |
-| horseweed (EC)       |   0.0106386 | greater    | 9999 |  0.0858594 |  -0.0031786 | 0.0258977 |  0.4472 |        0.8377600 | PX   |
-| prickly lettuce (LS) |   0.1456205 | greater    | 9999 |  0.5659122 |   0.0018806 | 0.0645144 |  0.2994 |        0.7984000 | BA   |
-| prickly lettuce (LS) |  -0.0725099 | greater    | 9999 | -0.4629508 |  -0.0004308 | 0.0242409 |  0.6496 |        0.9405714 | BO   |
-| prickly lettuce (LS) |   0.4413406 | greater    | 9999 |  2.2995233 |   0.0001766 | 0.0368065 |  0.0530 |        0.3180000 | LA   |
-| prickly lettuce (LS) |   0.0845050 | greater    | 9999 |  0.4603606 |  -0.0014208 | 0.0348378 |  0.3343 |        0.8023200 | MN   |
-| prickly lettuce (LS) |  -0.1679338 | greater    | 9999 | -0.8275834 |   0.0000745 | 0.0412133 |  0.7684 |        0.9405714 | PX   |
-| bluegrass (PA)       |  -0.0149195 | greater    | 9999 | -0.1337558 |   0.0007146 | 0.0136622 |  0.5099 |        0.8377600 | BA   |
-| bluegrass (PA)       |  -0.2168452 | greater    | 9999 | -1.6352688 |   0.0023646 | 0.0179697 |  0.9988 |        0.9988000 | BO   |
-| bluegrass (PA)       |  -0.0431048 | greater    | 9999 | -0.2310866 |   0.0020106 | 0.0381153 |  0.5236 |        0.8377600 | LA   |
-| bluegrass (PA)       |   0.3830110 | greater    | 9999 |  1.7229224 |  -0.0029655 | 0.0501869 |  0.0286 |        0.3180000 | PX   |
-| dandelion (TO)       |  -0.0020598 | greater    | 9999 | -0.0233426 |   0.0016880 | 0.0257782 |  0.4539 |        0.8377600 | BA   |
-| dandelion (TO)       |  -0.1937755 | greater    | 9999 | -1.2563379 |  -0.0007760 | 0.0235993 |  0.9342 |        0.9748174 | BO   |
-| dandelion (TO)       |   0.1682753 | greater    | 9999 |  1.2689800 |   0.0003895 | 0.0175032 |  0.1023 |        0.4568000 | LA   |
-| dandelion (TO)       |   0.0036501 | greater    | 9999 |  0.0644593 |  -0.0009095 | 0.0050035 |  0.4581 |        0.8377600 | MN   |
-| dandelion (TO)       |  -0.1823350 | greater    | 9999 | -0.7473653 |   0.0000244 | 0.0595375 |  0.7378 |        0.9405714 | PX   |
-
-Statistics from running 9999 permutations via mantel test, limited to
-within city.
 
 <!-- #### -->
 <!-- #### -->

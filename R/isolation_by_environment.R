@@ -207,6 +207,44 @@ extract_ibe_stats_and_plots <- function(env_var_to_use = "nlcd_urban_pct") {
 }
 
 
+ibe_stats_all <- function(){
+  
+  df <- rbind(
+    readr::read_csv("output/IBE/isolation-by-envt-nlcd_urban_pct-mantel-test.csv"),
+    readr::read_csv("output/IBE/isolation-by-envt-distance_to_city_center_km-mantel-test.csv"),
+    readr::read_csv("output/IBE/isolation-by-envt-soiltemp_2.5cm_Apr_12pm-mantel-test.csv"),
+    readr::read_csv("output/IBE/isolation-by-envt-soiltemp_2.5cm_Jul_12pm-mantel-test.csv")
+  ) %>% arrange(Species)
+  
+  df$padj <- c(
+    p.adjust(df$`p-value`[1:4], method = "BH"), # CD
+    p.adjust(df$`p-value`[5:8], method = "BH"), # DS
+    p.adjust(df$`p-value`[9:12], method = "BH"), # EC
+    p.adjust(df$`p-value`[13:16], method = "BH"), # LS
+    p.adjust(df$`p-value`[17:20], method = "BH"), # PA
+    p.adjust(df$`p-value`[21:24], method = "BH") # TO
+  )
+  
+  colnames(df) <-
+    c(
+      "Species",
+      "Observation",
+      "Hypothesis",
+      "Reps",
+      "Std.Obs",
+      "Expectation",
+      "Variance",
+      "p-value",
+      "Env.Var",
+      "Adjusted p-value"
+    )
+  df <- 
+    df %>%
+    relocate("Adjusted p-value", .before = "Env.Var")
+  readr::write_csv(df, "output/IBE/isolation-by-env-all-mantel-test.csv")
+}
+
+
 ibe_mega_plot <- function(){
   d1 <- readRDS("output/IBE/isolation_by_envt_nlcd_urban_pct_plot_data.rds")
   d1[[1]]$env_var <- "% Urban cover"
@@ -272,4 +310,113 @@ ibe_mega_plot <- function(){
          height = 10,
          width = 8,
          units = "in") 
+}
+
+
+ibe_within_city_stats <- function(){
+
+  # do IBE within city
+  # TODO DRY this up!
+  run_by_envt_var <- function(env_var_to_use = env_var_to_use){
+    
+    CD <- do_ibe(spp_ = "CD", env_var_to_use = env_var_to_use)
+    DS <- do_ibe(spp_ = "DS", env_var_to_use = env_var_to_use)
+    EC <- do_ibe(spp_ = "EC", env_var_to_use = env_var_to_use)
+    LS <- do_ibe(spp_ = "LS", env_var_to_use = env_var_to_use)
+    PA <- do_ibe(spp_ = "PA", env_var_to_use = env_var_to_use)
+    TO <- do_ibe(spp_ = "TO", env_var_to_use = env_var_to_use)
+    
+    # This is so ugly, please someone DRY this up 
+    CD_BA <- c(CD[[1]]$BA$obs, CD[[1]]$BA$alter, CD[[1]]$BA$rep, CD[[1]]$BA$expvar, CD[[1]]$BA$pvalue, env_var_to_use)
+    CD_LA <- c(CD[[1]]$LA$obs, CD[[1]]$LA$alter, CD[[1]]$LA$rep, CD[[1]]$LA$expvar, CD[[1]]$LA$pvalue, env_var_to_use)
+    CD_PX <- c(CD[[1]]$PX$obs, CD[[1]]$PX$alter, CD[[1]]$PX$rep, CD[[1]]$PX$expvar, CD[[1]]$PX$pvalue, env_var_to_use)
+    
+    DS_BA <- c(DS[[1]]$BA$obs, DS[[1]]$BA$alter, DS[[1]]$BA$rep, DS[[1]]$BA$expvar, DS[[1]]$BA$pvalue, env_var_to_use)
+    DS_BO <- c(DS[[1]]$BO$obs, DS[[1]]$BO$alter, DS[[1]]$BO$rep, DS[[1]]$BO$expvar, DS[[1]]$BO$pvalue, env_var_to_use)
+    DS_MN <- c(DS[[1]]$MN$obs, DS[[1]]$MN$alter, DS[[1]]$MN$rep, DS[[1]]$MN$expvar, DS[[1]]$MN$pvalue, env_var_to_use)
+    DS_PX <- c(DS[[1]]$PX$obs, DS[[1]]$PX$alter, DS[[1]]$PX$rep, DS[[1]]$PX$expvar, DS[[1]]$PX$pvalue, env_var_to_use)
+    
+    EC_BA <- c(EC[[1]]$BA$obs, EC[[1]]$BA$alter, EC[[1]]$BA$rep, EC[[1]]$BA$expvar, EC[[1]]$BA$pvalue, env_var_to_use)
+    EC_LA <- c(EC[[1]]$LA$obs, EC[[1]]$LA$alter, EC[[1]]$LA$rep, EC[[1]]$LA$expvar, EC[[1]]$LA$pvalue, env_var_to_use)
+    EC_PX <- c(EC[[1]]$PX$obs, EC[[1]]$PX$alter, EC[[1]]$PX$rep, EC[[1]]$PX$expvar, EC[[1]]$PX$pvalue, env_var_to_use)
+    
+    LS_BA <- c(LS[[1]]$BA$obs, LS[[1]]$BA$alter, LS[[1]]$BA$rep, LS[[1]]$BA$expvar, LS[[1]]$BA$pvalue, env_var_to_use)
+    LS_BO <- c(LS[[1]]$BO$obs, LS[[1]]$BO$alter, LS[[1]]$BO$rep, LS[[1]]$BO$expvar, LS[[1]]$BO$pvalue, env_var_to_use)
+    LS_LA <- c(LS[[1]]$LA$obs, LS[[1]]$LA$alter, LS[[1]]$LA$rep, LS[[1]]$LA$expvar, LS[[1]]$LA$pvalue, env_var_to_use)
+    LS_MN <- c(LS[[1]]$MN$obs, LS[[1]]$MN$alter, LS[[1]]$MN$rep, LS[[1]]$MN$expvar, LS[[1]]$MN$pvalue, env_var_to_use)
+    LS_PX <- c(LS[[1]]$PX$obs, LS[[1]]$PX$alter, LS[[1]]$PX$rep, LS[[1]]$PX$expvar, LS[[1]]$PX$pvalue, env_var_to_use)
+    
+    PA_BA <- c(PA[[1]]$BA$obs, PA[[1]]$BA$alter, PA[[1]]$BA$rep, PA[[1]]$BA$expvar, PA[[1]]$BA$pvalue, env_var_to_use)
+    PA_BO <- c(PA[[1]]$BO$obs, PA[[1]]$BO$alter, PA[[1]]$BO$rep, PA[[1]]$BO$expvar, PA[[1]]$BO$pvalue, env_var_to_use)
+    PA_LA <- c(PA[[1]]$LA$obs, PA[[1]]$LA$alter, PA[[1]]$LA$rep, PA[[1]]$LA$expvar, PA[[1]]$LA$pvalue, env_var_to_use)
+    PA_PX <- c(PA[[1]]$PX$obs, PA[[1]]$PX$alter, PA[[1]]$PX$rep, PA[[1]]$PX$expvar, PA[[1]]$PX$pvalue, env_var_to_use)
+    
+    TO_BA <- c(TO[[1]]$BA$obs, TO[[1]]$BA$alter, TO[[1]]$BA$rep, TO[[1]]$BA$expvar, TO[[1]]$BA$pvalue, env_var_to_use)
+    TO_BO <- c(TO[[1]]$BO$obs, TO[[1]]$BO$alter, TO[[1]]$BO$rep, TO[[1]]$BO$expvar, TO[[1]]$BO$pvalue, env_var_to_use)
+    TO_LA <- c(TO[[1]]$LA$obs, TO[[1]]$LA$alter, TO[[1]]$LA$rep, TO[[1]]$LA$expvar, TO[[1]]$LA$pvalue, env_var_to_use)
+    TO_MN <- c(TO[[1]]$MN$obs, TO[[1]]$MN$alter, TO[[1]]$MN$rep, TO[[1]]$MN$expvar, TO[[1]]$MN$pvalue, env_var_to_use)
+    TO_PX <- c(TO[[1]]$PX$obs, TO[[1]]$PX$alter, TO[[1]]$PX$rep, TO[[1]]$PX$expvar, TO[[1]]$PX$pvalue, env_var_to_use)
+    
+    out <- data.frame(rbind(CD_BA, CD_LA, CD_PX, DS_BA, DS_BO, DS_MN, DS_PX, EC_BA, EC_LA, EC_PX, 
+                            LS_BA, LS_BO, LS_LA, LS_MN, LS_PX, PA_BA, PA_BO, PA_LA, PA_PX, TO_BA, TO_BO, TO_LA, TO_MN, TO_PX))
+    
+  }
+  
+  nlcd_urban_pct_stats <- run_by_envt_var(env_var_to_use = "nlcd_urban_pct") 
+  city_center_stats <- run_by_envt_var(env_var_to_use = "distance_to_city_center_km")
+  jul_stats <- run_by_envt_var(env_var_to_use = "soiltemp_2.5cm_Jul_12pm")
+  apr_stats <- run_by_envt_var(env_var_to_use = "soiltemp_2.5cm_Apr_12pm")
+  
+  nlcd_urban_pct_stats <- nlcd_urban_pct_stats %>% rownames_to_column("Species.City")
+  city_center_stats <- city_center_stats %>% rownames_to_column("Species.City")
+  jul_stats <- jul_stats %>% rownames_to_column("Species.City")
+  apr_stats <-  apr_stats %>% rownames_to_column("Species.City")
+  
+  out_env <- data.frame(rbind(
+    nlcd_urban_pct_stats, city_center_stats, jul_stats, apr_stats
+  )) 
+  
+  out_env <- out_env[order(out_env$`Species.City`),]
+  row.names(out_env) <- NULL
+  
+  out_env$padj <- c(
+    p.adjust(out_env$V7[1:12], method = "BH"), # CD
+    p.adjust(out_env$V7[13:28], method = "BH"), # DS
+    p.adjust(out_env$V7[29:40], method = "BH"), # EC
+    p.adjust(out_env$V7[41:60], method = "BH"), # LS
+    p.adjust(out_env$V7[61:76], method = "BH"), # PA
+    p.adjust(out_env$V7[77:96], method = "BH") # TO
+  )
+  out_env$spp <- c(
+    rep("Bermuda grass (CD)", 12), 
+    rep("crabgrass (DS)", 16), 
+    rep("horseweed (EC)", 12), 
+    rep("prickly lettuce (LS)", 20), 
+    rep("bluegrass (PA)", 16), 
+    rep("dandelion (TO)", 20)
+  )
+  out_env$city <- rep(c(
+    "BA", "LA", "PX", "BA", "BO", "MN", "PX", "BA", "LA", "PX", "BA", "BO", "LA", "MN", "PX", "BA", "BO", "LA", "PX", "BA", "BO", "LA", "MN", "PX"
+  ), each = 4)
+  colnames(out_env) <-
+    c(
+      "ID",
+      "Observation",
+      "Hypothesis",
+      "Reps",
+      "Std.Obs",
+      "Expectation",
+      "Variance",
+      "p-value",
+      "Env.Var",
+      "Adjusted p-value",
+      "Species",
+      "City"
+    )
+  out_env <- 
+    out_env %>% 
+    relocate("Species", .before = "Observation") %>% 
+    relocate("Adjusted p-value", .before = "Env.Var") %>% 
+    select(-ID)
+  readr::write_csv(out_env, "output/IBE/isolation-by-env-within-city-mantel-test.csv")
 }
