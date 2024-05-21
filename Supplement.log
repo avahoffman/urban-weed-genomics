@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.7.19)  14 MAY 2024 11:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.7.19)  21 MAY 2024 10:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -664,38 +664,42 @@ acks[][] \T1/lmr/m/n/10 (+20) with \T1/lmtt/m/n/10 sstacks\T1/lmr/m/n/10 (+20)
 File: Supplement_files/figure-latex/snmf_2-1.pdf Graphic file (type pdf)
 <use Supplement_files/figure-latex/snmf_2-1.pdf>
 Package pdftex.def Info: Supplement_files/figure-latex/snmf_2-1.pdf  used on in
-put line 1748.
+put line 1750.
 (pdftex.def)             Requested size: 465.75307pt x 642.41803pt.
 
-LaTeX Warning: Float too large for page by 15.93245pt on input line 1750.
+LaTeX Warning: Float too large for page by 15.93245pt on input line 1752.
 
-[22] [23 <./Supplement_files/figure-latex/snmf_2-1.pdf>] [24] [25] [26] [27] [2
-8]
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 2513--2513
+[22] [23 <./Supplement_files/figure-latex/snmf_2-1.pdf>] [24] [25] [26]
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
+2133.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/lm/ts1lmtt.fd
+File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) [27] [28]
+Overfull \hbox (13.24358pt too wide) in paragraph at lines 2530--2530
 []\T1/lmtt/m/n/10 ## BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64
 /Resources/lib/libRblas.0.dylib[] 
  []
 
 
-Overfull \hbox (139.24321pt too wide) in paragraph at lines 2513--2513
+Overfull \hbox (139.24321pt too wide) in paragraph at lines 2530--2530
 []\T1/lmtt/m/n/10 ## LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64
 /Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0[] 
  []
 
 [29]
-Underfull \hbox (badness 2837) in paragraph at lines 2540--2553
+Underfull \hbox (badness 2837) in paragraph at lines 2557--2570
 []\T1/lmtt/b/n/10 04-process_radtags\T1/lmr/m/n/10 (+20) : This folder con-tain
 s var-i-ous sub-di-rec-to-ries that cor-re-spond to the
  []
 
 
-Underfull \hbox (badness 1178) in paragraph at lines 2540--2553
+Underfull \hbox (badness 1178) in paragraph at lines 2557--2570
 \T1/lmtt/m/n/10 process_radtags \T1/lmr/m/n/10 (+20) pro-gram that de-mul-ti-pl
 exes and cleans the data. The \T1/lmtt/m/n/10 demux_txt_files
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2577--2582
+Underfull \hbox (badness 10000) in paragraph at lines 2594--2599
 []\T1/lmr/m/n/10 (+20) Catalogs con-tain three files; \T1/lmtt/m/n/10 catalog.a
 lleles.tsv.gz\T1/lmr/m/n/10 (+20) , \T1/lmtt/m/n/10 catalog.snps.tsv.gz\T1/lmr/
 m/n/10 (+20) , and
@@ -703,11 +707,11 @@ m/n/10 (+20) , and
 
 [30] [31] (./Supplement.aux) ) 
 Here is how much of TeX's memory you used:
- 14216 strings out of 478994
- 213988 string characters out of 5858184
- 646072 words of memory out of 5000000
- 31099 multiletter control sequences out of 15000+600000
- 468812 words of font info for 158 fonts, out of 8000000 for 9000
+ 14254 strings out of 478994
+ 214644 string characters out of 5858184
+ 651160 words of memory out of 5000000
+ 31133 multiletter control sequences out of 15000+600000
+ 469119 words of font info for 159 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  85i,6n,88p,832b,479s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{step-6---cstacks} has
@@ -728,11 +732,11 @@ pdfTeX warning (dest): name{step-3---03-clone_filtersh} has been referenced but
 pdfTeX warning (dest): name{step-3---remove-pcr-clones} has been referenced but
  does not exist, replaced by a fixed one
 
-{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/te
-xlive/2021/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2021/tex
-mf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2021/texmf-dist/fo
-nts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2021/texmf-dist/fonts/enc/dv
-ips/lm/lm-ts1.enc}</usr/local/texlive/2021/texmf-dist/fonts/type1/public/lm/lmb
+{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/local/t
+exlive/2021/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2021/te
+xmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2021/texmf-dist/fonts
+/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips
+/lm/lm-mathsy.enc}</usr/local/texlive/2021/texmf-dist/fonts/type1/public/lm/lmb
 x10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></
 usr/local/texlive/2021/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/
 texlive/2021/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/local/texlive/20
@@ -746,10 +750,10 @@ l/texlive/2021/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/
 -dist/fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2021/texmf-dist/font
 s/type1/public/lm/lmtt10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/pu
 blic/lm/lmtti10.pfb>
-Output written on Supplement.pdf (31 pages, 513806 bytes).
+Output written on Supplement.pdf (31 pages, 517707 bytes).
 PDF statistics:
- 613 PDF objects out of 1000 (max. 8388607)
- 546 compressed objects within 6 object streams
+ 616 PDF objects out of 1000 (max. 8388607)
+ 549 compressed objects within 6 object streams
  173 named destinations out of 1000 (max. 500000)
  35106 words of extra memory for PDF output out of 35830 (max. 10000000)
 

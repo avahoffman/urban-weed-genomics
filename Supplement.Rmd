@@ -911,16 +911,17 @@ We ran sNMF as an alternative to Structure to validate the results. We coerced a
 source("R/sNMF.R")
 ```
 
+The following runs sNMF and generates the figure. Note that in the pdf version of this document, the figure might appear on the next page.
+
 ```{r snmf_2, message=FALSE, fig.cap = "Ancestry coefficients obtained using `snmf()`", fig.height=9}
-# Run sNMF if not done already; generate figure
 do_all_sNMF()
 ```
+
+<!-- ![sNMF Results](figures/snmf_all.png)\ -->
 
 ## AMOVA
 
 We performed heirarchical analysis of molecular variance (AMOVA; using GenoDrive) based on the Rho-statistics, which is based on a Ploidy independent Infinite Allele Model.
-
-
 
 ## Local: $F_{IS}$ - Homozygosity within population
 
@@ -1032,6 +1033,20 @@ Variables were extracted from historic datasets and modeled using a microclimate
 This method was chosen because it takes data from global datasets (you can use both historic and current or pick specific years) but then accounts for site-specific variables (we can change the % shade, the slope or aspect of the landscape, and it considers elevation, average cloud cover, etc.). [Here’s the list](https://mrke.github.io/models/MicroClimate-Models) of all the different models/datasets we’re able to can pull from. It's meant for mechanistic niche modeling.
 
 Variables in the file `site_data_DUC_environvars.csv` are all for the monthly averages at noon (12pm - hottest part of the day!) and are extreme. In other words, they are maximums. 
+
+Note that [this Stack Overflow post](https://stackoverflow.com/questions/69639782/installing-gfortran-on-macbook-with-apple-m1-chip-for-use-in-r) is helpful with installing `NicheMapR`.
+
+```{r}
+# devtools::install_github('mrke/NicheMapR')
+# library(NicheMapR)
+# 
+# test_site_coords <- c(sites[1,]$lat, sites[1,]$long)
+# test_distance_to_city_center_km <- sites[1,]$distance_to_city_center_km
+# micros_ <- micro_usa(loc = test_site_coords)
+# 
+# loc <- c(-89.40, 43.07)
+# micro <- micro_global(loc = loc)
+```
 
 ### IBE analysis
 
