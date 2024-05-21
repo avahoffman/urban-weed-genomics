@@ -919,7 +919,7 @@ do_all_sNMF()
 
 ## AMOVA
 
-We performed heirarchical analysis of molecular variance (AMOVA; using GenoDrive) based on the Rho-statistics, which is based on a Ploidy independent Infinite Allele Model.
+We performed hierarchical analysis of molecular variance (AMOVA; using GenoDrive) based on the Rho-statistics, which is based on a Ploidy independent Infinite Allele Model.
 
 ## Local: $F_{IS}$ - Homozygosity within population
 
