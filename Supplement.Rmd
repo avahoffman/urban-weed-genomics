@@ -917,8 +917,6 @@ The following runs sNMF and generates the figure. Note that in the pdf version o
 do_all_sNMF()
 ```
 
-<!-- ![sNMF Results](figures/snmf_all.png)\ -->
-
 ## AMOVA
 
 We performed heirarchical analysis of molecular variance (AMOVA; using GenoDrive) based on the Rho-statistics, which is based on a Ploidy independent Infinite Allele Model.
