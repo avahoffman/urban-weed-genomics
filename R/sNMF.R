@@ -232,18 +232,27 @@ do_all_sNMF <- function(width = 12, height = 12){
     height = height
   )
   
+  quick_theme <- function(plot_) {
+    return(plot_ +
+             theme(
+               plot.margin = unit(c(15, 5, 5, 5), "pt"),
+               strip.text.x = element_text(size = 6)
+             ))
+  }
+  
   # Plot for the supplemental material
   supp_plot <- plot_grid(
-    p3 + theme(plot.margin = unit(c(20, 5, 5, 5), "pt")),
-    p4 + theme(plot.margin = unit(c(20, 5, 5, 5), "pt")),
-    p1 + theme(plot.margin = unit(c(20, 5, 5, 5), "pt")),
-    p2 + theme(plot.margin = unit(c(20, 5, 5, 5), "pt")),
-    p5 + theme(plot.margin = unit(c(20, 5, 5, 5), "pt")),
-    p6 + theme(plot.margin = unit(c(20, 5, 5, 5), "pt")),
+    quick_theme(p3),
+    quick_theme(p4),
+    quick_theme(p1),
+    quick_theme(p2),
+    quick_theme(p5),
+    quick_theme(p6),
     # align = 'h',
     # axis = "b",
     hjust = 0,
     ncol = 1,
+    label_size = 10,
     #rel_widths = c(1, 0.2),
     labels = c(
       "(a) Bermuda grass   K = 3",
