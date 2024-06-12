@@ -1,0 +1,19 @@
+﻿Species,Locus,Source of Variation,Nested in,SSD,d.f.,MS,Var-comp,%Var,F-stat,F-value,P-value
+CD,Overall,Within Population,--,34441.923,136,253.249,253.249,0.235,Rho_st,0.765,--
+CD,,Among Population,City,137243.842,46,2983.562,732.212,0.678,Rho_sc,0.743,0.001
+CD,,Among City ,--,18722.905,2,9361.452,94.155,0.087,Rho_ct,0.087,0.001
+DS,Overall,Within Population,--,39458.473,155,254.571,254.571,0.224,Rho_st,0.776,--
+DS,,Among Population,City,149988.556,65,2307.516,638.534,0.561,Rho_sc,0.715,0.001
+DS,,Among City ,--,47958.337,3,15986.112,244.451,0.215,Rho_ct,0.215,0.001
+EC,Overall,Within Population,--,15832.596,73,216.885,216.885,0.302,Rho_st,0.698,--
+EC,,Among Population,City,44957.413,31,1450.239,391.507,0.546,Rho_sc,0.644,0.001
+EC,,Among City ,--,10368.036,2,5184.018,108.704,0.152,Rho_ct,0.152,0.001
+LS,Overall,Within Population,--,10889.549,120,90.746,90.746,0.308,Rho_st,0.692,--
+LS,,Among Population,City,32081.032,59,543.746,159.914,0.544,Rho_sc,0.638,0.001
+LS,,Among City ,--,8721.721,4,2180.43,43.569,0.148,Rho_ct,0.148,0.001
+PA,Overall,Within Population,--,10167.015,129,78.814,78.814,0.278,Rho_st,0.722,--
+PA,,Among Population,City,30922.681,44,702.788,168.366,0.593,Rho_sc,0.681,0.001
+PA,,Among City ,--,6999.878,4,1749.97,36.75,0.129,Rho_ct,0.129,0.002
+TO,Overall,Within Population,--,15727.071,162,97.081,97.081,0.314,Rho_st,0.686,--
+TO,,Among Population,City,51744.43,71,728.795,202.502,0.655,Rho_sc,0.676,0.001
+TO,,Among City ,--,4740.183,4,1185.046,9.469,0.031,Rho_ct,0.031,0.001
