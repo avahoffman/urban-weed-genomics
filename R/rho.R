@@ -29,7 +29,10 @@ compile_rho_table <- function() {
     reshape2::melt(TO %>% rownames_to_column() %>% mutate(spp = "TO"))
   ) %>% na.omit(value)
   
-  rho_stats[,c(1,3,2,4)]
+  rho_stats <- rho_stats %>% 
+    relocate(spp, .before = rowname) %>% 
+    rename(Species = spp, City1 = rowname, City2 = variable, rho = value) %>% 
+    arrange(Species, -rho)
   
   readr::write_csv(rho_stats, "output/population_stats/rho_all.csv")
 }

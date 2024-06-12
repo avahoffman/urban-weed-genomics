@@ -919,11 +919,13 @@ do_all_sNMF()
 
 ## AMOVA
 
-We performed hierarchical analysis of molecular variance (AMOVA; using GenoDive) based on the Rho-statistics, which is based on a Ploidy independent Infinite Allele Model.
+We performed hierarchical analysis of molecular variance (AMOVA; using GenoDive 3.06) based on the Rho-statistics, which is based on a Ploidy independent Infinite Allele Model. AMOVA is under the "Analysis" menu.
 
 ## Local: $F_{IS}$ - Homozygosity within population
 
 We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate $F_{IS}$. This gives a good estimate of whether there are more homozygotes than expected (positive number) or more heterozygotes than expected (negative number). Notably, GenoDive accommodates polyploids and reduces the bias on $F_{IS}$ by performing a permutation test. By default, there are 999 permutations.
+
+This can be run in GenoDive by selecting Analysis > Hardy-Weinberg > Heterozygosity-based (Nei) method.
 
 ```{r Fis_table_readlines, message=FALSE}
 head(read.csv("output/population_stats/genodive_output_Fis.csv"))
@@ -938,9 +940,12 @@ source("R/rho.R")
 compile_rho_table()
 ```
 
-```{r rho_table_readlines, message=FALSE}
-# LS as an example
-read.csv("output/population_stats/rho_all.csv")
+```{r rho_table_display, echo = FALSE, message = FALSE}
+table_ <-
+  readr::read_csv("output/population_stats/rho_all.csv")
+knitr::kable(table_,
+             format = "simple",
+             caption = "Rho statistics for pairwise comparison between cities.")
 ```
 
 ## Local: $\bar{r}_d$ - Linkage disequilibrium
