@@ -2,12 +2,12 @@
 title: "Supplementary Information" 
 author: "Ava Hoffman, Jenny Cocciardi" 
 output: 
-  pdf_document: 
-    toc: true 
-    number_sections: true
   md_document: 
     variant: gfm
     toc: true
+    number_sections: true
+  pdf_document: 
+    toc: true 
     number_sections: true
 urlcolor: blue 
 editor_options: 
@@ -967,16 +967,6 @@ There is a nice description [here](https://grunwaldlab.github.io/Population_Gene
 ```{r rbarD_code, eval = FALSE, message=FALSE}
 source("R/rbarD.R")
 calc_rbarD()
-```
-
-```{r rbarD_table, echo=FALSE, message=FALSE}
-# Not generating this table since it's in the main text
-table_ <- readr::read_csv("output/population_stats/rbarD.csv")
-knitr::kable(
-  table_,
-  format = "simple",
-  caption = "rbarD statistics for species and cities in this study."
-)
 ```
 
 ```{r rbarD_table_readlines, message=FALSE}
