@@ -47,13 +47,14 @@ plot_sites <-
       theme_void() +
       xlab("% Urban") +
       theme(
-        axis.text.x = element_text(hjust = 0.5, size = 20, vjust = 0.8),
+        axis.text.x = element_text(hjust = 0.5, size = 20, vjust = 0.8, margin = margin(10, 10, 10, 10)),
         axis.title.x.bottom = element_text(hjust = 0.5, size = 20, vjust = 0),
         legend.position = "none"
         ) 
     
     gg
     
+    #####
     # gg +
     #   draw_image(
     #     "images/IMG_5536_BA.LA.U, 70 pct urban_.jpg",
@@ -79,7 +80,7 @@ plot_sites <-
     #            xend = 43, 
     #            y = 1,
     #            yend = 3)
-    
+    #####
     ggsave(paste0("figures/site_image_gradient.png"),
            height = 1,
            width = 20,

@@ -935,6 +935,8 @@ head(read.csv("output/population_stats/genodive_output_Fis.csv"))
 
 We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate pairise $\rho$ (rho) among cities within species. 
 
+This can be run in GenoDive by selecting Pairwise Differentiation from the Analysis menu and selecting the "rho" statistic from the dropdown.  
+
 We used the following script to clean up the results.
 
 ```{r rho_code, eval = FALSE, message=FALSE}

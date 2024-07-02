@@ -42,7 +42,9 @@ compile_rho_table <- function(){
   # Read in the stats only
   rho_vals <- clean_rho_table(delim = "")
   # Get p-values
-  rho_p <- clean_rho_table(delim = "_pval")
+  rho_p <- clean_rho_table(delim = "_pval") %>% rename(`p-value` = rho)
+  
+  rho_stats <- full_join(rho_vals, rho_p)
   
   readr::write_csv(rho_stats, "output/population_stats/rho_all.csv")
 }
