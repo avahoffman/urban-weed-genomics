@@ -933,7 +933,9 @@ head(read.csv("output/population_stats/genodive_output_Fis.csv"))
 
 ## Local: $\rho$ - Pairwise comparison
 
-We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate pairise $\rho$ (rho) among cities within species. We used the following script to clean up the results.
+We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate pairise $\rho$ (rho) among cities within species. 
+
+We used the following script to clean up the results.
 
 ```{r rho_code, eval = FALSE, message=FALSE}
 source("R/rho.R")

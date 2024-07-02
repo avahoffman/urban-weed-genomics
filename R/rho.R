@@ -1,18 +1,18 @@
 require(tidyverse)
 
-compile_rho_table <- function() {
+clean_rho_table <- function(delim = "") {
   CD <-
-    read.csv("output/population_stats/genodive_output_rho_CD.csv") %>% column_to_rownames("X")
+    read.csv(paste0("output/population_stats/genodive_output_rho_CD",delim,".csv")) %>% column_to_rownames("X")
   DS <-
-    read.csv("output/population_stats/genodive_output_rho_DS.csv") %>% column_to_rownames("X")
+    read.csv(paste0("output/population_stats/genodive_output_rho_DS",delim,".csv")) %>% column_to_rownames("X")
   EC <-
-    read.csv("output/population_stats/genodive_output_rho_EC.csv") %>% column_to_rownames("X")
+    read.csv(paste0("output/population_stats/genodive_output_rho_EC",delim,".csv")) %>% column_to_rownames("X")
   LS <-
-    read.csv("output/population_stats/genodive_output_rho_LS.csv") %>% column_to_rownames("X")
+    read.csv(paste0("output/population_stats/genodive_output_rho_LS",delim,".csv")) %>% column_to_rownames("X")
   PA <-
-    read.csv("output/population_stats/genodive_output_rho_PA.csv") %>% column_to_rownames("X")
+    read.csv(paste0("output/population_stats/genodive_output_rho_PA",delim,".csv")) %>% column_to_rownames("X")
   TO <-
-    read.csv("output/population_stats/genodive_output_rho_TO.csv") %>% column_to_rownames("X")
+    read.csv(paste0("output/population_stats/genodive_output_rho_TO",delim,".csv")) %>% column_to_rownames("X")
   
   CD[upper.tri(CD, diag = T)] <-
     DS[upper.tri(DS, diag = T)] <-
@@ -33,6 +33,16 @@ compile_rho_table <- function() {
     relocate(spp, .before = rowname) %>% 
     rename(Species = spp, City1 = rowname, City2 = variable, rho = value) %>% 
     arrange(Species, -rho)
+  
+  return(rho_stats)
+}
+
+
+compile_rho_table <- function(){
+  # Read in the stats only
+  rho_vals <- clean_rho_table(delim = "")
+  # Get p-values
+  rho_p <- clean_rho_table(delim = "_pval")
   
   readr::write_csv(rho_stats, "output/population_stats/rho_all.csv")
 }
