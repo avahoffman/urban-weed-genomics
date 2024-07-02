@@ -46,5 +46,14 @@ compile_rho_table <- function(){
   
   rho_stats <- full_join(rho_vals, rho_p)
   
+  rho_stats$`adjusted p-value` <- round(c(
+    p.adjust(rho_stats$`p-value`[1:3], method = "BH"), # CD
+    p.adjust(rho_stats$`p-value`[4:9], method = "BH"), # DS
+    p.adjust(rho_stats$`p-value`[10:12], method = "BH"), # EC
+    p.adjust(rho_stats$`p-value`[13:22], method = "BH"), # LS
+    p.adjust(rho_stats$`p-value`[23:28], method = "BH"), # PA
+    p.adjust(rho_stats$`p-value`[29:38], method = "BH") # TO
+  ), 4)
+  
   readr::write_csv(rho_stats, "output/population_stats/rho_all.csv")
 }

@@ -1335,23 +1335,29 @@ K, we then selected the best of 10 runs in each K using the
 source("R/sNMF.R")
 ```
 
+The following runs sNMF and generates the figure. Note that in the pdf
+version of this document, the figure might appear on the next page.
+
 ``` r
-# Run sNMF if not done already; generate figure
 do_all_sNMF()
 ```
 
 <figure>
 <img src="Supplement_files/figure-gfm/snmf_2-1.png"
-alt="Ancestry coefficients obtained using snmf()" />
+alt="Ancestry coefficients obtained using snmf(). As with the Structure analysis, horseweed and prickly lettuce appear to have the most population structure. Phoenix crabgrass, horseweed, and prickly lettuce appear unique. In general, sNMF produced larger K for most species, which will create more sensitivity to admixture." />
 <figcaption aria-hidden="true">Ancestry coefficients obtained using
-<code>snmf()</code></figcaption>
+<code>snmf()</code>. As with the Structure analysis, horseweed and
+prickly lettuce appear to have the most population structure. Phoenix
+crabgrass, horseweed, and prickly lettuce appear unique. In general,
+sNMF produced larger K for most species, which will create more
+sensitivity to admixture.</figcaption>
 </figure>
 
 ## 4.8 AMOVA
 
-We performed heirarchical analysis of molecular variance (AMOVA; using
-GenoDrive) based on the Rho-statistics, which is based on a Ploidy
-independent Infinite Allele Model.
+We performed hierarchical analysis of molecular variance (AMOVA; using
+GenoDive 3.06) based on the Rho-statistics, which is based on a Ploidy
+independent Infinite Allele Model. AMOVA is under the “Analysis” menu.
 
 ## 4.9 Local: $F_{IS}$ - Homozygosity within population
 
@@ -1362,73 +1368,80 @@ expected (negative number). Notably, GenoDive accommodates polyploids
 and reduces the bias on $F_{IS}$ by performing a permutation test. By
 default, there are 999 permutations.
 
+This can be run in GenoDive by selecting Analysis \> Hardy-Weinberg \>
+Heterozygosity-based (Nei) method.
+
 ``` r
 head(read.csv("output/population_stats/genodive_output_Fis.csv"))
 ```
 
-    ##   Species Population   Fis
-    ## 1      CD         BA 0.166
-    ## 2      CD         LA 0.186
-    ## 3      CD         PX 0.200
-    ## 4      CD    Overall 0.187
-    ## 5      DS         BA 0.208
-    ## 6      DS         BO 0.252
+    ##   Species Population  n   Fis
+    ## 1      CD         BA 55 0.166
+    ## 2      CD         LA 48 0.186
+    ## 3      CD         PX 82 0.200
+    ## 4      CD    Overall NA 0.187
+    ## 5      DS         BA 55 0.208
+    ## 6      DS         BO 52 0.252
 
 ## 4.10 Local: $\rho$ - Pairwise comparison
 
 We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to
-calculate pairise $\rho$ (rho) among cities within species. We used the
-following script to clean up the results.
+calculate pairise $\rho$ (rho) among cities within species. Note that
+there is a p-value correction for testing multiple cities (species are
+treated as independent, however).
+
+This can be run in GenoDive by selecting Pairwise Differentiation from
+the Analysis menu and selecting the “rho” statistic from the dropdown.
+
+We used the following script to clean up the results.
 
 ``` r
 source("R/rho.R")
 compile_rho_table()
 ```
 
-``` r
-# LS as an example
-read.csv("output/population_stats/rho_all.csv")
-```
+| Species | City1 | City2 |    rho | p-value | adjusted p-value |
+|:--------|:------|:------|-------:|--------:|-----------------:|
+| CD      | PX    | BA    |  0.050 |   0.001 |           0.0010 |
+| CD      | LA    | BA    |  0.046 |   0.001 |           0.0010 |
+| CD      | PX    | LA    |  0.015 |   0.001 |           0.0010 |
+| DS      | MN    | BA    |  0.031 |   0.001 |           0.0015 |
+| DS      | BO    | BA    |  0.018 |   0.001 |           0.0015 |
+| DS      | PX    | BA    |  0.012 |   0.001 |           0.0015 |
+| DS      | MN    | BO    |  0.007 |   0.001 |           0.0015 |
+| DS      | PX    | BO    | -0.002 |   0.875 |           0.9550 |
+| DS      | PX    | MN    | -0.002 |   0.955 |           0.9550 |
+| EC      | PX    | BA    |  0.098 |   0.001 |           0.0010 |
+| EC      | PX    | LA    |  0.087 |   0.001 |           0.0010 |
+| EC      | LA    | BA    |  0.038 |   0.001 |           0.0010 |
+| LS      | PX    | BA    |  0.077 |   0.001 |           0.0011 |
+| LS      | PX    | MN    |  0.069 |   0.001 |           0.0011 |
+| LS      | PX    | LA    |  0.061 |   0.001 |           0.0011 |
+| LS      | PX    | BO    |  0.056 |   0.001 |           0.0011 |
+| LS      | MN    | LA    |  0.039 |   0.001 |           0.0011 |
+| LS      | LA    | BA    |  0.038 |   0.001 |           0.0011 |
+| LS      | BO    | BA    |  0.032 |   0.001 |           0.0011 |
+| LS      | MN    | BO    |  0.021 |   0.001 |           0.0011 |
+| LS      | LA    | BO    |  0.010 |   0.001 |           0.0011 |
+| LS      | MN    | BA    |  0.009 |   0.002 |           0.0020 |
+| PA      | PX    | BO    |  0.028 |   0.001 |           0.0015 |
+| PA      | LA    | BO    |  0.024 |   0.001 |           0.0015 |
+| PA      | PX    | BA    |  0.015 |   0.001 |           0.0015 |
+| PA      | LA    | BA    |  0.011 |   0.001 |           0.0015 |
+| PA      | BO    | BA    |  0.008 |   0.002 |           0.0024 |
+| PA      | PX    | LA    | -0.002 |   0.972 |           0.9720 |
+| TO      | PX    | BA    |  0.023 |   0.001 |           0.0014 |
+| TO      | PX    | MN    |  0.015 |   0.001 |           0.0014 |
+| TO      | PX    | BO    |  0.013 |   0.002 |           0.0025 |
+| TO      | LA    | BA    |  0.011 |   0.001 |           0.0014 |
+| TO      | LA    | BO    |  0.009 |   0.001 |           0.0014 |
+| TO      | MN    | LA    |  0.009 |   0.001 |           0.0014 |
+| TO      | PX    | LA    |  0.009 |   0.027 |           0.0300 |
+| TO      | BO    | BA    |  0.008 |   0.001 |           0.0014 |
+| TO      | MN    | BO    |  0.008 |   0.001 |           0.0014 |
+| TO      | MN    | BA    |  0.001 |   0.098 |           0.0980 |
 
-    ##    rowname spp variable  value
-    ## 1       LA  CD       BA  0.046
-    ## 2       PX  CD       BA  0.050
-    ## 3       PX  CD       LA  0.015
-    ## 4       BO  DS       BA  0.018
-    ## 5       MN  DS       BA  0.031
-    ## 6       PX  DS       BA  0.012
-    ## 7       MN  DS       BO  0.007
-    ## 8       PX  DS       BO -0.002
-    ## 9       PX  DS       MN -0.002
-    ## 10      LA  EC       BA  0.038
-    ## 11      PX  EC       BA  0.098
-    ## 12      PX  EC       LA  0.087
-    ## 13      BO  LS       BA  0.032
-    ## 14      LA  LS       BA  0.038
-    ## 15      MN  LS       BA  0.009
-    ## 16      PX  LS       BA  0.077
-    ## 17      LA  LS       BO  0.010
-    ## 18      MN  LS       BO  0.021
-    ## 19      PX  LS       BO  0.056
-    ## 20      MN  LS       LA  0.039
-    ## 21      PX  LS       LA  0.061
-    ## 22      PX  LS       MN  0.069
-    ## 23      BO  PA       BA  0.008
-    ## 24      LA  PA       BA  0.011
-    ## 25      PX  PA       BA  0.015
-    ## 26      LA  PA       BO  0.024
-    ## 27      PX  PA       BO  0.028
-    ## 28      PX  PA       LA -0.002
-    ## 29      BO  TO       BA  0.008
-    ## 30      LA  TO       BA  0.011
-    ## 31      MN  TO       BA  0.001
-    ## 32      PX  TO       BA  0.023
-    ## 33      LA  TO       BO  0.009
-    ## 34      MN  TO       BO  0.008
-    ## 35      PX  TO       BO  0.013
-    ## 36      MN  TO       LA  0.009
-    ## 37      PX  TO       LA  0.009
-    ## 38      PX  TO       MN  0.015
+Rho statistics for pairwise comparison between cities.
 
 ## 4.11 Local: $\bar{r}_d$ - Linkage disequilibrium
 
@@ -1614,6 +1627,22 @@ mechanistic niche modeling.
 Variables in the file `site_data_DUC_environvars.csv` are all for the
 monthly averages at noon (12pm - hottest part of the day!) and are
 extreme. In other words, they are maximums.
+
+Note that [this Stack Overflow
+post](https://stackoverflow.com/questions/69639782/installing-gfortran-on-macbook-with-apple-m1-chip-for-use-in-r)
+is helpful with installing `NicheMapR`.
+
+``` r
+# devtools::install_github('mrke/NicheMapR')
+# library(NicheMapR)
+# 
+# test_site_coords <- c(sites[1,]$lat, sites[1,]$long)
+# test_distance_to_city_center_km <- sites[1,]$distance_to_city_center_km
+# micros_ <- micro_usa(loc = test_site_coords)
+# 
+# loc <- c(-89.40, 43.07)
+# micro <- micro_global(loc = loc)
+```
 
 ### 4.13.2 IBE analysis
 
@@ -1810,13 +1839,13 @@ ibe_mega_plot()
 sessionInfo()
 ```
 
-    ## R version 4.3.2 (2023-10-31)
-    ## Platform: aarch64-apple-darwin20 (64-bit)
+    ## R version 4.4.0 (2024-04-24)
+    ## Platform: aarch64-apple-darwin20
     ## Running under: macOS Sonoma 14.4.1
     ## 
     ## Matrix products: default
-    ## BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-    ## LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+    ## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+    ## LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
     ## 
     ## locale:
     ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1828,32 +1857,32 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ##  [1] adegenet_2.1.10   ade4_1.7-22       LEA_3.12.2        ggh4x_0.2.6      
+    ##  [1] adegenet_2.1.10   ade4_1.7-22       LEA_3.16.0        ggh4x_0.2.8      
     ##  [5] here_1.0.1        lubridate_1.9.3   forcats_1.0.0     purrr_1.0.2      
-    ##  [9] tibble_3.2.1      tidyverse_2.0.0   polysat_1.7-7     cowplot_1.1.2    
-    ## [13] viridis_0.6.4     viridisLite_0.4.2 raster_3.6-26     sp_2.1-2         
-    ## [17] stringr_1.5.1     readr_2.1.4       polyRAD_2.0.0     dplyr_1.1.4      
-    ## [21] magrittr_2.0.3    tidyr_1.3.0       ggplot2_3.4.4    
+    ##  [9] tibble_3.2.1      tidyverse_2.0.0   polysat_1.7-7     cowplot_1.1.3    
+    ## [13] viridis_0.6.5     viridisLite_0.4.2 raster_3.6-26     sp_2.1-4         
+    ## [17] stringr_1.5.1     readr_2.1.5       polyRAD_2.0.0     dplyr_1.1.4      
+    ## [21] magrittr_2.0.3    tidyr_1.3.1       ggplot2_3.5.1    
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] tidyselect_1.2.0  farver_2.1.1      fastmap_1.1.1     promises_1.2.1   
-    ##  [5] digest_0.6.33     timechange_0.2.0  mime_0.12         lifecycle_1.0.4  
-    ##  [9] cluster_2.1.4     ellipsis_0.3.2    terra_1.7-65      compiler_4.3.2   
-    ## [13] rlang_1.1.2       tools_4.3.2       igraph_1.6.0      utf8_1.2.4       
-    ## [17] yaml_2.3.8        knitr_1.45        labeling_0.4.3    bit_4.0.5        
-    ## [21] plyr_1.8.9        withr_2.5.2       grid_4.3.2        fansi_1.0.6      
-    ## [25] xtable_1.8-4      colorspace_2.1-0  scales_1.3.0      MASS_7.3-60      
-    ## [29] cli_3.6.2         vegan_2.6-4       rmarkdown_2.25    crayon_1.5.2     
-    ## [33] ragg_1.2.7        generics_0.1.3    rstudioapi_0.15.0 reshape2_1.4.4   
-    ## [37] tzdb_0.4.0        ape_5.7-1         splines_4.3.2     parallel_4.3.2   
-    ## [41] vctrs_0.6.5       Matrix_1.6-5      hms_1.1.3         bit64_4.0.5      
-    ## [45] seqinr_4.2-36     systemfonts_1.0.5 glue_1.6.2        codetools_0.2-19 
-    ## [49] stringi_1.8.3     gtable_0.3.4      later_1.3.2       munsell_0.5.0    
-    ## [53] pillar_1.9.0      htmltools_0.5.7   R6_2.5.1          textshaping_0.3.7
-    ## [57] rprojroot_2.0.4   vroom_1.6.5       evaluate_0.23     shiny_1.8.0      
-    ## [61] lattice_0.21-9    highr_0.10        httpuv_1.6.14     Rcpp_1.0.11      
-    ## [65] fastmatch_1.1-4   permute_0.9-7     gridExtra_2.3     nlme_3.1-163     
-    ## [69] mgcv_1.9-0        xfun_0.41         pkgconfig_2.0.3
+    ##  [1] tidyselect_1.2.1  farver_2.1.2      fastmap_1.2.0     promises_1.3.0   
+    ##  [5] digest_0.6.35     timechange_0.3.0  mime_0.12         lifecycle_1.0.4  
+    ##  [9] cluster_2.1.6     terra_1.7-78      compiler_4.4.0    rlang_1.1.4      
+    ## [13] tools_4.4.0       igraph_2.0.3      utf8_1.2.4        yaml_2.3.8       
+    ## [17] knitr_1.47        labeling_0.4.3    bit_4.0.5         plyr_1.8.9       
+    ## [21] withr_3.0.0       grid_4.4.0        fansi_1.0.6       xtable_1.8-4     
+    ## [25] colorspace_2.1-0  scales_1.3.0      MASS_7.3-60.2     cli_3.6.2        
+    ## [29] rmarkdown_2.27    vegan_2.6-6.1     crayon_1.5.2      ragg_1.3.2       
+    ## [33] generics_0.1.3    rstudioapi_0.16.0 reshape2_1.4.4    tzdb_0.4.0       
+    ## [37] ape_5.8           splines_4.4.0     parallel_4.4.0    vctrs_0.6.5      
+    ## [41] Matrix_1.7-0      hms_1.1.3         bit64_4.0.5       seqinr_4.2-36    
+    ## [45] systemfonts_1.1.0 glue_1.7.0        codetools_0.2-20  stringi_1.8.4    
+    ## [49] gtable_0.3.5      later_1.3.2       munsell_0.5.1     pillar_1.9.0     
+    ## [53] htmltools_0.5.8.1 R6_2.5.1          textshaping_0.4.0 rprojroot_2.0.4  
+    ## [57] vroom_1.6.5       evaluate_0.24.0   shiny_1.8.1.1     lattice_0.22-6   
+    ## [61] highr_0.11        httpuv_1.6.15     Rcpp_1.0.12       fastmatch_1.1-4  
+    ## [65] permute_0.9-7     gridExtra_2.3     nlme_3.1-165      mgcv_1.9-1       
+    ## [69] xfun_0.44         pkgconfig_2.0.3
 
 ## 5.2 File Organization
 

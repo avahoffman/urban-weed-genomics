@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.7.19)  12 JUN 2024 11:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.7.19)  2 JUL 2024 12:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -694,41 +694,41 @@ put line 1703.
 (pdftex.def)             Requested size: 465.75307pt x 498.87775pt.
 [22] [23 <./Supplement_files/figure-latex/snmf_2-1.pdf>] [24] [25] [26]
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-2090.
+2096.
 (/usr/local/texlive/2021/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [27] [28]
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 2487--2487
+Overfull \hbox (13.24358pt too wide) in paragraph at lines 2493--2493
 []\T1/lmtt/m/n/10 ## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64
 /Resources/lib/libRblas.0.dylib[] 
  []
 
 
-Overfull \hbox (139.24321pt too wide) in paragraph at lines 2487--2487
+Overfull \hbox (139.24321pt too wide) in paragraph at lines 2493--2493
 []\T1/lmtt/m/n/10 ## LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64
 /Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0[] 
  []
 
 [29]
-Underfull \hbox (badness 2837) in paragraph at lines 2513--2526
+Underfull \hbox (badness 2837) in paragraph at lines 2519--2532
 []\T1/lmtt/b/n/10 04-process_radtags\T1/lmr/m/n/10 (+20) : This folder con-tain
 s var-i-ous sub-di-rec-to-ries that cor-re-spond to the
  []
 
 
-Underfull \hbox (badness 1178) in paragraph at lines 2513--2526
+Underfull \hbox (badness 1178) in paragraph at lines 2519--2532
 \T1/lmtt/m/n/10 process_radtags \T1/lmr/m/n/10 (+20) pro-gram that de-mul-ti-pl
 exes and cleans the data. The \T1/lmtt/m/n/10 demux_txt_files
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 2550--2555
+[30]
+Underfull \hbox (badness 10000) in paragraph at lines 2556--2561
 []\T1/lmr/m/n/10 (+20) Catalogs con-tain three files; \T1/lmtt/m/n/10 catalog.a
 lleles.tsv.gz\T1/lmr/m/n/10 (+20) , \T1/lmtt/m/n/10 catalog.snps.tsv.gz\T1/lmr/
 m/n/10 (+20) , and
  []
 
-[30] [31] (./Supplement.aux)
+[31] (./Supplement.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -736,7 +736,7 @@ LaTeX Warning: There were undefined references.
 Here is how much of TeX's memory you used:
  14206 strings out of 478994
  213092 string characters out of 5858184
- 656283 words of memory out of 5000000
+ 657811 words of memory out of 5000000
  31140 multiletter control sequences out of 15000+600000
  469190 words of font info for 160 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -759,7 +759,7 @@ e/2021/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2021/tex
 mf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2021/texmf-dist/fo
 nts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/
 public/lm/lmtti10.pfb>
-Output written on Supplement.pdf (31 pages, 515502 bytes).
+Output written on Supplement.pdf (31 pages, 515765 bytes).
 PDF statistics:
  542 PDF objects out of 1000 (max. 8388607)
  476 compressed objects within 5 object streams
