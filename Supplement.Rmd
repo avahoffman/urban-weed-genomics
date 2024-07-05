@@ -2,12 +2,12 @@
 title: "Supplementary Information" 
 author: "Ava Hoffman, Jenny Cocciardi" 
 output: 
+  pdf_document: 
+    toc: true 
+    number_sections: true
   md_document: 
     variant: gfm
     toc: true
-    number_sections: true
-  pdf_document: 
-    toc: true 
     number_sections: true
 urlcolor: blue 
 editor_options: 
@@ -882,27 +882,6 @@ source("R/plot_structure.R")
 make_structure_multi_plot()
 ```
 
-## Correlation between Urbanness and Admixture
-
-We tested the relationship between urbanness and the extent of admixture by running a correlation test between percent impervious surface and $1 - sd(K_i)$, where $sd(K_i)$ represents the standard deviation of the cluster assignment values for any given individual. We used the `cor.test()` function.
-
-```{r admix_cor_1, message=FALSE}
-source("R/plot_structure.R")
-```
-
-```{r admix_cor_2, eval = FALSE, message=FALSE}
-run_make_urban_admix_corr()
-```
-
-```{r admix_cor_3, echo = FALSE, message = FALSE}
-table_ <-
-  readr::read_csv("output/structure/urban_admix_cor.csv")
-table_ <- table_[,-7]
-knitr::kable(table_,
-             format = "simple",
-             caption = "Pearson’s product-moment correlation test results comparing percent impervious surface and extent of admixture.")
-```
-
 ## Validation of Structure results with sNMF
 
 We ran sNMF as an alternative to Structure to validate the results. We coerced all polyploid data to diploid data to make the file types compatible with the sNMF function in R. The snmf() function computes an entropy criterion that evaluates the quality of fit of the statistical model to the data by using a cross-validation technique. We plotted the cross-entropy criterion for K=[2:10] for all species. Using the best K, we then selected the best of 10 runs in each K using the `which.min()` function.
@@ -1111,6 +1090,27 @@ ibe_mega_plot()
 <!-- #### -->
 <!-- #### -->
 <!-- #### -->
+
+## Correlation between Urbanness and Admixture
+
+We tested the relationship between urbanness and the extent of admixture by running a correlation test between percent impervious surface and $1 - sd(K_i)$, where $sd(K_i)$ represents the standard deviation of the cluster assignment values for any given individual. We used the `cor.test()` function.
+
+```{r admix_cor_1, message=FALSE}
+source("R/plot_structure.R")
+```
+
+```{r admix_cor_2, eval = FALSE, message=FALSE}
+run_make_urban_admix_corr()
+```
+
+```{r admix_cor_3, echo = FALSE, message = FALSE}
+table_ <-
+  readr::read_csv("output/structure/urban_admix_cor.csv")
+table_ <- table_[,-7]
+knitr::kable(table_,
+             format = "simple",
+             caption = "Pearson’s product-moment correlation test results comparing percent impervious surface and extent of admixture.")
+```
 
 # Appendix {#appendix-books}
 

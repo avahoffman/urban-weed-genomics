@@ -59,21 +59,21 @@
     results](#continental-population-structure-structure-software-results)
   - [4.5 Continental population structure: Structure
     plots](#continental-population-structure-structure-plots)
-  - [4.6 Correlation between Urbanness and
-    Admixture](#correlation-between-urbanness-and-admixture)
-  - [4.7 Validation of Structure results with
+  - [4.6 Validation of Structure results with
     sNMF](#validation-of-structure-results-with-snmf)
-  - [4.8 AMOVA](#amova)
-  - [4.9 Local: $F_{IS}$ - Homozygosity within
+  - [4.7 AMOVA](#amova)
+  - [4.8 Local: $F_{IS}$ - Homozygosity within
     population](#local-f_is---homozygosity-within-population)
-  - [4.10 Local: $\rho$ - Pairwise
+  - [4.9 Local: $\rho$ - Pairwise
     comparison](#local-rho---pairwise-comparison)
-  - [4.11 Local: $\bar{r}_d$ - Linkage
+  - [4.10 Local: $\bar{r}_d$ - Linkage
     disequilibrium](#local-barr_d---linkage-disequilibrium)
-  - [4.12 Isolation by distance](#isolation-by-distance)
-  - [4.13 Isolation by environment](#isolation-by-environment)
-    - [4.13.1 Environmental data](#environmental-data)
-    - [4.13.2 IBE analysis](#ibe-analysis)
+  - [4.11 Isolation by distance](#isolation-by-distance)
+  - [4.12 Isolation by environment](#isolation-by-environment)
+    - [4.12.1 Environmental data](#environmental-data)
+    - [4.12.2 IBE analysis](#ibe-analysis)
+  - [4.13 Correlation between Urbanness and
+    Admixture](#correlation-between-urbanness-and-admixture)
 - [5 Appendix](#appendix-books)
   - [5.1 `SessionInfo()`](#sessioninfo)
   - [5.2 File Organization](#file-organization-bookmark_tabs)
@@ -1292,35 +1292,7 @@ source("R/plot_structure.R")
 make_structure_multi_plot()
 ```
 
-## 4.6 Correlation between Urbanness and Admixture
-
-We tested the relationship between urbanness and the extent of admixture
-by running a correlation test between percent impervious surface and
-$1 - sd(K_i)$, where $sd(K_i)$ represents the standard deviation of the
-cluster assignment values for any given individual. We used the
-`cor.test()` function.
-
-``` r
-source("R/plot_structure.R")
-```
-
-``` r
-run_make_urban_admix_corr()
-```
-
-|   estimate |  statistic |   p.value | parameter |   conf.low | conf.high | alternative |
-|-----------:|-----------:|----------:|----------:|-----------:|----------:|:------------|
-| -0.1107532 | -1.5279720 | 0.1282002 |       188 | -0.2491780 | 0.0321063 | two.sided   |
-| -0.0460642 | -0.6901589 | 0.4908087 |       224 | -0.1755096 | 0.0849468 | two.sided   |
-| -0.1165779 | -1.2084826 | 0.2295507 |       106 | -0.2989656 | 0.0740269 | two.sided   |
-| -0.0569564 | -0.7780453 | 0.4375309 |       186 | -0.1984491 | 0.0868618 | two.sided   |
-| -0.0498366 | -0.6731691 | 0.5016936 |       182 | -0.1931055 | 0.0955130 | two.sided   |
-|  0.0285504 |  0.4443212 | 0.6572074 |       242 | -0.0973846 | 0.1535855 | two.sided   |
-
-Pearson’s product-moment correlation test results comparing percent
-impervious surface and extent of admixture.
-
-## 4.7 Validation of Structure results with sNMF
+## 4.6 Validation of Structure results with sNMF
 
 We ran sNMF as an alternative to Structure to validate the results. We
 coerced all polyploid data to diploid data to make the file types
@@ -1353,13 +1325,13 @@ sNMF produced larger K for most species, which will create more
 sensitivity to admixture.</figcaption>
 </figure>
 
-## 4.8 AMOVA
+## 4.7 AMOVA
 
 We performed hierarchical analysis of molecular variance (AMOVA; using
 GenoDive 3.06) based on the Rho-statistics, which is based on a Ploidy
 independent Infinite Allele Model. AMOVA is under the “Analysis” menu.
 
-## 4.9 Local: $F_{IS}$ - Homozygosity within population
+## 4.8 Local: $F_{IS}$ - Homozygosity within population
 
 We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to
 calculate $F_{IS}$. This gives a good estimate of whether there are more
@@ -1383,7 +1355,7 @@ head(read.csv("output/population_stats/genodive_output_Fis.csv"))
     ## 5      DS         BA 55 0.208
     ## 6      DS         BO 52 0.252
 
-## 4.10 Local: $\rho$ - Pairwise comparison
+## 4.9 Local: $\rho$ - Pairwise comparison
 
 We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to
 calculate pairise $\rho$ (rho) among cities within species. Note that
@@ -1443,7 +1415,7 @@ compile_rho_table()
 
 Rho statistics for pairwise comparison between cities.
 
-## 4.11 Local: $\bar{r}_d$ - Linkage disequilibrium
+## 4.10 Local: $\bar{r}_d$ - Linkage disequilibrium
 
 We used `poppr::ia()` to calculate the standardized index of association
 of loci in the dataset ($\bar{r}_d$ or `rbarD`). We use the standardized
@@ -1490,7 +1462,7 @@ head(read.csv("output/population_stats/rbarD.csv"))
     ## 5  DS   BO 52 896.0906 0.001 0.3398873 0.001
     ## 6  DS   MN 81 578.2494 0.001 0.2192197 0.001
 
-## 4.12 Isolation by distance
+## 4.11 Isolation by distance
 
 We assessed isolation by distance by comparing genetic distance to
 geographic distance. Specifically, we took the traditional approach of
@@ -1566,9 +1538,9 @@ Statistics from running 9999 permutations (‘Reps’) via mantel test,
 limited to within city for genomic versus distance comparisons.
 Hypothesis for all tests is ‘greater’.
 
-## 4.13 Isolation by environment
+## 4.12 Isolation by environment
 
-### 4.13.1 Environmental data
+### 4.12.1 Environmental data
 
 Environmental variables include the monthly averages in the middle of
 the day for:
@@ -1614,7 +1586,7 @@ is helpful with installing `NicheMapR`.
 # micro <- micro_global(loc = loc)
 ```
 
-### 4.13.2 IBE analysis
+### 4.12.2 IBE analysis
 
 We assessed isolation by environment by comparing genetic distance to
 environmental distance, or the difference among sites. Genetic distance
@@ -1800,6 +1772,34 @@ ibe_mega_plot()
 <!-- #### -->
 <!-- #### -->
 <!-- #### -->
+
+## 4.13 Correlation between Urbanness and Admixture
+
+We tested the relationship between urbanness and the extent of admixture
+by running a correlation test between percent impervious surface and
+$1 - sd(K_i)$, where $sd(K_i)$ represents the standard deviation of the
+cluster assignment values for any given individual. We used the
+`cor.test()` function.
+
+``` r
+source("R/plot_structure.R")
+```
+
+``` r
+run_make_urban_admix_corr()
+```
+
+|   estimate |  statistic |   p.value | parameter |   conf.low | conf.high | alternative |
+|-----------:|-----------:|----------:|----------:|-----------:|----------:|:------------|
+| -0.1107532 | -1.5279720 | 0.1282002 |       188 | -0.2491780 | 0.0321063 | two.sided   |
+| -0.0460642 | -0.6901589 | 0.4908087 |       224 | -0.1755096 | 0.0849468 | two.sided   |
+| -0.1165779 | -1.2084826 | 0.2295507 |       106 | -0.2989656 | 0.0740269 | two.sided   |
+| -0.0569564 | -0.7780453 | 0.4375309 |       186 | -0.1984491 | 0.0868618 | two.sided   |
+| -0.0498366 | -0.6731691 | 0.5016936 |       182 | -0.1931055 | 0.0955130 | two.sided   |
+|  0.0285504 |  0.4443212 | 0.6572074 |       242 | -0.0973846 | 0.1535855 | two.sided   |
+
+Pearson’s product-moment correlation test results comparing percent
+impervious surface and extent of admixture.
 
 # 5 Appendix
 
