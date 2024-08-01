@@ -8,7 +8,7 @@ dat_ <-
   tidyr::unite("site", c(city, site, mgmt), remove = F) %>% 
   dplyr::mutate("site" = as.numeric(factor(site)))
 
-# Look at combos
+# Optional, Look at combos to gut check
 dat_ %>% select(city, site) %>% distinct() %>% arrange(city, site) %>% print(n = 100)
 
 dat_ <- dat_ %>% 

@@ -890,10 +890,28 @@ We ran sNMF as an alternative to Structure to validate the results. We coerced a
 source("R/sNMF.R")
 ```
 
-The following runs sNMF and generates the figure. Note that in the pdf version of this document, the figure might appear on the next page.
+The following runs sNMF and generates the figure. Note that in the pdf version of this document, the figure might appear on the next pages.
 
 ```{r snmf_2, message=FALSE, fig.cap = "Ancestry coefficients obtained using `snmf()`. As with the Structure analysis, horseweed and prickly lettuce appear to have the most population structure. Phoenix crabgrass, horseweed, and prickly lettuce appear unique. In general, sNMF produced larger K for most species, which will create more sensitivity to admixture.", fig.height=7}
 do_all_sNMF()
+```
+
+## Principal Components Analysis Plots
+
+The following creates PCA plots from polyRAD data.
+
+```{r plot_pca_1, message=FALSE}
+source("R/plot_pca.R")
+```
+
+```{r plot_pca_2, eval = FALSE, message=FALSE}
+plot_pcas()
+```
+
+In addition to coloring points by city, we also colored points by NLCD Urban Cover %. Note that in the pdf version of this document, the figure might appear on the next pages.
+
+```{r plot_pca_3, message=FALSE, fig.cap = "PCA colored by percent urban cover. Points in yellow are individuals from sites with >50% impervious cover. Black points are individuals from sites with <=50% impervious cover."}
+plot_pcas_urbanness()
 ```
 
 ## AMOVA

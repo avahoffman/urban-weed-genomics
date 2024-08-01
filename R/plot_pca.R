@@ -4,6 +4,7 @@ library(here)
 library(readr)
 library(ggplot2)
 library(cowplot)
+library(tidyverse)
 
 
 make_pca_plot <- function(spp_, species_name) {
@@ -66,7 +67,6 @@ make_pca_plot <- function(spp_, species_name) {
 }
 
 
-
 plot_pcas <- function() {
   # Make plots
   p1 <- make_pca_plot("CD", "Bermuda grass")
@@ -110,4 +110,93 @@ plot_pcas <- function() {
   
 }
 
-plot_pcas()
+
+make_pca_plot_urbanness <- function(spp_, species_name) {
+  pca_dat <-
+    read_csv(paste0("output/pca/", spp_, "_IteratePopStructPCA.csv")) %>% 
+    rename(sample = V1, city = V2)
+  
+  # Get the site info
+  site_info <-
+    read_csv(paste0(here(),
+                    "/data/site_data_urban_cov.csv")) %>%
+    dplyr::select(site_abbv, city, management_type, nlcd_urban_pct) %>%
+    mutate(site_abbv = str_replace(site_abbv, " ", "_"))
+  
+  pca_dat <- pca_dat %>% tidyr::separate(
+    sample,
+    into = c("spp", "ct", "site_abbv", "management_type", "id"),
+    sep = "\\.",
+    remove = F
+  ) %>%
+    left_join(site_info,
+              by = c("city", "site_abbv", "management_type")) %>% 
+    mutate(nlcd_urban_pct = case_when(
+      nlcd_urban_pct > 50 ~ 100,
+      nlcd_urban_pct <= 50 ~ 0
+    ))
+  
+  gg <- ggplot() +
+    geom_point(
+      data = pca_dat,
+      mapping = aes(
+        x = PC1,
+        y = PC2,
+        fill = nlcd_urban_pct,
+      ),
+      shape = 21,
+      size = 2
+    ) +
+    scale_fill_viridis_c(option = "A", limits = c(0, 100)) +
+    guides(fill = guide_legend(title = "")) +
+    theme_bw() +
+    theme(legend.position = "none",
+          legend.text = element_text(size = 10)) +
+    ggtitle(paste0("", species_name))
+  
+  # Save plot
+  ggsave(
+    paste0("figures/pca/pca_urbanness_", spp_, ".png"),
+    dpi = "print",
+    width = 4,
+    height = 4
+  )
+  
+  return(gg)
+  
+}
+
+
+plot_pcas_urbanness <- function() {
+  # Make plots
+  p1 <- make_pca_plot_urbanness("CD", "Bermuda grass")
+  p2 <- make_pca_plot_urbanness("DS", "crabgrass")
+  p3 <- make_pca_plot_urbanness("EC", "horseweed")
+  p4 <- make_pca_plot_urbanness("LS", "prickly lettuce")
+  p5 <- make_pca_plot_urbanness("PA", "bluegrass")
+  p6 <- make_pca_plot_urbanness("TO", "dandelion")
+  
+  mega_plot <- plot_grid(
+    p1,
+    p2,
+    p3,
+    p4,
+    p5,
+    p6,
+    align = 'vh',
+    #hjust = -1,
+    ncol = 3,
+    rel_heights = c(1, 1, 1),
+    labels = c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)")
+  )
+  mega_plot
+  setwd(here::here())
+  ggsave(
+    paste0("figures/pca/pca_urbanness_all.png"),
+    dpi = "print",
+    width = 7,
+    height = 5
+  )
+  
+  return(mega_plot)
+}
