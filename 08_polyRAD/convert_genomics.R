@@ -3,9 +3,9 @@
 #' This allowed us to remove any samples with very low coverage that might
 #' interfere with downstream applications like Structure.
 
-library(polyRAD)
-library(readr)
-library(stringr)
+library(polyRAD) # HindHe SubsetByTaxon Export_adegenet_genind Export_Structure
+library(readr) # read_rds write_rds
+library(stringr) # str_extract %>%
 
 
 check_coverage <- function(spp_) {
@@ -26,10 +26,17 @@ check_coverage <- function(spp_) {
 }
 
 
-convert_spp <- function(spp_){
+#' Convert RAD output to other formats
+#'
+#' @param spp_ two letter string representing the species (e.g., "CD")
+#'
+#' @return NULL (files are written)
+#'
+#' @examples convert_spp(spp_ = "EC")
+convert_spp <- function(spp_) {
   # Read in polyRAD output (RADdata object)
   wd_ <- paste0("SNP_data/", spp_, "/", spp_)
-  polyrad_dat <- read_rds(paste0(wd_,"_estimatedgeno_RADdata.rds"))
+  polyrad_dat <- read_rds(paste0(wd_, "_estimatedgeno_RADdata.rds"))
   
   # ! Remove the following low coverage or outlying samples.
   lowcov <- c(
@@ -58,9 +65,9 @@ convert_spp <- function(spp_){
     "TO.BO.R4.U.2",
     "TO.BO.R2.U.2"
   )
-
+  
   # Drop these samples
-  keepsamples <- names(polyrad_dat$taxaPloidy)[!(names(polyrad_dat$taxaPloidy) %in% lowcov) ]
+  keepsamples <- names(polyrad_dat$taxaPloidy)[!(names(polyrad_dat$taxaPloidy) %in% lowcov)]
   polyrad_dat <- SubsetByTaxon(polyrad_dat, keepsamples)
   
   # Save genind format file if file isn't there already
@@ -68,17 +75,23 @@ convert_spp <- function(spp_){
     genind_format_dat <-
       Export_adegenet_genind(polyrad_dat)
     # Extract population information (two character abbreviation)
-    popmap <- stringr::str_extract(names(polyrad_dat$taxaPloidy), "(?<=...)[:graph:]{2,4}(?=\\..)")
+    popmap <- stringr::str_extract(names(polyrad_dat$taxaPloidy),
+                                   "(?<=...)[:graph:]{2,4}(?=\\..)")
     pop(genind_format_dat) <- popmap
-    write_rds(genind_format_dat, paste0(wd_, "_estimatedgeno_genind.rds"))
+    write_rds(genind_format_dat,
+              paste0(wd_, "_estimatedgeno_genind.rds"))
   }
   
   # Save structure format file
   if (!file.exists(paste0(wd_, "_estimatedgeno.structure"))) {
     # Create structure file and re-import it
     Export_Structure(polyrad_dat, file = paste0(wd_, "_estimatedgeno.structure"))
-    struct_ <- 
-      read.delim(paste0(wd_, "_estimatedgeno.structure"), sep = "\t", check.names = F)
+    struct_ <-
+      read.delim(
+        paste0(wd_, "_estimatedgeno.structure"),
+        sep = "\t",
+        check.names = F
+      )
     colnames(struct_)[1] <- "V1"
     
     # Extract population information
@@ -86,26 +99,34 @@ convert_spp <- function(spp_){
     struct_ <- struct_ %>% dplyr::relocate(pop, .after = V1)
     
     # Recode (Structure wants integers)
-    struct_w_pop <- struct_ %>% 
-      dplyr::mutate(pop = dplyr::case_when(
-        pop == "BA" ~ 1,
-        pop == "BO" ~ 2,
-        pop == "LA" ~ 3,
-        pop == "MN" ~ 4,
-        pop == "PX" ~ 5
-      ))
+    struct_w_pop <- struct_ %>%
+      dplyr::mutate(
+        pop = dplyr::case_when(
+          pop == "BA" ~ 1,
+          pop == "BO" ~ 2,
+          pop == "LA" ~ 3,
+          pop == "MN" ~ 4,
+          pop == "PX" ~ 5
+        )
+      )
     
     # Structure doesn't want column names for non-locus info
     colnames(struct_w_pop)[1:2] <- c("", "")
     
     # Write structure-compatible file
-    write.table(struct_w_pop, paste0(wd_, "_estimatedgeno.structure"), sep = "\t", quote = F, row.names = F)
+    write.table(
+      struct_w_pop,
+      paste0(wd_, "_estimatedgeno.structure"),
+      sep = "\t",
+      quote = F,
+      row.names = F
+    )
   }
   
 }
 
 
-convert_all <- function(){
+convert_all <- function() {
   convert_spp(spp_ = "CD")
   convert_spp(spp_ = "DS")
   convert_spp(spp_ = "EC")
