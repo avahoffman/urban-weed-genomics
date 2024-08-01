@@ -1,6 +1,0 @@
-DS_metapop_catalog
-PA_metapop_catalog
-LS_metapop_catalog
-EC_metapop_catalog
-CD_metapop_catalog
-TO_metapop_catalog
