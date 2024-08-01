@@ -1,4 +1,4 @@
-library(polyRAD)
+library(polyRAD) # CRAN v2.0.0
 
 spp_ <- "EC"
 inbreeding_ <- 0 # overdisp = 3

@@ -4,7 +4,7 @@
 #' Tutorial: https://lvclark.r-universe.dev/articles/polyRAD/polyRADtutorial.html
 #' Tutorial: https://lvclark.r-universe.dev/articles/polyRADtutorials/population_genetics.html
 #'  
-library(polyRAD)
+library(polyRAD) # CRAN v2.0.0
 
 setwd("/home/ahoffm31/scratch4-mavolio2/scratch_AH/polyRAD/LS_matches_for_polyrad/")
 
