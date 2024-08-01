@@ -37,6 +37,10 @@ Wrap > Wrap paragraph at 72 characters. -->
 \beginsupplement
 <!-- End -->
 
+# About 
+
+This is supplementary material intended to be paired with files on GitHub at the repository https://github.com/avahoffman/urban-weed-genomics.
+
 # Introduction {#1-introduction}
 
 In this experiment, we used quaddRAD library prep to prepare the sample
@@ -313,7 +317,6 @@ error may have occurred. We used:
 
      stacks-dist-extract process_radtags.log total_raw_read_counts
      
-
 to pull out data on the total number of sequences, the number of
 low-quality reads, whether barcodes were found or not, and the total
 number of retained reads per sublibary. Look over these to make sure
@@ -331,18 +334,18 @@ statistics to consider for each sample.
     the proportion that each individual was processed and sequenced
     within the overall library. This is important to consider as cases
     where a single sample dominates the sublibrary may indicate
-    contamination.
+    contamination. (Field `prop_sample_per_library`).
 
 2.  *The number of reads retained for each sample* can be an indicator
     of coverage. It is most likely a good idea to remove samples with a
     very low number of reads. Where you decide to place the cutoff for
     low coverage samples is dependent on your dataset. For example, a
     threshold of 1 million reads is often used but this is not
-    universal.
+    universal. (Field `retained_reads`).
 
 3.  *The proportion of reads retained for each sample* can also indicate
     low-quality samples and will give an idea of the variation in
-    coverage across samples.
+    coverage across samples. (Field `prop_reads_retained_per_sample`).
 
 Output for sublibraries for this step are summarized in
 [`process_radtags-library_output.csv`](output/process_radtags-sample_output.csv).
@@ -354,15 +357,14 @@ The script `04c-process_radtags_stats.R` was used to create many plots for
 easily assessing each statistic. Output from this step can be found in 
 `figures/process_radtags/` where figures are organized by species.
 
+The script `04c-radtags_filter_summary.R` summarizes the filtering results from all samples.
+
 ```{r radtag_stats, message=FALSE, fig.cap = "RAD tag processing statistics"} 
 source("04_demux_filter/04c-radtags_filter_summary.R") 
 make_filterplot() 
 ```
 
-
 ### Step 4d - Identify low-coverage and low-quality samples from {#step-4d---identify-low-coverage-and-low-quality-samples-from}
-
-    downstream analysis
 
 Using the same output log and the above statistics, we removed
 low-coverage and low-quality samples that may skew downstream analyses.
@@ -378,10 +380,10 @@ Samples were identified and removed via the following procedure:
     correlate to low coverage and will lack enough raw reads to
     contribute to downstream analyses.
 
-Good/kept samples are summarized in
+Good/kept samples are listed in 
 [`process_radtags-kept_samples.csv`](output/process_radtags-kept_samples.csv).
 
-Discarded samples are summarized in
+Discarded samples are listed in 
 [`process_radtags-discarded_samples.csv`](output/process_radtags-discarded_samples.csv).
 
 ```{r radtag_manual_filter, message=FALSE, fig.cap = "RAD tag manual filtering summary"} 
@@ -679,7 +681,9 @@ Files can be found in the `08_polyRAD/` directory.
 
 ### Make `RADdata` object
 
-We used the [polyRAD package](https://github.com/lvclark/polyRAD) to call genotypes because many of our species are polyploid or have historical genome duplication. PolyRAD takes the catalog output (`catalog.alleles.tsv.gz`) and accompanying matches to the catalog (e.g., `CD.BA.AA.U.1.matches.tsv.gz`) to create genotype likelihoods for species with diploidy and/or polyploidy. We used the catalog and match files to create a RADdata object class in R for each species. We ran this on the Rockfish compute cluster, with the `make_polyRAD_<spp>.R` script doing the brunt of the work. The R script was wrapped by `polyrad_make_<spp>.sh` to submit the script to the SLURM scheduler. 
+We used the [polyRAD package](https://github.com/lvclark/polyRAD) to call genotypes because many of our species are polyploid or have historical genome duplication. PolyRAD takes the catalog output (`catalog.alleles.tsv.gz`) and accompanying matches to the catalog (e.g., `CD.BA.AA.U.1.matches.tsv.gz`) to create genotype likelihoods for species with diploidy and/or polyploidy. 
+
+We used the catalog and match files to create a RADdata object class in R for each species. We ran this on the Rockfish compute cluster at Johns Hopkins University, with the `make_polyRAD_<spp>.R` script doing the brunt of the work. The R script was wrapped by `polyrad_make_<spp>.sh` to submit the script to the SLURM scheduler. 
 
 _Relevant Parameters:_
 
