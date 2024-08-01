@@ -760,7 +760,7 @@ Structure documentation can be found [here](https://web.stanford.edu/group/pritc
 
 ### Running Structure
 
-`polyRAD` outputs genotype probabilites in a format suitable for Structure. 
+`polyRAD` outputs genotype probabilities in a format suitable for Structure. 
 These files were named as:
 
     CD_estimatedgeno.structure
