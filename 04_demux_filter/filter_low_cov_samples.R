@@ -1,7 +1,7 @@
 # This script filters out low coverage samples to be used in the next steps
 
-library(readr) # read_csv write_csv
-library(dplyr) # %>% filter select arrange mutate case_when
+library(readr) # CRAN v2.1.5
+library(dplyr) # CRAN v1.1.4
 
 retained_reads_threshold <- 1000000 # need more than 1000000 reads per sample
 prop_sample_threshold <- 0.01 # need more than 1% of the sublibrary (e.g., 1% of 1-1, 1-2 etc.)

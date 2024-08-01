@@ -1,13 +1,21 @@
-library(ggplot2)
-library(tidyr)
-library(magrittr)
-library(dplyr)
+library(ggplot2) # CRAN v3.5.1
+library(tidyr)   # CRAN v1.3.1
+library(dplyr)   # CRAN v1.1.4
 
-
+#' Make plot for reads filtered for low quality.
+#'
+#' Also writes a plot to a .jpg file.
+#'
+#' @return a ggplot object.
+#'
+#' @examples make_filterplot()
 make_filterplot <- function() {
   # Read in output from the radtag filtering part of sequence preparation
-  df <- readr::read_csv("output/process_radtags-sample_output.csv") %>% 
-    dplyr::select(Filename, low_quality, retained_reads, prop_sample_per_library) %>% 
+  df <- readr::read_csv("output/process_radtags-sample_output.csv") %>%
+    dplyr::select(Filename,
+                  low_quality,
+                  retained_reads,
+                  prop_sample_per_library) %>%
     pivot_longer(
       cols = c(low_quality, retained_reads, prop_sample_per_library),
       names_to = "feature",
@@ -29,7 +37,7 @@ make_filterplot <- function() {
   # Create plot
   gg <- ggplot(data = df) +
     geom_density(aes(x = value), fill = "#2171b5", alpha = 0.6) +
-    facet_wrap( ~ feature, ncol = 1, scales = "free") +
+    facet_wrap(~ feature, ncol = 1, scales = "free") +
     theme_minimal() +
     xlab(NULL)
   gg
@@ -42,31 +50,45 @@ make_filterplot <- function() {
 }
 
 
-make_manual_discard_plot <- function(){
+#' Make plot for reads filtered for low coverage.
+#'
+#' Also writes a plot to a .jpg file.
+#'
+#' @return a ggplot object.
+#'
+#' @examples make_manual_discard_plot()
+make_manual_discard_plot <- function() {
   # Read in output from the radtags filtering part of sequence preparation
-  df <- 
-    readr::read_csv("output/process_radtags-sample_output.csv") %>% 
-    mutate(species = case_when (
-      startsWith(Filename, "DS") ~ "DS",
-      startsWith(Filename, "CD") ~ "CD",
-      startsWith(Filename, "PA") ~ "PA",
-      startsWith(Filename, "EC") ~ "EC",
-      startsWith(Filename, "LS") ~ "LS",
-      startsWith(Filename, "TO") ~ "TO",
-      startsWith(Filename, "TE") ~ "TE")) %>% 
-    filter(species != "TE") %>% 
-    mutate(discarded = factor(case_when(
-      prop_sample_per_library < 0.01 ~ "Samples discarded: Less than 1% of sublibrary",
-      retained_reads < 1000000 ~ "Samples discarded: Less than 1 million reads",
-      TRUE ~ "Samples kept"
-    ))) %>% 
-    dplyr::select(Filename, discarded, species) %>% 
+  df <-
+    readr::read_csv("output/process_radtags-sample_output.csv") %>%
+    mutate(
+      species = case_when (
+        startsWith(Filename, "DS") ~ "DS",
+        startsWith(Filename, "CD") ~ "CD",
+        startsWith(Filename, "PA") ~ "PA",
+        startsWith(Filename, "EC") ~ "EC",
+        startsWith(Filename, "LS") ~ "LS",
+        startsWith(Filename, "TO") ~ "TO",
+        startsWith(Filename, "TE") ~ "TE"
+      )
+    ) %>%
+    filter(species != "TE") %>%
+    mutate(discarded = factor(
+      case_when(
+        prop_sample_per_library < 0.01 ~ "Samples discarded: Less than 1% of sublibrary",
+        retained_reads < 1000000 ~ "Samples discarded: Less than 1 million reads",
+        TRUE ~ "Samples kept"
+      )
+    )) %>%
+    dplyr::select(Filename, discarded, species) %>%
     group_by(discarded, species) %>% count()
   
   # Create plot
   gg <- ggplot(data = df) +
-    geom_col(aes(x = species, y = n), fill = "#2171b5", alpha = 0.6) +
-    facet_wrap( ~ discarded, ncol = 1) +
+    geom_col(aes(x = species, y = n),
+             fill = "#2171b5",
+             alpha = 0.6) +
+    facet_wrap(~ discarded, ncol = 1) +
     theme_minimal() +
     xlab(NULL)
   gg
