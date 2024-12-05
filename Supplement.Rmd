@@ -117,6 +117,22 @@ to adjust the file paths accordingly.
 
 ![File transfer schematic](figures/file_transfer.jpg)\
 
+## A Note on Species Names
+
+Throughout this study, we examined 6 species. Sometimes we used abbreviations for easier file naming. These are:
+
+1. _Cynodon dactylon_, "CD", or Bermuda grass
+
+2. _Digitaria sanguinalis_, "DS", or crabgrass
+
+3. _Erigeron canadensis_, "EC", or horseweed
+
+4. _Lactuca serriola_, "LS", or prickly lettuce
+
+5. _Poa annua_, "PA", or bluegrass
+
+6. _Taraxacum officinale_, "TO", or dandelion
+
 # Preprocessing {#2-preprocessing}
 
 ## Transfer Files {#21-transfer-files}
@@ -974,49 +990,19 @@ calc_rbarD()
 head(read.csv("output/population_stats/rbarD.csv"))
 ```
 
-## Isolation by distance
+## Isolation by distance and environment
 
-We assessed isolation by distance by comparing genetic distance to geographic distance. Specifically, we took the traditional approach of comparing a geographic dissimilarity matrix (based on latitude and longitude) to a genetic dissimilarity matrix. We calculated the genetic dissimilarity matrix with the `dist.genpop` function int the adegenet package. We use the [Cavalli-Sforza](https://doi.org/10.2307/2406616) distance metric, or `method = 2` argument for the `dist.genpop` function.
+We used [multiple matrix regression with randomization (MMRR)](https://doi.org/10.1111/evo.12134) to determine the relative contributions of isolation by distance (i.e., an association between genetic and geographic distances) and isolation by environment (i.e., an association between genetic and environmental distances).
 
-Note that for this analysis, we treated each *sampling site* as a distinct location. There would not be enough power to do a distance matrix among 3-5 cities. Code for generating stats and figures from the Mantel test can be found in the source code below.
+### Genetic distance
 
-```{r ibd_1, message=FALSE}
-source("R/isolation_by_distance.R")
-```
+We calculated the genetic dissimilarity matrix using the [Cavalli-Sforza](https://doi.org/10.2307/2406616) (Chord) distance metric in GenoDive. While this can also be done using `adegenet`, we don't want to make assumptions about ploidy.
 
-```{r ibd_2, eval = FALSE, message=FALSE}
-extract_ibd_stats_and_plots()
-```
+### Geographic distance
 
-Below are the results of the mantel test. Note that there is a p-value correction for testing multiple cities (species are treated as independent, however).
+We took the traditional approach to creating a geographic dissimilarity matrix (based on latitude and longitude) using euclidean distance.
 
-```{r ibd_3, echo = FALSE, message=FALSE}
-table_ <- readr::read_csv("output/IBD/isolation-by-distance-mantel-test.csv") %>% dplyr::select(-c(Hypothesis, Reps))
-knitr::kable(
-  table_,
-  format = "simple",
-  caption = "Statistics from running 9999 permutations ('Reps') via mantel test, limited to genomic versus distance comparisons. Hypothesis for all tests is 'greater'."
-)
-```
-
-We also repeated this within city. Note that there is a p-value correction for testing multiple environmental variables and cities (species are treated as independent, however).
-
-\tiny
-
-```{r ibd_4, echo = FALSE, message=FALSE}
-table_ <- readr::read_csv("output/IBD/isolation-by-distance-within-city-mantel-test.csv") %>% dplyr::select(-c(Hypothesis, Reps))
-knitr::kable(
-  table_,
-  format = "simple",
-  caption = "Statistics from running 9999 permutations ('Reps') via mantel test, limited to within city for genomic versus distance comparisons. Hypothesis for all tests is 'greater'."
-)
-```
-
-\normalsize
-
-## Isolation by environment
-
-### Environmental data
+### Environmental data and distance
 
 Environmental variables include the monthly averages in the middle of the day for:
 
@@ -1046,76 +1032,79 @@ Note that [this Stack Overflow post](https://stackoverflow.com/questions/6963978
 # micro <- micro_global(loc = loc)
 ```
 
-### IBE analysis
+Genetic distance was generated the same way as geographic distance above (euclidean distance). These are the four environmental variables mentioned in the main manuscript, although more environmental variables are present in the raw data: % Urban cover, Distance to city center, April soil temperature, and July soil temperature. In the raw data these appear as `nlcd_urban_pct`, `distance_to_city_center`, `soiltemp_2.5cm_Apr_12pm`, `soiltemp_2.5cm_Jul_12pm`.
 
-We assessed isolation by environment by comparing genetic distance to environmental distance, or the difference among sites. Genetic distance was generated the same way as isolation by distance (IBD) above. Code for generating stats from the Mantel test can be found in the source code below.
+### Analysis
 
-```{r ibe_1, message=FALSE}
-source("R/isolation_by_environment.R")
+Note that for this analysis, we treated each *sampling site* as a distinct location. There would not be enough power to do a distance matrix among 3-5 cities. Code for generating matrices, running the MMRR, and generating figures can be found in the source code below.
+
+```{r mmrr_1, message=FALSE}
+source("R/IBD_IBE_MMRR.R")
 ```
 
-The following functions are used to generate statistics for all environmental variables. Default of the function runs for "nlcd_urban_pct" which is the percent urban cover of a site within city. These are the four environmental variables mentioned in the main manuscript, although more environmental variables are present in the raw data.
-
-```{r ibe_2, eval = FALSE, message=FALSE}
-extract_ibe_stats_and_plots()
-extract_ibe_stats_and_plots(env_var_to_use = "distance_to_city_center_km")
-extract_ibe_stats_and_plots(env_var_to_use = "soiltemp_2.5cm_Jul_12pm")
-extract_ibe_stats_and_plots(env_var_to_use = "soiltemp_2.5cm_Apr_12pm")
+```{r mmrr_2, eval = FALSE, message=FALSE}
+make_mmrr_plot()
 ```
 
-Below are the results of the mantel test. Note that there is a p-value correction for testing multiple environmental variables (species are treated as independent, however).
+Below are the results of the MMRR, with all cities in the same model. Species are treated as independent, separate models.
 
-\tiny
+```{r mmrr_3, echo = FALSE, message=FALSE}
+table_ <-
+  readr::read_csv("output/MMRR/MMRR_total.csv") %>%
+  mutate(p = kableExtra::cell_spec(
+    p,
+    bold = ifelse(as.numeric(p) < 0.05, TRUE, FALSE),
+    underline = ifelse(as.numeric(p) < 0.05, TRUE, FALSE)
+  ))
 
-```{r ibe_3, echo = FALSE, message=FALSE}
-table_ <- readr::read_csv("output/IBE/isolation-by-env-all-mantel-test.csv") %>% dplyr::select(-c(Hypothesis, Reps))
 knitr::kable(
   table_,
   format = "simple",
-  caption = "Statistics from running 9999 permutations ('Reps') via mantel test, for genomic versus environmental comparisons. Hypothesis for all tests is 'greater'."
+  caption = "Statistics from running 9999 permutations ('Reps') via MMRR."
 )
 ```
 
-\normalsize
+We also repeated this within city.
 
-We also repeated the mantel tests within city. Note that there is a p-value correction for testing multiple environmental variables and cities (species are treated as independent, however).
+```{r mmrr_4, echo = FALSE, message=FALSE}
+table_ <- readr::read_csv("output/MMRR/MMRR_splitbycity_overall_models.csv") %>%
+  mutate(`p adjusted` = kableExtra::cell_spec(`p adjusted`, bold = ifelse(
+    as.numeric(`p adjusted`) < 0.05, TRUE, FALSE
+  )))
 
-\tiny
-
-```{r ibe_5, echo = FALSE, message=FALSE}
-table_ <- readr::read_csv("output/IBE/isolation-by-env-within-city-mantel-test.csv") %>% dplyr::select(-c(Hypothesis, Reps))
 knitr::kable(
   table_,
   format = "simple",
-  caption = "Statistics from running 9999 permutations ('Reps') via mantel test, limited to within city for genomic environmental comparisons. Hypothesis for all tests is 'greater'."
+  caption = "Overall model p-values from MMRR, subset by each city. Adjusted p-values are corrected using the Benjamini and Hochberg method within each species' results."
 )
 ```
 
-\normalsize
+```{r mmrr_5, echo = FALSE, message=FALSE}
+table_ <- readr::read_csv("output/MMRR/MMRR_splitbycity.csv") %>%
+  mutate(p = kableExtra::cell_spec(
+    p,
+    bold = ifelse(as.numeric(p) < 0.05, TRUE, FALSE),
+    underline = ifelse(as.numeric(p) < 0.05, TRUE, FALSE)
+  ))
 
-The following function makes the main text figure.
-
-```{r eval = FALSE}
-ibe_mega_plot()
+knitr::kable(
+  table_,
+  format = "simple",
+  caption = "Parameter estimates and statistics from running 9999 permutations ('Reps') via MMRR, subset by each city. Note that p-values are not adjusted for multiple testing."
+)
 ```
 
+## Distance and Pairwise $F_{ST}$
 
-<!-- #### -->
-<!-- #### -->
-<!-- #### -->
-<!-- #### -->
-<!-- #### -->
-<!-- #### -->
-<!-- #### -->
-<!-- #### -->
-<!-- #### -->
-<!-- #### -->
-<!-- #### -->
-<!-- #### -->
+To further investigate patterns of IBD, we performed Mantel tests comparing $F_{ST}$ distance to geographic distance. $F_{ST}$ distances were calculated in GenoDive. $F_{ST}$ values were set to zero if negative, indicating no detectable difference between individuals (we also ran without setting negative $F_{ST}$ to zero, and results were largely similar). 9999 permutations were used for each Mantel test (one per species).
+
+```{r mmrr_6, eval = FALSE, message=FALSE}
+make_scatter_Fst_dist_plot()
+```
 
 ## Correlation between Urbanness and Admixture
 
-We tested the relationship between urbanness and the extent of admixture by running a correlation test between percent impervious surface and $1 - sd(K_i)$, where $sd(K_i)$ represents the standard deviation of the cluster assignment values for any given individual. We used the `cor.test()` function.
+We were interested to determine if highly admixed individuals, measured using extent of admixture, would be more prevalent in cities due to human activity. We tested the relationship between urbanness and the extent of admixture by running a correlation test between percent impervious surface and $1 - sd(K_i)$, where $sd(K_i)$ represents the standard deviation of the cluster assignment values for any given individual. We used the `cor.test()` function.
 
 ```{r admix_cor_1, message=FALSE}
 source("R/plot_structure.R")
