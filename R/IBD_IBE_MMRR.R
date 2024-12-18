@@ -167,27 +167,58 @@ make_mmrr_plot <- function(){
     levels = c("Bermuda grass", "crabgrass", "horseweed", "prickly lettuce", "bluegrass", "dandelion")
   )
   
-  heat_plot <- function(in_dat) {
-    plot_ <- 
+  heat_plot <- function(in_dat, params = T) {
+    plot_ <-
       ggplot() +
-      geom_tile(data = in_dat %>% filter(spp != "bluegrass", spp != "dandelion"),
-                aes(x = spp, y = var, fill = estimate)) +
-      geom_text(data = in_dat %>% filter(spp != "bluegrass", spp != "dandelion"),
-                size = 2,
-                aes(x = spp, y = var, label = estimate_rounded)) +
-      theme_bw() +
-      theme(
-        axis.text.x = element_text(angle = 45, hjust = 1),
-        text = element_text(size = 8)
+      geom_tile(
+        data = in_dat %>% filter(spp != "bluegrass", spp != "dandelion"),
+        aes(x = spp, y = var, fill = estimate)
       ) +
-      labs(x = NULL, y = NULL) +
-      scale_fill_gradient2(limit = c(-2,1.5), high = "#641a80", low = "#fd6d21", mid = "white", midpoint = 0, na.value = "white") +
+      geom_text(
+        data = in_dat %>% filter(spp != "bluegrass", spp != "dandelion"),
+        size = 2,
+        aes(x = spp, y = var, label = estimate_rounded)
+      ) +
+      theme_bw() +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1),
+            text = element_text(size = 8)) +
+      labs(x = NULL, y = NULL)
+   
+    if (params) {
+      plot_ <- plot_ + scale_fill_gradient2(
+        limit = c(-2, 1.5),
+        high = "#641a80",
+        low = "#fd6d21",
+        mid = "white",
+        midpoint = 0,
+        na.value = "white"
+      )
+    }
+    if (!params) {
+      plot_ <- plot_ + scale_fill_gradient(
+        limit = c(0, 1),
+        high = "#20A387FF",
+        low = "white"
+      )
+    }
+    
+    plot_ <-
+      plot_ +
       ggnewscale::new_scale_fill() +
       geom_tile(data = in_dat %>% filter(spp %in% c("bluegrass", "dandelion")), aes(x = spp, y = var, fill = estimate)) +
-      geom_text(data = in_dat %>% filter(spp %in% c("bluegrass", "dandelion")),
-                size = 2,
-                aes(x = spp, y = var, label = estimate_rounded)) +
-      scale_fill_gradient2(limit = c(-2,1.5), high = "black", low = "black", mid = "white", midpoint = 0, na.value = "white") 
+      geom_text(
+        data = in_dat %>% filter(spp %in% c("bluegrass", "dandelion")),
+        size = 2,
+        aes(x = spp, y = var, label = estimate_rounded)
+      ) +
+      scale_fill_gradient2(
+        limit = c(-2, 1.5),
+        high = "black",
+        low = "black",
+        mid = "white",
+        midpoint = 0,
+        na.value = "white"
+      )
     
     return(plot_)
   }
@@ -204,8 +235,10 @@ make_mmrr_plot <- function(){
     theme(legend.title = element_blank(), axis.text.x = element_blank()) +
     theme(legend.position = "none")
   r2_plot_ <- 
-    heat_plot(mmrr_plot_ %>% filter(var == "R-Squared")) +
-    theme(legend.position = "none")
+    heat_plot(mmrr_plot_ %>% filter(var == "R-Squared"), params = F) +
+    guides(fill = FALSE) +
+    theme(legend.title = element_blank())
+    
   
   gg <- cowplot::plot_grid(
     env_plot_,

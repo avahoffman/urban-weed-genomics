@@ -948,6 +948,22 @@ This can be run in GenoDive by selecting Analysis > Hardy-Weinberg > Heterozygos
 head(read.csv("output/population_stats/genodive_output_Fis.csv"))
 ```
 
+## Local: Genetic Diversity
+
+We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate several additional statistics.
+
+This can be run in GenoDive by selecting Analysis > Genetic Diversity, and selecting "Calculate indices separately for every population" and selecting "Correct for unknown dosage of alleles" for the polyploid species.
+
+* Num: Number of alleles
+* Eff_num: Effective number of alleles
+* Ho: Observed Heterozygosity
+* Hs: Heterozygosity within populations
+* Gis: Inbreeding coefficient
+
+```{r GD_table_readlines, message=FALSE}
+head(read.csv("output/population_stats/genodive_genetic_diversity.csv"))
+```
+
 ## Local: $\rho$ - Pairwise comparison
 
 We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate pairise $\rho$ (rho) among cities within species. Note that there is a p-value correction for testing multiple cities (species are treated as independent, however).

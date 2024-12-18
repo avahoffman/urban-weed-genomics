@@ -126,80 +126,19 @@ make_structure_plot <- function(spp_,
     factor(long_df$city,
            levels = c("Baltimore", "Boston", "Los Angeles", "*", "Phoenix"))
   
-  # Create a set of labels for the x axis
-  # x_lbl_ <-
-  #   long_df %>%
-  #   select(sample, city, nlcd_urban_pct) %>%
-  #   unique()
-  
-  # Toggle to label with management type
-  # x_lbl_ <-
-  #   long_df %>%
-  #   select(sample, city, site_n_cov, management_type) %>%
-  #   unique()
-  
-  # Keep only the first label in the list to keep things tidy
-  # x_lbl <- x_lbl_ %>%
-  #   mutate(dupe = x_lbl_ %>% select(-sample) %>% duplicated()) %>%
-  #   mutate(site_n_cov = as.character(nl)) %>%
-  #   mutate(x = case_when(dupe == FALSE ~ site_n_cov,
-  #                        TRUE ~ "-")) %>%
-  #   mutate(x = as_factor(x))
-  
-  # Toggle to label with management type
-  # x_lbl <- x_lbl_ %>%
-  #   mutate(dupe = x_lbl_ %>% select(-sample) %>% duplicated()) %>%
-  #   mutate(site_n_cov = as.character(management_type)) %>%
-  #   mutate(x = case_when(
-  #     dupe == FALSE ~ management_type,
-  #     TRUE ~ "-"
-  #   )) %>%
-  #   mutate(x = as_factor(x))
-  
-  # Create a palette order by Phoenix. I want them to be red :)
-  # new_order <-
-  #   long_df %>%
-  #   filter(city == "Phoenix") %>%
-  #   group_by(name) %>%
-  #   summarize(tot = sum(value)) %>%
-  #   full_join(tibble(name = c("K1","K2","K3","K5","K4"))) %>%
-  #   replace_na(list(tot = 0)) %>%
-  #   arrange(tot)
-  
-  # Create labels and set palette
-  # colors_ <- viridis::viridis(n = 5, option = "E", begin = 0.2)
-  # my_pal <- setNames(colors_,
-  #                    new_order$name)
-  
+  # Make plot
   if (structure_plot) {
     gg <-
       ggplot(data = long_df, aes(x = sample, y = value, fill = name)) +
       geom_col(width = 1, color = NA) +
       facet_nested(~ city,
                    scales = "free_x",
-                   space = "free",
-                   switch = "both") +
+                   space = "free") +
       theme_classic() +
-      # facetted_pos_scales(
-      #   x = list(
-      #     city == "Baltimore" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "Baltimore"),]$x),
-      #     city == "Boston" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "Boston"),]$x),
-      #     city == "Los Angeles" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "Los Angeles"),]$x),
-      #     city == "Minneapolis" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "Minneapolis"),]$x),
-      #     city == "*" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "*"),]$x),
-      #     city == "Phoenix" ~ scale_x_discrete(position = "top", labels = x_lbl[(x_lbl$city == "Phoenix"),]$x)
-      #   )
-      # ) +
-      #scale_fill_manual(values = c(my_pal)) +
-      scale_fill_viridis_d(option = "E") +
+      labs(y = species_name) +
+      scale_fill_manual(values = viridis::turbo(n = 4, end = 0.9)) +
       theme(
         legend.position = "none",
-        # axis.text.x.top = element_text(
-        #   angle = 90,
-        #   hjust = 0,
-        #   size = 5,
-        #   vjust = 0.5
-        # ),
         axis.text.x = element_blank(),
         panel.spacing = unit(0, "lines"),
         ggh4x.facet.nestline = element_line(linetype = 3),
@@ -208,8 +147,9 @@ make_structure_plot <- function(spp_,
         axis.text.y = element_blank(),
         axis.ticks = element_blank(),
         axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        plot.margin = unit(c(0,5,5,5), "pt")
+        #axis.title.y = element_text(hjust = 0.1),
+        plot.margin = unit(c(0,5,0,5), "pt"),
+        text = element_text(size = 8)
       )
     
   } else {
@@ -234,7 +174,7 @@ make_structure_plot <- function(spp_,
         axis.ticks = element_blank(),
         axis.title.x.top = element_blank(),
         axis.title.y = element_blank(),
-        plot.margin = unit(c(20,5,0,5), "pt")
+        plot.margin = unit(c(15,5,0,5), "pt")
       )
   }
   
@@ -410,7 +350,7 @@ make_urban_admix_corr <- function(spp_,
   return(broom::tidy(cor.test(df$nlcd_urban_pct, df$admix)))
 }
 
-make_structure_multi_plot <- function(width = 12, height = 12) {
+make_structure_multi_plot <- function() {
   # Optimal K=3
   p1 <- plot_grid(
     make_structure_plot(spp = "CD", k = 3, structure_plot = F, species_name = "Bermuda grass"),
@@ -483,24 +423,29 @@ make_structure_multi_plot <- function(width = 12, height = 12) {
     #align = 'h',
     #axis = "b",
     hjust = 0,
-    ncol = 1,
+    ncol = 1
     #rel_widths = c(1, 0.2),
-    labels = c(
-      "(a) Bermuda grass",
-      "(b) crabgrass",
-      "(c) horseweed",
-      "(d) prickly lettuce",
-      "(e) bluegrass",
-      "(f) dandelion"
-    )
+    # labels = c(
+    #   "(a)",
+    #   "(b)",
+    #   "(c)",
+    #   "(d)",
+    #   "(e)",
+    #   "(f)"
+    # ),
+    # label_size = 10,
+    # label_y = 0.8
   )
   mega_plot
   setwd(here())
+  
+  # Prepare figures such that, after reduction to fit across one column, two-thirds page width, or two columns (80 mm, 112 mm, or 169 mm, respectively) as required, all lettering and symbols will be clear and easy to read,
   ggsave(
     paste0("figures/genetics/structure_ALL.png"),
     dpi = "print",
-    width = width,
-    height = height
+    width = 169,
+    height = 190,
+    units = "mm"
   )
 }
 
@@ -615,3 +560,4 @@ run_make_urban_admix_corr <- function(){
     file = "output/structure/urban_admix_cor.csv"
   )
 }
+

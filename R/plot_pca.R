@@ -7,6 +7,93 @@ library(cowplot)
 library(tidyverse)
 
 
+gather_pca_dat <- function(spp_) {
+  pca_dat <-
+    read_csv(paste0("output/pca/", spp_, "_IteratePopStructPCA.csv"))
+  pca_dat$spp <- spp_
+  return(pca_dat)
+}
+
+
+make_pca_plot2 <- function(){
+  pca_dat <- bind_rows(
+    gather_pca_dat("CD"),
+    gather_pca_dat("DS"),
+    gather_pca_dat("EC"),
+    gather_pca_dat("LS"),
+    gather_pca_dat("PA"),
+    gather_pca_dat("TO")
+  )  %>% 
+    mutate(spp = case_when(
+      spp == "CD" ~ "Bermuda grass",
+      spp == "DS" ~ "crabgrass",
+      spp == "EC" ~ "horseweed",
+      spp == "LS" ~ "prickly lettuce",
+      spp == "PA" ~ "bluegrass",
+      spp == "TO" ~ "dandelion"
+    ))
+  pca_dat$spp <- factor(
+    pca_dat$spp,
+    levels = c("Bermuda grass", "crabgrass", "horseweed", "prickly lettuce", "bluegrass", "dandelion")
+  )
+  pca_dat$V2<- factor(
+    pca_dat$V2,
+    levels = c("Minneapolis", "Boston", "Baltimore", "Los Angeles", "Phoenix")
+  )
+  
+  colors_ <- viridis::viridis(5, end = 0.8, option = "A") 
+  my_pal <- setNames(colors_,
+                     c(
+                       "Minneapolis",
+                       "Boston",
+                       "Baltimore",
+                       "Los Angeles",
+                       "Phoenix"
+                     ))
+  
+  shapes_ <- c(16, 4, 17, 3, 18)
+  
+  shape_pal <- setNames(shapes_,
+                        c(
+                          "Minneapolis",
+                          "Boston",
+                          "Baltimore",
+                          "Los Angeles",
+                          "Phoenix"
+                        ))
+  
+  gg <- ggplot() +
+    geom_point(
+      data = pca_dat,
+      alpha = 0.8,
+      mapping = aes(
+        x = PC1,
+        y = PC2,
+        color = V2,
+        shape = V2
+      )
+    ) +
+    facet_wrap(~spp, scales = "free") +
+    scale_color_manual(values = my_pal) +
+    scale_shape_manual(values = shape_pal) +
+    guides(color = guide_legend(title = ""),
+           shape = guide_legend(title = "")) +
+    theme_bw() +
+    theme(text = element_text(size = 8))
+  
+  gg
+  
+  # Prepare figures such that, after reduction to fit across one column, two-thirds page width, or two columns (80 mm, 112 mm, or 169 mm, respectively) as required, all lettering and symbols will be clear and easy to read,
+  ggsave(
+    paste0("figures/pca/pca_all.png"),
+    dpi = "print",
+    width = 169,
+    height = 100,
+    units = "mm"
+  )
+}
+
+
 make_pca_plot <- function(spp_, species_name) {
   pca_dat <-
     read_csv(paste0("output/pca/", spp_, "_IteratePopStructPCA.csv"))
