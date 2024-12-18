@@ -99,11 +99,11 @@ make_structure_plot <- function(spp_,
   df <- df %>% left_join(samp)
   
   # Reorder by urban % cover
-  df <- 
-    df %>% 
-    mutate(sample = fct_reorder(sample, nlcd_urban_pct)) %>% 
+  df <-
+    df %>%
+    mutate(sample = fct_reorder(sample, nlcd_urban_pct)) %>%
     arrange(sample)
-  
+
   # Pivot so that Ks (however many there are) and associated assignments are in 
   # long form
   long_df <-  
@@ -121,10 +121,14 @@ make_structure_plot <- function(spp_,
       TRUE ~ city
     ))
   
+  # ----- Reorder cities -----
+  
+  if (spp_ == "DS")
+    long_df$city <- factor(long_df$city, levels = c("Minneapolis", "Boston", "Baltimore", "Phoenix"))
+  if (spp_ %in% c("LS", "TO"))
+    long_df$city <- factor(long_df$city, levels = c("Minneapolis", "Boston", "Baltimore", "Los Angeles", "Phoenix"))
   if (spp_ == "PA")
-    long_df$city <-
-    factor(long_df$city,
-           levels = c("Baltimore", "Boston", "Los Angeles", "*", "Phoenix"))
+    long_df$city <- factor(long_df$city, levels = c("*", "Boston", "Baltimore", "Los Angeles", "Phoenix"))
   
   # Make plot
   if (structure_plot) {
