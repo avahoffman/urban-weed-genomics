@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.7.19)  10 JAN 2025 15:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.7.19)  10 JAN 2025 15:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -677,7 +677,7 @@ LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
 (/usr/local/texlive/2021/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [2]
-<figures/file_transfer.jpg, id=101, 1028.84375pt x 773.89125pt>
+<figures/file_transfer.jpg, id=99, 1028.84375pt x 773.89125pt>
 File: figures/file_transfer.jpg Graphic file (type jpg)
 <use figures/file_transfer.jpg>
 Package pdftex.def Info: figures/file_transfer.jpg  used on input line 246.
@@ -690,7 +690,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 246--247
 [3 <./figures/file_transfer.jpg>] [4]
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
 (Font)              Font shape `T1/lmtt/b/n' tried instead on input line 422.
-<Supplement_files/figure-latex/PCR_clones-1.pdf, id=124, 459.7175pt x 308.15125
+<Supplement_files/figure-latex/PCR_clones-1.pdf, id=122, 459.7175pt x 308.15125
 pt>
 File: Supplement_files/figure-latex/PCR_clones-1.pdf Graphic file (type pdf)
 <use Supplement_files/figure-latex/PCR_clones-1.pdf>
@@ -711,7 +711,7 @@ LaTeX Warning: Hyper reference `step-4---demultiplex-and-filter' on page 7 unde
 fined on input line 500.
 
 [7]
-<Supplement_files/figure-latex/radtag_stats-1.pdf, id=164, 459.7175pt x 308.151
+<Supplement_files/figure-latex/radtag_stats-1.pdf, id=162, 459.7175pt x 308.151
 25pt>
 File: Supplement_files/figure-latex/radtag_stats-1.pdf Graphic file (type pdf)
 <use Supplement_files/figure-latex/radtag_stats-1.pdf>
@@ -719,7 +719,7 @@ Package pdftex.def Info: Supplement_files/figure-latex/radtag_stats-1.pdf  used
  on input line 579.
 (pdftex.def)             Requested size: 459.74442pt x 308.16928pt.
 [8 <./Supplement_files/figure-latex/radtag_stats-1.pdf>]
-<Supplement_files/figure-latex/radtag_manual_filter-1.pdf, id=185, 457.71pt x 3
+<Supplement_files/figure-latex/radtag_manual_filter-1.pdf, id=183, 457.71pt x 3
 08.15125pt>
 File: Supplement_files/figure-latex/radtag_manual_filter-1.pdf Graphic file (ty
 pe pdf)
@@ -777,13 +777,13 @@ Underfull \hbox (badness 1609) in paragraph at lines 1272--1282
  []
 
 [18] [19] [20] [21] [22]
-<Supplement_files/figure-latex/snmf_2-1.pdf, id=298, 465.74pt x 498.86375pt>
+<Supplement_files/figure-latex/snmf_2-1.pdf, id=296, 465.74pt x 498.86375pt>
 File: Supplement_files/figure-latex/snmf_2-1.pdf Graphic file (type pdf)
 <use Supplement_files/figure-latex/snmf_2-1.pdf>
 Package pdftex.def Info: Supplement_files/figure-latex/snmf_2-1.pdf  used on in
 put line 1714.
 (pdftex.def)             Requested size: 465.75307pt x 498.87775pt.
-<Supplement_files/figure-latex/plot_pca_3-1.pdf, id=299, 459.7175pt x 314.17375
+<Supplement_files/figure-latex/plot_pca_3-1.pdf, id=297, 459.7175pt x 314.17375
 pt>
 File: Supplement_files/figure-latex/plot_pca_3-1.pdf Graphic file (type pdf)
 <use Supplement_files/figure-latex/plot_pca_3-1.pdf>
@@ -797,31 +797,31 @@ LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line
 (/usr/local/texlive/2021/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [28] [29] [30] [31] [32] [33] [34]
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 2584--2584
+Overfull \hbox (13.24358pt too wide) in paragraph at lines 2567--2567
 []\T1/lmtt/m/n/10 ## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64
 /Resources/lib/libRblas.0.dylib[] 
  []
 
 
-Overfull \hbox (139.24321pt too wide) in paragraph at lines 2584--2584
+Overfull \hbox (139.24321pt too wide) in paragraph at lines 2567--2567
 []\T1/lmtt/m/n/10 ## LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64
 /Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0[] 
  []
 
 [35]
-Underfull \hbox (badness 2837) in paragraph at lines 2610--2623
+Underfull \hbox (badness 2837) in paragraph at lines 2593--2606
 []\T1/lmtt/b/n/10 04-process_radtags\T1/lmr/m/n/10 (+20) : This folder con-tain
 s var-i-ous sub-di-rec-to-ries that cor-re-spond to the
  []
 
 
-Underfull \hbox (badness 1178) in paragraph at lines 2610--2623
+Underfull \hbox (badness 1178) in paragraph at lines 2593--2606
 \T1/lmtt/m/n/10 process_radtags \T1/lmr/m/n/10 (+20) pro-gram that de-mul-ti-pl
 exes and cleans the data. The \T1/lmtt/m/n/10 demux_txt_files
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2647--2652
+Underfull \hbox (badness 10000) in paragraph at lines 2630--2635
 []\T1/lmr/m/n/10 (+20) Catalogs con-tain three files; \T1/lmtt/m/n/10 catalog.a
 lleles.tsv.gz\T1/lmr/m/n/10 (+20) , \T1/lmtt/m/n/10 catalog.snps.tsv.gz\T1/lmr/
 m/n/10 (+20) , and
@@ -833,10 +833,10 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 15550 strings out of 478994
- 232687 string characters out of 5858184
- 643103 words of memory out of 5000000
- 32423 multiletter control sequences out of 15000+600000
+ 15547 strings out of 478994
+ 232638 string characters out of 5858184
+ 643007 words of memory out of 5000000
+ 32421 multiletter control sequences out of 15000+600000
  468787 words of font info for 155 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  85i,7n,88p,832b,483s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -855,10 +855,10 @@ ype1/public/lm/lmr12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public
 pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/
 local/texlive/2021/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texl
 ive/2021/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on Supplement.pdf (37 pages, 561126 bytes).
+Output written on Supplement.pdf (37 pages, 560020 bytes).
 PDF statistics:
- 598 PDF objects out of 1000 (max. 8388607)
- 524 compressed objects within 6 object streams
- 132 named destinations out of 1000 (max. 500000)
- 35135 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 593 PDF objects out of 1000 (max. 8388607)
+ 519 compressed objects within 6 object streams
+ 131 named destinations out of 1000 (max. 500000)
+ 35127 words of extra memory for PDF output out of 35830 (max. 10000000)
 
