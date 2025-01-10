@@ -566,6 +566,20 @@ A small number of samples (13) were discarded at this stage as the `ustacks` too
 unable to form any primary stacks corresponding to loci. See 
 [output/ustacks-discarded_samples.csv](output/ustacks-discarded_samples.csv).
 
+```{r ustacks_table, echo = FALSE, message = FALSE}
+table_ <-
+  readr::read_csv("output/ustacks-discared_samples_summary.csv")[, c(1,5,7)]
+colnames(table_) <-
+  c("ustacks discarded",
+    "Retained reads",
+    "Proportion of sub-library")
+knitr::kable(
+  table_,
+  format = "simple",
+  caption = "Summary of samples discarded at the ustacks step of the Stacks pipeline."
+)
+```
+
 ### Step 5c - Correct File Names {#step-5c---correct-file-names}
 
 This step contains a script `05b-fix_filenames.sh` which uses some
@@ -936,7 +950,9 @@ plot_pcas_urbanness()
 
 ## AMOVA
 
-We performed hierarchical analysis of molecular variance (AMOVA; using GenoDive 3.06) based on the Rho-statistics, which is based on a Ploidy independent Infinite Allele Model. AMOVA is under the "Analysis" menu.
+We performed hierarchical analysis of molecular variance (AMOVA; using GenoDive 3.06) based on the Rho-statistics, which is based on a Ploidy independent Infinite Allele Model. AMOVA is under the "Analysis" menu. Structure format files typically have only one level of population grouping. To ensure nestedness, we added a "City" level manually by going to "Data > Population grouping .." menu and adding "City". When running the AMOVA, we selected "Advanced" and selected Individual nested within Population nested within City. We used 999 permutations. 
+
+For bluegrass (PA), Minneapolis (MN) had a small sample size (2 individuals). We re-ran the AMOVA with these samples excluded but found similar results.
 
 ## Local: $F_{IS}$ - Homozygosity within population
 
@@ -979,7 +995,12 @@ compile_rho_table()
 
 ```{r rho_table_display, echo = FALSE, message = FALSE}
 table_ <-
-  readr::read_csv("output/population_stats/rho_all.csv")
+  readr::read_csv("output/population_stats/rho_all.csv") %>%
+  mutate(`adjusted p-value` = kableExtra::cell_spec(
+    `adjusted p-value`,
+    bold = ifelse(as.numeric(`adjusted p-value`) < 0.05, TRUE, FALSE),
+    underline = ifelse(as.numeric(`adjusted p-value`) < 0.05, TRUE, FALSE)
+  ))
 knitr::kable(table_,
              format = "simple",
              caption = "Rho statistics for pairwise comparison between cities.")
@@ -1118,26 +1139,10 @@ To further investigate patterns of IBD, we performed Mantel tests comparing $F_{
 make_scatter_Fst_dist_plot()
 ```
 
-## Correlation between Urbanness and Admixture
 
-We were interested to determine if highly admixed individuals, measured using extent of admixture, would be more prevalent in cities due to human activity. We tested the relationship between urbanness and the extent of admixture by running a correlation test between percent impervious surface and $1 - sd(K_i)$, where $sd(K_i)$ represents the standard deviation of the cluster assignment values for any given individual. We used the `cor.test()` function.
 
-```{r admix_cor_1, message=FALSE}
-source("R/plot_structure.R")
-```
 
-```{r admix_cor_2, eval = FALSE, message=FALSE}
-run_make_urban_admix_corr()
-```
 
-```{r admix_cor_3, echo = FALSE, message = FALSE}
-table_ <-
-  readr::read_csv("output/structure/urban_admix_cor.csv")
-table_ <- table_[,-7]
-knitr::kable(table_,
-             format = "simple",
-             caption = "Pearson’s product-moment correlation test results comparing percent impervious surface and extent of admixture.")
-```
 
 # Appendix {#appendix-books}
 
