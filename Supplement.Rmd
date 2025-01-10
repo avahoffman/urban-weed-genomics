@@ -1131,13 +1131,6 @@ knitr::kable(
 )
 ```
 
-## Distance and Pairwise $F_{ST}$
-
-To further investigate patterns of IBD, we performed Mantel tests comparing $F_{ST}$ distance to geographic distance. $F_{ST}$ distances were calculated in GenoDive. $F_{ST}$ values were set to zero if negative, indicating no detectable difference between individuals (we also ran without setting negative $F_{ST}$ to zero, and results were largely similar). 9999 permutations were used for each Mantel test (one per species).
-
-```{r mmrr_6, eval = FALSE, message=FALSE}
-make_scatter_Fst_dist_plot()
-```
 
 
 
