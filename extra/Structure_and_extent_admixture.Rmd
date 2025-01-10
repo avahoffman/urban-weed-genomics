@@ -1,0 +1,20 @@
+## Correlation between Urbanness and Admixture
+
+We were interested to determine if highly admixed individuals, measured using extent of admixture, would be more prevalent in cities due to human activity. We tested the relationship between urbanness and the extent of admixture by running a correlation test between percent impervious surface and $1 - sd(K_i)$, where $sd(K_i)$ represents the standard deviation of the cluster assignment values for any given individual. We used the `cor.test()` function.
+
+```{r admix_cor_1, message=FALSE}
+source("R/plot_structure.R")
+```
+
+```{r admix_cor_2, eval = FALSE, message=FALSE}
+run_make_urban_admix_corr()
+```
+
+```{r admix_cor_3, echo = FALSE, message = FALSE}
+table_ <-
+  readr::read_csv("output/structure/urban_admix_cor.csv")
+table_ <- table_[,-7]
+knitr::kable(table_,
+             format = "simple",
+             caption = "Pearson’s product-moment correlation test results comparing percent impervious surface and extent of admixture.")
+```
