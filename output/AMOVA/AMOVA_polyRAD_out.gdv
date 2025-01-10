@@ -196,3 +196,35 @@ Overall	Within Population   	--	10889.549	120	90.746	90.746	0.308	Rho_st	0.692	-
 
 
 ___________________________________________________________________
+___________________________________________________________________
+
+GenoDive 3.06, 2025-01-09 17:01:38 +0000
+Amova: Analysis of Molecular Variance (Excoffier et al., 1995)
+File: PA_estimatedgeno_NO_MN.structure
+176 of 176 individuals included, 746 of 746 loci included
+Note that missing dosage information for polyploids has been replaced with randomly drawn alleles based on estimated allele frequencies assuming HWE.
+
+Used a ploidy independent Infinite Allele Model, so the reported statistics are equivalent to Rho
+Significance was tested using 999 permutations
+
+
+– AMOVA summary:
+
+Source of Variation	Nested in	%var	F-stat	F-value	Std.Dev.	c.i.2.5%	c.i.97.5%	P-value
+Within Population 	--	0.230	Rho_st	0.770	--	--	--	--
+Among Population 	City	0.628	Rho_sc	0.732	--	--	--	0.001
+Among City    	--	0.141	Rho_ct	0.141	--	--	--	0.002
+
+Estimation of the standard deviations through jackknifing over loci was not possible.
+Estimation of the 95% confidence intervals through bootstrapping over loci was not possible.
+
+
+– Full AMOVA table:
+
+Locus	Source of Variation	Nested in	SSD	d.f.	MS	Var-comp	%Var	F-stat	F-value	P-value
+Overall	Within Population   	--	9129.284	128	71.323	71.323	0.230	Rho_st	0.770	--
+	Among Population   	City	34474.530	44	783.512	194.429	0.628	Rho_sc	0.732	0.001
+	Among City  	--	7968.939	3	2656.313	43.730	0.141	Rho_ct	0.141	0.002
+
+
+___________________________________________________________________

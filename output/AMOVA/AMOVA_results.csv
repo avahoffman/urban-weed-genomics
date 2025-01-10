@@ -11,9 +11,12 @@ EC,,Among City ,--,10368.036,2,5184.018,108.704,0.152,Rho_ct,0.152,0.001
 LS,Overall,Within Population,--,10889.549,120,90.746,90.746,0.308,Rho_st,0.692,--
 LS,,Among Population,City,32081.032,59,543.746,159.914,0.544,Rho_sc,0.638,0.001
 LS,,Among City ,--,8721.721,4,2180.43,43.569,0.148,Rho_ct,0.148,0.001
-PA,Overall,Within Population,--,10167.015,129,78.814,78.814,0.278,Rho_st,0.722,--
-PA,,Among Population,City,30922.681,44,702.788,168.366,0.593,Rho_sc,0.681,0.001
-PA,,Among City ,--,6999.878,4,1749.97,36.75,0.129,Rho_ct,0.129,0.002
+PA - no MN,Overall,Within Population,--,9129.284,128,71.323,71.323,0.23,Rho_st,0.77,--
+PA - no MN,,Among Population,City,34474.53,44,783.512,194.429,0.628,Rho_sc,0.732,0.001
+PA - no MN,,Among City ,--,7968.939,3,2656.313,43.73,0.141,Rho_ct,0.141,0.002
+PA - old,Overall,Within Population,--,10167.015,129,78.814,78.814,0.278,Rho_st,0.722,--
+PA - old,,Among Population,City,30922.681,44,702.788,168.366,0.593,Rho_sc,0.681,0.001
+PA - old,,Among City ,--,6999.878,4,1749.97,36.75,0.129,Rho_ct,0.129,0.002
 TO,Overall,Within Population,--,15727.071,162,97.081,97.081,0.314,Rho_st,0.686,--
 TO,,Among Population,City,51744.43,71,728.795,202.502,0.655,Rho_sc,0.676,0.001
 TO,,Among City ,--,4740.183,4,1185.046,9.469,0.031,Rho_ct,0.031,0.001
