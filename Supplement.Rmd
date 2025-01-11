@@ -1131,6 +1131,11 @@ knitr::kable(
 )
 ```
 
+## Sites per city per species
+
+Use `get_unique_site_post_genotyping.R`.
+
+
 
 
 
