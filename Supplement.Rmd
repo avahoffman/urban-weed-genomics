@@ -782,7 +782,7 @@ source("08_polyRAD/convert_genomics.R")
 convert_all()
 ```
 
-## Step 9 - Populations with `Structure`
+## Step 9 - Run `Structure`
 
 Files, inlcuding model parameters, can be found in the `09_structure/` directory.
 
@@ -823,9 +823,7 @@ to choose the optimal K using the Delta-K method
 optimal K was selected per species, we re-ran Structure using a greater number 
 of iterations (100000) for final output and plotting.
 
-# Analysis
-
-## NLCD Data
+## 10 - Get NLCD Data (used in Fig. 1 and IBE analysis)
 
 From the USGS:
 
@@ -847,7 +845,7 @@ analysis of developed features.
 First, we trimmed the large data. This makes a smaller `.rds` file for each city.
 
 ```{r trim_spatial_1, message=FALSE}
-source("R/trim_NLCD_spatial_data.R")
+source("R/10-trim_NLCD_spatial_data.R")
 ```
 
 ```{r trim_spatial_2, eval = FALSE, message=FALSE}
@@ -856,15 +854,22 @@ create_spatial_rds_files()
 
 ## Make maps of sampling locations
 
-Next, we made plots for each city's sampling locations. Note that these only include sites that had viable SNPs.
+Next, we made plots for each city's sampling locations. Note that these only include sites that had viable polymorphic loci.
 
 ```{r plot_map_1, message=FALSE}
-source("R/plot_map_of_samples.R")
+source("R/10-Fig1-plot_map_of_samples.R")
 ```
 
 ```{r plot_map_2, eval = FALSE, message=FALSE}
 make_all_urban_site_plots()
 ```
+
+
+
+
+
+
+# Analysis
 
 ## Continental population structure: population statistics by species
 

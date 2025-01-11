@@ -119,6 +119,10 @@ make_structure_plot <- function(spp_,
     mutate(city = case_when(
       sample %in% c("PA.MN.L01-TO_PA.M.4", "PA.MN.L01-TO_PA.M.5") ~ "*",
       TRUE ~ city
+    ))  %>%
+    mutate(city = case_when(
+      city == "Minneapolis" ~ "Minneapolis-Saint Paul",
+      TRUE ~ city
     ))
   
   # ----- Reorder cities -----
@@ -140,7 +144,7 @@ make_structure_plot <- function(spp_,
                    space = "free") +
       theme_classic() +
       labs(y = species_name) +
-      scale_fill_manual(values = viridis::turbo(n = 4, end = 0.9)) +
+      scale_fill_manual(values = c("#30123BFF", "#28BBECFF", "#A2FC3CFF", "#FB8022FF")) + # viridis::turbo(n = 5)
       theme(
         legend.position = "none",
         axis.text.x = element_blank(),
