@@ -31,7 +31,7 @@ get_gen_dist_matrix <- function(spp_){
     distinct(pop) %>% 
     pull(pop)
   
-  mat_ <- read_delim(paste0("output/genodive/", spp_, "_genetic_distance_bysite.txt"))
+  mat_ <- read_delim(paste0("output/genodive/", spp_, "_genetic_distance_bysite_rho.txt"))
   mat_ <- as.matrix(mat_ %>% dplyr::select(-`...1`), labels = T)
   colnames(mat_) <- rownames(mat_) <- names_
   mat_ <- as.dist(mat_)
@@ -321,7 +321,7 @@ make_mmrr_plot_bycity_ <- function(){
   
   p_vals_overall_models <-
     mmrr_city_ %>% filter(var %in% c("R-Squared:", "F-Statistic:", "F p-value:")) %>% 
-    select(var, estimate, spp, city) %>% 
+    dplyr::select(var, estimate, spp, city) %>% 
     pivot_wider(names_from = var, values_from = estimate)
   
   p_vect <- pull(p_vals_overall_models, `F p-value:`)

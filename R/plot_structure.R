@@ -128,9 +128,9 @@ make_structure_plot <- function(spp_,
   # ----- Reorder cities -----
   
   if (spp_ == "DS")
-    long_df$city <- factor(long_df$city, levels = c("Minneapolis", "Boston", "Baltimore", "Phoenix"))
+    long_df$city <- factor(long_df$city, levels = c("Minneapolis-Saint Paul", "Boston", "Baltimore", "Phoenix"))
   if (spp_ %in% c("LS", "TO"))
-    long_df$city <- factor(long_df$city, levels = c("Minneapolis", "Boston", "Baltimore", "Los Angeles", "Phoenix"))
+    long_df$city <- factor(long_df$city, levels = c("Minneapolis-Saint Paul", "Boston", "Baltimore", "Los Angeles", "Phoenix"))
   if (spp_ == "PA")
     long_df$city <- factor(long_df$city, levels = c("*", "Boston", "Baltimore", "Los Angeles", "Phoenix"))
   

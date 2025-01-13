@@ -1038,7 +1038,7 @@ We used [multiple matrix regression with randomization (MMRR)](https://doi.org/1
 
 ### Genetic distance
 
-We calculated the genetic dissimilarity matrix using the [Cavalli-Sforza](https://doi.org/10.2307/2406616) (Chord) distance metric in GenoDive. While this can also be done using `adegenet`, we don't want to make assumptions about ploidy.
+We calculated the genetic dissimilarity matrix (among sites) using the [Cavalli-Sforza](https://doi.org/10.2307/2406616) (Chord) distance metric in GenoDive. While this can also be done using `adegenet`, we don't want to make assumptions about ploidy. We used the "*_estimatedgeno_sitesaspops.structure" files so that sites (not cities) were treated here as populations.
 
 ### Geographic distance
 

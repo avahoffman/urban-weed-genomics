@@ -1,10 +1,10 @@
 #' This script reads in outputs from the polyRAD prep and performs population
 #' levelstatistics for population genetics.
 
-library(polysat)
-library(polyRAD)
-library(readr)
-library(magrittr)
+library(polysat) # calcPopDiff
+library(polyRAD) # CRAN v2.0.0 # GetWeightedMeanGenotypes nLoci GetLoci
+library(readr) # read_rds
+library(magrittr) # %>%
 
 
 do_continental_stats <- function(spp_) {
@@ -76,3 +76,7 @@ do_all_continental_stats <- function(){
   do_continental_stats(spp_ = "PA")
   do_continental_stats(spp_ = "TO")  
 }
+
+
+
+

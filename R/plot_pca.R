@@ -14,7 +14,6 @@ gather_pca_dat <- function(spp_) {
   return(pca_dat)
 }
 
-
 make_pca_plot2 <- function(){
   pca_dat <- bind_rows(
     gather_pca_dat("CD"),
@@ -23,28 +22,38 @@ make_pca_plot2 <- function(){
     gather_pca_dat("LS"),
     gather_pca_dat("PA"),
     gather_pca_dat("TO")
-  )  %>% 
-    mutate(spp = case_when(
-      spp == "CD" ~ "Bermuda grass",
-      spp == "DS" ~ "crabgrass",
-      spp == "EC" ~ "horseweed",
-      spp == "LS" ~ "prickly lettuce",
-      spp == "PA" ~ "bluegrass",
-      spp == "TO" ~ "dandelion"
+  )  %>%
+    mutate(
+      spp = case_when(
+        spp == "CD" ~ "Bermuda grass",
+        spp == "DS" ~ "crabgrass",
+        spp == "EC" ~ "horseweed",
+        spp == "LS" ~ "prickly lettuce",
+        spp == "PA" ~ "bluegrass",
+        spp == "TO" ~ "dandelion"
+      )
+    )
+  
+  pca_dat <-
+    pca_dat %>% 
+    mutate(V2 = case_when(
+      V2 == "Minneapolis" ~ "Minneapolis-\nSaint Paul",
+      TRUE ~ V2
     ))
+  
   pca_dat$spp <- factor(
     pca_dat$spp,
     levels = c("Bermuda grass", "crabgrass", "horseweed", "prickly lettuce", "bluegrass", "dandelion")
   )
   pca_dat$V2<- factor(
     pca_dat$V2,
-    levels = c("Minneapolis", "Boston", "Baltimore", "Los Angeles", "Phoenix")
+    levels = c("Minneapolis-\nSaint Paul", "Boston", "Baltimore", "Los Angeles", "Phoenix")
   )
   
-  colors_ <- viridis::viridis(5, end = 0.8, option = "A") 
+  colors_ <- viridis::turbo(n = 5)
   my_pal <- setNames(colors_,
                      c(
-                       "Minneapolis",
+                       "Minneapolis-\nSaint Paul",
                        "Boston",
                        "Baltimore",
                        "Los Angeles",
@@ -55,12 +64,15 @@ make_pca_plot2 <- function(){
   
   shape_pal <- setNames(shapes_,
                         c(
-                          "Minneapolis",
+                          "Minneapolis-\nSaint Paul",
                           "Boston",
                           "Baltimore",
                           "Los Angeles",
                           "Phoenix"
                         ))
+  
+  
+  labels_ <- F
   
   gg <- ggplot() +
     geom_point(
@@ -72,129 +84,43 @@ make_pca_plot2 <- function(){
         color = V2,
         shape = V2
       )
-    ) +
-    facet_wrap(~spp, scales = "free") +
+    )
+  
+  if (labels_){
+    gg <- gg + geom_label(data = pca_dat %>% filter(V2 == "Boston"), aes(x = PC1, y = PC2, label = V1))
+  }
+
+  gg <- gg +
+    facet_wrap( ~ spp, scales = "free") +
     scale_color_manual(values = my_pal) +
     scale_shape_manual(values = shape_pal) +
-    guides(color = guide_legend(title = ""),
-           shape = guide_legend(title = "")) +
+    guides(color = guide_legend(title = ""), shape = guide_legend(title = "")) +
     theme_bw() +
     theme(text = element_text(size = 8))
   
   gg
   
-  # Prepare figures such that, after reduction to fit across one column, two-thirds page width, or two columns (80 mm, 112 mm, or 169 mm, respectively) as required, all lettering and symbols will be clear and easy to read,
-  ggsave(
-    paste0("figures/pca/pca_all.png"),
-    dpi = "print",
-    width = 169,
-    height = 100,
-    units = "mm"
-  )
-}
-
-
-make_pca_plot <- function(spp_, species_name) {
-  pca_dat <-
-    read_csv(paste0("output/pca/", spp_, "_IteratePopStructPCA.csv"))
-  
-  colors_ <- viridis::viridis(n = 5,
-                              option = "H",
-                              begin = 0.2)
-  my_pal <- setNames(colors_,
-                     c(
-                       "Baltimore",
-                       "Boston",
-                       "Los Angeles",
-                       "Minneapolis",
-                       "Phoenix"
-                     ))
-  
-  shapes_ <- c(21, 24, 22, 23, 25)
-  
-  shape_pal <- setNames(shapes_,
-                        c(
-                          "Baltimore",
-                          "Boston",
-                          "Los Angeles",
-                          "Minneapolis",
-                          "Phoenix"
-                        ))
-  
-  gg <- ggplot() +
-    geom_point(
-      data = pca_dat,
-      mapping = aes(
-        x = PC1,
-        y = PC2,
-        fill = V2,
-        shape = V2
-      ),
-      size = 2
-    ) +
-    scale_fill_manual(values = my_pal) +
-    scale_shape_manual(values = shape_pal) +
-    guides(fill = guide_legend(title = ""),
-           shape = guide_legend(title = "")) +
-    theme_bw() +
-    theme(legend.position = "none",
-          legend.text = element_text(size = 10)) +
-    ggtitle(paste0("", species_name))
-  
-  # Save plot
-  ggsave(
-    paste0("figures/pca/pca_", spp_, ".png"),
-    dpi = "print",
-    width = 4,
-    height = 4
-  )
-  
-  return(gg)
-  
-}
-
-
-plot_pcas <- function() {
-  # Make plots
-  p1 <- make_pca_plot("CD", "Bermuda grass")
-  p2 <- make_pca_plot("DS", "crabgrass")
-  p3 <- make_pca_plot("EC", "horseweed")
-  p4 <- make_pca_plot("LS", "prickly lettuce")
-  p5 <- make_pca_plot("PA", "bluegrass")
-  p6 <- make_pca_plot("TO", "dandelion")
-  
-  legend <- get_legend(# create some space to the left of the legend
-    p6 + theme(legend.position = "bottom",
-               legend.direction = "horizontal"))
-  
-  mega_plot <- plot_grid(
-    p1,
-    p2,
-    p3,
-    p4,
-    p5,
-    p6,
-    align = 'vh',
-    #hjust = -1,
-    ncol = 3,
-    rel_heights = c(1, 1, 1),
-    labels = c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)")
-  )
-  mega_plot_legend <- plot_grid(
-    mega_plot,
-    legend,
-    ncol = 1,
-    rel_heights = c(1, 0.1)
-  )
-  mega_plot_legend
-  setwd(here::here())
-  ggsave(
-    paste0("figures/pca/pca_all.png"),
-    dpi = "print",
-    width = 7,
-    height = 5
-  )
-  
+  # Prepare figures such that, after reduction to fit across one column, two-thirds 
+  # page width, or two columns (80 mm, 112 mm, or 169 mm, respectively) as required, 
+  # all lettering and symbols will be clear and easy to read,
+  if (labels_) {
+    ggsave(
+      paste0("figures/pca/pca_all_wlabels.png"),
+      dpi = "screen",
+      width = 1690,
+      height = 1000,
+      units = "mm",
+      limitsize = F
+    )
+  } else {
+    ggsave(
+      paste0("figures/pca/pca_all.png"),
+      dpi = "print",
+      width = 169,
+      height = 100,
+      units = "mm"
+    )
+  }
 }
 
 
@@ -217,11 +143,12 @@ make_pca_plot_urbanness <- function(spp_, species_name) {
     remove = F
   ) %>%
     left_join(site_info,
-              by = c("city", "site_abbv", "management_type")) %>% 
+              by = c("city", "site_abbv", "management_type")) %>%
     mutate(nlcd_urban_pct = case_when(
-      nlcd_urban_pct > 50 ~ 100,
-      nlcd_urban_pct <= 50 ~ 0
-    ))
+      nlcd_urban_pct > 60 ~ 100, 
+      nlcd_urban_pct <= 15 ~ 0
+      )) %>% 
+    drop_na(nlcd_urban_pct)
   
   gg <- ggplot() +
     geom_point(
@@ -238,9 +165,23 @@ make_pca_plot_urbanness <- function(spp_, species_name) {
     guides(fill = guide_legend(title = "")) +
     theme_bw() +
     theme(legend.position = "none",
-          legend.text = element_text(size = 10)) +
+    legend.text = element_text(size = 10)) +
     ggtitle(paste0("", species_name))
   
+  # ggplot() +
+  #   geom_point(
+  #     data = pca_dat,
+  #     mapping = aes(
+  #       x = PC1,
+  #       y = nlcd_urban_pct,
+  #       fill = city
+  #     ),
+  #     shape = 21,
+  #     size = 4
+  #   ) +
+  #   theme_bw() +
+  #   ggtitle(paste0("", species_name))
+  # 
   # Save plot
   ggsave(
     paste0("figures/pca/pca_urbanness_", spp_, ".png"),
@@ -279,7 +220,7 @@ plot_pcas_urbanness <- function() {
   mega_plot
   setwd(here::here())
   ggsave(
-    paste0("figures/pca/pca_urbanness_all.png"),
+    paste0("figures/pca/pca_urbanness_all_thresh.png"),
     dpi = "print",
     width = 7,
     height = 5
