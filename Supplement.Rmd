@@ -850,6 +850,7 @@ source("R/10-trim_NLCD_spatial_data.R")
 
 ```{r trim_spatial_2, eval = FALSE, message=FALSE}
 create_spatial_rds_files()
+create_spatial_rds_files(spp = "CD")
 ```
 
 ## Make maps of sampling locations
@@ -958,6 +959,16 @@ plot_pcas_urbanness()
 We performed hierarchical analysis of molecular variance (AMOVA; using GenoDive 3.06) based on the Rho-statistics, which is based on a Ploidy independent Infinite Allele Model. AMOVA is under the "Analysis" menu. Structure format files typically have only one level of population grouping. To ensure nestedness, we added a "City" level manually by going to "Data > Population grouping .." menu and adding "City". When running the AMOVA, we selected "Advanced" and selected Individual nested within Population nested within City. We used 999 permutations. 
 
 For bluegrass (PA), Minneapolis (MN) had a small sample size (2 individuals). We re-ran the AMOVA with these samples excluded but found similar results.
+
+```{r AMOVA_table_display, echo = FALSE, message = FALSE}
+table_ <-
+  readr::read_csv("output/AMOVA/AMOVA_results.csv") %>%
+  dplyr::select(!c(Locus, `F-stat`))
+
+knitr::kable(table_,
+             format = "simple",
+             caption = "AMOVA Statistics.")
+```
 
 ## Local: $F_{IS}$ - Homozygosity within population
 
