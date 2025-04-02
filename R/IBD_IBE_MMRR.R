@@ -121,6 +121,7 @@ get_env_dist_matrix_list <- function(spp_) {
   return(env_list)
 }
 
+
 do_MMRR <- function(spp_){
   Y <- get_gen_dist_matrix(spp_)
   X <- get_env_dist_matrix_list(spp_)
@@ -133,6 +134,7 @@ do_MMRR <- function(spp_){
   return(out_)
 }
 
+
 make_mmrr_plot <- function(){
   mmrr_ <- rbind(
     do_MMRR("CD"),
@@ -144,6 +146,13 @@ make_mmrr_plot <- function(){
   )
   
   readr::write_csv(mmrr_, "output/MMRR/MMRR_total.csv")
+  
+  p_vals_overall_models <-
+    mmrr_ %>% filter(var %in% c("R-Squared:", "F-Statistic:", "F p-value:")) %>% 
+    dplyr::select(var, estimate, spp) %>% 
+    pivot_wider(names_from = var, values_from = estimate)
+  
+  readr::write_csv(p_vals_overall_models, "output/MMRR/MMRR_total_overall_models.csv")
     
   mmrr_plot_ <- 
     mmrr_ %>% filter(var != "F-Statistic:" & var != "F p-value:" & var != "Intercept") %>% 
@@ -170,11 +179,11 @@ make_mmrr_plot <- function(){
     plot_ <-
       ggplot() +
       geom_tile(
-        data = in_dat %>% filter(spp != "bluegrass", spp != "dandelion"),
+        data = in_dat ,
         aes(x = spp, y = var, fill = estimate)
       ) +
       geom_text(
-        data = in_dat %>% filter(spp != "bluegrass", spp != "dandelion"),
+        data = in_dat ,
         size = 2,
         aes(x = spp, y = var, label = estimate_rounded)
       ) +
@@ -204,9 +213,9 @@ make_mmrr_plot <- function(){
     plot_ <-
       plot_ +
       ggnewscale::new_scale_fill() +
-      geom_tile(data = in_dat %>% filter(spp %in% c("bluegrass", "dandelion")), aes(x = spp, y = var, fill = estimate)) +
+      geom_tile(data = in_dat %>% filter(spp != "horseweed"), aes(x = spp, y = var, fill = estimate)) +
       geom_text(
-        data = in_dat %>% filter(spp %in% c("bluegrass", "dandelion")),
+        data = in_dat %>% filter(spp != "horseweed"),
         size = 2,
         aes(x = spp, y = var, label = estimate_rounded)
       ) +
@@ -281,7 +290,7 @@ do_MMRR_by_city <- function(spp_, city_){
     X_city[[item]] <- X_temp_
   }
   set.seed(444)
-  results_full <- mmrr_run(Y_city, X_city, nperm = 9999, stdz = TRUE, model = "full")
+  results_full <- mmrr_run(Y_city, X_city, nperm = 999, stdz = TRUE, model = "full")
   out_ <- mmrr_table(results_full, digits = 2, summary_stats = TRUE)
   out_ <- out_[["_data"]]
   out_$spp <- spp_

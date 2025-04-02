@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.7.19)  1 APR 2025 18:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.7.19)  1 APR 2025 23:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -822,46 +822,46 @@ LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line
 (/usr/local/texlive/2021/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [28] [29] [30] [31] [32] [33] [34]
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 2634--2634
+Overfull \hbox (13.24358pt too wide) in paragraph at lines 2655--2655
 []\T1/lmtt/m/n/10 ## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64
 /Resources/lib/libRblas.0.dylib[] 
  []
 
 
-Overfull \hbox (139.24321pt too wide) in paragraph at lines 2634--2634
+Overfull \hbox (139.24321pt too wide) in paragraph at lines 2655--2655
 []\T1/lmtt/m/n/10 ## LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64
 /Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0[] 
  []
 
 [35]
-Underfull \hbox (badness 2837) in paragraph at lines 2660--2673
+Underfull \hbox (badness 2837) in paragraph at lines 2681--2694
 []\T1/lmtt/b/n/10 04-process_radtags\T1/lmr/m/n/10 (+20) : This folder con-tain
 s var-i-ous sub-di-rec-to-ries that cor-re-spond to the
  []
 
 
-Underfull \hbox (badness 1178) in paragraph at lines 2660--2673
+Underfull \hbox (badness 1178) in paragraph at lines 2681--2694
 \T1/lmtt/m/n/10 process_radtags \T1/lmr/m/n/10 (+20) pro-gram that de-mul-ti-pl
 exes and cleans the data. The \T1/lmtt/m/n/10 demux_txt_files
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 2697--2702
+[36]
+Underfull \hbox (badness 10000) in paragraph at lines 2718--2723
 []\T1/lmr/m/n/10 (+20) Catalogs con-tain three files; \T1/lmtt/m/n/10 catalog.a
 lleles.tsv.gz\T1/lmr/m/n/10 (+20) , \T1/lmtt/m/n/10 catalog.snps.tsv.gz\T1/lmr/
 m/n/10 (+20) , and
  []
 
-[36] [37] (./Supplement.aux)
+[37] (./Supplement.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 15552 strings out of 478994
- 232720 string characters out of 5858184
- 642234 words of memory out of 5000000
- 32424 multiletter control sequences out of 15000+600000
+ 15554 strings out of 478994
+ 232732 string characters out of 5858184
+ 640316 words of memory out of 5000000
+ 32425 multiletter control sequences out of 15000+600000
  468787 words of font info for 155 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  85i,7n,88p,832b,483s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -880,10 +880,10 @@ ype1/public/lm/lmr12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public
 pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/
 local/texlive/2021/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texl
 ive/2021/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on Supplement.pdf (37 pages, 530459 bytes).
+Output written on Supplement.pdf (37 pages, 531189 bytes).
 PDF statistics:
- 600 PDF objects out of 1000 (max. 8388607)
- 526 compressed objects within 6 object streams
- 133 named destinations out of 1000 (max. 500000)
+ 601 PDF objects out of 1000 (max. 8388607)
+ 527 compressed objects within 6 object streams
+ 134 named destinations out of 1000 (max. 500000)
  35135 words of extra memory for PDF output out of 35830 (max. 10000000)
 

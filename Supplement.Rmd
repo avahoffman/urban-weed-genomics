@@ -1085,7 +1085,7 @@ Note that [this Stack Overflow post](https://stackoverflow.com/questions/6963978
 # micro <- micro_global(loc = loc)
 ```
 
-Genetic distance was generated the same way as geographic distance above (euclidean distance). These are the four environmental variables mentioned in the main manuscript, although more environmental variables are present in the raw data: % Urban cover, Distance to city center, April soil temperature, and July soil temperature. In the raw data these appear as `nlcd_urban_pct`, `distance_to_city_center`, `soiltemp_2.5cm_Apr_12pm`, `soiltemp_2.5cm_Jul_12pm`.
+Environmental distance was generated the same way as geographic distance above (euclidean distance). These are the four environmental variables mentioned in the main manuscript, although more environmental variables are present in the raw data: % Urban cover, Distance to city center, April soil temperature, and July soil temperature. In the raw data these appear as `nlcd_urban_pct`, `distance_to_city_center`, `soiltemp_2.5cm_Apr_12pm`, `soiltemp_2.5cm_Jul_12pm`.
 
 ### Analysis
 
@@ -1101,7 +1101,22 @@ make_mmrr_plot()
 
 Below are the results of the MMRR, with all cities in the same model. Species are treated as independent, separate models.
 
-```{r mmrr_3, echo = FALSE, message=FALSE}
+```{r mmrr_3a, echo = FALSE, message=FALSE}
+table_ <- readr::read_csv("output/MMRR/MMRR_total_overall_models.csv") %>%
+  mutate(p = kableExtra::cell_spec(
+    `F p-value:`,
+    bold = ifelse(as.numeric(`F p-value:`) < 0.05, TRUE, FALSE),
+    underline = ifelse(as.numeric(`F p-value:`) < 0.05, TRUE, FALSE)
+  ))
+  
+knitr::kable(
+  table_,
+  format = "simple",
+  caption = "Overall model p-values from MMRR."
+)
+```
+
+```{r mmrr_3b, echo = FALSE, message=FALSE}
 table_ <-
   readr::read_csv("output/MMRR/MMRR_total.csv") %>%
   mutate(p = kableExtra::cell_spec(
@@ -1113,17 +1128,18 @@ table_ <-
 knitr::kable(
   table_,
   format = "simple",
-  caption = "Statistics from running 9999 permutations ('Reps') via MMRR."
+  caption = "Full parameter estimates and statistics by species from running 9999 permutations ('Reps') via MMRR."
 )
 ```
 
 We also repeated this within city.
 
-```{r mmrr_4, echo = FALSE, message=FALSE}
+```{r mmrr_4a, echo = FALSE, message=FALSE}
 table_ <- readr::read_csv("output/MMRR/MMRR_splitbycity_overall_models.csv") %>%
-  mutate(`p adjusted` = kableExtra::cell_spec(`p adjusted`, bold = ifelse(
-    as.numeric(`p adjusted`) < 0.05, TRUE, FALSE
-  )))
+  mutate(`p adjusted` = kableExtra::cell_spec(`p adjusted`, 
+  bold = ifelse(as.numeric(`p adjusted`) < 0.05, TRUE, FALSE),
+  underline = ifelse(as.numeric(`p adjusted`) < 0.05, TRUE, FALSE)
+))
 
 knitr::kable(
   table_,
@@ -1132,7 +1148,7 @@ knitr::kable(
 )
 ```
 
-```{r mmrr_5, echo = FALSE, message=FALSE}
+```{r mmrr_4b, echo = FALSE, message=FALSE}
 table_ <- readr::read_csv("output/MMRR/MMRR_splitbycity.csv") %>%
   mutate(p = kableExtra::cell_spec(
     p,
