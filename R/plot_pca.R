@@ -238,10 +238,6 @@ make_pca1_v_urban <- function(){
       )
     )
   
-  pca_dat <-
-    pca_dat %>%
-    mutate(V2 = case_when(V2 == "Minneapolis" ~ "Minneapolis-\nSaint Paul", TRUE ~ V2))
-  
   pca_dat$spp <- factor(
     pca_dat$spp,
     levels = c(
@@ -269,6 +265,10 @@ make_pca1_v_urban <- function(){
       remove = F
     ) %>%
     left_join(site_info, by = c("city", "site_abbv", "management_type"))
+  
+  pca_dat <-
+    pca_dat %>%
+    mutate(city = case_when(city == "Minneapolis" ~ "Minneapolis-\nSaint Paul", TRUE ~ city))
   
   pca_dat$city <- factor(
     pca_dat$city,
@@ -353,4 +353,116 @@ make_pca1_v_urban <- function(){
       units = "mm"
     )
   }
+}
+
+
+make_urban_and_PC1_PC2 <- function(){
+  pca_dat <- bind_rows(
+    gather_pca_dat("CD"),
+    gather_pca_dat("DS"),
+    gather_pca_dat("EC"),
+    gather_pca_dat("LS"),
+    gather_pca_dat("PA"),
+    gather_pca_dat("TO")
+  )  %>%
+    mutate(
+      spp = case_when(
+        spp == "CD" ~ "Bermuda grass",
+        spp == "DS" ~ "crabgrass",
+        spp == "EC" ~ "horseweed",
+        spp == "LS" ~ "prickly lettuce",
+        spp == "PA" ~ "bluegrass",
+        spp == "TO" ~ "dandelion"
+      )
+    )
+  
+  pca_dat$spp <- factor(
+    pca_dat$spp,
+    levels = c(
+      "Bermuda grass",
+      "crabgrass",
+      "horseweed",
+      "prickly lettuce",
+      "bluegrass",
+      "dandelion"
+    )
+  )
+  
+  # Get the site info
+  site_info <-
+    read_csv(paste0(here(), "/data/site_data_urban_cov.csv")) %>%
+    dplyr::select(site_abbv, city, management_type, nlcd_urban_pct) %>%
+    mutate(site_abbv = str_replace(site_abbv, " ", "_"))
+  
+  pca_dat <- pca_dat %>%
+    rename(sample = V1, city = V2) %>%
+    tidyr::separate(
+      sample,
+      into = c("spp_abbv", "ct", "site_abbv", "management_type", "id"),
+      sep = "\\.",
+      remove = F
+    ) %>%
+    left_join(site_info, by = c("city", "site_abbv", "management_type")) %>% 
+    mutate(is_urban = nlcd_urban_pct > 40) %>% 
+    drop_na(is_urban)
+    
+  pca_dat <-
+    pca_dat %>%
+    mutate(city = case_when(city == "Minneapolis" ~ "Minneapolis-\nSaint Paul", TRUE ~ city))
+  
+  pca_dat$city <- factor(
+    pca_dat$city,
+    levels = c(
+      "Minneapolis-\nSaint Paul",
+      "Boston",
+      "Baltimore",
+      "Los Angeles",
+      "Phoenix"
+    )
+  )
+  
+  colors_ <- viridis::turbo(n = 5)
+  my_pal <- setNames(colors_,
+                     c(
+                       "Minneapolis-\nSaint Paul",
+                       "Boston",
+                       "Baltimore",
+                       "Los Angeles",
+                       "Phoenix"
+                     ))
+  
+  shapes_ <- c(16, 1)
+  
+  shape_pal <- setNames(shapes_, c(T, F))
+
+  gg <- ggplot() +
+    geom_point(
+      data = pca_dat,
+      alpha = 0.8,
+      mapping = aes(
+        x = PC1,
+        y = PC2,
+        color = city,
+        shape = is_urban
+      )
+    ) +
+    facet_wrap( ~ spp, scales = "free") +
+    scale_color_manual(values = my_pal) +
+    scale_shape_manual(values = shape_pal, labels = c("Rural", "Urban")) +
+    guides(color = guide_legend(title = ""), shape = guide_legend(title = "")) +
+    theme_bw() +
+    theme(text = element_text(size = 8))
+  
+  gg
+  
+  # Prepare figures such that, after reduction to fit across one column, two-thirds 
+  # page width, or two columns (80 mm, 112 mm, or 169 mm, respectively) as required, 
+  # all lettering and symbols will be clear and easy to read,
+  ggsave(
+      paste0("figures/pca/pc1_pc2_with_urban.png"),
+      dpi = "print",
+      width = 169,
+      height = 100,
+      units = "mm"
+    )
 }
