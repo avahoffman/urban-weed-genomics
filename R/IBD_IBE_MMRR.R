@@ -1,6 +1,7 @@
-library(algatr)   # [github::TheWangLab/algatr] v1.0.0 # %>% / mmrr_run / mmrr_table
-library(adegenet) # CRAN v2.1.10 # as.matrix
-library(cowplot)  # CRAN v1.1.3 # plot_grid
+library(algatr)    # [github::TheWangLab/algatr] v1.0.0 # %>% / mmrr_run / mmrr_table
+library(adegenet)  # CRAN v2.1.10 # as.matrix
+library(cowplot)   # CRAN v1.1.3 # plot_grid
+library(tidyverse) # CRAN v2.0.0 
 
 # First goal is to get the genetic distance matrix -- by site within city
 # Need to correct the structure file to reflect this.
@@ -234,7 +235,7 @@ make_mmrr_plot <- function(){
   env_plot_ <- 
     heat_plot(mmrr_plot_ %>% filter(facet_ == "Environment"))  +
     labs(y = "Model variable") +
-    scale_y_discrete(labels = c("Distance to city center", "% Urban cover", "April soil temp.", "July soil temp."))  +
+    scale_y_discrete(labels = c("Distance to city center", "% Impervious", "April soil temp.", "July soil temp."))  +
     theme(legend.title = element_blank(), axis.text.x = element_blank()) +
     guides(fill = FALSE)
   dist_plot_ <- 
