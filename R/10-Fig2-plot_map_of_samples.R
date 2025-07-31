@@ -6,7 +6,7 @@ library(viridis)
 library(cowplot) # theme_map()
 
 plot_urban_cover_and_sites <-
-  function(spatial_data) {
+  function(spatial_data, highres=F) {
     # This function takes an urban pct cover raster layer and spatial data points and
     # makes a nice ggplot
     #
@@ -22,6 +22,7 @@ plot_urban_cover_and_sites <-
     
     # De-list
     sites <- spatial_data[[1]]
+    site_points <- sites
     urban_data <- spatial_data[[2]]
     
     # Automatically determine city from the input (sites)
@@ -36,7 +37,12 @@ plot_urban_cover_and_sites <-
           ymax(sites) * 1.0003
         )
     cr <- crop(urban_data, figure_margins)
-    site_points <- sites
+    
+    # !! IMPORTANT -- this step aggregates pixels so it doesn't take a century
+    # to plot. Aggregated data should be used for plotting only!
+    if(!highres){
+      cr <- terra::aggregate(cr, fact = 3, fun = mean) 
+    }
     
     # !! Dodging the points a bit so that the sampling location is more on the point 
     # of the triangle point rather than the center, when plotted.
@@ -89,8 +95,13 @@ plot_urban_cover_and_sites <-
       )) 
     
     gg
-    ggsave(paste0("figures/Fig2_sampling_map/sites_", city, ".png"),
-           dpi = "print")
+    if(highres){
+      ggsave(paste0("figures/Fig2_sampling_map/sites_", city, "_highres.png"),
+             dpi = "print")
+    } else {
+      ggsave(paste0("figures/Fig2_sampling_map/sites_", city, ".png"),
+             dpi = "print") 
+    }
     return(gg)
   }
 
@@ -101,24 +112,24 @@ make_all_urban_site_plots <-
     
     g1 <- plot_urban_cover_and_sites(
       readr::read_rds("spatial_data/trimmed_spatial_BA.rds")
-    ) + theme(plot.margin = unit(c(0, 0, -0.3, 0), "cm"))
+    )
     g2 <- plot_urban_cover_and_sites(
       readr::read_rds("spatial_data/trimmed_spatial_BO.rds")
-    ) + theme(plot.margin = unit(c(0, 0, -0.3, 0), "cm"))
+    )
     g3 <- plot_urban_cover_and_sites(
       readr::read_rds("spatial_data/trimmed_spatial_LA.rds")
-    ) + theme(plot.margin = unit(c(0, 0, -0.3, 0), "cm"))
+    )
     g4 <- plot_urban_cover_and_sites(
       readr::read_rds("spatial_data/trimmed_spatial_MN.rds")
-    ) + theme(plot.margin = unit(c(-0.3, 0, 0, 0), "cm")) +
+    ) + theme(plot.margin = unit(c(0, 0, -0.3, 0), "cm")) +
       ggtitle(label = "Minneapolis-Saint Paul") 
     g5 <- plot_urban_cover_and_sites(
       readr::read_rds("spatial_data/trimmed_spatial_PX.rds")
-    ) + theme(plot.margin = unit(c(-0.3, 0, 0, 0), "cm"))
+    ) + theme(plot.margin = unit(c(0, 0, -0.3, 0), "cm"))
     
     legend <- get_legend(
       # create some space to the left of the legend
-      g1 + theme(legend.box.margin = unit(c(0, 0, 0, 2.5), "cm"),
+      g3 + theme(legend.box.margin = unit(c(0, 0, 0, 2.5), "cm"),
                  legend.box = "horizontal")
     )
     
@@ -132,13 +143,13 @@ make_all_urban_site_plots <-
       align = 'v',
       axis = "l",
       #hjust = -1,
-      nrow = 2
+      ncol = 1
     )
-    mega_plot
-    ggsave(paste0("figures/Fig1_sampling_map/sites_ALL.png"),
+    #mega_plot
+    ggsave(paste0("figures/Fig2_sampling_map/sites_ALL.png"),
            dpi = "print",
-           height = 7,
-           width = 9,
+           height = 13,
+           width = 5,
            units = "in")
     rm(g1,g2,g3,g4,g5,legend,mega_plot)
   }
