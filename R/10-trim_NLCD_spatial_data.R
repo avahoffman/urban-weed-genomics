@@ -8,6 +8,7 @@
 #' 2016 and describes urban imperviousness.
 #'
 #' https://www.mrlc.gov/data/type/urban-imperviousness
+#' https://www.mrlc.gov/data/nlcd-2016-percent-developed-imperviousness-conus
 #'
 #' NLCD imperviousness products represent urban impervious surfaces as a percentage of
 #' developed surface over every 30-meter pixel in the United States. NLCD 2016 updates all
@@ -18,6 +19,7 @@
 #' analysis of developed features.
 #
 #' https://www.mrlc.gov/data/nlcd-2016-developed-imperviousness-descriptor-conus
+#' 
 ###########################################################################################
 
 library(raster)
@@ -31,7 +33,7 @@ data_projection_settings <-
 
 
 trim_site_data <-
-  function(city = "None", filter_SNP = TRUE) {
+  function(city = "None", filter_SNP = TRUE, spp = NULL) {
     # This function imports and prepares sampling site data
     # Args:
     # city: string denoting the desired city. possible values: c("BA","BO","LA","MN","PX")
@@ -59,6 +61,13 @@ trim_site_data <-
         read.delim("SNP_data/PA/popmap_PA_polyrad.txt", sep = '\t', header = F),
         read.delim("SNP_data/TO/popmap_TO_polyrad.txt", sep = '\t', header = F)
       )
+      
+      if(!is.null(spp)){
+        final_samples <-
+          final_samples %>% 
+          filter(str_detect(V1, paste0("^", spp)))
+      }
+      
       # Pull out city, site, management combination
       final_samples$site <-
         stringr::str_extract(final_samples$V1, "(?<=...)[:graph:]{2,15}(?=\\..)")
@@ -127,11 +136,12 @@ trim_spatial <-
     #    file_suffix = "urban_zone.jpg", guide_title = "% Urban")
     
     data_source <- "spatial_data/NLCD_2016_Impervious/NLCD_2016_Impervious_L48_20190405.img"
+    data_source <- "../nlcd_2016_impervious_descriptor_l48_20210604.img"
     
     # Read spatial data - check for raster or shapefile
     if (stringr::str_sub(data_source, -4, -1) == ".img") {
       r <-
-        raster::raster(data_source)
+        terra::rast(data_source)
     } else if (stringr::str_sub(data_source, -4, -1) == ".shp") {
       r <-
         raster::shapefile(data_source)
@@ -147,11 +157,11 @@ trim_spatial <-
     # Return only the city that is specified by the args
     if (city == "BA") {
       BA_crop <-
-        raster::extent(1610000,
+        terra::ext(1610000,
                        1680000,
                        1950005,
                        2003005)
-      out <- crop(r, BA_crop)
+      out <- terra::crop(r, BA_crop)
     } else if (city == "BO") {
       BO_crop <-
         raster::extent(1910000,
@@ -186,36 +196,40 @@ trim_spatial <-
     
     # Ensure correct projection
     out_projected <-
-      raster::projectRaster(from = out, crs = data_projection_settings)
+      terra::project(out, data_projection_settings)
     
     return(out_projected)
   }
 
 
-create_spatial_rds_files <- function(){
+create_spatial_rds_files <- function(spp = NULL){
   # This function creates the trimmed spatial data as rds
   # Make sure you set the R_MAX_VSIZE=100Gb in ~/.Renviron
   
   spatial_dat <- 
     "spatial_data/trimmed_spatial"
+  if(!is.null(spp)){
+    spatial_dat <- 
+      paste0("spatial_data/trimmed_spatial_", spp, "_only")
+  }
   
-  s_BA <- trim_site_data(city = "BA")
+  s_BA <- trim_site_data(city = "BA", spp = spp)
   r_BA <- trim_spatial(city = "BA")
   readr::write_rds(list(s_BA, r_BA), paste0(spatial_dat, "_BA.rds"))
   
-  s_BO <- trim_site_data(city = "BO")
+  s_BO <- trim_site_data(city = "BO", spp = spp)
   r_BO <- trim_spatial(city = "BO")
   readr::write_rds(list(s_BO, r_BO), paste0(spatial_dat, "_BO.rds"))
   
-  s_MN <- trim_site_data(city = "MN")
+  s_MN <- trim_site_data(city = "MN", spp = spp)
   r_MN <- trim_spatial(city = "MN")
   readr::write_rds(list(s_MN, r_MN), paste0(spatial_dat, "_MN.rds"))
   
-  s_PX <- trim_site_data(city = "PX")
+  s_PX <- trim_site_data(city = "PX", spp = spp)
   r_PX <- trim_spatial(city = "PX")
   readr::write_rds(list(s_PX, r_PX), paste0(spatial_dat, "_PX.rds"))
   
-  s_LA <- trim_site_data(city = "LA")
+  s_LA <- trim_site_data(city = "LA", spp = spp)
   r_LA <- trim_spatial(city = "LA")
   readr::write_rds(list(s_LA, r_LA), paste0(spatial_dat, "_LA.rds"))
 }
