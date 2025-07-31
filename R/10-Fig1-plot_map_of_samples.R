@@ -89,7 +89,7 @@ plot_urban_cover_and_sites <-
       )) 
     
     gg
-    ggsave(paste0("figures/Fig1_sampling_map/sites_", city, ".png"),
+    ggsave(paste0("figures/Fig2_sampling_map/sites_", city, ".png"),
            dpi = "print")
     return(gg)
   }
