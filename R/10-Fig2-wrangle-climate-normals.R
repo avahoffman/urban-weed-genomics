@@ -18,7 +18,8 @@ get_climate_normals <- function(city_ = "BA", temp_ = T) {
     `MLY-TAVG-NORMAL` = (`MLY-TAVG-NORMAL` - 32) * 5 / 9,
     `MLY-TMAX-NORMAL` = (`MLY-TMAX-NORMAL` - 32) * 5 / 9,
     `MLY-TMIN-NORMAL` = (`MLY-TMIN-NORMAL` - 32) * 5 / 9
-  ) %>% mutate(# Convert to mm
+  ) %>% mutate(
+    # Convert to mm
     `MLY-PRCP-NORMAL` = `MLY-PRCP-NORMAL` * 25.4,
     `MLY-SNOW-NORMAL` = `MLY-SNOW-NORMAL` * 25.4,
   ) %>%
