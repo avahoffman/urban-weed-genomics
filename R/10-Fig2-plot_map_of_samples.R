@@ -38,7 +38,7 @@ plot_urban_cover_and_sites <-
     cr <- crop(urban_data, figure_margins)
     
     # !! IMPORTANT -- this step aggregates pixels so it doesn't take a century
-    # to plot. Aggregated data should be used for plotting only! the larger the 
+    # to plot. Aggregated data should be used for plotting only! the larger the
     # fact argument, the lower the resolution.
     if (!highres) {
       cr <- terra::aggregate(cr, fact = 3, fun = mean)
@@ -141,13 +141,14 @@ make_all_urban_site_plots <-
   }
 
 
-# make_all_urban_site_plots_with_clim_normals <-
-#   function() {
-    g1 <- plot_urban_cover_and_sites(readr::read_rds("spatial_data/trimmed_spatial_BA.rds")) + theme(plot.margin = unit(c(2, 2, 2, 15), "mm")) 
-    g2 <- plot_urban_cover_and_sites(readr::read_rds("spatial_data/trimmed_spatial_BO.rds")) + scale_y_continuous(breaks = c(42.0, 42.4)) + scale_x_continuous(breaks = c(-71.2,-70,-70.8)) + theme(plot.margin=unit(c(0,0,0,0),"mm"))
-    g3 <- plot_urban_cover_and_sites(readr::read_rds("spatial_data/trimmed_spatial_LA.rds")) + scale_y_continuous(breaks = c(33.8,34.0,34.2)) + scale_x_continuous(breaks = c(-118.4,-118.2)) 
+make_all_urban_site_plots_with_clim_normals <-
+  function() {
+    g1 <- plot_urban_cover_and_sites(readr::read_rds("spatial_data/trimmed_spatial_BA.rds")) + theme(plot.margin = unit(c(2, 2, 2, 15), "mm"))
+    g2 <- plot_urban_cover_and_sites(readr::read_rds("spatial_data/trimmed_spatial_BO.rds")) + scale_y_continuous(breaks = c(42.0, 42.4)) + scale_x_continuous(breaks = c(-71.2, -70, -70.8)) + theme(plot.margin =
+                                                                                                                                                                                                        unit(c(0, 0, 0, 0), "mm"))
+    g3 <- plot_urban_cover_and_sites(readr::read_rds("spatial_data/trimmed_spatial_LA.rds")) + scale_y_continuous(breaks = c(33.8, 34.0, 34.2)) + scale_x_continuous(breaks = c(-118.4, -118.2))
     g4 <- plot_urban_cover_and_sites(readr::read_rds("spatial_data/trimmed_spatial_MN.rds")) + ggtitle(label = "Minneapolis-Saint Paul")
-    g5 <- plot_urban_cover_and_sites(readr::read_rds("spatial_data/trimmed_spatial_PX.rds")) + scale_y_continuous(breaks = c(33.4, 33.6)) + scale_x_continuous(breaks = c(-112, -111.8)) 
+    g5 <- plot_urban_cover_and_sites(readr::read_rds("spatial_data/trimmed_spatial_PX.rds")) + scale_y_continuous(breaks = c(33.4, 33.6)) + scale_x_continuous(breaks = c(-112, -111.8))
     
     legend1 <- get_legend(# create some space to the left of the legend
       g3 + theme(
@@ -155,17 +156,17 @@ make_all_urban_site_plots <-
         legend.box = "horizontal"
       ))
     
-    gg1 <- get_climate_normals(city_ = "BA", temp_ = T) + xlab(NULL) + theme(plot.margin = unit(c(2, 2, 2, 15), "mm")) 
+    gg1 <- get_climate_normals(city_ = "BA", temp_ = T) + xlab(NULL) + theme(plot.margin = unit(c(2, 2, 2, 15), "mm"))
     gg2 <- get_climate_normals(city_ = "BO", temp_ = T) + ylab(NULL) + xlab(NULL) + theme(axis.text.y = element_blank())
-    gg3 <- get_climate_normals(city_ = "LA", temp_ = T) + ylab(NULL) + xlab(NULL) + theme(axis.text.y = element_blank()) 
-    gg4 <- get_climate_normals(city_ = "MN", temp_ = T) + ylab(NULL) + xlab(NULL) + theme(axis.text.y = element_blank()) 
+    gg3 <- get_climate_normals(city_ = "LA", temp_ = T) + ylab(NULL) + xlab(NULL) + theme(axis.text.y = element_blank())
+    gg4 <- get_climate_normals(city_ = "MN", temp_ = T) + ylab(NULL) + xlab(NULL) + theme(axis.text.y = element_blank())
     gg5 <- get_climate_normals(city_ = "PX", temp_ = T) + ylab(NULL) + xlab(NULL) + theme(axis.text.y = element_blank())
     
-    gg6 <- get_climate_normals(city_ = "BA", temp_ = F) + xlab("") + theme(plot.margin = unit(c(2, 2, 2, 15), "mm")) 
+    gg6 <- get_climate_normals(city_ = "BA", temp_ = F) + xlab("") + theme(plot.margin = unit(c(2, 2, 2, 15), "mm"))
     gg7 <- get_climate_normals(city_ = "BO", temp_ = F) + ylab(NULL) + xlab("") + theme(axis.text.y = element_blank())
     gg8 <- get_climate_normals(city_ = "LA", temp_ = F) + ylab(NULL) + theme(axis.text.y = element_blank())
     gg9 <- get_climate_normals(city_ = "MN", temp_ = F) + ylab(NULL) + xlab("") + theme(axis.text.y = element_blank())
-    gg10 <- get_climate_normals(city_ = "PX", temp_ = F) + ylab(NULL) + xlab("") + theme(axis.text.y = element_blank()) 
+    gg10 <- get_climate_normals(city_ = "PX", temp_ = F) + ylab(NULL) + xlab("") + theme(axis.text.y = element_blank())
     
     legend2 <- get_legend(gg3 + theme(legend.text = element_text(size = 10)))
     legend3 <- get_legend(gg8 + theme(legend.text = element_text(size = 10)))
@@ -195,9 +196,7 @@ make_all_urban_site_plots <-
       nrow = 3,
       rel_heights = c(3, 2, 2),
       rel_widths = c(1.3, 1, 1, 1, 1, 0.9),
-      labels = c("(a)", rep("", 5),
-                 "(b)", rep("", 5),
-                 "(c)", rep("", 5))
+      labels = c("(a)", rep("", 5), "(b)", rep("", 5), "(c)", rep("", 5))
     )
     mega_plot
     ggsave(
@@ -207,5 +206,5 @@ make_all_urban_site_plots <-
       width = 15,
       units = "in"
     )
-  #   rm(g1, g2, g3, g4, g5, legend1, mega_plot)
-  # }
+    rm(g1, g2, g3, g4, g5, legend1, mega_plot)
+  }
