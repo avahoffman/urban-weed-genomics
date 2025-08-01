@@ -38,9 +38,10 @@ plot_urban_cover_and_sites <-
     cr <- crop(urban_data, figure_margins)
     
     # !! IMPORTANT -- this step aggregates pixels so it doesn't take a century
-    # to plot. Aggregated data should be used for plotting only!
+    # to plot. Aggregated data should be used for plotting only! the larger the 
+    # fact argument, the lower the resolution.
     if (!highres) {
-      cr <- terra::aggregate(cr, fact = 6, fun = mean)
+      cr <- terra::aggregate(cr, fact = 3, fun = mean)
     }
     
     # !! Dodging the points a bit so that the sampling location is more on the point
@@ -150,7 +151,7 @@ make_all_urban_site_plots <-
     
     legend1 <- get_legend(# create some space to the left of the legend
       g3 + theme(
-        legend.box.margin = unit(c(0, 0, 0, 0), "cm"),
+        legend.box.margin = unit(c(0, 0, 0, 5), "mm"),
         legend.box = "horizontal"
       ))
     
@@ -193,7 +194,7 @@ make_all_urban_site_plots <-
       #hjust = -1,
       nrow = 3,
       rel_heights = c(3, 2, 2),
-      rel_widths = c(1.3, 1, 1, 1, 1, 0.7),
+      rel_widths = c(1.3, 1, 1, 1, 1, 0.9),
       labels = c("(a)", rep("", 5),
                  "(b)", rep("", 5),
                  "(c)", rep("", 5))
