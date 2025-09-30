@@ -14,7 +14,33 @@ gather_pca_dat <- function(spp_) {
   return(pca_dat)
 }
 
-make_pca_plot2 <- function() {
+
+city_lab_vector <- function() {
+  return(c(
+    "Minneapolis-\nSaint Paul",
+    "Boston",
+    "Baltimore",
+    "Los Angeles",
+    "Phoenix"
+  ))
+}
+
+spp_labels <- function() {
+  return(
+    c(
+      CD =  "_C. dactylon_ (Bermuda grass)",
+      DS = "_D. sanguinalis_ (crabgrass)",
+      EC = "_E. canadensis_ (horseweed)",
+      LS = "_L. serriola_ (prickly lettuce)",
+      PA = "_P. annua_ (bluegrass)",
+      TO = "_T. officinale_ (dandelion)"
+    )
+  )
+}
+
+# color PCA by city only (no urban labeling) - includes all species
+# can optionally set labels_ to TRUE to sub for sample labels (help with troubleshooting/outliers)
+make_pca_city_only_all <- function(labels_ = F) {
   pca_dat <- bind_rows(
     gather_pca_dat("CD"),
     gather_pca_dat("DS"),
@@ -22,71 +48,42 @@ make_pca_plot2 <- function() {
     gather_pca_dat("LS"),
     gather_pca_dat("PA"),
     gather_pca_dat("TO")
-  )  %>%
-    mutate(
-      spp = case_when(
-        spp == "CD" ~ "Bermuda grass",
-        spp == "DS" ~ "crabgrass",
-        spp == "EC" ~ "horseweed",
-        spp == "LS" ~ "prickly lettuce",
-        spp == "PA" ~ "bluegrass",
-        spp == "TO" ~ "dandelion"
-      )
-    )
+  )  
+  # %>%
+  #   mutate(
+  #     spp = case_when(
+  #       spp == "CD" ~ "Bermuda grass",
+  #       spp == "DS" ~ "crabgrass",
+  #       spp == "EC" ~ "horseweed",
+  #       spp == "LS" ~ "prickly lettuce",
+  #       spp == "PA" ~ "bluegrass",
+  #       spp == "TO" ~ "dandelion"
+  #     )
+  #   )
   
   pca_dat <-
     pca_dat %>%
     mutate(V2 = case_when(V2 == "Minneapolis" ~ "Minneapolis-\nSaint Paul", TRUE ~ V2))
   
-  pca_dat$spp <- factor(
-    pca_dat$spp,
-    levels = c(
-      "Bermuda grass",
-      "crabgrass",
-      "horseweed",
-      "prickly lettuce",
-      "bluegrass",
-      "dandelion"
-    )
-  )
-  pca_dat$V2 <- factor(
-    pca_dat$V2,
-    levels = c(
-      "Minneapolis-\nSaint Paul",
-      "Boston",
-      "Baltimore",
-      "Los Angeles",
-      "Phoenix"
-    )
-  )
+  # pca_dat$spp <- factor(
+  #   pca_dat$spp,
+  #   levels = c(
+  #     "Bermuda grass",
+  #     "crabgrass",
+  #     "horseweed",
+  #     "prickly lettuce",
+  #     "bluegrass",
+  #     "dandelion"
+  #   )
+  # )
   
+  pca_dat$V2 <- factor(pca_dat$V2, levels = city_lab_vector())
+  
+  # Palettes
   colors_ <- viridis::turbo(n = 5)
-  my_pal <- setNames(
-    colors_,
-    c(
-      "Minneapolis-\nSaint Paul",
-      "Boston",
-      "Baltimore",
-      "Los Angeles",
-      "Phoenix"
-    )
-  )
-  
+  my_pal <- setNames(colors_, city_lab_vector())
   shapes_ <- c(16, 4, 17, 3, 18)
-  
-  shape_pal <- setNames(
-    shapes_,
-    c(
-      "Minneapolis-\nSaint Paul",
-      "Boston",
-      "Baltimore",
-      "Los Angeles",
-      "Phoenix"
-    )
-  )
-  
-  
-  labels_ <- F
+  shape_pal <- setNames(shapes_, city_lab_vector())
   
   gg <- ggplot() +
     geom_point(
@@ -105,12 +102,13 @@ make_pca_plot2 <- function() {
   }
   
   gg <- gg +
-    facet_wrap(~ spp, scales = "free") +
+    facet_wrap(~ spp, scales = "free", labeller = labeller(spp = spp_labels())) +
     scale_color_manual(values = my_pal) +
     scale_shape_manual(values = shape_pal) +
     guides(color = guide_legend(title = ""), shape = guide_legend(title = "")) +
     theme_bw() +
-    theme(text = element_text(size = 8))
+    theme(text = element_text(size = 8),
+          strip.text = ggtext::element_markdown())
   
   gg
   
@@ -128,7 +126,7 @@ make_pca_plot2 <- function() {
     )
   } else {
     ggsave(
-      paste0("figures/pca/pca_all.png"),
+      paste0("figures/pca/pca_city_all.png"),
       dpi = "print",
       width = 169,
       height = 100,
@@ -138,7 +136,8 @@ make_pca_plot2 <- function() {
 }
 
 
-make_pca_plot_urbanness <- function(spp_, species_name) {
+# color PCA by %impervious only (no city labeling) - single species
+make_pca_pctimp_only_single <- function(spp_, species_name) {
   pca_dat <-
     read_csv(paste0("output/pca/", spp_, "_IteratePopStructPCA.csv")) %>%
     rename(sample = V1, city = V2)
@@ -156,46 +155,38 @@ make_pca_plot_urbanness <- function(spp_, species_name) {
     remove = F
   ) %>%
     left_join(site_info, by = c("city", "site_abbv", "management_type")) %>%
-    mutate(nlcd_urban_pct_binary = case_when(nlcd_urban_pct > 60 ~ 100, nlcd_urban_pct <= 15 ~ 0)) %>%
-    drop_na(nlcd_urban_pct_binary)
+    # Can use the following binary variable if desired in the ggplot below
+    mutate(nlcd_urban_pct_binary = case_when(nlcd_urban_pct > 60 ~ 100, nlcd_urban_pct <= 15 ~ 0))
   
   gg <- ggplot() +
     geom_point(
       data = pca_dat,
-      mapping = aes(x = PC1, y = PC2, fill = nlcd_urban_pct_binary, ),
+      mapping = aes(x = PC1, y = PC2, fill = nlcd_urban_pct),
       shape = 21,
       size = 2
     ) +
     scale_fill_viridis_c(option = "A", limits = c(0, 100)) +
     guides(fill = guide_legend(title = "")) +
     theme_bw() +
-    theme(legend.position = "none",
-          legend.text = element_text(size = 10)) +
+    theme(legend.text = element_text(size = 10)) +
     ggtitle(paste0("", species_name))
   
   gg
-  
-  # Save plot
-  ggsave(
-    paste0("figures/pca/pca_urbanness_", spp_, ".png"),
-    dpi = "print",
-    width = 4,
-    height = 4
-  )
   
   return(gg)
   
 }
 
 
-plot_pcas_urbanness <- function() {
+# color PCA by %impervious only (no city labeling) - includes all species
+make_pca_pctimp_only_all <- function() {
   # Make plots
-  p1 <- make_pca_plot_urbanness("CD", "Bermuda grass")
-  p2 <- make_pca_plot_urbanness("DS", "crabgrass")
-  p3 <- make_pca_plot_urbanness("EC", "horseweed")
-  p4 <- make_pca_plot_urbanness("LS", "prickly lettuce")
-  p5 <- make_pca_plot_urbanness("PA", "bluegrass")
-  p6 <- make_pca_plot_urbanness("TO", "dandelion")
+  p1 <- make_pca_pctimp_only_single("CD", "Bermuda grass")
+  p2 <- make_pca_pctimp_only_single("DS", "crabgrass")
+  p3 <- make_pca_pctimp_only_single("EC", "horseweed")
+  p4 <- make_pca_pctimp_only_single("LS", "prickly lettuce")
+  p5 <- make_pca_pctimp_only_single("PA", "bluegrass")
+  p6 <- make_pca_pctimp_only_single("TO", "dandelion")
   
   mega_plot <- plot_grid(
     p1,
@@ -220,149 +211,6 @@ plot_pcas_urbanness <- function() {
   )
   
   return(mega_plot)
-}
-
-
-make_pca1_v_urban <- function() {
-  pca_dat <- bind_rows(
-    gather_pca_dat("CD"),
-    gather_pca_dat("DS"),
-    gather_pca_dat("EC"),
-    gather_pca_dat("LS"),
-    gather_pca_dat("PA"),
-    gather_pca_dat("TO")
-  )  %>%
-    mutate(
-      spp = case_when(
-        spp == "CD" ~ "Bermuda grass",
-        spp == "DS" ~ "crabgrass",
-        spp == "EC" ~ "horseweed",
-        spp == "LS" ~ "prickly lettuce",
-        spp == "PA" ~ "bluegrass",
-        spp == "TO" ~ "dandelion"
-      )
-    )
-  
-  pca_dat$spp <- factor(
-    pca_dat$spp,
-    levels = c(
-      "Bermuda grass",
-      "crabgrass",
-      "horseweed",
-      "prickly lettuce",
-      "bluegrass",
-      "dandelion"
-    )
-  )
-  
-  # Get the site info
-  site_info <-
-    read_csv(paste0(here(), "/data/site_data_urban_cov.csv")) %>%
-    dplyr::select(site_abbv, city, management_type, nlcd_urban_pct) %>%
-    mutate(site_abbv = str_replace(site_abbv, " ", "_"))
-  
-  pca_dat <- pca_dat %>%
-    rename(sample = V1, city = V2) %>%
-    tidyr::separate(
-      sample,
-      into = c("spp_abbv", "ct", "site_abbv", "management_type", "id"),
-      sep = "\\.",
-      remove = F
-    ) %>%
-    left_join(site_info, by = c("city", "site_abbv", "management_type"))
-  
-  pca_dat <-
-    pca_dat %>%
-    mutate(city = case_when(city == "Minneapolis" ~ "Minneapolis-\nSaint Paul", TRUE ~ city))
-  
-  pca_dat$city <- factor(
-    pca_dat$city,
-    levels = c(
-      "Minneapolis-\nSaint Paul",
-      "Boston",
-      "Baltimore",
-      "Los Angeles",
-      "Phoenix"
-    )
-  )
-  
-  colors_ <- viridis::turbo(n = 5)
-  my_pal <- setNames(
-    colors_,
-    c(
-      "Minneapolis-\nSaint Paul",
-      "Boston",
-      "Baltimore",
-      "Los Angeles",
-      "Phoenix"
-    )
-  )
-  
-  shapes_ <- c(16, 4, 17, 3, 18)
-  
-  shape_pal <- setNames(
-    shapes_,
-    c(
-      "Minneapolis-\nSaint Paul",
-      "Boston",
-      "Baltimore",
-      "Los Angeles",
-      "Phoenix"
-    )
-  )
-  
-  
-  labels_ <- F
-  
-  gg <- ggplot() +
-    geom_point(
-      data = pca_dat,
-      alpha = 0.8,
-      mapping = aes(
-        x = PC1,
-        y = nlcd_urban_pct,
-        color = city,
-        shape = city
-      )
-    )
-  
-  if (labels_) {
-    gg <- gg + geom_label(data = pca_dat %>% filter(city == "Boston"),
-                          aes(x = PC1, y = PC2, label = sample))
-  }
-  
-  gg <- gg +
-    facet_wrap(~ spp, scales = "free") +
-    scale_color_manual(values = my_pal) +
-    scale_shape_manual(values = shape_pal) +
-    guides(color = guide_legend(title = ""), shape = guide_legend(title = "")) +
-    theme_bw() +
-    labs(y = "% impervious surface") +
-    theme(text = element_text(size = 8))
-  
-  gg
-  
-  # Prepare figures such that, after reduction to fit across one column, two-thirds
-  # page width, or two columns (80 mm, 112 mm, or 169 mm, respectively) as required,
-  # all lettering and symbols will be clear and easy to read,
-  if (labels_) {
-    ggsave(
-      paste0("figures/pca/pc1_vs_urban_wlabels.png"),
-      dpi = "screen",
-      width = 1690,
-      height = 1000,
-      units = "mm",
-      limitsize = F
-    )
-  } else {
-    ggsave(
-      paste0("figures/pca/pc1_vs_urban.png"),
-      dpi = "print",
-      width = 169,
-      height = 100,
-      units = "mm"
-    )
-  }
 }
 
 
