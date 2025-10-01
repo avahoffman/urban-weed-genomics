@@ -44,6 +44,7 @@ vignettes/*.pdf
 
 # Rendering intermediate files
 Supplement_files/*
+Supplement.log
 
 # Large and/or personal files
 data_archive/*
