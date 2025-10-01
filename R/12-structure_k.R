@@ -12,6 +12,7 @@ calc_Pr_structure<-function(K) {
 }
 
 
+# Print a plot of various K (e.g., K={1-5}) vs likelihood
 Pr_plot <- function(spp_, bayes = F) {
   values <- read_csv("output/structure/structure_k_Pr.csv")
   values_filt <- values[(values$species == spp_),]

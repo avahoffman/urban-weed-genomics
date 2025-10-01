@@ -1,7 +1,22 @@
 library(tidyverse)
-library(here)
-library(ggh4x)
-library(cowplot)
+library(here) # here
+library(ggh4x) # facet_nested
+library(cowplot) # plot_grid
+
+
+spp_labels <- function() {
+  return(
+    c(
+      CD =  "_C. dactylon_<br>(Bermuda grass)",
+      DS = "_D. sanguinalis_<br>(crabgrass)",
+      EC = "_E. canadensis_<br>(horseweed)",
+      LS = "_L. serriola_<br>(prickly lettuce)",
+      PA = "_P. annua_<br>(bluegrass)",
+      TO = "_T. officinale_<br>(dandelion)"
+    )
+  )
+}
+
 
 parseStructure <- function(file) {
   # initial parse
@@ -77,7 +92,6 @@ get_sample_info <- function(spp_) {
 
 make_structure_plot <- function(spp_,
                                 k = "",
-                                species_name,
                                 structure_plot = T,
                                 width = 12,
                                 height = 3.5) {
@@ -134,6 +148,9 @@ make_structure_plot <- function(spp_,
   if (spp_ == "PA")
     long_df$city <- factor(long_df$city, levels = c("*", "Boston", "Baltimore", "Los Angeles", "Phoenix"))
   
+  # Get species label from above
+  species_name <- spp_labels()[[spp_]]
+  
   # Make plot
   if (structure_plot) {
     gg <-
@@ -149,12 +166,13 @@ make_structure_plot <- function(spp_,
         legend.position = "none",
         axis.text.x = element_blank(),
         panel.spacing = unit(0, "lines"),
-        ggh4x.facet.nestline = element_line(linetype = 3),
+        #ggh4x.facet.nestline = element_line(linetype = 3),
         axis.ticks.length = unit(-1, "inch"),
         axis.line = element_blank(),
         axis.text.y = element_blank(),
         axis.ticks = element_blank(),
         axis.title.x = element_blank(),
+        axis.title.y = ggtext::element_markdown(),
         #axis.title.y = element_text(hjust = 0.1),
         plot.margin = unit(c(0,5,0,5), "pt"),
         text = element_text(size = 8)
@@ -186,13 +204,6 @@ make_structure_plot <- function(spp_,
       )
   }
   
-  setwd(here())
-  ggsave(
-    paste0("figures/genetics/structure_", species_name, ".png"),
-    dpi = "print",
-    width = width,
-    height = height
-  )
   return(gg)
   
 }
@@ -200,8 +211,8 @@ make_structure_plot <- function(spp_,
 make_structure_multi_plot <- function() {
   # Optimal K=3
   p1 <- plot_grid(
-    make_structure_plot(spp = "CD", k = 3, structure_plot = F, species_name = "Bermuda grass"),
-    make_structure_plot(spp = "CD", k = 3, species_name = "Bermuda grass"),
+    make_structure_plot(spp_ = "CD", k = 3, structure_plot = F),
+    make_structure_plot(spp_ = "CD", k = 3),
     ncol = 1,
     align = "v",
     rel_heights = c(30, 100)
@@ -209,8 +220,8 @@ make_structure_multi_plot <- function() {
   
   # Optimal K=3
   p2 <- plot_grid(
-    make_structure_plot(spp = "DS", k = 3, structure_plot = F, species_name = "crabgrass"),
-    make_structure_plot(spp = "DS", k = 3, species_name = "crabgrass"),
+    make_structure_plot(spp_ = "DS", k = 3, structure_plot = F),
+    make_structure_plot(spp_ = "DS", k = 3),
     ncol = 1,
     align = "v",
     rel_heights = c(30, 100)
@@ -218,8 +229,8 @@ make_structure_multi_plot <- function() {
   
   # Optimal K=2
   p3 <- plot_grid(
-    make_structure_plot(spp = "EC", k = 2, structure_plot = F, species_name = "horseweed"),
-    make_structure_plot(spp = "EC", k = 2, species_name = "horseweed"),
+    make_structure_plot(spp_ = "EC", k = 2, structure_plot = F),
+    make_structure_plot(spp_ = "EC", k = 2),
     ncol = 1,
     align = "v",
     rel_heights = c(30, 100)
@@ -227,8 +238,8 @@ make_structure_multi_plot <- function() {
   
   # Optimal K=3
   p4 <- plot_grid(
-    make_structure_plot(spp = "LS", k = 3, structure_plot = F, species_name = "prickly lettuce"),
-    make_structure_plot(spp = "LS", k = 3, species_name = "prickly lettuce"),
+    make_structure_plot(spp_ = "LS", k = 3, structure_plot = F),
+    make_structure_plot(spp_ = "LS", k = 3),
     ncol = 1,
     align = "v",
     rel_heights = c(30, 100)
@@ -236,8 +247,8 @@ make_structure_multi_plot <- function() {
   
   # Optimal K=4
   p5 <- plot_grid(
-    make_structure_plot(spp = "PA", k = 4, structure_plot = F, species_name = "bluegrass"),
-    make_structure_plot(spp = "PA", k = 4, species_name = "bluegrass"),
+    make_structure_plot(spp_ = "PA", k = 4, structure_plot = F),
+    make_structure_plot(spp_ = "PA", k = 4),
     ncol = 1,
     align = "v",
     rel_heights = c(30, 100)
@@ -245,14 +256,14 @@ make_structure_multi_plot <- function() {
   
   # Optimal K=3
   p6 <- plot_grid(
-    make_structure_plot(spp = "TO", k = 3, structure_plot = F, species_name = "dandelion"),
-    make_structure_plot(spp = "TO", k = 3, species_name = "dandelion"),
+    make_structure_plot(spp_ = "TO", k = 3, structure_plot = F),
+    make_structure_plot(spp_ = "TO", k = 3),
     ncol = 1,
     align = "v",
     rel_heights = c(30, 100)
   )
   
-  # Add K plots
+  # Add K plots (removed)
   # p1k <- Pr_plot(spp_ = "CD") + theme(plot.margin = unit(c(20,5,0,5), "pt"))
   # p2k <- Pr_plot(spp_ = "DS") + theme(plot.margin = unit(c(20,5,0,5), "pt"))
   # p3k <- Pr_plot(spp_ = "EC") + theme(plot.margin = unit(c(20,5,0,5), "pt"))
@@ -260,35 +271,15 @@ make_structure_multi_plot <- function() {
   # p5k <- Pr_plot(spp_ = "PA") + theme(plot.margin = unit(c(20,5,0,5), "pt"))
   # p6k <- Pr_plot(spp_ = "TO") + theme(plot.margin = unit(c(20,5,0,5), "pt"))
   
-  mega_plot <- plot_grid(
-    p1,
-    p2,
-    p3,
-    p4,
-    p5,
-    p6,
-    #align = 'h',
-    #axis = "b",
-    hjust = 0,
-    ncol = 1
-    #rel_widths = c(1, 0.2),
-    # labels = c(
-    #   "(a)",
-    #   "(b)",
-    #   "(c)",
-    #   "(d)",
-    #   "(e)",
-    #   "(f)"
-    # ),
-    # label_size = 10,
-    # label_y = 0.8
-  )
+  mega_plot <- plot_grid(p1, p2, p3, p4, p5, p6, hjust = 0, ncol = 1)
   mega_plot
   setwd(here())
   
-  # Prepare figures such that, after reduction to fit across one column, two-thirds page width, or two columns (80 mm, 112 mm, or 169 mm, respectively) as required, all lettering and symbols will be clear and easy to read,
+  # Prepare figures such that, after reduction to fit across one column, 
+  # two-thirds page width, or two columns (80 mm, 112 mm, or 169 mm, respectively) 
+  # as required, all lettering and symbols will be clear and easy to read
   ggsave(
-    paste0("figures/genetics/structure_ALL.png"),
+    paste0("figures/Fig5_structure/structure_ALL.png"),
     dpi = "print",
     width = 169,
     height = 190,

@@ -100,7 +100,7 @@ do_sNMF_plot <- function(indata){
       # ),
       axis.text.x = element_blank(),
       panel.spacing = unit(0, "lines"),
-      ggh4x.facet.nestline = element_line(linetype = 3),
+      #ggh4x.facet.nestline = element_line(linetype = 3),
       axis.ticks.length = unit(-1, "inch"),
       axis.line = element_blank(),
       axis.text.y = element_blank(),
@@ -209,24 +209,22 @@ do_all_sNMF <- function(width = 12, height = 12){
     p2 + theme(plot.margin = unit(c(20, 5, 5, 5), "pt")),
     p5 + theme(plot.margin = unit(c(20, 5, 5, 5), "pt")),
     p6 + theme(plot.margin = unit(c(20, 5, 5, 5), "pt")),
-    # align = 'h',
-    # axis = "b",
     hjust = 0,
     ncol = 1,
-    #rel_widths = c(1, 0.2),
+    label_fontface = "italic",
     labels = c(
-      "(a) Bermuda grass   K = 3",
-      "(b) crabgrass   K = 3",
-      "(c) horseweed   K = 4",
-      "(d) prickly lettuce   K = 3",
-      "(e) bluegrass   K = 4",
-      "(f) dandelion   K = 4"
+      "C. dactylon   K = 3",
+      "D. sanguinalis   K = 3",
+      "E. canadensis   K = 4",
+      "L. serriola   K = 3",
+      "P. annua   K = 4",
+      "T. officinale   K = 4"
     )
   )
   mega_plot
   setwd(here::here())
   ggsave(
-    paste0("figures/genetics/sNMF_all.png"),
+    paste0("figures/Fig5_structure/sNMF_all.png"),
     dpi = "print",
     width = width,
     height = height
@@ -248,19 +246,17 @@ do_all_sNMF <- function(width = 12, height = 12){
     quick_theme(p2),
     quick_theme(p5),
     quick_theme(p6),
-    # align = 'h',
-    # axis = "b",
     hjust = 0,
     ncol = 1,
     label_size = 10,
-    #rel_widths = c(1, 0.2),
+    label_fontface = "italic",
     labels = c(
-      "(a) Bermuda grass   K = 3",
-      "(b) crabgrass   K = 3",
-      "(c) horseweed   K = 4",
-      "(d) prickly lettuce   K = 3",
-      "(e) bluegrass   K = 4",
-      "(f) dandelion   K = 4"
+      "C. dactylon   K = 3",
+      "D. sanguinalis   K = 3",
+      "E. canadensis   K = 4",
+      "L. serriola   K = 3",
+      "P. annua   K = 4",
+      "T. officinale   K = 4"
     )
   )
   supp_plot
