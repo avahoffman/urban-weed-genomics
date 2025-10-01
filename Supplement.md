@@ -1,84 +1,64 @@
-- [1 Introduction](#1-introduction)
-  - [1.1 Raw Data File Naming -
+- [About](#about)
+- [Introduction](#introduction)
+  - [0.1 Raw Data File Naming -
     Sublibraries](#11-raw-data-file-naming---sublibraries)
-  - [1.2 A Note on File Transfers](#12-a-note-on-file-transfers)
-- [2 Preprocessing](#2-preprocessing)
-  - [2.1 Transfer Files](#21-transfer-files)
-  - [2.2 Concatenate Files and Install
-    Stacks](#22-concatenate-files-and-install-stacks)
-    - [2.2.1 Concatenate Files for each
-      Sublibrary](#221-concatenate-files-for-each-sublibrary)
-    - [2.2.2 Download and Install
-      Stacks](#222-download-and-install-stacks)
-  - [2.3 Remove PCR Clones](#23-remove-pcr-clones)
-    - [2.3.1 Run PCR Clone Removal
-      Script](#231-run-pcr-clone-removal-script)
-    - [2.3.2 Parse PCR Clone Removal
-      Results](#232-parse-pcr-clone-removal-results)
-  - [2.4 Step 4 - Demultiplexing and Sample
-    Filtering](#step-4---demultiplexing-and-sample-filtering)
-    - [2.4.1 Step 4a - Demultiplex and
-      Filter](#step-4a---demultiplex-and-filter)
-    - [2.4.2 Step 4b - Organize files](#step-4b---organize-files)
-    - [2.4.3 Step 4c - Assess the raw, processed, and cleaned
-      data](#step-4c---assess-the-raw-processed-and-cleaned-data)
-    - [2.4.4 Step 4d - Identify low-coverage and low-quality samples
-      from](#step-4d---identify-low-coverage-and-low-quality-samples-from)
-- [3 Generating Stacks Catalogs and Calling
-  SNPs](#generating-stacks-catalogs-and-calling-snps-mag)
-  - [3.1 Step 5 - Metapopulation Catalog Building and Parameter
-    Search](#step-5---metapopulation-catalog-building-and-parameter-search)
-    - [3.1.1 Step 5a - Run
-      `denovo_map.sh`](#step-5a---run-denovo_map.sh)
-    - [3.1.2 Step 5b - Run `ustacks`](#step-5b---run-ustacks)
-    - [3.1.3 Step 5c - Correct File
-      Names](#step-5c---correct-file-names)
-    - [3.1.4 Step 5d - Choose catalog
-      samples/files](#step-5d---choose-catalog-samplesfiles)
-  - [3.2 Step 6 - Metapopulation catalog with
-    `cstacks`](#step-6---metapopulation-catalog-with-cstacks)
-  - [3.3 Step 7 - Metapopulation locus matching with
-    `sstacks`](#step-7---metapopulation-locus-matching-with-sstacks)
-  - [3.4 Step 8 - Genotype probabilities with
-    `polyRAD`](#step-8---polyrad)
-    - [3.4.1 Make `RADdata` object](#make-raddata-object)
-    - [3.4.2 Calculate overdispersion](#calculate-overdispersion)
-    - [3.4.3 Estimate genotypes](#estimate-genotypes)
-    - [3.4.4 Final filter and file
-      cleanup](#final-filter-and-file-cleanup)
-  - [3.5 Step 9 - Populations with
-    `Structure`](#step-9---populations-with-structure)
-    - [3.5.1 Running Structure](#running-structure)
-- [4 Analysis](#analysis)
-  - [4.1 NLCD Data](#nlcd-data)
-  - [4.2 Make maps of sampling
-    locations](#make-maps-of-sampling-locations)
-  - [4.3 Continental population structure: population statistics by
-    species](#continental-population-structure-population-statistics-by-species)
-  - [4.4 Continental population structure: Structure software
-    results](#continental-population-structure-structure-software-results)
-  - [4.5 Continental population structure: Structure
-    plots](#continental-population-structure-structure-plots)
-  - [4.6 Validation of Structure results with
+  - [0.2 A Note on File Transfers](#12-a-note-on-file-transfers)
+  - [0.3 A Note on Species Names](#a-note-on-species-names)
+- [1 File Transfer](#21-transfer-files)
+- [2 File Concatenation and Stacks
+  Installation](#22-concatenate-files-and-install-stacks)
+  - [2.1 Concatenate Files for each
+    Sublibrary](#221-concatenate-files-for-each-sublibrary)
+  - [2.2 Download and Install Stacks](#222-download-and-install-stacks)
+- [3 PCR Clone Removal](#23-remove-pcr-clones)
+  - [3.1 Run PCR Clone Removal
+    Script](#231-run-pcr-clone-removal-script)
+  - [3.2 Parse PCR Clone Removal
+    Results](#232-parse-pcr-clone-removal-results)
+- [4 Sample Demultiplexing and
+  Filtering](#step-4---demultiplexing-and-sample-filtering)
+  - [4.1 Demultiplex and Filter](#step-4a---demultiplex-and-filter)
+  - [4.2 Organize files](#step-4b---organize-files)
+  - [4.3 Assess the raw, processed, and cleaned
+    data](#step-4c---assess-the-raw-processed-and-cleaned-data)
+  - [4.4 Identify low-coverage and low-quality samples
+    from](#step-4d---identify-low-coverage-and-low-quality-samples-from)
+- [5 Stacks: Metapopulation Catalog Building and Parameter
+  Search](#step-5---metapopulation-catalog-building-and-parameter-search)
+  - [5.1 Run `denovo_map.sh`](#run-denovo_map.sh)
+  - [5.2 Run `ustacks`](#step-5b---run-ustacks)
+  - [5.3 Correct File Names](#step-5c---correct-file-names)
+  - [5.4 Choose catalog
+    samples/files](#step-5d---choose-catalog-samplesfiles)
+- [6 Stacks: Metapopulation catalog with
+  `cstacks`](#step-6---metapopulation-catalog-with-cstacks)
+- [7 Stacks: Metapopulation locus matching with
+  `sstacks`](#step-7---metapopulation-locus-matching-with-sstacks)
+- [8 Genotype probabilities with `polyRAD`](#step-8---polyrad)
+  - [8.1 Make `RADdata` object](#make-raddata-object)
+  - [8.2 Calculate overdispersion](#calculate-overdispersion)
+  - [8.3 Estimate genotypes](#estimate-genotypes)
+  - [8.4 Final filter and file cleanup](#final-filter-and-file-cleanup)
+- [9 `Structure` Analysis](#structure-analysis)
+  - [9.1 Running Structure on `polyRAD`
+    output](#running-structure-on-polyrad-output)
+- [10 NLCD Data and Site Plots](#nlcd-data-and-site-plots)
+  - [10.1 Preparing NLCD Data](#preparing-nlcd-data)
+  - [10.2 Climate normals](#climate-normals)
+  - [10.3 Maps of sampling locations](#maps-of-sampling-locations)
+- [11 Principal components analysis &
+  plots](#principal-components-analysis-plots)
+- [12 Genetic structure using Structure and
+  sNMF](#genetic-structure-using-structure-and-snmf)
+  - [12.1 `Structure` optimal K](#structure-optimal-k)
+  - [12.2 Plotting Structure output](#plotting-structure-output)
+  - [12.3 Validation of Structure results with
     sNMF](#validation-of-structure-results-with-snmf)
-  - [4.7 AMOVA](#amova)
-  - [4.8 Local: $F_{IS}$ - Homozygosity within
-    population](#local-f_is---homozygosity-within-population)
-  - [4.9 Local: $\rho$ - Pairwise
-    comparison](#local-rho---pairwise-comparison)
-  - [4.10 Local: $\bar{r}_d$ - Linkage
-    disequilibrium](#local-barr_d---linkage-disequilibrium)
-  - [4.11 Isolation by distance](#isolation-by-distance)
-  - [4.12 Isolation by environment](#isolation-by-environment)
-    - [4.12.1 Environmental data](#environmental-data)
-    - [4.12.2 IBE analysis](#ibe-analysis)
-  - [4.13 Correlation between Urbanness and
-    Admixture](#correlation-between-urbanness-and-admixture)
-- [5 Appendix](#appendix-books)
-  - [5.1 `SessionInfo()`](#sessioninfo)
-  - [5.2 File Organization](#file-organization-bookmark_tabs)
-  - [5.3 Aspera Transfer File Names](#aspera-transfer-file-names)
-  - [5.4 `clone_filter` File Names](#clone_filter-file-names)
+- [13 `SessionInfo()`](#sessioninfo)
+- [Appendix](#appendix-books)
+  - [13.1 File Organization](#file-organization-bookmark_tabs)
+  - [13.2 Aspera Transfer File Names](#aspera-transfer-file-names)
+  - [13.3 `clone_filter` File Names](#clone_filter-file-names)
 
 <!-- To nicely format this markdown doc, I recommend using
 Sublime Text editor. Highlight the text in question and select Edit >
@@ -86,7 +66,13 @@ Wrap > Wrap paragraph at 72 characters. -->
 <!-- Allow "S" labeling on Figs and Tables  -->
 <!-- End -->
 
-# 1 Introduction
+# About
+
+This is supplementary material intended to be paired with files on
+GitHub at the repository
+<https://github.com/avahoffman/urban-weed-genomics>.
+
+# Introduction
 
 In this experiment, we used quaddRAD library prep to prepare the sample
 DNA. This means that there were both two unique outer barcodes (typical
@@ -99,7 +85,7 @@ still contains a mix of the inner barcodes. We will refer to these as
 “sublibraries” because they are sort of halfway demultiplexed. We
 separate them out bioinformatically later.
 
-## 1.1 Raw Data File Naming - Sublibraries
+## 0.1 Raw Data File Naming - Sublibraries
 
 Here’s a bit of information on the file name convention. The typical raw
 file looks like this:
@@ -143,7 +129,7 @@ file looks like this:
 
   `001.fastq.gz`
 
-## 1.2 A Note on File Transfers
+## 0.2 A Note on File Transfers
 
 There are three main systems at play for file transfer: the local
 machine, the sequencing facility’s (GRCF) Aspera server, and
@@ -160,9 +146,24 @@ to adjust the file paths accordingly.
 
 ![File transfer schematic](figures/file_transfer.jpg)  
 
-# 2 Preprocessing
+## 0.3 A Note on Species Names
 
-## 2.1 Transfer Files
+Throughout this study, we examined 6 species. Sometimes we used
+abbreviations for easier file naming. These are:
+
+1.  *Cynodon dactylon*, “CD”, or Bermuda grass
+
+2.  *Digitaria sanguinalis*, “DS”, or crabgrass
+
+3.  *Erigeron canadensis*, “EC”, or horseweed
+
+4.  *Lactuca serriola*, “LS”, or prickly lettuce
+
+5.  *Poa annua*, “PA”, or bluegrass
+
+6.  *Taraxacum officinale*, “TO”, or dandelion
+
+# 1 File Transfer
 
 Referred to through files as “Step 1”. Files can be found in the
 `01_transfer_files/` directory.
@@ -192,12 +193,12 @@ Initiate the transfer from within your scratch directory:
     --file-list=01-aspera_transfer_n.txt
     --mode=recv --user=<aspera-user> --host=<aspera-IP> /scratch/users/<me>@jhu.edu
 
-## 2.2 Concatenate Files and Install Stacks
+# 2 File Concatenation and Stacks Installation
 
 Referred to through files as “Step 2”. Files can be found in the
 `02_concatenate_and_check/` directory.
 
-### 2.2.1 Concatenate Files for each Sublibrary
+## 2.1 Concatenate Files for each Sublibrary
 
 **Step 2a**. We ran my samples across the whole flow cell of the
 NovaSeq, so results came in 8 files for each demultiplexed sublibrary (4
@@ -232,7 +233,7 @@ will look for and pull the script from the code directory. This will
 concatenate all files within the current directory that match the loop
 pattern.
 
-### 2.2.2 Download and Install Stacks
+## 2.2 Download and Install Stacks
 
 **Step 2b**. On Rockfish,
 [Stacks](https://catchenlab.life.illinois.edu/stacks/) will need to be
@@ -258,12 +259,12 @@ Next, go into the stacks-2.60 directory and run the following commands:
 The filesystem patterns on your cluster might be different, and you
 should change these file paths accordingly.
 
-## 2.3 Remove PCR Clones
+# 3 PCR Clone Removal
 
 Referred to through files as “Step 3”. Files can be found in the
 `03_clone_filter/` directory.
 
-### 2.3.1 Run PCR Clone Removal Script
+## 3.1 Run PCR Clone Removal Script
 
 **Step 3a**. The `03-clone_filter.sh` script runs `clone_filter` from
 [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was
@@ -275,7 +276,7 @@ single sub-pooled library in `03-clone_filter_file_names.txt` and loops
 to run `clone_filter` on all of them. Possible file names shown in
 [`clone_filter` File Names](#clone_filter-file-names).
 
-### 2.3.2 Parse PCR Clone Removal Results
+## 3.2 Parse PCR Clone Removal Results
 
 **Step 3b**. If you want to extract descriptive statistics from the
 `clone_filter` output, you can use the `03.5-parse_clone_filter.py`
@@ -283,8 +284,8 @@ script to do so. It can be run on your local terminal after transferring
 the `clone_filter.out` logs to your local computer.
 
 ``` r
-source("03_clone_filter/examine_clones.R") 
-make_cloneplot() 
+source("03_clone_filter/examine_clones.R")
+make_cloneplot()
 ```
 
 <figure>
@@ -293,15 +294,15 @@ alt="PCR clone removal statistics" />
 <figcaption aria-hidden="true">PCR clone removal statistics</figcaption>
 </figure>
 
-## 2.4 Step 4 - Demultiplexing and Sample Filtering
+# 4 Sample Demultiplexing and Filtering
 
 Files can be found in the `04_demux_filter/` directory.
 
-### 2.4.1 Step 4a - Demultiplex and Filter
+## 4.1 Demultiplex and Filter
 
-The `04-process_radtags.sh` script runs `process_radtags` from
-[Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was
-run with options
+*Step 4a*. The `04-process_radtags.sh` script runs `process_radtags`
+from [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program
+was run with options
 `-c -q --inline_inline --renz_1 pstI --renz_2 mspI --rescue --disable_rad_check`.
 The script uses the same file prefixes as [Step 3 -
 `03-clone_filter.sh`](#step-3---remove-pcr-clones). Each sub-pooled
@@ -334,13 +335,13 @@ out each sublibrary into the individual samples. It will then clean the
 data, and will remove low quality reads and discard reads where a
 barcode was not found.
 
-### 2.4.2 Step 4b - Organize files
+## 4.2 Organize files
 
-In a new directory, make sure the files are organized by species. In the
-`process_radtags` script, we specified that files be sent to
-`~/scratch/demux/*sublibrary_name*` (reasoning for this is in [Step
-4c](#step-4c---assess-the-raw-processed-and-cleaned-data)), but files
-should manually be organized into species folders (i.e.,
+*Step 4b*. In a new directory, make sure the files are organized by
+species. In the `process_radtags` script, we specified that files be
+sent to `~/scratch/demux/*sublibrary_name*` (reasoning for this is in
+[Step 4c](#step-4c---assess-the-raw-processed-and-cleaned-data)), but
+files should manually be organized into species folders (i.e.,
 `~/scratch/demux/*SPP*`) after `process_radtags` is performed. For
 example, the file “DS.MN.L01-DS.M.1.1.fq.gz” should be sent to the
 `~/scratch/demux/DS` directory.
@@ -348,15 +349,16 @@ example, the file “DS.MN.L01-DS.M.1.1.fq.gz” should be sent to the
 Note: this is not automated at this point but it would be nice to
 automate the file moving process so it’s not forgotten at this point.
 
-### 2.4.3 Step 4c - Assess the raw, processed, and cleaned data
+## 4.3 Assess the raw, processed, and cleaned data
 
-In the script for [Step 4](#step-4---demultiplex-and-filter), we have
-specified that a new output folder be created for each sublibrary. The
-output folder is where all sample files and the log file will be dumped
-for each sublibrary. It is important to specify a different output
-folder if you have multiple sublibraries because we will be assessing
-the output log for each sublibrary individually (and otherwise, the log
-is overwritten when the script loops to a new sublibrary).
+*Step 4c*. In the script for [Step 4](#step-4---demultiplex-and-filter),
+we have specified that a new output folder be created for each
+sublibrary. The output folder is where all sample files and the log file
+will be dumped for each sublibrary. It is important to specify a
+different output folder if you have multiple sublibraries because we
+will be assessing the output log for each sublibrary individually (and
+otherwise, the log is overwritten when the script loops to a new
+sublibrary).
 
 The utility `stacks-dist-extract` can be used to extract data from the
 log file. First, we examined the library-wide statistics to identify
@@ -383,18 +385,18 @@ statistics to consider for each sample.
     the proportion that each individual was processed and sequenced
     within the overall library. This is important to consider as cases
     where a single sample dominates the sublibrary may indicate
-    contamination.
+    contamination. (Field `prop_sample_per_library`).
 
 2.  *The number of reads retained for each sample* can be an indicator
     of coverage. It is most likely a good idea to remove samples with a
     very low number of reads. Where you decide to place the cutoff for
     low coverage samples is dependent on your dataset. For example, a
     threshold of 1 million reads is often used but this is not
-    universal.
+    universal. (Field `retained_reads`).
 
 3.  *The proportion of reads retained for each sample* can also indicate
     low-quality samples and will give an idea of the variation in
-    coverage across samples.
+    coverage across samples. (Field `prop_reads_retained_per_sample`).
 
 Output for sublibraries for this step are summarized in
 [`process_radtags-library_output.csv`](output/process_radtags-sample_output.csv).
@@ -406,9 +408,12 @@ The script `04c-process_radtags_stats.R` was used to create many plots
 for easily assessing each statistic. Output from this step can be found
 in `figures/process_radtags/` where figures are organized by species.
 
+The script `04c-radtags_filter_summary.R` summarizes the filtering
+results from all samples.
+
 ``` r
-source("04_demux_filter/04c-radtags_filter_summary.R") 
-make_filterplot() 
+source("04_demux_filter/04c-radtags_filter_summary.R")
+make_filterplot()
 ```
 
 <figure>
@@ -418,12 +423,11 @@ alt="RAD tag processing statistics" />
 statistics</figcaption>
 </figure>
 
-### 2.4.4 Step 4d - Identify low-coverage and low-quality samples from
+## 4.4 Identify low-coverage and low-quality samples from
 
-    downstream analysis
-
-Using the same output log and the above statistics, we removed
-low-coverage and low-quality samples that may skew downstream analyses.
+*Step 4d*. Using the same output log and the above statistics, we
+removed low-coverage and low-quality samples that may skew downstream
+analyses.
 
 Samples were identified and removed via the following procedure:
 
@@ -436,15 +440,15 @@ Samples were identified and removed via the following procedure:
     correlate to low coverage and will lack enough raw reads to
     contribute to downstream analyses.
 
-Good/kept samples are summarized in
+Good/kept samples are listed in
 [`process_radtags-kept_samples.csv`](output/process_radtags-kept_samples.csv).
 
-Discarded samples are summarized in
+Discarded samples are listed in
 [`process_radtags-discarded_samples.csv`](output/process_radtags-discarded_samples.csv).
 
 ``` r
-source("04_demux_filter/04c-radtags_filter_summary.R") 
-make_manual_discard_plot() 
+source("04_demux_filter/04c-radtags_filter_summary.R")
+make_manual_discard_plot()
 ```
 
 <figure>
@@ -458,9 +462,7 @@ Note: At this point, we started using Stacks 2.62 for its
 multi-threading capabilities. Functionality of the previous steps should
 be the same, however.
 
-# 3 Generating Stacks Catalogs and Calling SNPs
-
-## 3.1 Step 5 - Metapopulation Catalog Building and Parameter Search
+# 5 Stacks: Metapopulation Catalog Building and Parameter Search
 
 Files can be found in the `05_ustacks_and_params/` directory.
 
@@ -473,12 +475,13 @@ optimal set of parameters for the dataset (see [Step
 5a](#step-5a---denovo_mapsh)). Following the parameter optimization, the
 program `ustacks` can be run to generate a catalog of loci.
 
-### 3.1.1 Step 5a - Run `denovo_map.sh`
+## 5.1 Run `denovo_map.sh`
 
-Stack assembly will differ based on several different aspects of the
-dataset(such as the study species, the RAD-seq method used, and/or the
-quality and quantity of DNA used). So it is important to use parameters
-that will maximize the amount of biological data obtained from stacks.
+*Step 5a*. Stack assembly will differ based on several different aspects
+of the dataset(such as the study species, the RAD-seq method used,
+and/or the quality and quantity of DNA used). So it is important to use
+parameters that will maximize the amount of biological data obtained
+from stacks.
 
 There are three main parameters to consider when doing this:
 
@@ -563,6 +566,14 @@ assessing the change in shared loci across parameter iterations.
 
 Based on this optimization step, we used the following parameters:
 
+    ## Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
+    ## Use 'xfun::attr2()' instead.
+    ## See help("Deprecated")
+
+    ## Warning in attr(x, "format"): 'xfun::attr()' is deprecated.
+    ## Use 'xfun::attr2()' instead.
+    ## See help("Deprecated")
+
 | Species | M (locus mismatches) | n (catalog mismatches) | m (minimum reads) |
 |:--------|---------------------:|-----------------------:|------------------:|
 | CD      |                    8 |                      8 |                 3 |
@@ -574,10 +585,11 @@ Based on this optimization step, we used the following parameters:
 
 Final parameter optimization values for the Stacks pipeline.
 
-### 3.1.2 Step 5b - Run `ustacks`
+## 5.2 Run `ustacks`
 
-`ustacks` builds *de novo* loci in each individual sample. We have
-designed the `ustacks` script so that the process requires three files:
+*Step 5b*. `ustacks` builds *de novo* loci in each individual sample. We
+have designed the `ustacks` script so that the process requires three
+files:
 
 - `05-ustacks_n.sh` : the shell script that executes `ustacks`
 - `05-ustacks_id_n.txt` : the sample ID number
@@ -610,12 +622,27 @@ A small number of samples (13) were discarded at this stage as the
 loci. See
 [output/ustacks-discarded_samples.csv](output/ustacks-discarded_samples.csv).
 
-### 3.1.3 Step 5c - Correct File Names
+    ## Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
+    ## Use 'xfun::attr2()' instead.
+    ## See help("Deprecated")
 
-This step contains a script `05b-fix_filenames.sh` which uses some
-simple regex to fix filenames that are output in previous steps. Stacks
-adds an extra “1” at some point at the end of the sample name which is
-not meaningful. The following files:
+    ## Warning in attr(x, "format"): 'xfun::attr()' is deprecated.
+    ## Use 'xfun::attr2()' instead.
+    ## See help("Deprecated")
+
+| ustacks discarded | Retained reads | Proportion of sub-library |
+|:------------------|---------------:|--------------------------:|
+| no                |       10075192 |                 0.1608982 |
+| yes               |        7490510 |                 0.1230658 |
+
+Summary of samples discarded at the ustacks step of the Stacks pipeline.
+
+## 5.3 Correct File Names
+
+*Step 5c*. This step contains a script `05b-fix_filenames.sh` which uses
+some simple regex to fix filenames that are output in previous steps.
+Stacks adds an extra “1” at some point at the end of the sample name
+which is not meaningful. The following files:
 
 - DS.MN.L02-DS.M.3.1.alleles.tsv.gz
 - DS.MN.L03-DS.U.2.1.tags.tsv.gz
@@ -632,10 +659,10 @@ be optimized/improved. The script should be run from the directory where
 the changes need to be made. Files that have already been fixed will not
 be changed.
 
-### 3.1.4 Step 5d - Choose catalog samples/files
+## 5.4 Choose catalog samples/files
 
-In the next step, we will choose the files we want to go into the
-catalog. This involves a few steps:
+*Step 5d*. In the next step, we will choose the files we want to go into
+the catalog. This involves a few steps:
 
 1.  Create a meaningful directory name. This could be the date (e.g.,
     `stacks_22_01_25`).
@@ -653,7 +680,7 @@ catalog. This involves a few steps:
 
 3.  Remember the meaningful directory name. You will need it in Step 6.
 
-## 3.2 Step 6 - Metapopulation catalog with `cstacks`
+# 6 Stacks: Metapopulation catalog with `cstacks`
 
 Files can be found in the `06_cstacks/` directory.
 
@@ -698,6 +725,16 @@ by[`ustacks`](#step-5---ustacks):
 - `catalog.alleles.tsv.gz`
 - `catalog.snps.tsv.gz`
 - `catalog.tags.tsv.gz`
+
+<!-- -->
+
+    ## Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
+    ## Use 'xfun::attr2()' instead.
+    ## See help("Deprecated")
+
+    ## Warning in attr(x, "format"): 'xfun::attr()' is deprecated.
+    ## Use 'xfun::attr2()' instead.
+    ## See help("Deprecated")
 
 | Sample           | Species | City |
 |:-----------------|:--------|:-----|
@@ -980,7 +1017,7 @@ by[`ustacks`](#step-5---ustacks):
 
 Subset of samples used in SNP catalog creation.
 
-## 3.3 Step 7 - Metapopulation locus matching with `sstacks`
+# 7 Stacks: Metapopulation locus matching with `sstacks`
 
 Files can be found in the `07_sstacks/` directory.
 
@@ -1011,22 +1048,24 @@ A small number of samples generated very few matches to the catalog
 conclusions) and therefore aren’t used in the next step. See
 [output/sstacks-discarded_samples.csv](output/sstacks-discarded_samples.csv).
 
-## 3.4 Step 8 - Genotype probabilities with `polyRAD`
+# 8 Genotype probabilities with `polyRAD`
 
 Files can be found in the `08_polyRAD/` directory.
 
-### 3.4.1 Make `RADdata` object
+## 8.1 Make `RADdata` object
 
 We used the [polyRAD package](https://github.com/lvclark/polyRAD) to
 call genotypes because many of our species are polyploid or have
 historical genome duplication. PolyRAD takes the catalog output
 (`catalog.alleles.tsv.gz`) and accompanying matches to the catalog
 (e.g., `CD.BA.AA.U.1.matches.tsv.gz`) to create genotype likelihoods for
-species with diploidy and/or polyploidy. We used the catalog and match
-files to create a RADdata object class in R for each species. We ran
-this on the Rockfish compute cluster, with the `make_polyRAD_<spp>.R`
-script doing the brunt of the work. The R script was wrapped by
-`polyrad_make_<spp>.sh` to submit the script to the SLURM scheduler.
+species with diploidy and/or polyploidy.
+
+We used the catalog and match files to create a RADdata object class in
+R for each species. We ran this on the Rockfish compute cluster at Johns
+Hopkins University, with the `make_polyRAD_<spp>.R` script doing the
+brunt of the work. The R script was wrapped by `polyrad_make_<spp>.sh`
+to submit the script to the SLURM scheduler.
 
 *Relevant Parameters:*
 
@@ -1046,7 +1085,7 @@ script doing the brunt of the work. The R script was wrapped by
 
 - `<spp>_polyRADdata.rds`, RDS object (the RADdata object)
 
-### 3.4.2 Calculate overdispersion
+## 8.2 Calculate overdispersion
 
 Next, we calculated overdispersion using the
 `polyRAD_overdispersion_<spp>.R` script, wrapped by
@@ -1063,7 +1102,7 @@ Outputs:
 - `<spp>_overdispersion.rds`, RDS object (the overdispersion test
   output)
 
-### 3.4.3 Estimate genotypes
+## 8.3 Estimate genotypes
 
 Next, we calculated filtered loci based on the expected Hind/He
 statistic and estimated population structure/genotypes using the
@@ -1093,7 +1132,7 @@ Outputs:
 - `<spp>_estimatedgeno_RADdata.rds`, RDS object (RADdata object with
   genotype estimates)
 
-### 3.4.4 Final filter and file cleanup
+## 8.4 Final filter and file cleanup
 
 The output `<spp>_estimatedgeno_RADdata.rds` needs to be converted to
 genind and structure format for further analysis and steps. There is a
@@ -1105,6 +1144,14 @@ At this stage, we also visually assessed the $H_{ind}/H_e$ statistic
 versus the locus depth (see `check_coverage` inside the
 `convert_genomics.R` script). We removed the following samples from
 further analysis:
+
+    ## Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
+    ## Use 'xfun::attr2()' instead.
+    ## See help("Deprecated")
+
+    ## Warning in attr(x, "format"): 'xfun::attr()' is deprecated.
+    ## Use 'xfun::attr2()' instead.
+    ## See help("Deprecated")
 
 | Sample         |
 |:---------------|
@@ -1143,7 +1190,7 @@ source("08_polyRAD/convert_genomics.R")
 convert_all()
 ```
 
-## 3.5 Step 9 - Populations with `Structure`
+# 9 `Structure` Analysis
 
 Files, inlcuding model parameters, can be found in the `09_structure/`
 directory.
@@ -1151,9 +1198,9 @@ directory.
 Structure documentation can be found
 [here](https://web.stanford.edu/group/pritchardlab/structure_software/release_versions/v2.3.4/structure_doc.pdf).
 
-### 3.5.1 Running Structure
+## 9.1 Running Structure on `polyRAD` output
 
-`polyRAD` outputs genotype probabilites in a format suitable for
+`polyRAD` outputs genotype probabilities in a format suitable for
 Structure. These files were named as:
 
     CD_estimatedgeno.structure
@@ -1187,9 +1234,9 @@ choose the optimal K using the Delta-K method (see
 optimal K was selected per species, we re-ran Structure using a greater
 number of iterations (100000) for final output and plotting.
 
-# 4 Analysis
+# 10 NLCD Data and Site Plots
 
-## 4.1 NLCD Data
+NLCD is used in Fig. 2 and IBE analysis, described below.
 
 From the USGS:
 
@@ -1211,54 +1258,72 @@ From the USGS:
 > sites for each impervious pixel to allow deeper analysis of developed
 > features.
 
+## 10.1 Preparing NLCD Data
+
 First, we trimmed the large data. This makes a smaller `.rds` file for
 each city.
 
 ``` r
-source("R/trim_NLCD_spatial_data.R")
+source("R/10-trim_NLCD_spatial_data.R")
 ```
 
 ``` r
 create_spatial_rds_files()
+create_spatial_rds_files(spp = "CD")
 ```
 
-## 4.2 Make maps of sampling locations
+## 10.2 Climate normals
+
+We obtained climate normals for plotting from
+<https://www.ncei.noaa.gov/access/us-climate-normals>. We used the
+latest 30-year period (1991-2020): Most recent standard climatological
+period (2021 release); which is recommended for most purposes.
+
+## 10.3 Maps of sampling locations
 
 Next, we made plots for each city’s sampling locations. Note that these
-only include sites that had viable SNPs.
+only include sites that had viable polymorphic loci.
 
 ``` r
-source("R/plot_map_of_samples.R")
+source("R/10-Fig2-plot_map_of_samples.R")
 ```
 
 ``` r
-make_all_urban_site_plots()
+# Plot Fig 2
+make_all_urban_site_plots_with_clim_normals()
 ```
 
-## 4.3 Continental population structure: population statistics by species
+# 11 Principal components analysis & plots
 
-We used `polyrad::calcPopDiff()` to calculate continental population
-statistics for each species.
-
-``` r
-source("R/calc_continental_stats.R")
-```
+The following creates PCA plots from polyRAD data.
 
 ``` r
-do_all_continental_stats()
+source("R/11-plot_pca.R")
 ```
 
 ``` r
-# CD as an example
-read.csv("output/population_stats/CD_continental_stats.csv")
+# Plot Fig 4
+make_pca_city_and_pctimp_all()
 ```
 
-    ##   X statistic      value
-    ## 1 1     JostD 0.30579677
-    ## 2 2       Gst 0.02735719
-    ## 3 3       Fst 0.02812163
+In addition to coloring points by city, we also colored points by NLCD
+Urban Cover %. Note that in the pdf version of this document, the figure
+might appear on the next pages.
 
-## 4.4 Continental population structure: Structure software results
+``` r
+make_pca_pctimp_only_all()
+```
+
+<figure>
+<img src="Supplement_files/figure-gfm/plot_pca_3-1.png"
+alt="PCA colored by % Impervious surface." />
+<figcaption aria-hidden="true">PCA colored by % Impervious
+surface.</figcaption>
+</figure>
+
+# 12 Genetic structure using Structure and sNMF
+
+## 12.1 `Structure` optimal K
 
 Within each species, we compressed the result files for all K and reps
 and submitted to [Structure
@@ -1268,31 +1333,33 @@ choose the optimal K using the Delta-K method (see
 
 The results were:
 
-CD: K=3  
-DS: K=3  
-EC: K=2  
-LS: K=3  
-PA: K=4  
-TO: K=3
+CD: K=3 DS: K=3 EC: K=2 LS: K=3 PA: K=4 TO: K=3
 
 ``` r
 # This file contains output from various K from Structure..
 read_csv("output/structure/structure_k_Pr.csv")
 ```
 
-## 4.5 Continental population structure: Structure plots
+The code below generates plots of various K (e.g., K={1-5}) vs
+likelihood, but did not end up being used in the manuscript.
+
+``` r
+source("R/12-structure_k.R")
+```
+
+## 12.2 Plotting Structure output
 
 The code below generates plots for Structure results.
 
 ``` r
-source("R/plot_structure.R")
+source("R/12-plot_structure.R")
 ```
 
 ``` r
 make_structure_multi_plot()
 ```
 
-## 4.6 Validation of Structure results with sNMF
+## 12.3 Validation of Structure results with sNMF
 
 We ran sNMF as an alternative to Structure to validate the results. We
 coerced all polyploid data to diploid data to make the file types
@@ -1304,11 +1371,10 @@ K, we then selected the best of 10 runs in each K using the
 `which.min()` function.
 
 ``` r
-source("R/sNMF.R")
+source("R/12-sNMF.R")
 ```
 
-The following runs sNMF and generates the figure. Note that in the pdf
-version of this document, the figure might appear on the next page.
+The following runs sNMF and generates the figure. .
 
 ``` r
 do_all_sNMF()
@@ -1316,500 +1382,190 @@ do_all_sNMF()
 
 <figure>
 <img src="Supplement_files/figure-gfm/snmf_2-1.png"
-alt="Ancestry coefficients obtained using snmf(). As with the Structure analysis, horseweed and prickly lettuce appear to have the most population structure. Phoenix crabgrass, horseweed, and prickly lettuce appear unique. In general, sNMF produced larger K for most species, which will create more sensitivity to admixture." />
+alt="Ancestry coefficients obtained using snmf(). As with the Structure analysis, E. canadensis (horseweed) and L. serriola (prickly lettuce) appear to have the most population structure. D. sanguinalis, E. canadensis, and L. serriola from Phoenix appear unique. In general, sNMF produced larger K for most species, which will create more sensitivity to admixture." />
 <figcaption aria-hidden="true">Ancestry coefficients obtained using
-<code>snmf()</code>. As with the Structure analysis, horseweed and
-prickly lettuce appear to have the most population structure. Phoenix
-crabgrass, horseweed, and prickly lettuce appear unique. In general,
-sNMF produced larger K for most species, which will create more
-sensitivity to admixture.</figcaption>
+<code>snmf()</code>. As with the Structure analysis, <em>E.
+canadensis</em> (horseweed) and <em>L. serriola</em> (prickly lettuce)
+appear to have the most population structure. <em>D. sanguinalis</em>,
+<em>E. canadensis</em>, and <em>L. serriola</em> from Phoenix appear
+unique. In general, sNMF produced larger K for most species, which will
+create more sensitivity to admixture.</figcaption>
 </figure>
 
-## 4.7 AMOVA
-
-We performed hierarchical analysis of molecular variance (AMOVA; using
-GenoDive 3.06) based on the Rho-statistics, which is based on a Ploidy
-independent Infinite Allele Model. AMOVA is under the “Analysis” menu.
-
-## 4.8 Local: $F_{IS}$ - Homozygosity within population
-
-We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to
-calculate $F_{IS}$. This gives a good estimate of whether there are more
-homozygotes than expected (positive number) or more heterozygotes than
-expected (negative number). Notably, GenoDive accommodates polyploids
-and reduces the bias on $F_{IS}$ by performing a permutation test. By
-default, there are 999 permutations.
-
-This can be run in GenoDive by selecting Analysis \> Hardy-Weinberg \>
-Heterozygosity-based (Nei) method.
-
-``` r
-head(read.csv("output/population_stats/genodive_output_Fis.csv"))
-```
-
-    ##   Species Population  n   Fis
-    ## 1      CD         BA 55 0.166
-    ## 2      CD         LA 48 0.186
-    ## 3      CD         PX 82 0.200
-    ## 4      CD    Overall NA 0.187
-    ## 5      DS         BA 55 0.208
-    ## 6      DS         BO 52 0.252
-
-## 4.9 Local: $\rho$ - Pairwise comparison
-
-We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to
-calculate pairise $\rho$ (rho) among cities within species. Note that
-there is a p-value correction for testing multiple cities (species are
-treated as independent, however).
-
-This can be run in GenoDive by selecting Pairwise Differentiation from
-the Analysis menu and selecting the “rho” statistic from the dropdown.
-
-We used the following script to clean up the results.
-
-``` r
-source("R/rho.R")
-compile_rho_table()
-```
-
-| Species | City1 | City2 |    rho | p-value | adjusted p-value |
-|:--------|:------|:------|-------:|--------:|-----------------:|
-| CD      | PX    | BA    |  0.050 |   0.001 |           0.0010 |
-| CD      | LA    | BA    |  0.046 |   0.001 |           0.0010 |
-| CD      | PX    | LA    |  0.015 |   0.001 |           0.0010 |
-| DS      | MN    | BA    |  0.031 |   0.001 |           0.0015 |
-| DS      | BO    | BA    |  0.018 |   0.001 |           0.0015 |
-| DS      | PX    | BA    |  0.012 |   0.001 |           0.0015 |
-| DS      | MN    | BO    |  0.007 |   0.001 |           0.0015 |
-| DS      | PX    | BO    | -0.002 |   0.875 |           0.9550 |
-| DS      | PX    | MN    | -0.002 |   0.955 |           0.9550 |
-| EC      | PX    | BA    |  0.098 |   0.001 |           0.0010 |
-| EC      | PX    | LA    |  0.087 |   0.001 |           0.0010 |
-| EC      | LA    | BA    |  0.038 |   0.001 |           0.0010 |
-| LS      | PX    | BA    |  0.077 |   0.001 |           0.0011 |
-| LS      | PX    | MN    |  0.069 |   0.001 |           0.0011 |
-| LS      | PX    | LA    |  0.061 |   0.001 |           0.0011 |
-| LS      | PX    | BO    |  0.056 |   0.001 |           0.0011 |
-| LS      | MN    | LA    |  0.039 |   0.001 |           0.0011 |
-| LS      | LA    | BA    |  0.038 |   0.001 |           0.0011 |
-| LS      | BO    | BA    |  0.032 |   0.001 |           0.0011 |
-| LS      | MN    | BO    |  0.021 |   0.001 |           0.0011 |
-| LS      | LA    | BO    |  0.010 |   0.001 |           0.0011 |
-| LS      | MN    | BA    |  0.009 |   0.002 |           0.0020 |
-| PA      | PX    | BO    |  0.028 |   0.001 |           0.0015 |
-| PA      | LA    | BO    |  0.024 |   0.001 |           0.0015 |
-| PA      | PX    | BA    |  0.015 |   0.001 |           0.0015 |
-| PA      | LA    | BA    |  0.011 |   0.001 |           0.0015 |
-| PA      | BO    | BA    |  0.008 |   0.002 |           0.0024 |
-| PA      | PX    | LA    | -0.002 |   0.972 |           0.9720 |
-| TO      | PX    | BA    |  0.023 |   0.001 |           0.0014 |
-| TO      | PX    | MN    |  0.015 |   0.001 |           0.0014 |
-| TO      | PX    | BO    |  0.013 |   0.002 |           0.0025 |
-| TO      | LA    | BA    |  0.011 |   0.001 |           0.0014 |
-| TO      | LA    | BO    |  0.009 |   0.001 |           0.0014 |
-| TO      | MN    | LA    |  0.009 |   0.001 |           0.0014 |
-| TO      | PX    | LA    |  0.009 |   0.027 |           0.0300 |
-| TO      | BO    | BA    |  0.008 |   0.001 |           0.0014 |
-| TO      | MN    | BO    |  0.008 |   0.001 |           0.0014 |
-| TO      | MN    | BA    |  0.001 |   0.098 |           0.0980 |
-
-Rho statistics for pairwise comparison between cities.
-
-## 4.10 Local: $\bar{r}_d$ - Linkage disequilibrium
-
-We used `poppr::ia()` to calculate the standardized index of association
-of loci in the dataset ($\bar{r}_d$ or `rbarD`). We use the standardized
-index of association to avoid the influence of different sample sizes,
-as described by [Agapow and Burt
-2001](https://doi.org/10.1046/j.1471-8278.2000.00014.x).
-
-When `p.rD` is small (\<0.05) and rbarD is (relatively) higher, that is
-a sign that the population could be in linkage disequilibrium.
-
-An interesting note from the documentation:
-
-> It has been widely used as a tool to detect clonal reproduction within
-> populations. Populations whose members are undergoing sexual
-> reproduction, whether it be selfing or out-crossing, will produce
-> gametes via meiosis, and thus have a chance to shuffle alleles in the
-> next generation. Populations whose members are undergoing clonal
-> reproduction, however, generally do so via mitosis. This means that
-> the most likely mechanism for a change in genotype is via mutation.
-> The rate of mutation varies from species to species, but it is rarely
-> sufficiently high to approximate a random shuffling of alleles. The
-> index of association is a calculation based on the ratio of the
-> variance of the raw number of differences between individuals and the
-> sum of those variances over each locus. You can also think of it as
-> the observed variance over the expected variance.
-
-There is a nice description
-[here](https://grunwaldlab.github.io/Population_Genetics_in_R/Linkage_disequilibrium.html).
-
-``` r
-source("R/rbarD.R")
-calc_rbarD()
-```
-
-``` r
-head(read.csv("output/population_stats/rbarD.csv"))
-```
-
-    ##   spp city  n       Ia  p.Ia     rbarD  p.rD
-    ## 1  CD   BA 55 664.7655 0.001 0.2950534 0.001
-    ## 2  CD   LA 48 470.5913 0.001 0.2070064 0.001
-    ## 3  CD   PX 82 634.5787 0.001 0.2792566 0.001
-    ## 4  DS   BA 55 557.7334 0.001 0.2123881 0.001
-    ## 5  DS   BO 52 896.0906 0.001 0.3398873 0.001
-    ## 6  DS   MN 81 578.2494 0.001 0.2192197 0.001
-
-## 4.11 Isolation by distance
-
-We assessed isolation by distance by comparing genetic distance to
-geographic distance. Specifically, we took the traditional approach of
-comparing a geographic dissimilarity matrix (based on latitude and
-longitude) to a genetic dissimilarity matrix. We calculated the genetic
-dissimilarity matrix with the `dist.genpop` function int the adegenet
-package. We use the [Cavalli-Sforza](https://doi.org/10.2307/2406616)
-distance metric, or `method = 2` argument for the `dist.genpop`
-function.
-
-Note that for this analysis, we treated each *sampling site* as a
-distinct location. There would not be enough power to do a distance
-matrix among 3-5 cities. Code for generating stats and figures from the
-Mantel test can be found in the source code below.
-
-``` r
-source("R/isolation_by_distance.R")
-```
-
-``` r
-extract_ibd_stats_and_plots()
-```
-
-Below are the results of the mantel test. Note that there is a p-value
-correction for testing multiple cities (species are treated as
-independent, however).
-
-| Species              | Observation |   Std.Obs | Expectation |  Variance | p-value |
-|:---------------------|------------:|----------:|------------:|----------:|--------:|
-| Bermuda grass (CD)   |   0.4476430 | 11.782345 |   0.0004658 | 0.0014404 |   1e-04 |
-| crabgrass (DS)       |   0.3299992 |  8.210204 |   0.0009116 | 0.0016066 |   1e-04 |
-| horseweed (EC)       |   0.4028339 |  9.240682 |  -0.0000991 | 0.0019013 |   1e-04 |
-| prickly lettuce (LS) |   0.1939607 |  7.794608 |  -0.0000002 | 0.0006192 |   1e-04 |
-| bluegrass (PA)       |   0.2821562 |  8.264578 |  -0.0006003 | 0.0011705 |   1e-04 |
-| dandelion (TO)       |   0.3101457 |  7.250584 |  -0.0000930 | 0.0018308 |   1e-04 |
-
-Statistics from running 9999 permutations (‘Reps’) via mantel test,
-limited to genomic versus distance comparisons. Hypothesis for all tests
-is ‘greater’.
-
-We also repeated this within city. Note that there is a p-value
-correction for testing multiple environmental variables and cities
-(species are treated as independent, however).
-
-| Species              | Observation |    Std.Obs | Expectation |  Variance | p-value | Adjusted p-value | City |
-|:---------------------|------------:|-----------:|------------:|----------:|--------:|-----------------:|:-----|
-| Bermuda grass (CD)   |   0.2945315 |  1.9546056 |  -0.0029856 | 0.0231689 |  0.0436 |        0.0654000 | BA   |
-| Bermuda grass (CD)   |  -0.1400172 | -0.8703840 |  -0.0020079 | 0.0251417 |  0.7907 |        0.7907000 | LA   |
-| Bermuda grass (CD)   |   0.3063556 |  2.5384776 |   0.0026243 | 0.0143164 |  0.0128 |        0.0384000 | PX   |
-| crabgrass (DS)       |   0.1864927 |  1.3126728 |   0.0012624 | 0.0199118 |  0.1142 |        0.4568000 | BA   |
-| crabgrass (DS)       |  -0.1472240 | -0.9380806 |   0.0012481 | 0.0250501 |  0.8230 |        0.9188000 | BO   |
-| crabgrass (DS)       |   0.0756460 |  0.5534710 |  -0.0004163 | 0.0188864 |  0.2807 |        0.5614000 | MN   |
-| crabgrass (DS)       |  -0.2825720 | -1.2882736 |  -0.0015179 | 0.0475953 |  0.9188 |        0.9188000 | PX   |
-| horseweed (EC)       |   0.1702378 |  0.9531766 |   0.0005356 | 0.0316977 |  0.1752 |        0.5256000 | BA   |
-| horseweed (EC)       |  -0.1334229 | -0.8704015 |  -0.0005180 | 0.0233154 |  0.8025 |        0.8025000 | LA   |
-| horseweed (EC)       |   0.0106386 |  0.0858594 |  -0.0031786 | 0.0258977 |  0.4472 |        0.6708000 | PX   |
-| prickly lettuce (LS) |   0.1456205 |  0.5659122 |   0.0018806 | 0.0645144 |  0.2994 |        0.5571667 | BA   |
-| prickly lettuce (LS) |  -0.0725099 | -0.4629508 |  -0.0004308 | 0.0242409 |  0.6496 |        0.7684000 | BO   |
-| prickly lettuce (LS) |   0.4413406 |  2.2995233 |   0.0001766 | 0.0368065 |  0.0530 |        0.2650000 | LA   |
-| prickly lettuce (LS) |   0.0845050 |  0.4603606 |  -0.0014208 | 0.0348378 |  0.3343 |        0.5571667 | MN   |
-| prickly lettuce (LS) |  -0.1679338 | -0.8275834 |   0.0000745 | 0.0412133 |  0.7684 |        0.7684000 | PX   |
-| bluegrass (PA)       |  -0.0149195 | -0.1337558 |   0.0007146 | 0.0136622 |  0.5099 |        0.6981333 | BA   |
-| bluegrass (PA)       |  -0.2168452 | -1.6352688 |   0.0023646 | 0.0179697 |  0.9988 |        0.9988000 | BO   |
-| bluegrass (PA)       |  -0.0431048 | -0.2310866 |   0.0020106 | 0.0381153 |  0.5236 |        0.6981333 | LA   |
-| bluegrass (PA)       |   0.3830110 |  1.7229224 |  -0.0029655 | 0.0501869 |  0.0286 |        0.1144000 | PX   |
-| dandelion (TO)       |  -0.0020598 | -0.0233426 |   0.0016880 | 0.0257782 |  0.4539 |        0.7635000 | BA   |
-| dandelion (TO)       |  -0.1937755 | -1.2563379 |  -0.0007760 | 0.0235993 |  0.9342 |        0.9342000 | BO   |
-| dandelion (TO)       |   0.1682753 |  1.2689800 |   0.0003895 | 0.0175032 |  0.1023 |        0.5115000 | LA   |
-| dandelion (TO)       |   0.0036501 |  0.0644593 |  -0.0009095 | 0.0050035 |  0.4581 |        0.7635000 | MN   |
-| dandelion (TO)       |  -0.1823350 | -0.7473653 |   0.0000244 | 0.0595375 |  0.7378 |        0.9222500 | PX   |
-
-Statistics from running 9999 permutations (‘Reps’) via mantel test,
-limited to within city for genomic versus distance comparisons.
-Hypothesis for all tests is ‘greater’.
-
-## 4.12 Isolation by environment
-
-### 4.12.1 Environmental data
-
-Environmental variables include the monthly averages in the middle of
-the day for:
-
-- air temperature at 5cm above ground
-- air temperature at 1.2m above ground
-- soil temperature at 2.5cm below ground
-- RH (relative humidity) at 5cm above ground
-- RH at 1.2m above ground
-
-Variables were extracted from historic datasets and modeled using a
-microclimate model. More information can be found on the [NicheMapR
-website](https://mrke.github.io/) (how the model works, what variables
-can be manipulated and what you can model, vignettes for running models
-in R).
-
-This method was chosen because it takes data from global datasets (you
-can use both historic and current or pick specific years) but then
-accounts for site-specific variables (we can change the % shade, the
-slope or aspect of the landscape, and it considers elevation, average
-cloud cover, etc.). [Here’s the
-list](https://mrke.github.io/models/MicroClimate-Models) of all the
-different models/datasets we’re able to can pull from. It’s meant for
-mechanistic niche modeling.
-
-Variables in the file `site_data_DUC_environvars.csv` are all for the
-monthly averages at noon (12pm - hottest part of the day!) and are
-extreme. In other words, they are maximums.
-
-Note that [this Stack Overflow
-post](https://stackoverflow.com/questions/69639782/installing-gfortran-on-macbook-with-apple-m1-chip-for-use-in-r)
-is helpful with installing `NicheMapR`.
-
-``` r
-# devtools::install_github('mrke/NicheMapR')
-# library(NicheMapR)
-# 
-# test_site_coords <- c(sites[1,]$lat, sites[1,]$long)
-# test_distance_to_city_center_km <- sites[1,]$distance_to_city_center_km
-# micros_ <- micro_usa(loc = test_site_coords)
-# 
-# loc <- c(-89.40, 43.07)
-# micro <- micro_global(loc = loc)
-```
-
-### 4.12.2 IBE analysis
-
-We assessed isolation by environment by comparing genetic distance to
-environmental distance, or the difference among sites. Genetic distance
-was generated the same way as isolation by distance (IBD) above. Code
-for generating stats from the Mantel test can be found in the source
-code below.
-
-``` r
-source("R/isolation_by_environment.R")
-```
-
-The following functions are used to generate statistics for all
-environmental variables. Default of the function runs for
-“nlcd_urban_pct” which is the percent urban cover of a site within city.
-These are the four environmental variables mentioned in the main
-manuscript, although more environmental variables are present in the raw
-data.
-
-``` r
-extract_ibe_stats_and_plots()
-extract_ibe_stats_and_plots(env_var_to_use = "distance_to_city_center_km")
-extract_ibe_stats_and_plots(env_var_to_use = "soiltemp_2.5cm_Jul_12pm")
-extract_ibe_stats_and_plots(env_var_to_use = "soiltemp_2.5cm_Apr_12pm")
-```
-
-Below are the results of the mantel test. Note that there is a p-value
-correction for testing multiple environmental variables (species are
-treated as independent, however).
-
-| Species              | Observation |    Std.Obs | Expectation |  Variance | p-value | Adjusted p-value | Env.Var                    |
-|:---------------------|------------:|-----------:|------------:|----------:|--------:|-----------------:|:---------------------------|
-| Bermuda grass (CD)   |   0.0063593 |  0.1835877 |  -0.0005072 | 0.0013989 |  0.3941 |        0.3941000 | nlcd_urban_pct             |
-| Bermuda grass (CD)   |   0.1376533 |  3.0448142 |   0.0002070 | 0.0020377 |  0.0040 |        0.0053333 | distance_to_city_center_km |
-| Bermuda grass (CD)   |   0.4752489 | 13.8424955 |   0.0006095 | 0.0011757 |  0.0001 |        0.0002000 | soiltemp_2.5cm_Apr_12pm    |
-| Bermuda grass (CD)   |   0.4323268 | 14.6854153 |   0.0004020 | 0.0008651 |  0.0001 |        0.0002000 | soiltemp_2.5cm_Jul_12pm    |
-| bluegrass (PA)       |   0.0002138 |  0.0011500 |   0.0001657 | 0.0017543 |  0.4588 |        0.4737000 | nlcd_urban_pct             |
-| bluegrass (PA)       |  -0.0069195 | -0.0996185 |   0.0000543 | 0.0049007 |  0.4737 |        0.4737000 | distance_to_city_center_km |
-| bluegrass (PA)       |   0.2551951 |  6.3497889 |  -0.0000994 | 0.0016165 |  0.0001 |        0.0004000 | soiltemp_2.5cm_Apr_12pm    |
-| bluegrass (PA)       |   0.2065044 |  3.9951073 |   0.0002376 | 0.0026656 |  0.0008 |        0.0016000 | soiltemp_2.5cm_Jul_12pm    |
-| crabgrass (DS)       |   0.0084529 |  0.2008775 |  -0.0000271 | 0.0017821 |  0.3993 |        0.5324000 | nlcd_urban_pct             |
-| crabgrass (DS)       |  -0.1048469 | -1.5781202 |   0.0001499 | 0.0044266 |  0.9724 |        0.9724000 | distance_to_city_center_km |
-| crabgrass (DS)       |   0.3342972 |  6.0271540 |   0.0011639 | 0.0030550 |  0.0001 |        0.0002000 | soiltemp_2.5cm_Apr_12pm    |
-| crabgrass (DS)       |   0.3007634 |  5.2868618 |   0.0011398 | 0.0032119 |  0.0001 |        0.0002000 | soiltemp_2.5cm_Jul_12pm    |
-| dandelion (TO)       |  -0.0799521 | -1.5694516 |  -0.0002883 | 0.0025765 |  0.9486 |        0.9486000 | nlcd_urban_pct             |
-| dandelion (TO)       |   0.0153535 |  0.1977167 |  -0.0012246 | 0.0070304 |  0.3992 |        0.5322667 | distance_to_city_center_km |
-| dandelion (TO)       |   0.4279786 |  7.0596781 |   0.0001653 | 0.0036723 |  0.0001 |        0.0002000 | soiltemp_2.5cm_Apr_12pm    |
-| dandelion (TO)       |   0.4638919 |  6.4145637 |   0.0006164 | 0.0052161 |  0.0001 |        0.0002000 | soiltemp_2.5cm_Jul_12pm    |
-| horseweed (EC)       |   0.0159108 |  0.3024347 |   0.0008836 | 0.0024688 |  0.3163 |        0.3163000 | nlcd_urban_pct             |
-| horseweed (EC)       |   0.0946052 |  1.7061014 |   0.0003245 | 0.0030538 |  0.0619 |        0.0825333 | distance_to_city_center_km |
-| horseweed (EC)       |   0.7172402 | 17.0412662 |   0.0002351 | 0.0017703 |  0.0001 |        0.0002000 | soiltemp_2.5cm_Apr_12pm    |
-| horseweed (EC)       |   0.8921599 | 19.8503117 |   0.0003372 | 0.0020185 |  0.0001 |        0.0002000 | soiltemp_2.5cm_Jul_12pm    |
-| prickly lettuce (LS) |   0.0430785 |  1.0699199 |  -0.0004009 | 0.0016515 |  0.1371 |        0.1828000 | nlcd_urban_pct             |
-| prickly lettuce (LS) |  -0.0891865 | -1.1853224 |  -0.0007151 | 0.0055710 |  0.8831 |        0.8831000 | distance_to_city_center_km |
-| prickly lettuce (LS) |   0.4268723 | 14.7446772 |   0.0000286 | 0.0008380 |  0.0001 |        0.0002000 | soiltemp_2.5cm_Apr_12pm    |
-| prickly lettuce (LS) |   0.5214303 | 10.8973662 |  -0.0000095 | 0.0022896 |  0.0001 |        0.0002000 | soiltemp_2.5cm_Jul_12pm    |
-
-Statistics from running 9999 permutations (‘Reps’) via mantel test, for
-genomic versus environmental comparisons. Hypothesis for all tests is
-‘greater’.
-
-We also repeated the mantel tests within city. Note that there is a
-p-value correction for testing multiple environmental variables and
-cities (species are treated as independent, however).
-
-| Species              | Observation |    Std.Obs | Expectation |  Variance | p-value | Adjusted p-value | Env.Var                    | City |
-|:---------------------|------------:|-----------:|------------:|----------:|--------:|-----------------:|:---------------------------|:-----|
-| Bermuda grass (CD)   |   0.3372190 |  2.8474161 |  -0.0012071 | 0.0141262 |  0.0091 |        0.0546000 | nlcd_urban_pct             | BA   |
-| Bermuda grass (CD)   |   0.1188409 |  0.9270429 |  -0.0023793 | 0.0170982 |  0.1821 |        0.4370400 | distance_to_city_center_km | BA   |
-| Bermuda grass (CD)   |  -0.2441035 | -1.4754900 |  -0.0008758 | 0.0271740 |  0.9656 |        0.9656000 | soiltemp_2.5cm_Jul_12pm    | BA   |
-| Bermuda grass (CD)   |  -0.1570643 | -1.0130521 |   0.0002126 | 0.0241027 |  0.8431 |        0.9197455 | soiltemp_2.5cm_Apr_12pm    | BA   |
-| Bermuda grass (CD)   |   0.0802221 |  0.4793677 |   0.0009244 | 0.0273643 |  0.3174 |        0.4761000 | nlcd_urban_pct             | LA   |
-| Bermuda grass (CD)   |   0.1995251 |  1.4117523 |  -0.0014271 | 0.0202613 |  0.0952 |        0.3808000 | distance_to_city_center_km | LA   |
-| Bermuda grass (CD)   |  -0.0061106 | -0.0151598 |  -0.0031778 | 0.0374262 |  0.4586 |        0.6114667 | soiltemp_2.5cm_Jul_12pm    | LA   |
-| Bermuda grass (CD)   |  -0.0805969 | -0.6239987 |  -0.0007061 | 0.0163918 |  0.7126 |        0.8551200 | soiltemp_2.5cm_Apr_12pm    | LA   |
-| Bermuda grass (CD)   |   0.0906880 |  0.9167417 |   0.0007042 | 0.0096346 |  0.1746 |        0.4370400 | nlcd_urban_pct             | PX   |
-| Bermuda grass (CD)   |   0.3757125 |  3.0579121 |   0.0019998 | 0.0149357 |  0.0049 |        0.0546000 | distance_to_city_center_km | PX   |
-| Bermuda grass (CD)   |   0.0395164 |  0.3334686 |   0.0005637 | 0.0136448 |  0.3078 |        0.4761000 | soiltemp_2.5cm_Jul_12pm    | PX   |
-| Bermuda grass (CD)   |   0.0417285 |  0.3405412 |   0.0005393 | 0.0146294 |  0.2844 |        0.4761000 | soiltemp_2.5cm_Apr_12pm    | PX   |
-| crabgrass (DS)       |   0.1601026 |  1.2452588 |   0.0013308 | 0.0162565 |  0.1173 |        0.6256000 | nlcd_urban_pct             | BA   |
-| crabgrass (DS)       |  -0.1187959 | -0.6719382 |   0.0028106 | 0.0327533 |  0.7248 |        0.9411000 | distance_to_city_center_km | BA   |
-| crabgrass (DS)       |  -0.1582690 | -0.8561975 |   0.0027774 | 0.0353797 |  0.7854 |        0.9411000 | soiltemp_2.5cm_Jul_12pm    | BA   |
-| crabgrass (DS)       |  -0.2451437 | -1.3695752 |   0.0005281 | 0.0321765 |  0.9337 |        0.9411000 | soiltemp_2.5cm_Apr_12pm    | BA   |
-| crabgrass (DS)       |   0.0241445 |  0.2053813 |  -0.0009766 | 0.0149608 |  0.3947 |        0.9411000 | nlcd_urban_pct             | BO   |
-| crabgrass (DS)       |  -0.1112305 | -0.6469967 |   0.0018740 | 0.0305602 |  0.7065 |        0.9411000 | distance_to_city_center_km | BO   |
-| crabgrass (DS)       |  -0.0427338 | -0.2772193 |  -0.0011589 | 0.0224914 |  0.5703 |        0.9411000 | soiltemp_2.5cm_Jul_12pm    | BO   |
-| crabgrass (DS)       |  -0.0600640 | -0.4084107 |  -0.0003231 | 0.0213968 |  0.6217 |        0.9411000 | soiltemp_2.5cm_Apr_12pm    | BO   |
-| crabgrass (DS)       |   0.0480884 |  0.4750376 |  -0.0007043 | 0.0105500 |  0.3085 |        0.9411000 | nlcd_urban_pct             | MN   |
-| crabgrass (DS)       |   0.0823907 |  0.5522340 |  -0.0009400 | 0.0227701 |  0.2734 |        0.9411000 | distance_to_city_center_km | MN   |
-| crabgrass (DS)       |   0.3191330 |  2.1117687 |   0.0028693 | 0.0224288 |  0.0229 |        0.3664000 | soiltemp_2.5cm_Jul_12pm    | MN   |
-| crabgrass (DS)       |   0.2069916 |  1.2882169 |   0.0053125 | 0.0245100 |  0.1127 |        0.6256000 | soiltemp_2.5cm_Apr_12pm    | MN   |
-| crabgrass (DS)       |  -0.0614409 | -0.2643071 |  -0.0013096 | 0.0517588 |  0.4933 |        0.9411000 | nlcd_urban_pct             | PX   |
-| crabgrass (DS)       |  -0.2758803 | -1.3193515 |  -0.0028122 | 0.0428372 |  0.9230 |        0.9411000 | distance_to_city_center_km | PX   |
-| crabgrass (DS)       |  -0.2275997 | -1.0754253 |  -0.0032313 | 0.0435274 |  0.8600 |        0.9411000 | soiltemp_2.5cm_Jul_12pm    | PX   |
-| crabgrass (DS)       |  -0.2533099 | -1.2102037 |  -0.0027972 | 0.0428492 |  0.9411 |        0.9411000 | soiltemp_2.5cm_Apr_12pm    | PX   |
-| horseweed (EC)       |  -0.1903379 | -1.1707289 |   0.0019864 | 0.0269871 |  0.8784 |        0.9861000 | nlcd_urban_pct             | BA   |
-| horseweed (EC)       |   0.1148969 |  0.6372828 |   0.0008399 | 0.0320316 |  0.2403 |        0.9861000 | distance_to_city_center_km | BA   |
-| horseweed (EC)       |  -0.2773508 | -1.7132248 |  -0.0010091 | 0.0260174 |  0.9805 |        0.9861000 | soiltemp_2.5cm_Jul_12pm    | BA   |
-| horseweed (EC)       |  -0.3260510 | -1.7866924 |  -0.0014809 | 0.0330003 |  0.9861 |        0.9861000 | soiltemp_2.5cm_Apr_12pm    | BA   |
-| horseweed (EC)       |  -0.0694567 | -0.5193465 |   0.0002874 | 0.0180344 |  0.6319 |        0.9861000 | nlcd_urban_pct             | LA   |
-| horseweed (EC)       |  -0.1854615 | -1.2016425 |   0.0001369 | 0.0238560 |  0.9058 |        0.9861000 | distance_to_city_center_km | LA   |
-| horseweed (EC)       |  -0.3092654 | -1.5703327 |   0.0019847 | 0.0392858 |  0.9581 |        0.9861000 | soiltemp_2.5cm_Jul_12pm    | LA   |
-| horseweed (EC)       |   0.0814879 |  0.4078862 |   0.0014242 | 0.0385294 |  0.2957 |        0.9861000 | soiltemp_2.5cm_Apr_12pm    | LA   |
-| horseweed (EC)       |   0.0533446 |  0.3463454 |  -0.0014662 | 0.0250445 |  0.3303 |        0.9861000 | nlcd_urban_pct             | PX   |
-| horseweed (EC)       |   0.2460485 |  1.4670912 |  -0.0023983 | 0.0286783 |  0.0795 |        0.9540000 | distance_to_city_center_km | PX   |
-| horseweed (EC)       |  -0.0941541 | -0.4764958 |  -0.0008660 | 0.0383296 |  0.6275 |        0.9861000 | soiltemp_2.5cm_Jul_12pm    | PX   |
-| horseweed (EC)       |  -0.1007252 | -0.5128665 |  -0.0014423 | 0.0374749 |  0.6366 |        0.9861000 | soiltemp_2.5cm_Apr_12pm    | PX   |
-| prickly lettuce (LS) |   0.2275756 |  0.8970634 |  -0.0005680 | 0.0646801 |  0.2049 |        0.8528421 | nlcd_urban_pct             | BA   |
-| prickly lettuce (LS) |  -0.0007177 | -0.0050873 |   0.0004469 | 0.0524045 |  0.5032 |        0.8528421 | distance_to_city_center_km | BA   |
-| prickly lettuce (LS) |  -0.0230189 | -0.1469705 |  -0.0002974 | 0.0239010 |  0.5440 |        0.8528421 | soiltemp_2.5cm_Jul_12pm    | BA   |
-| prickly lettuce (LS) |  -0.2125019 | -0.8382982 |  -0.0005803 | 0.0639077 |  0.7748 |        0.8528421 | soiltemp_2.5cm_Apr_12pm    | BA   |
-| prickly lettuce (LS) |  -0.1076683 | -0.8169817 |   0.0019126 | 0.0179906 |  0.7839 |        0.8528421 | nlcd_urban_pct             | BO   |
-| prickly lettuce (LS) |  -0.0764992 | -0.4279106 |  -0.0003930 | 0.0316325 |  0.6318 |        0.8528421 | distance_to_city_center_km | BO   |
-| prickly lettuce (LS) |   0.0019421 |  0.0116429 |  -0.0000526 | 0.0293529 |  0.4734 |        0.8528421 | soiltemp_2.5cm_Jul_12pm    | BO   |
-| prickly lettuce (LS) |  -0.1207036 | -0.7310420 |   0.0008312 | 0.0276386 |  0.7451 |        0.8528421 | soiltemp_2.5cm_Apr_12pm    | BO   |
-| prickly lettuce (LS) |  -0.0772755 | -0.5237519 |  -0.0025257 | 0.0203690 |  0.6499 |        0.8528421 | nlcd_urban_pct             | LA   |
-| prickly lettuce (LS) |   0.2393495 |  1.4098461 |   0.0000782 | 0.0288030 |  0.1068 |        0.8100000 | distance_to_city_center_km | LA   |
-| prickly lettuce (LS) |   0.5090590 |  3.0381437 |  -0.0005762 | 0.0281386 |  0.0042 |        0.0840000 | soiltemp_2.5cm_Jul_12pm    | LA   |
-| prickly lettuce (LS) |   0.0502661 |  0.3156152 |  -0.0040791 | 0.0296488 |  0.3191 |        0.8528421 | soiltemp_2.5cm_Apr_12pm    | LA   |
-| prickly lettuce (LS) |   0.0596842 |  0.3218968 |   0.0017251 | 0.0324198 |  0.3751 |        0.8528421 | nlcd_urban_pct             | MN   |
-| prickly lettuce (LS) |   0.2307428 |  1.2084445 |  -0.0013445 | 0.0368850 |  0.1215 |        0.8100000 | distance_to_city_center_km | MN   |
-| prickly lettuce (LS) |  -0.1463485 | -0.9646066 |  -0.0015993 | 0.0225181 |  0.8102 |        0.8528421 | soiltemp_2.5cm_Jul_12pm    | MN   |
-| prickly lettuce (LS) |  -0.1569714 | -0.9013417 |  -0.0006673 | 0.0300720 |  0.7874 |        0.8528421 | soiltemp_2.5cm_Apr_12pm    | MN   |
-| prickly lettuce (LS) |   0.0048140 |  0.0371630 |  -0.0000159 | 0.0168916 |  0.4261 |        0.8528421 | nlcd_urban_pct             | PX   |
-| prickly lettuce (LS) |  -0.2384487 | -1.5636104 |   0.0012078 | 0.0234921 |  0.9841 |        0.9841000 | distance_to_city_center_km | PX   |
-| prickly lettuce (LS) |  -0.0884762 | -0.4310103 |  -0.0017385 | 0.0404986 |  0.5993 |        0.8528421 | soiltemp_2.5cm_Jul_12pm    | PX   |
-| prickly lettuce (LS) |  -0.1131637 | -0.5322267 |  -0.0015588 | 0.0439717 |  0.6554 |        0.8528421 | soiltemp_2.5cm_Apr_12pm    | PX   |
-| bluegrass (PA)       |   0.2590523 |  1.7915057 |  -0.0003314 | 0.0209628 |  0.0504 |        0.6586667 | nlcd_urban_pct             | BA   |
-| bluegrass (PA)       |   0.0837403 |  0.4954254 |  -0.0006743 | 0.0290321 |  0.3140 |        0.7319273 | distance_to_city_center_km | BA   |
-| bluegrass (PA)       |   0.0474162 |  0.2515628 |   0.0006727 | 0.0345263 |  0.3951 |        0.7319273 | soiltemp_2.5cm_Jul_12pm    | BA   |
-| bluegrass (PA)       |  -0.0469166 | -0.3069994 |   0.0000839 | 0.0234385 |  0.5914 |        0.7885333 | soiltemp_2.5cm_Apr_12pm    | BA   |
-| bluegrass (PA)       |  -0.0211154 | -0.1686075 |  -0.0016706 | 0.0133001 |  0.5032 |        0.7319273 | nlcd_urban_pct             | BO   |
-| bluegrass (PA)       |  -0.1839908 | -1.2359879 |   0.0020825 | 0.0226641 |  0.9591 |        0.9591000 | distance_to_city_center_km | BO   |
-| bluegrass (PA)       |   0.0497172 |  0.3308238 |   0.0014752 | 0.0212646 |  0.3519 |        0.7319273 | soiltemp_2.5cm_Jul_12pm    | BO   |
-| bluegrass (PA)       |   0.1285994 |  0.8795620 |   0.0008966 | 0.0210799 |  0.1880 |        0.7319273 | soiltemp_2.5cm_Apr_12pm    | BO   |
-| bluegrass (PA)       |  -0.1798066 | -1.1444740 |  -0.0016225 | 0.0242396 |  0.8360 |        0.8917333 | nlcd_urban_pct             | LA   |
-| bluegrass (PA)       |   0.0298291 |  0.1604297 |   0.0022274 | 0.0296008 |  0.4126 |        0.7319273 | distance_to_city_center_km | LA   |
-| bluegrass (PA)       |  -0.0614415 | -0.2935904 |   0.0015465 | 0.0460291 |  0.4510 |        0.7319273 | soiltemp_2.5cm_Jul_12pm    | LA   |
-| bluegrass (PA)       |  -0.1578118 | -0.8920280 |   0.0013053 | 0.0318183 |  0.7664 |        0.8917333 | soiltemp_2.5cm_Apr_12pm    | LA   |
-| bluegrass (PA)       |  -0.1804107 | -0.7813029 |  -0.0041644 | 0.0508863 |  0.8055 |        0.8917333 | nlcd_urban_pct             | PX   |
-| bluegrass (PA)       |  -0.0252203 | -0.1243909 |   0.0012535 | 0.0452954 |  0.4579 |        0.7319273 | distance_to_city_center_km | PX   |
-| bluegrass (PA)       |   0.4310886 |  1.5503133 |  -0.0027320 | 0.0783035 |  0.1186 |        0.6586667 | soiltemp_2.5cm_Jul_12pm    | PX   |
-| bluegrass (PA)       |   0.4553606 |  1.5631826 |  -0.0006383 | 0.0850958 |  0.1235 |        0.6586667 | soiltemp_2.5cm_Apr_12pm    | PX   |
-| dandelion (TO)       |  -0.2054537 | -1.6876982 |  -0.0019329 | 0.0145421 |  0.9770 |        0.9841000 | nlcd_urban_pct             | BA   |
-| dandelion (TO)       |  -0.1162303 | -0.6877884 |   0.0009578 | 0.0290307 |  0.7455 |        0.9841000 | distance_to_city_center_km | BA   |
-| dandelion (TO)       |  -0.2552180 | -1.7044053 |  -0.0004910 | 0.0223359 |  0.9841 |        0.9841000 | soiltemp_2.5cm_Jul_12pm    | BA   |
-| dandelion (TO)       |  -0.1781216 | -1.2260365 |  -0.0000668 | 0.0210912 |  0.9035 |        0.9841000 | soiltemp_2.5cm_Apr_12pm    | BA   |
-| dandelion (TO)       |   0.0264439 |  0.2249632 |   0.0005884 | 0.0132094 |  0.3798 |        0.7596000 | nlcd_urban_pct             | BO   |
-| dandelion (TO)       |  -0.1317608 | -0.7825541 |  -0.0007820 | 0.0280139 |  0.7562 |        0.9841000 | distance_to_city_center_km | BO   |
-| dandelion (TO)       |   0.0495102 |  0.3167951 |  -0.0017255 | 0.0261570 |  0.3347 |        0.7596000 | soiltemp_2.5cm_Jul_12pm    | BO   |
-| dandelion (TO)       |   0.0566830 |  0.3766265 |  -0.0016718 | 0.0240066 |  0.3146 |        0.7596000 | soiltemp_2.5cm_Apr_12pm    | BO   |
-| dandelion (TO)       |   0.0429612 |  0.3098228 |   0.0005572 | 0.0187321 |  0.3507 |        0.7596000 | nlcd_urban_pct             | LA   |
-| dandelion (TO)       |   0.1619736 |  1.2080728 |   0.0005408 | 0.0178565 |  0.1118 |        0.7596000 | distance_to_city_center_km | LA   |
-| dandelion (TO)       |   0.0498208 |  0.3481755 |  -0.0008254 | 0.0211592 |  0.3337 |        0.7596000 | soiltemp_2.5cm_Jul_12pm    | LA   |
-| dandelion (TO)       |   0.0396090 |  0.2603843 |   0.0008168 | 0.0221953 |  0.3376 |        0.7596000 | soiltemp_2.5cm_Apr_12pm    | LA   |
-| dandelion (TO)       |  -0.0259176 | -0.1965684 |  -0.0002874 | 0.0170011 |  0.5574 |        0.9841000 | nlcd_urban_pct             | MN   |
-| dandelion (TO)       |  -0.0689391 | -0.7453822 |  -0.0003591 | 0.0084652 |  0.7590 |        0.9841000 | distance_to_city_center_km | MN   |
-| dandelion (TO)       |  -0.1163927 | -0.9129396 |   0.0016218 | 0.0167104 |  0.8052 |        0.9841000 | soiltemp_2.5cm_Jul_12pm    | MN   |
-| dandelion (TO)       |   0.1077444 |  0.8015352 |   0.0004217 | 0.0179283 |  0.2205 |        0.7596000 | soiltemp_2.5cm_Apr_12pm    | MN   |
-| dandelion (TO)       |  -0.2898283 | -1.4806284 |   0.0001428 | 0.0383546 |  0.9451 |        0.9841000 | nlcd_urban_pct             | PX   |
-| dandelion (TO)       |  -0.2290678 | -1.2581586 |   0.0012770 | 0.0335186 |  0.9379 |        0.9841000 | distance_to_city_center_km | PX   |
-| dandelion (TO)       |   0.0834362 |  0.2591188 |   0.0014711 | 0.1000599 |  0.3051 |        0.7596000 | soiltemp_2.5cm_Jul_12pm    | PX   |
-| dandelion (TO)       |   0.1422441 |  0.4269951 |   0.0004292 | 0.1103057 |  0.2530 |        0.7596000 | soiltemp_2.5cm_Apr_12pm    | PX   |
-
-Statistics from running 9999 permutations (‘Reps’) via mantel test,
-limited to within city for genomic environmental comparisons. Hypothesis
-for all tests is ‘greater’.
-
-The following function makes the main text figure.
-
-``` r
-ibe_mega_plot()
-```
-
-<!-- #### -->
-<!-- #### -->
-<!-- #### -->
-<!-- #### -->
-<!-- #### -->
-<!-- #### -->
-<!-- #### -->
-<!-- #### -->
-<!-- #### -->
-<!-- #### -->
-<!-- #### -->
-<!-- #### -->
-
-## 4.13 Correlation between Urbanness and Admixture
-
-We tested the relationship between urbanness and the extent of admixture
-by running a correlation test between percent impervious surface and
-$1 - sd(K_i)$, where $sd(K_i)$ represents the standard deviation of the
-cluster assignment values for any given individual. We used the
-`cor.test()` function.
-
-``` r
-source("R/plot_structure.R")
-```
-
-``` r
-run_make_urban_admix_corr()
-```
-
-|   estimate |  statistic |   p.value | parameter |   conf.low | conf.high | alternative |
-|-----------:|-----------:|----------:|----------:|-----------:|----------:|:------------|
-| -0.1107532 | -1.5279720 | 0.1282002 |       188 | -0.2491780 | 0.0321063 | two.sided   |
-| -0.0460642 | -0.6901589 | 0.4908087 |       224 | -0.1755096 | 0.0849468 | two.sided   |
-| -0.1165779 | -1.2084826 | 0.2295507 |       106 | -0.2989656 | 0.0740269 | two.sided   |
-| -0.0569564 | -0.7780453 | 0.4375309 |       186 | -0.1984491 | 0.0868618 | two.sided   |
-| -0.0498366 | -0.6731691 | 0.5016936 |       182 | -0.1931055 | 0.0955130 | two.sided   |
-|  0.0285504 |  0.4443212 | 0.6572074 |       242 | -0.0973846 | 0.1535855 | two.sided   |
-
-Pearson’s product-moment correlation test results comparing percent
-impervious surface and extent of admixture.
-
-# 5 Appendix
-
-## 5.1 `SessionInfo()`
+<!-- ## Continental population structure: population statistics by species -->
+<!-- We used `polyrad::calcPopDiff()` to calculate continental population statistics for each species. -->
+<!-- ```{r continental_stats_libs, message=FALSE} -->
+<!-- source("R/calc_continental_stats.R") -->
+<!-- ``` -->
+<!-- ```{r continental_stats_code, eval = FALSE, message=FALSE} -->
+<!-- do_all_continental_stats() -->
+<!-- ``` -->
+<!-- ```{r continental_stats_table_readlines, message=FALSE} -->
+<!-- # CD as an example -->
+<!-- read.csv("output/population_stats/CD_continental_stats.csv") -->
+<!-- ``` -->
+<!-- ## AMOVA -->
+<!-- We performed hierarchical analysis of molecular variance (AMOVA; using GenoDive 3.06) based on the Rho-statistics, which is based on a Ploidy independent Infinite Allele Model. AMOVA is under the "Analysis" menu. Structure format files typically have only one level of population grouping. To ensure nestedness, we added a "City" level manually by going to "Data > Population grouping .." menu and adding "City". When running the AMOVA, we selected "Advanced" and selected Individual nested within Population nested within City. We used 999 permutations. -->
+<!-- For bluegrass (PA), Minneapolis (MN) had a small sample size (2 individuals). We re-ran the AMOVA with these samples excluded but found similar results. -->
+<!-- ```{r AMOVA_table_display, echo = FALSE, message = FALSE} -->
+<!-- table_ <- -->
+<!--   readr::read_csv("output/AMOVA/AMOVA_results.csv") %>% -->
+<!--   dplyr::select(!c(Locus, `F-stat`)) -->
+<!-- knitr::kable(table_, -->
+<!--              format = "simple", -->
+<!--              caption = "AMOVA Statistics.") -->
+<!-- ``` -->
+<!-- ## Local: $F_{IS}$ - Homozygosity within population -->
+<!-- We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate $F_{IS}$. This gives a good estimate of whether there are more homozygotes than expected (positive number) or more heterozygotes than expected (negative number). Notably, GenoDive accommodates polyploids and reduces the bias on $F_{IS}$ by performing a permutation test. By default, there are 999 permutations. -->
+<!-- This can be run in GenoDive by selecting Analysis > Hardy-Weinberg > Heterozygosity-based (Nei) method. -->
+<!-- ```{r Fis_table_readlines, message=FALSE} -->
+<!-- head(read.csv("output/population_stats/genodive_output_Fis.csv")) -->
+<!-- ``` -->
+<!-- ## Local: Genetic Diversity -->
+<!-- We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate several additional statistics. -->
+<!-- This can be run in GenoDive by selecting Analysis > Genetic Diversity, and selecting "Calculate indices separately for every population" and selecting "Correct for unknown dosage of alleles" for the polyploid species. -->
+<!-- * Num: Number of alleles -->
+<!-- * Eff_num: Effective number of alleles -->
+<!-- * Ho: Observed Heterozygosity -->
+<!-- * Hs: Heterozygosity within populations -->
+<!-- * Gis: Inbreeding coefficient -->
+<!-- ```{r GD_table_readlines, message=FALSE} -->
+<!-- head(read.csv("output/population_stats/genodive_genetic_diversity.csv")) -->
+<!-- ``` -->
+<!-- ## Local: $\rho$ - Pairwise comparison -->
+<!-- We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate pairise $\rho$ (rho) among cities within species. Note that there is a p-value correction for testing multiple cities (species are treated as independent, however). -->
+<!-- This can be run in GenoDive by selecting Pairwise Differentiation from the Analysis menu and selecting the "rho" statistic from the dropdown. -->
+<!-- We used the following script to clean up the results. -->
+<!-- ```{r rho_code, eval = FALSE, message=FALSE} -->
+<!-- source("R/rho.R") -->
+<!-- compile_rho_table() -->
+<!-- ``` -->
+<!-- ```{r rho_table_display, echo = FALSE, message = FALSE} -->
+<!-- table_ <- -->
+<!--   readr::read_csv("output/population_stats/rho_all.csv") %>% -->
+<!--   mutate(`adjusted p-value` = kableExtra::cell_spec( -->
+<!--     `adjusted p-value`, -->
+<!--     bold = ifelse(as.numeric(`adjusted p-value`) < 0.05, TRUE, FALSE), -->
+<!--     underline = ifelse(as.numeric(`adjusted p-value`) < 0.05, TRUE, FALSE) -->
+<!--   )) -->
+<!-- knitr::kable(table_, -->
+<!--              format = "simple", -->
+<!--              caption = "Rho statistics for pairwise comparison between cities.") -->
+<!-- ``` -->
+<!-- ## Local: $\bar{r}_d$ - Linkage disequilibrium -->
+<!-- We used `poppr::ia()` to calculate the standardized index of association of loci in the dataset ($\bar{r}_d$ or `rbarD`). We use the standardized index of association to avoid the influence of different sample sizes, as described by [Agapow and Burt 2001](https://doi.org/10.1046/j.1471-8278.2000.00014.x). -->
+<!-- When `p.rD` is small (<0.05) and rbarD is (relatively) higher, that is a sign that the population could be in linkage disequilibrium. -->
+<!-- An interesting note from the documentation: -->
+<!-- > It has been widely used as a tool to detect clonal reproduction within populations. Populations whose members are undergoing sexual reproduction, whether it be selfing or out-crossing, will produce gametes via meiosis, and thus have a chance to shuffle alleles in the next generation. Populations whose members are undergoing clonal reproduction, however, generally do so via mitosis. This means that the most likely mechanism for a change in genotype is via mutation. The rate of mutation varies from species to species, but it is rarely sufficiently high to approximate a random shuffling of alleles. The index of association is a calculation based on the ratio of the variance of the raw number of differences between individuals and the sum of those variances over each locus. You can also think of it as the observed variance over the expected variance. -->
+<!-- There is a nice description [here](https://grunwaldlab.github.io/Population_Genetics_in_R/Linkage_disequilibrium.html). -->
+<!-- ```{r rbarD_code, eval = FALSE, message=FALSE} -->
+<!-- source("R/rbarD.R") -->
+<!-- calc_rbarD() -->
+<!-- ``` -->
+<!-- ```{r rbarD_table_readlines, message=FALSE} -->
+<!-- head(read.csv("output/population_stats/rbarD.csv")) -->
+<!-- ``` -->
+<!-- ## Isolation by distance and environment -->
+<!-- We used [multiple matrix regression with randomization (MMRR)](https://doi.org/10.1111/evo.12134) to determine the relative contributions of isolation by distance (i.e., an association between genetic and geographic distances) and isolation by environment (i.e., an association between genetic and environmental distances). -->
+<!-- ### Genetic distance -->
+<!-- We calculated the genetic dissimilarity matrix (among sites) using the [Cavalli-Sforza](https://doi.org/10.2307/2406616) (Chord) distance metric in GenoDive. While this can also be done using `adegenet`, we don't want to make assumptions about ploidy. We used the "*_estimatedgeno_sitesaspops.structure" files so that sites (not cities) were treated here as populations. -->
+<!-- ### Geographic distance -->
+<!-- We took the traditional approach to creating a geographic dissimilarity matrix (based on latitude and longitude) using euclidean distance. -->
+<!-- ### Environmental data and distance -->
+<!-- Environmental variables include the monthly averages in the middle of the day for: -->
+<!-- - air temperature at 5cm above ground -->
+<!-- - air temperature at 1.2m above ground -->
+<!-- - soil temperature at 2.5cm below ground -->
+<!-- - RH (relative humidity) at 5cm above ground -->
+<!-- - RH at 1.2m above ground -->
+<!-- Variables were extracted from historic datasets and modeled using a microclimate model. More information can be found on the [NicheMapR website](https://mrke.github.io/) (how the model works, what variables can be manipulated and what you can model, vignettes for running models in R). -->
+<!-- This method was chosen because it takes data from global datasets (you can use both historic and current or pick specific years) but then accounts for site-specific variables (we can change the % shade, the slope or aspect of the landscape, and it considers elevation, average cloud cover, etc.). [Here’s the list](https://mrke.github.io/models/MicroClimate-Models) of all the different models/datasets we’re able to can pull from. It's meant for mechanistic niche modeling. -->
+<!-- Variables in the file `site_data_DUC_environvars.csv` are all for the monthly averages at noon (12pm - hottest part of the day!) and are extreme. In other words, they are maximums. -->
+<!-- Note that [this Stack Overflow post](https://stackoverflow.com/questions/69639782/installing-gfortran-on-macbook-with-apple-m1-chip-for-use-in-r) is helpful with installing `NicheMapR`. -->
+<!-- ```{r} -->
+<!-- # devtools::install_github('mrke/NicheMapR') -->
+<!-- # library(NicheMapR) -->
+<!-- # -->
+<!-- # test_site_coords <- c(sites[1,]$lat, sites[1,]$long) -->
+<!-- # test_distance_to_city_center_km <- sites[1,]$distance_to_city_center_km -->
+<!-- # micros_ <- micro_usa(loc = test_site_coords) -->
+<!-- # -->
+<!-- # loc <- c(-89.40, 43.07) -->
+<!-- # micro <- micro_global(loc = loc) -->
+<!-- ``` -->
+<!-- Environmental distance was generated the same way as geographic distance above (euclidean distance). These are the four environmental variables mentioned in the main manuscript, although more environmental variables are present in the raw data: % Urban cover, Distance to city center, April soil temperature, and July soil temperature. In the raw data these appear as `nlcd_urban_pct`, `distance_to_city_center`, `soiltemp_2.5cm_Apr_12pm`, `soiltemp_2.5cm_Jul_12pm`. -->
+<!-- ### Analysis -->
+<!-- Note that for this analysis, we treated each *sampling site* as a distinct location. There would not be enough power to do a distance matrix among 3-5 cities. Code for generating matrices, running the MMRR, and generating figures can be found in the source code below. -->
+<!-- ```{r mmrr_1, message=FALSE} -->
+<!-- source("R/IBD_IBE_MMRR.R") -->
+<!-- ``` -->
+<!-- ```{r mmrr_2, eval = FALSE, message=FALSE} -->
+<!-- make_mmrr_plot() -->
+<!-- ``` -->
+<!-- Below are the results of the MMRR, with all cities in the same model. Species are treated as independent, separate models. -->
+<!-- ```{r mmrr_3a, echo = FALSE, message=FALSE} -->
+<!-- table_ <- readr::read_csv("output/MMRR/MMRR_total_overall_models.csv") %>% -->
+<!--   mutate(p = kableExtra::cell_spec( -->
+<!--     `F p-value:`, -->
+<!--     bold = ifelse(as.numeric(`F p-value:`) < 0.05, TRUE, FALSE), -->
+<!--     underline = ifelse(as.numeric(`F p-value:`) < 0.05, TRUE, FALSE) -->
+<!--   )) -->
+<!-- knitr::kable( -->
+<!--   table_, -->
+<!--   format = "simple", -->
+<!--   caption = "Overall model p-values from MMRR." -->
+<!-- ) -->
+<!-- ``` -->
+<!-- ```{r mmrr_3b, echo = FALSE, message=FALSE} -->
+<!-- table_ <- -->
+<!--   readr::read_csv("output/MMRR/MMRR_total.csv") %>% -->
+<!--   mutate(p = kableExtra::cell_spec( -->
+<!--     p, -->
+<!--     bold = ifelse(as.numeric(p) < 0.05, TRUE, FALSE), -->
+<!--     underline = ifelse(as.numeric(p) < 0.05, TRUE, FALSE) -->
+<!--   )) -->
+<!-- knitr::kable( -->
+<!--   table_, -->
+<!--   format = "simple", -->
+<!--   caption = "Full parameter estimates and statistics by species from running 9999 permutations ('Reps') via MMRR." -->
+<!-- ) -->
+<!-- ``` -->
+<!-- We also repeated this within city. -->
+<!-- ```{r mmrr_4a, echo = FALSE, message=FALSE} -->
+<!-- table_ <- readr::read_csv("output/MMRR/MMRR_splitbycity_overall_models.csv") %>% -->
+<!--   mutate(`p adjusted` = kableExtra::cell_spec(`p adjusted`, -->
+<!--   bold = ifelse(as.numeric(`p adjusted`) < 0.05, TRUE, FALSE), -->
+<!--   underline = ifelse(as.numeric(`p adjusted`) < 0.05, TRUE, FALSE) -->
+<!-- )) -->
+<!-- knitr::kable( -->
+<!--   table_, -->
+<!--   format = "simple", -->
+<!--   caption = "Overall model p-values from MMRR, subset by each city. Adjusted p-values are corrected using the Benjamini and Hochberg method within each species' results." -->
+<!-- ) -->
+<!-- ``` -->
+<!-- ```{r mmrr_4b, echo = FALSE, message=FALSE} -->
+<!-- table_ <- readr::read_csv("output/MMRR/MMRR_splitbycity.csv") %>% -->
+<!--   mutate(p = kableExtra::cell_spec( -->
+<!--     p, -->
+<!--     bold = ifelse(as.numeric(p) < 0.05, TRUE, FALSE), -->
+<!--     underline = ifelse(as.numeric(p) < 0.05, TRUE, FALSE) -->
+<!--   )) -->
+<!-- knitr::kable( -->
+<!--   table_, -->
+<!--   format = "simple", -->
+<!--   caption = "Parameter estimates and statistics from running 9999 permutations ('Reps') via MMRR, subset by each city. Note that p-values are not adjusted for multiple testing." -->
+<!-- ) -->
+<!-- ``` -->
+<!-- ## Sites per city per species -->
+<!-- Use `get_unique_site_post_genotyping.R`. -->
+
+# 13 `SessionInfo()`
 
 ``` r
 sessionInfo()
 ```
 
-    ## R version 4.4.0 (2024-04-24)
+    ## R version 4.4.2 (2024-10-31)
     ## Platform: aarch64-apple-darwin20
     ## Running under: macOS Sonoma 14.4.1
     ## 
@@ -1827,34 +1583,32 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ##  [1] adegenet_2.1.10   ade4_1.7-22       LEA_3.16.0        ggh4x_0.2.8      
-    ##  [5] here_1.0.1        lubridate_1.9.3   forcats_1.0.0     purrr_1.0.2      
-    ##  [9] tibble_3.2.1      tidyverse_2.0.0   polysat_1.7-7     cowplot_1.1.3    
-    ## [13] viridis_0.6.5     viridisLite_0.4.2 raster_3.6-26     sp_2.1-4         
-    ## [17] stringr_1.5.1     readr_2.1.5       polyRAD_2.0.0     dplyr_1.1.4      
-    ## [21] magrittr_2.0.3    tidyr_1.3.1       ggplot2_3.5.1    
+    ##  [1] LEA_3.16.0        ggh4x_0.2.8       here_1.0.1        lubridate_1.9.3  
+    ##  [5] forcats_1.0.0     purrr_1.0.2       tibble_3.2.1      tidyverse_2.0.0  
+    ##  [9] cowplot_1.2.0     viridis_0.6.5     viridisLite_0.4.2 raster_3.6-26    
+    ## [13] sp_2.1-4          stringr_1.5.1     readr_2.1.5       polyRAD_2.0.0    
+    ## [17] dplyr_1.1.4       magrittr_2.0.3    tidyr_1.3.1       ggplot2_4.0.0    
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] tidyselect_1.2.1  farver_2.1.2      fastmap_1.2.0     promises_1.3.0   
-    ##  [5] digest_0.6.35     timechange_0.3.0  mime_0.12         lifecycle_1.0.4  
-    ##  [9] cluster_2.1.6     terra_1.7-78      compiler_4.4.0    rlang_1.1.4      
-    ## [13] tools_4.4.0       igraph_2.0.3      utf8_1.2.4        yaml_2.3.8       
-    ## [17] knitr_1.47        labeling_0.4.3    bit_4.0.5         plyr_1.8.9       
-    ## [21] withr_3.0.0       grid_4.4.0        fansi_1.0.6       xtable_1.8-4     
-    ## [25] colorspace_2.1-0  scales_1.3.0      MASS_7.3-60.2     cli_3.6.2        
-    ## [29] rmarkdown_2.27    vegan_2.6-6.1     crayon_1.5.2      ragg_1.3.2       
-    ## [33] generics_0.1.3    rstudioapi_0.16.0 reshape2_1.4.4    tzdb_0.4.0       
-    ## [37] ape_5.8           splines_4.4.0     parallel_4.4.0    vctrs_0.6.5      
-    ## [41] Matrix_1.7-0      hms_1.1.3         bit64_4.0.5       seqinr_4.2-36    
-    ## [45] systemfonts_1.1.0 glue_1.7.0        codetools_0.2-20  stringi_1.8.4    
-    ## [49] gtable_0.3.5      later_1.3.2       munsell_0.5.1     pillar_1.9.0     
-    ## [53] htmltools_0.5.8.1 R6_2.5.1          textshaping_0.4.0 rprojroot_2.0.4  
-    ## [57] vroom_1.6.5       evaluate_0.24.0   shiny_1.8.1.1     lattice_0.22-6   
-    ## [61] highr_0.11        httpuv_1.6.15     Rcpp_1.0.12       fastmatch_1.1-4  
-    ## [65] permute_0.9-7     gridExtra_2.3     nlme_3.1-165      mgcv_1.9-1       
-    ## [69] xfun_0.44         pkgconfig_2.0.3
+    ##  [1] fastmatch_1.1-4    gtable_0.3.6       xfun_0.52          lattice_0.22-6    
+    ##  [5] tzdb_0.4.0         vctrs_0.6.5        tools_4.4.2        generics_0.1.3    
+    ##  [9] parallel_4.4.2     fansi_1.0.6        highr_0.11         pkgconfig_2.0.3   
+    ## [13] RColorBrewer_1.1-3 S7_0.2.0           lifecycle_1.0.4    compiler_4.4.2    
+    ## [17] farver_2.1.2       textshaping_0.4.0  terra_1.8-60       codetools_0.2-20  
+    ## [21] htmltools_0.5.8.1  yaml_2.3.8         pillar_1.9.0       crayon_1.5.2      
+    ## [25] commonmark_1.9.1   tidyselect_1.2.1   digest_0.6.35      stringi_1.8.4     
+    ## [29] labeling_0.4.3     rprojroot_2.0.4    fastmap_1.2.0      grid_4.4.2        
+    ## [33] cli_3.6.3          dichromat_2.0-0.1  utf8_1.2.4         withr_3.0.2       
+    ## [37] scales_1.4.0       bit64_4.0.5        timechange_0.3.0   rmarkdown_2.27    
+    ## [41] ggtext_0.1.2       bit_4.0.5          gridExtra_2.3      ragg_1.3.2        
+    ## [45] hms_1.1.3          evaluate_1.0.5     knitr_1.47         markdown_1.13     
+    ## [49] rlang_1.1.4        gridtext_0.1.5     Rcpp_1.0.12        glue_1.8.0        
+    ## [53] xml2_1.3.6         formatR_1.14       rstudioapi_0.16.0  vroom_1.6.5       
+    ## [57] R6_2.5.1           systemfonts_1.1.0
 
-## 5.2 File Organization
+# Appendix
+
+## 13.1 File Organization
 
 All data files for the Macrosystems project are permanently stored under
 Meghan Avolio’s group resources in the Johns Hopkins University Rockfish
@@ -1923,7 +1677,7 @@ following subdirectories:
     scripts and output files (i.e., from `cstacks`, `gstacks`, `stacks`,
     `tsv2bam`, and `populations`),
 
-## 5.3 Aspera Transfer File Names
+## 13.2 Aspera Transfer File Names
 
 See
 [data/aspera_transfer_file_names.csv](data/aspera_transfer_file_names.csv).
@@ -1944,7 +1698,7 @@ readLines("data/aspera_transfer_file_names.csv", 10)
     ##  [9] "/Hoffman_macrosystems/AMH_macro_1_10_8px_S10_L001_R1_001.fastq.gz"
     ## [10] "/Hoffman_macrosystems/AMH_macro_1_10_8px_S10_L001_R2_001.fastq.gz"
 
-## 5.4 `clone_filter` File Names
+## 13.3 `clone_filter` File Names
 
 See
 [data/clone_filter_file_names.csv](data/clone_filter_file_names.csv).

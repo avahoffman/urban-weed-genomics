@@ -2,12 +2,12 @@
 title: "Supplementary Information" 
 author: "Ava Hoffman, Jenny Cocciardi" 
 output: 
-  pdf_document: 
-    toc: true 
-    number_sections: true
   md_document: 
     variant: gfm
     toc: true
+    number_sections: true
+  pdf_document: 
+    toc: true 
     number_sections: true
 urlcolor: blue 
 editor_options: 
@@ -37,11 +37,11 @@ Wrap > Wrap paragraph at 72 characters. -->
 \beginsupplement
 <!-- End -->
 
-# About 
+# About {-}
 
 This is supplementary material intended to be paired with files on GitHub at the repository https://github.com/avahoffman/urban-weed-genomics.
 
-# Introduction {#1-introduction}
+# Introduction {-}
 
 In this experiment, we used quaddRAD library prep to prepare the sample
 DNA. This means that there were both two unique outer barcodes 
@@ -60,7 +60,7 @@ still contains a mix of the inner barcodes. We will refer to these as
 Here's a bit of information on the file name convention. The typical raw
 file looks like this:
 
-``` AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz ```
+`AMH_macro_1_1_12px_S1_L001_R1_001.fastq.gz`
   
 - These are author initials and "macro" stands for "Macrosystems". These
   are on every file.
@@ -133,9 +133,7 @@ Throughout this study, we examined 6 species. Sometimes we used abbreviations fo
 
 6. _Taraxacum officinale_, "TO", or dandelion
 
-# Preprocessing {#2-preprocessing}
-
-## Transfer Files {#21-transfer-files}
+# File Transfer {#21-transfer-files}
 
 Referred to through files as "Step 1". Files can be found in the `01_transfer_files/` directory.
 
@@ -169,11 +167,11 @@ ascp -T -l8G -i /software/apps/aspera/3.9.1/etc/asperaweb_id_dsa.openssh
 --mode=recv --user=<aspera-user> --host=<aspera-IP> /scratch/users/<me>@jhu.edu
 ```
 
-## Concatenate Files and Install Stacks {#22-concatenate-files-and-install-stacks}
+# File Concatenation and Stacks Installation {#22-concatenate-files-and-install-stacks}
 
 Referred to through files as "Step 2". Files can be found in the `02_concatenate_and_check/` directory.
 
-### Concatenate Files for each Sublibrary {#221-concatenate-files-for-each-sublibrary}
+## Concatenate Files for each Sublibrary {#221-concatenate-files-for-each-sublibrary}
 
 **Step 2a**. We ran my samples across the whole flow cell of the NovaSeq, so results
 came in 8 files for each demultiplexed sublibrary (4 lanes \* paired
@@ -208,7 +206,7 @@ will look for and pull the script from the code directory. This will
 concatenate all files within the current directory that match the loop
 pattern.
 
-### Download and Install Stacks {#222-download-and-install-stacks}
+## Download and Install Stacks {#222-download-and-install-stacks}
 
 **Step 2b**. On Rockfish, [Stacks](https://catchenlab.life.illinois.edu/stacks/) will
 need to be downloaded to each user's code directory. Stacks, and
@@ -233,11 +231,11 @@ Next, go into the stacks-2.60 directory and run the following commands:
 The filesystem patterns on your cluster might be different, and you
 should change these file paths accordingly.
 
-## Remove PCR Clones {#23-remove-pcr-clones}
+# PCR Clone Removal {#23-remove-pcr-clones}
 
 Referred to through files as "Step 3". Files can be found in the `03_clone_filter/` directory.
 
-### Run PCR Clone Removal Script {#231-run-pcr-clone-removal-script}
+## Run PCR Clone Removal Script {#231-run-pcr-clone-removal-script}
 
 **Step 3a**. The `03-clone_filter.sh` script runs `clone_filter` from
 [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was
@@ -249,7 +247,7 @@ single sub-pooled library in `03-clone_filter_file_names.txt` and loops
 to run `clone_filter` on all of them. Possible file names shown in
 [`clone_filter` File Names](#clone_filter-file-names).
 
-### Parse PCR Clone Removal Results {#232-parse-pcr-clone-removal-results}
+## Parse PCR Clone Removal Results {#232-parse-pcr-clone-removal-results}
 
 **Step 3b**. If you want to extract descriptive statistics from the `clone_filter`
 output, you can use the `03.5-parse_clone_filter.py` script to do so. It
@@ -261,13 +259,13 @@ source("03_clone_filter/examine_clones.R")
 make_cloneplot() 
 ```
 
-## Step 4 - Demultiplexing and Sample Filtering {#step-4---demultiplexing-and-sample-filtering}
+# Sample Demultiplexing and Filtering {#step-4---demultiplexing-and-sample-filtering}
 
 Files can be found in the `04_demux_filter/` directory.
 
-### Step 4a - Demultiplex and Filter {#step-4a---demultiplex-and-filter}
+## Demultiplex and Filter {#step-4a---demultiplex-and-filter}
 
-The `04-process_radtags.sh` script runs `process_radtags` from
+_Step 4a_. The `04-process_radtags.sh` script runs `process_radtags` from
 [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was
 run with options
 `-c -q --inline_inline --renz_1 pstI --renz_2 mspI --rescue --disable_rad_check`.
@@ -302,9 +300,9 @@ out each sublibrary into the individual samples. It will then clean the
 data, and will remove low quality reads and discard reads where a
 barcode was not found.
 
-### Step 4b - Organize files {#step-4b---organize-files}
+## Organize files {#step-4b---organize-files}
 
-In a new directory, make sure the files are organized by species. In the
+_Step 4b_. In a new directory, make sure the files are organized by species. In the
 `process_radtags` script, we specified that files be sent to
 `~/scratch/demux/*sublibrary_name*` (reasoning for this is in [Step
 4c](#step-4c---assess-the-raw-processed-and-cleaned-data)), but files
@@ -316,9 +314,9 @@ example, the file "DS.MN.L01-DS.M.1.1.fq.gz" should be sent to the
 Note: this is not automated at this point but it would be nice to
 automate the file moving process so it's not forgotten at this point.
 
-### Step 4c - Assess the raw, processed, and cleaned data {#step-4c---assess-the-raw-processed-and-cleaned-data}
+## Assess the raw, processed, and cleaned data {#step-4c---assess-the-raw-processed-and-cleaned-data}
 
-In the script for [Step 4](#step-4---demultiplex-and-filter), we have
+_Step 4c_. In the script for [Step 4](#step-4---demultiplex-and-filter), we have
 specified that a new output folder be created for each sublibrary. The
 output folder is where all sample files and the log file will be dumped
 for each sublibrary. It is important to specify a different output
@@ -380,9 +378,9 @@ source("04_demux_filter/04c-radtags_filter_summary.R")
 make_filterplot() 
 ```
 
-### Step 4d - Identify low-coverage and low-quality samples from {#step-4d---identify-low-coverage-and-low-quality-samples-from}
+## Identify low-coverage and low-quality samples from {#step-4d---identify-low-coverage-and-low-quality-samples-from}
 
-Using the same output log and the above statistics, we removed
+_Step 4d_. Using the same output log and the above statistics, we removed
 low-coverage and low-quality samples that may skew downstream analyses.
 
 Samples were identified and removed via the following procedure:
@@ -411,9 +409,7 @@ Note: At this point, we started using Stacks 2.62 for its
 multi-threading capabilities. Functionality of the previous steps should
 be the same, however.
 
-# Generating Stacks Catalogs and Calling SNPs {#generating-stacks-catalogs-and-calling-snps-mag}
-
-## Step 5 - Metapopulation Catalog Building and Parameter Search {#step-5---metapopulation-catalog-building-and-parameter-search}
+# Stacks: Metapopulation Catalog Building and Parameter Search {#step-5---metapopulation-catalog-building-and-parameter-search}
 
 Files can be found in the `05_ustacks_and_params/` directory.
 
@@ -426,9 +422,9 @@ optimal set of parameters for the dataset (see [Step
 5a](#step-5a---denovo_mapsh)). Following the parameter optimization, the
 program `ustacks` can be run to generate a catalog of loci.
 
-### Step 5a - Run `denovo_map.sh`
+## Run `denovo_map.sh`
 
-Stack assembly will differ based on several different aspects of the
+_Step 5a_. Stack assembly will differ based on several different aspects of the
 dataset(such as the study species, the RAD-seq method used, and/or the
 quality and quantity of DNA used). So it is important to use parameters
 that will maximize the amount of biological data obtained from stacks.
@@ -531,9 +527,9 @@ knitr::kable(
 )
 ```
 
-### Step 5b - Run `ustacks` {#step-5b---run-ustacks}
+## Run `ustacks` {#step-5b---run-ustacks}
 
-`ustacks` builds *de novo* loci in each individual sample. We have
+_Step 5b_. `ustacks` builds *de novo* loci in each individual sample. We have
 designed the `ustacks` script so that the process requires three files:
 
 -   `05-ustacks_n.sh` : the shell script that executes `ustacks`
@@ -580,9 +576,9 @@ knitr::kable(
 )
 ```
 
-### Step 5c - Correct File Names {#step-5c---correct-file-names}
+## Correct File Names {#step-5c---correct-file-names}
 
-This step contains a script `05b-fix_filenames.sh` which uses some
+_Step 5c_. This step contains a script `05b-fix_filenames.sh` which uses some
 simple regex to fix filenames that are output in previous steps. Stacks
 adds an extra "1" at some point at the end of the sample name which is
 not meaningful. The following files:
@@ -602,9 +598,9 @@ be optimized/improved. The script should be run from the directory where
 the changes need to be made. Files that have already been fixed will not
 be changed.
 
-### Step 5d - Choose catalog samples/files {#step-5d---choose-catalog-samplesfiles}
+## Choose catalog samples/files {#step-5d---choose-catalog-samplesfiles}
 
-In the next step, we will choose the files we want to go into the
+_Step 5d_. In the next step, we will choose the files we want to go into the
 catalog. This involves a few steps:
 
 1.  Create a meaningful directory name. This could be the date (e.g.,
@@ -623,7 +619,7 @@ catalog. This involves a few steps:
 
 3.  Remember the meaningful directory name. You will need it in Step 6.
 
-## Step 6 - Metapopulation catalog with `cstacks` {#step-6---metapopulation-catalog-with-cstacks}
+# Stacks: Metapopulation catalog with `cstacks` {#step-6---metapopulation-catalog-with-cstacks}
 
 Files can be found in the `06_cstacks/` directory.
 
@@ -678,7 +674,7 @@ knitr::kable(table_,
              caption = "Subset of samples used in SNP catalog creation.")
 ```
 
-## Step 7 - Metapopulation locus matching with `sstacks` {#step-7---metapopulation-locus-matching-with-sstacks}
+# Stacks: Metapopulation locus matching with `sstacks` {#step-7---metapopulation-locus-matching-with-sstacks}
 
 Files can be found in the `07_sstacks/` directory.
 
@@ -705,11 +701,11 @@ output directory:
 
 A small number of samples generated very few matches to the catalog (such as only 4 loci matching, obviously not enough to draw any conclusions) and therefore aren't used in the next step. See [output/sstacks-discarded_samples.csv](output/sstacks-discarded_samples.csv).
 
-## Step 8 - Genotype probabilities with `polyRAD` {#step-8---polyrad}
+# Genotype probabilities with `polyRAD` {#step-8---polyrad}
 
 Files can be found in the `08_polyRAD/` directory.
 
-### Make `RADdata` object
+## Make `RADdata` object
 
 We used the [polyRAD package](https://github.com/lvclark/polyRAD) to call genotypes because many of our species are polyploid or have historical genome duplication. PolyRAD takes the catalog output (`catalog.alleles.tsv.gz`) and accompanying matches to the catalog (e.g., `CD.BA.AA.U.1.matches.tsv.gz`) to create genotype likelihoods for species with diploidy and/or polyploidy. 
 
@@ -729,7 +725,7 @@ _Outputs:_
 
 - `<spp>_polyRADdata.rds`, RDS object (the RADdata object) 
 
-### Calculate overdispersion
+## Calculate overdispersion
 
 Next, we calculated overdispersion using the `polyRAD_overdispersion_<spp>.R` script, wrapped by `polyrad_overd_<spp>.sh` to submit the script to the SLURM scheduler. 
 
@@ -742,7 +738,7 @@ Outputs:
 
 - `<spp>_overdispersion.rds`, RDS object (the overdispersion test output) 
 
-### Estimate genotypes
+## Estimate genotypes
 
 Next, we calculated filtered loci based on the expected Hind/He statistic and estimated population structure/genotypes using the `polyRAD_filter_<spp>.R` script, wrapped by `polyrad_filt_<spp>.sh` to submit the script to the SLURM scheduler.
 
@@ -760,7 +756,7 @@ Outputs:
 - `<spp>_IteratePopStructPCA.csv`, data output from the genotype estimate PCA, suitable for plotting
 - `<spp>_estimatedgeno_RADdata.rds`, RDS object (RADdata object with genotype estimates)
 
-### Final filter and file cleanup
+## Final filter and file cleanup
 
 The output `<spp>_estimatedgeno_RADdata.rds` needs to be converted to genind and structure format for further analysis and steps. There is a little cleanup involved so the population information is retained. For example, Structure needs the population identity to be an integer, not a string. This set of functions can be run on a laptop.
 
@@ -782,13 +778,13 @@ source("08_polyRAD/convert_genomics.R")
 convert_all()
 ```
 
-## Step 9 - Run `Structure`
+# `Structure` Analysis
 
 Files, inlcuding model parameters, can be found in the `09_structure/` directory.
 
 Structure documentation can be found [here](https://web.stanford.edu/group/pritchardlab/structure_software/release_versions/v2.3.4/structure_doc.pdf).
 
-### Running Structure
+## Running Structure on `polyRAD` output
 
 `polyRAD` outputs genotype probabilities in a format suitable for Structure. 
 These files were named as:
@@ -823,7 +819,9 @@ to choose the optimal K using the Delta-K method
 optimal K was selected per species, we re-ran Structure using a greater number 
 of iterations (100000) for final output and plotting.
 
-## 10 - Get NLCD Data (used in Fig. 1 and IBE analysis)
+# NLCD Data and Site Plots
+
+NLCD is used in Fig. 2 and IBE analysis, described below.
 
 From the USGS:
 
@@ -842,6 +840,8 @@ an impervious surface descriptor layer. This descriptor layer identifies types o
 core urban areas, and energy production sites for each impervious pixel to allow deeper
 analysis of developed features.
 
+## Preparing NLCD Data
+
 First, we trimmed the large data. This makes a smaller `.rds` file for each city.
 
 ```{r trim_spatial_1, message=FALSE}
@@ -853,28 +853,24 @@ create_spatial_rds_files()
 create_spatial_rds_files(spp = "CD")
 ```
 
-## Make maps of sampling locations
-
-Next, we made plots for each city's sampling locations. Note that these only include sites that had viable polymorphic loci.
-
-```{r plot_map_1, message=FALSE}
-source("R/10-Fig1-plot_map_of_samples.R")
-```
-
-```{r plot_map_2, eval = FALSE, message=FALSE}
-make_all_urban_site_plots()
-```
-
 ## Climate normals
 
 We obtained climate normals for plotting from https://www.ncei.noaa.gov/access/us-climate-normals. We used the latest 30-year period (1991-2020): Most recent standard climatological period (2021 release); which is recommended for most purposes.
 
-<!-- ---------------------------------------------------------------------- -->
-<!-- ---------------------------------------------------------------------- -->
+## Maps of sampling locations
 
-# Analysis
+Next, we made plots for each city's sampling locations. Note that these only include sites that had viable polymorphic loci.
 
-## 11 - Principal Components Analysis Plots
+```{r plot_map_1, message=FALSE}
+source("R/10-Fig2-plot_map_of_samples.R")
+```
+
+```{r plot_map_2, eval = FALSE, message=FALSE}
+# Plot Fig 2
+make_all_urban_site_plots_with_clim_normals()
+```
+
+# Principal components analysis & plots
 
 The following creates PCA plots from polyRAD data.
 
@@ -883,62 +879,54 @@ source("R/11-plot_pca.R")
 ```
 
 ```{r plot_pca_2, eval = FALSE, message=FALSE}
-plot_pcas()
+# Plot Fig 4
+make_pca_city_and_pctimp_all()
 ```
 
 In addition to coloring points by city, we also colored points by NLCD Urban Cover %. Note that in the pdf version of this document, the figure might appear on the next pages.
 
-```{r plot_pca_3, message=FALSE, fig.cap = "PCA colored by percent urban cover. Points in yellow are individuals from sites with >50% impervious cover. Black points are individuals from sites with <=50% impervious cover."}
-plot_pcas_urbanness()
+```{r plot_pca_3, message=FALSE, fig.cap = "PCA colored by % Impervious surface."}
+make_pca_pctimp_only_all()
 ```
 
-## Continental population structure: population statistics by species
+# Genetic structure using Structure and sNMF
 
-We used `polyrad::calcPopDiff()` to calculate continental population statistics for each species.
+## `Structure` optimal K
 
-```{r continental_stats_libs, message=FALSE}
-source("R/calc_continental_stats.R")
-```
-
-```{r continental_stats_code, eval = FALSE, message=FALSE}
-do_all_continental_stats()
-```
-
-```{r continental_stats_table_readlines, message=FALSE}
-# CD as an example
-read.csv("output/population_stats/CD_continental_stats.csv")
-```
-
-## Continental population structure: Structure software results
-
-Within each species, we compressed the result files for all K and reps and 
-submitted to [Structure Harvester](https://taylor0.biology.ucla.edu/structureHarvester/) 
-to choose the optimal K using the Delta-K method 
-(see https://link.springer.com/article/10.1007/s12686-011-9548-7). 
+Within each species, we compressed the result files for all K and reps and
+submitted to [Structure Harvester](https://taylor0.biology.ucla.edu/structureHarvester/)
+to choose the optimal K using the Delta-K method
+(see https://link.springer.com/article/10.1007/s12686-011-9548-7).
 
 The results were:
 
-CD: K=3  
-DS: K=3  
-EC: K=2  
-LS: K=3  
-PA: K=4  
-TO: K=3  
+CD: K=3
+DS: K=3
+EC: K=2
+LS: K=3
+PA: K=4
+TO: K=3
 
 ```{r struct_k_2, message=FALSE, eval=FALSE}
 # This file contains output from various K from Structure..
 read_csv("output/structure/structure_k_Pr.csv")
 ```
 
-## Continental population structure: Structure plots
+The code below generates plots of various K (e.g., K={1-5}) vs likelihood, but did not end up being used in the manuscript.
+
+```{r plot_struct_1, message=FALSE}
+source("R/12-structure_k.R")
+```
+
+## Plotting Structure output
 
 The code below generates plots for Structure results.
 
-```{r plot_struct_1, message=FALSE}
-source("R/plot_structure.R")
+```{r plot_struct_3, message=FALSE}
+source("R/12-plot_structure.R")
 ```
 
-```{r plot_struct_2, eval = FALSE, message=FALSE}
+```{r plot_struct_4, eval = FALSE, message=FALSE}
 make_structure_multi_plot()
 ```
 
@@ -947,242 +935,263 @@ make_structure_multi_plot()
 We ran sNMF as an alternative to Structure to validate the results. We coerced all polyploid data to diploid data to make the file types compatible with the sNMF function in R. The snmf() function computes an entropy criterion that evaluates the quality of fit of the statistical model to the data by using a cross-validation technique. We plotted the cross-entropy criterion for K=[2:10] for all species. Using the best K, we then selected the best of 10 runs in each K using the `which.min()` function.
 
 ```{r snmf_1, message=FALSE}
-source("R/sNMF.R")
+source("R/12-sNMF.R")
 ```
 
-The following runs sNMF and generates the figure. Note that in the pdf version of this document, the figure might appear on the next pages.
+The following runs sNMF and generates the figure. \textcolor{red}{Note that in the pdf version of this document, the figure might appear on the next pages}.
 
-```{r snmf_2, message=FALSE, fig.cap = "Ancestry coefficients obtained using `snmf()`. As with the Structure analysis, horseweed and prickly lettuce appear to have the most population structure. Phoenix crabgrass, horseweed, and prickly lettuce appear unique. In general, sNMF produced larger K for most species, which will create more sensitivity to admixture.", fig.height=7}
+```{r snmf_2, message=FALSE, fig.cap = "Ancestry coefficients obtained using `snmf()`. As with the Structure analysis, _E. canadensis_ (horseweed) and _L. serriola_ (prickly lettuce) appear to have the most population structure. _D. sanguinalis_, _E. canadensis_, and _L. serriola_ from Phoenix appear unique. In general, sNMF produced larger K for most species, which will create more sensitivity to admixture.", fig.height=7}
 do_all_sNMF()
 ```
 
-## AMOVA
 
-We performed hierarchical analysis of molecular variance (AMOVA; using GenoDive 3.06) based on the Rho-statistics, which is based on a Ploidy independent Infinite Allele Model. AMOVA is under the "Analysis" menu. Structure format files typically have only one level of population grouping. To ensure nestedness, we added a "City" level manually by going to "Data > Population grouping .." menu and adding "City". When running the AMOVA, we selected "Advanced" and selected Individual nested within Population nested within City. We used 999 permutations. 
 
-For bluegrass (PA), Minneapolis (MN) had a small sample size (2 individuals). We re-ran the AMOVA with these samples excluded but found similar results.
 
-```{r AMOVA_table_display, echo = FALSE, message = FALSE}
-table_ <-
-  readr::read_csv("output/AMOVA/AMOVA_results.csv") %>%
-  dplyr::select(!c(Locus, `F-stat`))
 
-knitr::kable(table_,
-             format = "simple",
-             caption = "AMOVA Statistics.")
-```
 
-## Local: $F_{IS}$ - Homozygosity within population
+<!-- ## Continental population structure: population statistics by species -->
 
-We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate $F_{IS}$. This gives a good estimate of whether there are more homozygotes than expected (positive number) or more heterozygotes than expected (negative number). Notably, GenoDive accommodates polyploids and reduces the bias on $F_{IS}$ by performing a permutation test. By default, there are 999 permutations.
+<!-- We used `polyrad::calcPopDiff()` to calculate continental population statistics for each species. -->
 
-This can be run in GenoDive by selecting Analysis > Hardy-Weinberg > Heterozygosity-based (Nei) method.
+<!-- ```{r continental_stats_libs, message=FALSE} -->
+<!-- source("R/calc_continental_stats.R") -->
+<!-- ``` -->
 
-```{r Fis_table_readlines, message=FALSE}
-head(read.csv("output/population_stats/genodive_output_Fis.csv"))
-```
+<!-- ```{r continental_stats_code, eval = FALSE, message=FALSE} -->
+<!-- do_all_continental_stats() -->
+<!-- ``` -->
 
-## Local: Genetic Diversity
+<!-- ```{r continental_stats_table_readlines, message=FALSE} -->
+<!-- # CD as an example -->
+<!-- read.csv("output/population_stats/CD_continental_stats.csv") -->
+<!-- ``` -->
 
-We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate several additional statistics.
 
-This can be run in GenoDive by selecting Analysis > Genetic Diversity, and selecting "Calculate indices separately for every population" and selecting "Correct for unknown dosage of alleles" for the polyploid species.
+<!-- ## AMOVA -->
 
-* Num: Number of alleles
-* Eff_num: Effective number of alleles
-* Ho: Observed Heterozygosity
-* Hs: Heterozygosity within populations
-* Gis: Inbreeding coefficient
+<!-- We performed hierarchical analysis of molecular variance (AMOVA; using GenoDive 3.06) based on the Rho-statistics, which is based on a Ploidy independent Infinite Allele Model. AMOVA is under the "Analysis" menu. Structure format files typically have only one level of population grouping. To ensure nestedness, we added a "City" level manually by going to "Data > Population grouping .." menu and adding "City". When running the AMOVA, we selected "Advanced" and selected Individual nested within Population nested within City. We used 999 permutations. -->
 
-```{r GD_table_readlines, message=FALSE}
-head(read.csv("output/population_stats/genodive_genetic_diversity.csv"))
-```
+<!-- For bluegrass (PA), Minneapolis (MN) had a small sample size (2 individuals). We re-ran the AMOVA with these samples excluded but found similar results. -->
 
-## Local: $\rho$ - Pairwise comparison
+<!-- ```{r AMOVA_table_display, echo = FALSE, message = FALSE} -->
+<!-- table_ <- -->
+<!--   readr::read_csv("output/AMOVA/AMOVA_results.csv") %>% -->
+<!--   dplyr::select(!c(Locus, `F-stat`)) -->
 
-We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate pairise $\rho$ (rho) among cities within species. Note that there is a p-value correction for testing multiple cities (species are treated as independent, however).
+<!-- knitr::kable(table_, -->
+<!--              format = "simple", -->
+<!--              caption = "AMOVA Statistics.") -->
+<!-- ``` -->
 
-This can be run in GenoDive by selecting Pairwise Differentiation from the Analysis menu and selecting the "rho" statistic from the dropdown.  
+<!-- ## Local: $F_{IS}$ - Homozygosity within population -->
 
-We used the following script to clean up the results.
+<!-- We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate $F_{IS}$. This gives a good estimate of whether there are more homozygotes than expected (positive number) or more heterozygotes than expected (negative number). Notably, GenoDive accommodates polyploids and reduces the bias on $F_{IS}$ by performing a permutation test. By default, there are 999 permutations. -->
 
-```{r rho_code, eval = FALSE, message=FALSE}
-source("R/rho.R")
-compile_rho_table()
-```
+<!-- This can be run in GenoDive by selecting Analysis > Hardy-Weinberg > Heterozygosity-based (Nei) method. -->
 
-```{r rho_table_display, echo = FALSE, message = FALSE}
-table_ <-
-  readr::read_csv("output/population_stats/rho_all.csv") %>%
-  mutate(`adjusted p-value` = kableExtra::cell_spec(
-    `adjusted p-value`,
-    bold = ifelse(as.numeric(`adjusted p-value`) < 0.05, TRUE, FALSE),
-    underline = ifelse(as.numeric(`adjusted p-value`) < 0.05, TRUE, FALSE)
-  ))
-knitr::kable(table_,
-             format = "simple",
-             caption = "Rho statistics for pairwise comparison between cities.")
-```
+<!-- ```{r Fis_table_readlines, message=FALSE} -->
+<!-- head(read.csv("output/population_stats/genodive_output_Fis.csv")) -->
+<!-- ``` -->
 
-## Local: $\bar{r}_d$ - Linkage disequilibrium
+<!-- ## Local: Genetic Diversity -->
 
-We used `poppr::ia()` to calculate the standardized index of association of loci in the dataset ($\bar{r}_d$ or `rbarD`). We use the standardized index of association to avoid the influence of different sample sizes, as described by [Agapow and Burt 2001](https://doi.org/10.1046/j.1471-8278.2000.00014.x). 
+<!-- We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate several additional statistics. -->
 
-When `p.rD` is small (<0.05) and rbarD is (relatively) higher, that is a sign that the population could be in linkage disequilibrium.
+<!-- This can be run in GenoDive by selecting Analysis > Genetic Diversity, and selecting "Calculate indices separately for every population" and selecting "Correct for unknown dosage of alleles" for the polyploid species. -->
 
-An interesting note from the documentation:
+<!-- * Num: Number of alleles -->
+<!-- * Eff_num: Effective number of alleles -->
+<!-- * Ho: Observed Heterozygosity -->
+<!-- * Hs: Heterozygosity within populations -->
+<!-- * Gis: Inbreeding coefficient -->
 
-> It has been widely used as a tool to detect clonal reproduction within populations. Populations whose members are undergoing sexual reproduction, whether it be selfing or out-crossing, will produce gametes via meiosis, and thus have a chance to shuffle alleles in the next generation. Populations whose members are undergoing clonal reproduction, however, generally do so via mitosis. This means that the most likely mechanism for a change in genotype is via mutation. The rate of mutation varies from species to species, but it is rarely sufficiently high to approximate a random shuffling of alleles. The index of association is a calculation based on the ratio of the variance of the raw number of differences between individuals and the sum of those variances over each locus. You can also think of it as the observed variance over the expected variance.
+<!-- ```{r GD_table_readlines, message=FALSE} -->
+<!-- head(read.csv("output/population_stats/genodive_genetic_diversity.csv")) -->
+<!-- ``` -->
 
-There is a nice description [here](https://grunwaldlab.github.io/Population_Genetics_in_R/Linkage_disequilibrium.html).
+<!-- ## Local: $\rho$ - Pairwise comparison -->
 
-```{r rbarD_code, eval = FALSE, message=FALSE}
-source("R/rbarD.R")
-calc_rbarD()
-```
+<!-- We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate pairise $\rho$ (rho) among cities within species. Note that there is a p-value correction for testing multiple cities (species are treated as independent, however). -->
 
-```{r rbarD_table_readlines, message=FALSE}
-head(read.csv("output/population_stats/rbarD.csv"))
-```
+<!-- This can be run in GenoDive by selecting Pairwise Differentiation from the Analysis menu and selecting the "rho" statistic from the dropdown. -->
 
-## Isolation by distance and environment
+<!-- We used the following script to clean up the results. -->
 
-We used [multiple matrix regression with randomization (MMRR)](https://doi.org/10.1111/evo.12134) to determine the relative contributions of isolation by distance (i.e., an association between genetic and geographic distances) and isolation by environment (i.e., an association between genetic and environmental distances).
+<!-- ```{r rho_code, eval = FALSE, message=FALSE} -->
+<!-- source("R/rho.R") -->
+<!-- compile_rho_table() -->
+<!-- ``` -->
 
-### Genetic distance
+<!-- ```{r rho_table_display, echo = FALSE, message = FALSE} -->
+<!-- table_ <- -->
+<!--   readr::read_csv("output/population_stats/rho_all.csv") %>% -->
+<!--   mutate(`adjusted p-value` = kableExtra::cell_spec( -->
+<!--     `adjusted p-value`, -->
+<!--     bold = ifelse(as.numeric(`adjusted p-value`) < 0.05, TRUE, FALSE), -->
+<!--     underline = ifelse(as.numeric(`adjusted p-value`) < 0.05, TRUE, FALSE) -->
+<!--   )) -->
+<!-- knitr::kable(table_, -->
+<!--              format = "simple", -->
+<!--              caption = "Rho statistics for pairwise comparison between cities.") -->
+<!-- ``` -->
 
-We calculated the genetic dissimilarity matrix (among sites) using the [Cavalli-Sforza](https://doi.org/10.2307/2406616) (Chord) distance metric in GenoDive. While this can also be done using `adegenet`, we don't want to make assumptions about ploidy. We used the "*_estimatedgeno_sitesaspops.structure" files so that sites (not cities) were treated here as populations.
+<!-- ## Local: $\bar{r}_d$ - Linkage disequilibrium -->
 
-### Geographic distance
+<!-- We used `poppr::ia()` to calculate the standardized index of association of loci in the dataset ($\bar{r}_d$ or `rbarD`). We use the standardized index of association to avoid the influence of different sample sizes, as described by [Agapow and Burt 2001](https://doi.org/10.1046/j.1471-8278.2000.00014.x). -->
 
-We took the traditional approach to creating a geographic dissimilarity matrix (based on latitude and longitude) using euclidean distance.
+<!-- When `p.rD` is small (<0.05) and rbarD is (relatively) higher, that is a sign that the population could be in linkage disequilibrium. -->
 
-### Environmental data and distance
-
-Environmental variables include the monthly averages in the middle of the day for:
-
-- air temperature at 5cm above ground
-- air temperature at 1.2m above ground
-- soil temperature at 2.5cm below ground
-- RH (relative humidity) at 5cm above ground
-- RH at 1.2m above ground
-
-Variables were extracted from historic datasets and modeled using a microclimate model. More information can be found on the [NicheMapR website](https://mrke.github.io/) (how the model works, what variables can be manipulated and what you can model, vignettes for running models in R). 
-
-This method was chosen because it takes data from global datasets (you can use both historic and current or pick specific years) but then accounts for site-specific variables (we can change the % shade, the slope or aspect of the landscape, and it considers elevation, average cloud cover, etc.). [Here’s the list](https://mrke.github.io/models/MicroClimate-Models) of all the different models/datasets we’re able to can pull from. It's meant for mechanistic niche modeling.
-
-Variables in the file `site_data_DUC_environvars.csv` are all for the monthly averages at noon (12pm - hottest part of the day!) and are extreme. In other words, they are maximums. 
-
-Note that [this Stack Overflow post](https://stackoverflow.com/questions/69639782/installing-gfortran-on-macbook-with-apple-m1-chip-for-use-in-r) is helpful with installing `NicheMapR`.
+<!-- An interesting note from the documentation: -->
 
-```{r}
-# devtools::install_github('mrke/NicheMapR')
-# library(NicheMapR)
-# 
-# test_site_coords <- c(sites[1,]$lat, sites[1,]$long)
-# test_distance_to_city_center_km <- sites[1,]$distance_to_city_center_km
-# micros_ <- micro_usa(loc = test_site_coords)
-# 
-# loc <- c(-89.40, 43.07)
-# micro <- micro_global(loc = loc)
-```
+<!-- > It has been widely used as a tool to detect clonal reproduction within populations. Populations whose members are undergoing sexual reproduction, whether it be selfing or out-crossing, will produce gametes via meiosis, and thus have a chance to shuffle alleles in the next generation. Populations whose members are undergoing clonal reproduction, however, generally do so via mitosis. This means that the most likely mechanism for a change in genotype is via mutation. The rate of mutation varies from species to species, but it is rarely sufficiently high to approximate a random shuffling of alleles. The index of association is a calculation based on the ratio of the variance of the raw number of differences between individuals and the sum of those variances over each locus. You can also think of it as the observed variance over the expected variance. -->
 
-Environmental distance was generated the same way as geographic distance above (euclidean distance). These are the four environmental variables mentioned in the main manuscript, although more environmental variables are present in the raw data: % Urban cover, Distance to city center, April soil temperature, and July soil temperature. In the raw data these appear as `nlcd_urban_pct`, `distance_to_city_center`, `soiltemp_2.5cm_Apr_12pm`, `soiltemp_2.5cm_Jul_12pm`.
+<!-- There is a nice description [here](https://grunwaldlab.github.io/Population_Genetics_in_R/Linkage_disequilibrium.html). -->
 
-### Analysis
+<!-- ```{r rbarD_code, eval = FALSE, message=FALSE} -->
+<!-- source("R/rbarD.R") -->
+<!-- calc_rbarD() -->
+<!-- ``` -->
 
-Note that for this analysis, we treated each *sampling site* as a distinct location. There would not be enough power to do a distance matrix among 3-5 cities. Code for generating matrices, running the MMRR, and generating figures can be found in the source code below.
+<!-- ```{r rbarD_table_readlines, message=FALSE} -->
+<!-- head(read.csv("output/population_stats/rbarD.csv")) -->
+<!-- ``` -->
 
-```{r mmrr_1, message=FALSE}
-source("R/IBD_IBE_MMRR.R")
-```
+<!-- ## Isolation by distance and environment -->
 
-```{r mmrr_2, eval = FALSE, message=FALSE}
-make_mmrr_plot()
-```
+<!-- We used [multiple matrix regression with randomization (MMRR)](https://doi.org/10.1111/evo.12134) to determine the relative contributions of isolation by distance (i.e., an association between genetic and geographic distances) and isolation by environment (i.e., an association between genetic and environmental distances). -->
 
-Below are the results of the MMRR, with all cities in the same model. Species are treated as independent, separate models.
+<!-- ### Genetic distance -->
 
-```{r mmrr_3a, echo = FALSE, message=FALSE}
-table_ <- readr::read_csv("output/MMRR/MMRR_total_overall_models.csv") %>%
-  mutate(p = kableExtra::cell_spec(
-    `F p-value:`,
-    bold = ifelse(as.numeric(`F p-value:`) < 0.05, TRUE, FALSE),
-    underline = ifelse(as.numeric(`F p-value:`) < 0.05, TRUE, FALSE)
-  ))
-  
-knitr::kable(
-  table_,
-  format = "simple",
-  caption = "Overall model p-values from MMRR."
-)
-```
+<!-- We calculated the genetic dissimilarity matrix (among sites) using the [Cavalli-Sforza](https://doi.org/10.2307/2406616) (Chord) distance metric in GenoDive. While this can also be done using `adegenet`, we don't want to make assumptions about ploidy. We used the "*_estimatedgeno_sitesaspops.structure" files so that sites (not cities) were treated here as populations. -->
 
-```{r mmrr_3b, echo = FALSE, message=FALSE}
-table_ <-
-  readr::read_csv("output/MMRR/MMRR_total.csv") %>%
-  mutate(p = kableExtra::cell_spec(
-    p,
-    bold = ifelse(as.numeric(p) < 0.05, TRUE, FALSE),
-    underline = ifelse(as.numeric(p) < 0.05, TRUE, FALSE)
-  ))
+<!-- ### Geographic distance -->
 
-knitr::kable(
-  table_,
-  format = "simple",
-  caption = "Full parameter estimates and statistics by species from running 9999 permutations ('Reps') via MMRR."
-)
-```
+<!-- We took the traditional approach to creating a geographic dissimilarity matrix (based on latitude and longitude) using euclidean distance. -->
 
-We also repeated this within city.
+<!-- ### Environmental data and distance -->
 
-```{r mmrr_4a, echo = FALSE, message=FALSE}
-table_ <- readr::read_csv("output/MMRR/MMRR_splitbycity_overall_models.csv") %>%
-  mutate(`p adjusted` = kableExtra::cell_spec(`p adjusted`, 
-  bold = ifelse(as.numeric(`p adjusted`) < 0.05, TRUE, FALSE),
-  underline = ifelse(as.numeric(`p adjusted`) < 0.05, TRUE, FALSE)
-))
+<!-- Environmental variables include the monthly averages in the middle of the day for: -->
 
-knitr::kable(
-  table_,
-  format = "simple",
-  caption = "Overall model p-values from MMRR, subset by each city. Adjusted p-values are corrected using the Benjamini and Hochberg method within each species' results."
-)
-```
+<!-- - air temperature at 5cm above ground -->
+<!-- - air temperature at 1.2m above ground -->
+<!-- - soil temperature at 2.5cm below ground -->
+<!-- - RH (relative humidity) at 5cm above ground -->
+<!-- - RH at 1.2m above ground -->
+
+<!-- Variables were extracted from historic datasets and modeled using a microclimate model. More information can be found on the [NicheMapR website](https://mrke.github.io/) (how the model works, what variables can be manipulated and what you can model, vignettes for running models in R). -->
 
-```{r mmrr_4b, echo = FALSE, message=FALSE}
-table_ <- readr::read_csv("output/MMRR/MMRR_splitbycity.csv") %>%
-  mutate(p = kableExtra::cell_spec(
-    p,
-    bold = ifelse(as.numeric(p) < 0.05, TRUE, FALSE),
-    underline = ifelse(as.numeric(p) < 0.05, TRUE, FALSE)
-  ))
+<!-- This method was chosen because it takes data from global datasets (you can use both historic and current or pick specific years) but then accounts for site-specific variables (we can change the % shade, the slope or aspect of the landscape, and it considers elevation, average cloud cover, etc.). [Here’s the list](https://mrke.github.io/models/MicroClimate-Models) of all the different models/datasets we’re able to can pull from. It's meant for mechanistic niche modeling. -->
 
-knitr::kable(
-  table_,
-  format = "simple",
-  caption = "Parameter estimates and statistics from running 9999 permutations ('Reps') via MMRR, subset by each city. Note that p-values are not adjusted for multiple testing."
-)
-```
+<!-- Variables in the file `site_data_DUC_environvars.csv` are all for the monthly averages at noon (12pm - hottest part of the day!) and are extreme. In other words, they are maximums. -->
 
-## Sites per city per species
+<!-- Note that [this Stack Overflow post](https://stackoverflow.com/questions/69639782/installing-gfortran-on-macbook-with-apple-m1-chip-for-use-in-r) is helpful with installing `NicheMapR`. -->
 
-Use `get_unique_site_post_genotyping.R`.
+<!-- ```{r} -->
+<!-- # devtools::install_github('mrke/NicheMapR') -->
+<!-- # library(NicheMapR) -->
+<!-- # -->
+<!-- # test_site_coords <- c(sites[1,]$lat, sites[1,]$long) -->
+<!-- # test_distance_to_city_center_km <- sites[1,]$distance_to_city_center_km -->
+<!-- # micros_ <- micro_usa(loc = test_site_coords) -->
+<!-- # -->
+<!-- # loc <- c(-89.40, 43.07) -->
+<!-- # micro <- micro_global(loc = loc) -->
+<!-- ``` -->
 
+<!-- Environmental distance was generated the same way as geographic distance above (euclidean distance). These are the four environmental variables mentioned in the main manuscript, although more environmental variables are present in the raw data: % Urban cover, Distance to city center, April soil temperature, and July soil temperature. In the raw data these appear as `nlcd_urban_pct`, `distance_to_city_center`, `soiltemp_2.5cm_Apr_12pm`, `soiltemp_2.5cm_Jul_12pm`. -->
 
+<!-- ### Analysis -->
 
+<!-- Note that for this analysis, we treated each *sampling site* as a distinct location. There would not be enough power to do a distance matrix among 3-5 cities. Code for generating matrices, running the MMRR, and generating figures can be found in the source code below. -->
 
+<!-- ```{r mmrr_1, message=FALSE} -->
+<!-- source("R/IBD_IBE_MMRR.R") -->
+<!-- ``` -->
 
+<!-- ```{r mmrr_2, eval = FALSE, message=FALSE} -->
+<!-- make_mmrr_plot() -->
+<!-- ``` -->
 
+<!-- Below are the results of the MMRR, with all cities in the same model. Species are treated as independent, separate models. -->
 
+<!-- ```{r mmrr_3a, echo = FALSE, message=FALSE} -->
+<!-- table_ <- readr::read_csv("output/MMRR/MMRR_total_overall_models.csv") %>% -->
+<!--   mutate(p = kableExtra::cell_spec( -->
+<!--     `F p-value:`, -->
+<!--     bold = ifelse(as.numeric(`F p-value:`) < 0.05, TRUE, FALSE), -->
+<!--     underline = ifelse(as.numeric(`F p-value:`) < 0.05, TRUE, FALSE) -->
+<!--   )) -->
 
-# Appendix {#appendix-books}
+<!-- knitr::kable( -->
+<!--   table_, -->
+<!--   format = "simple", -->
+<!--   caption = "Overall model p-values from MMRR." -->
+<!-- ) -->
+<!-- ``` -->
 
-## `SessionInfo()`
+<!-- ```{r mmrr_3b, echo = FALSE, message=FALSE} -->
+<!-- table_ <- -->
+<!--   readr::read_csv("output/MMRR/MMRR_total.csv") %>% -->
+<!--   mutate(p = kableExtra::cell_spec( -->
+<!--     p, -->
+<!--     bold = ifelse(as.numeric(p) < 0.05, TRUE, FALSE), -->
+<!--     underline = ifelse(as.numeric(p) < 0.05, TRUE, FALSE) -->
+<!--   )) -->
+
+<!-- knitr::kable( -->
+<!--   table_, -->
+<!--   format = "simple", -->
+<!--   caption = "Full parameter estimates and statistics by species from running 9999 permutations ('Reps') via MMRR." -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- We also repeated this within city. -->
+
+<!-- ```{r mmrr_4a, echo = FALSE, message=FALSE} -->
+<!-- table_ <- readr::read_csv("output/MMRR/MMRR_splitbycity_overall_models.csv") %>% -->
+<!--   mutate(`p adjusted` = kableExtra::cell_spec(`p adjusted`, -->
+<!--   bold = ifelse(as.numeric(`p adjusted`) < 0.05, TRUE, FALSE), -->
+<!--   underline = ifelse(as.numeric(`p adjusted`) < 0.05, TRUE, FALSE) -->
+<!-- )) -->
+
+<!-- knitr::kable( -->
+<!--   table_, -->
+<!--   format = "simple", -->
+<!--   caption = "Overall model p-values from MMRR, subset by each city. Adjusted p-values are corrected using the Benjamini and Hochberg method within each species' results." -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- ```{r mmrr_4b, echo = FALSE, message=FALSE} -->
+<!-- table_ <- readr::read_csv("output/MMRR/MMRR_splitbycity.csv") %>% -->
+<!--   mutate(p = kableExtra::cell_spec( -->
+<!--     p, -->
+<!--     bold = ifelse(as.numeric(p) < 0.05, TRUE, FALSE), -->
+<!--     underline = ifelse(as.numeric(p) < 0.05, TRUE, FALSE) -->
+<!--   )) -->
+
+<!-- knitr::kable( -->
+<!--   table_, -->
+<!--   format = "simple", -->
+<!--   caption = "Parameter estimates and statistics from running 9999 permutations ('Reps') via MMRR, subset by each city. Note that p-values are not adjusted for multiple testing." -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- ## Sites per city per species -->
+
+<!-- Use `get_unique_site_post_genotyping.R`. -->
+
+
+
+
+
+
+# `SessionInfo()`
 
 ```{r}
 sessionInfo()
 ```
+
+# Appendix {-#appendix-books}
 
 ## File Organization {#file-organization-bookmark_tabs}
 
