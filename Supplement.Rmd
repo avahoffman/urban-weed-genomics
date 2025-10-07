@@ -944,27 +944,24 @@ The following runs sNMF and generates the figure. \textcolor{red}{Note that in t
 do_all_sNMF()
 ```
 
-
-
-
-
+# Population (city) level statistics
 
 <!-- ## Continental population structure: population statistics by species -->
 
-<!-- We used `polyrad::calcPopDiff()` to calculate continental population statistics for each species. -->
+We used `polyrad::calcPopDiff()` to calculate continental population statistics for each species.
 
-<!-- ```{r continental_stats_libs, message=FALSE} -->
-<!-- source("R/calc_continental_stats.R") -->
-<!-- ``` -->
+```{r continental_stats_libs, message=FALSE}
+source("R/calc_continental_stats.R")
+```
 
-<!-- ```{r continental_stats_code, eval = FALSE, message=FALSE} -->
-<!-- do_all_continental_stats() -->
-<!-- ``` -->
+```{r continental_stats_code, eval = FALSE, message=FALSE}
+do_all_continental_stats()
+```
 
-<!-- ```{r continental_stats_table_readlines, message=FALSE} -->
-<!-- # CD as an example -->
-<!-- read.csv("output/population_stats/CD_continental_stats.csv") -->
-<!-- ``` -->
+```{r continental_stats_table_readlines, message=FALSE}
+# CD as an example
+read.csv("output/population_stats/CD_continental_stats.csv")
+```
 
 
 <!-- ## AMOVA -->

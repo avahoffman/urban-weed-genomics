@@ -54,11 +54,13 @@
   - [12.2 Plotting Structure output](#plotting-structure-output)
   - [12.3 Validation of Structure results with
     sNMF](#validation-of-structure-results-with-snmf)
-- [13 `SessionInfo()`](#sessioninfo)
+- [13 Population (city) level
+  statistics](#population-city-level-statistics)
+- [14 `SessionInfo()`](#sessioninfo)
 - [Appendix](#appendix-books)
-  - [13.1 File Organization](#file-organization-bookmark_tabs)
-  - [13.2 Aspera Transfer File Names](#aspera-transfer-file-names)
-  - [13.3 `clone_filter` File Names](#clone_filter-file-names)
+  - [14.1 File Organization](#file-organization-bookmark_tabs)
+  - [14.2 Aspera Transfer File Names](#aspera-transfer-file-names)
+  - [14.3 `clone_filter` File Names](#clone_filter-file-names)
 
 <!-- To nicely format this markdown doc, I recommend using
 Sublime Text editor. Highlight the text in question and select Edit >
@@ -1392,18 +1394,31 @@ unique. In general, sNMF produced larger K for most species, which will
 create more sensitivity to admixture.</figcaption>
 </figure>
 
+# 13 Population (city) level statistics
+
 <!-- ## Continental population structure: population statistics by species -->
-<!-- We used `polyrad::calcPopDiff()` to calculate continental population statistics for each species. -->
-<!-- ```{r continental_stats_libs, message=FALSE} -->
-<!-- source("R/calc_continental_stats.R") -->
-<!-- ``` -->
-<!-- ```{r continental_stats_code, eval = FALSE, message=FALSE} -->
-<!-- do_all_continental_stats() -->
-<!-- ``` -->
-<!-- ```{r continental_stats_table_readlines, message=FALSE} -->
-<!-- # CD as an example -->
-<!-- read.csv("output/population_stats/CD_continental_stats.csv") -->
-<!-- ``` -->
+
+We used `polyrad::calcPopDiff()` to calculate continental population
+statistics for each species.
+
+``` r
+source("R/calc_continental_stats.R")
+```
+
+``` r
+do_all_continental_stats()
+```
+
+``` r
+# CD as an example
+read.csv("output/population_stats/CD_continental_stats.csv")
+```
+
+    ##   X statistic      value
+    ## 1 1     JostD 0.30579677
+    ## 2 2       Gst 0.02735719
+    ## 3 3       Fst 0.02812163
+
 <!-- ## AMOVA -->
 <!-- We performed hierarchical analysis of molecular variance (AMOVA; using GenoDive 3.06) based on the Rho-statistics, which is based on a Ploidy independent Infinite Allele Model. AMOVA is under the "Analysis" menu. Structure format files typically have only one level of population grouping. To ensure nestedness, we added a "City" level manually by going to "Data > Population grouping .." menu and adding "City". When running the AMOVA, we selected "Advanced" and selected Individual nested within Population nested within City. We used 999 permutations. -->
 <!-- For bluegrass (PA), Minneapolis (MN) had a small sample size (2 individuals). We re-ran the AMOVA with these samples excluded but found similar results. -->
@@ -1559,7 +1574,7 @@ create more sensitivity to admixture.</figcaption>
 <!-- ## Sites per city per species -->
 <!-- Use `get_unique_site_post_genotyping.R`. -->
 
-# 13 `SessionInfo()`
+# 14 `SessionInfo()`
 
 ``` r
 sessionInfo()
@@ -1583,11 +1598,12 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ##  [1] LEA_3.16.0        ggh4x_0.2.8       here_1.0.1        lubridate_1.9.3  
-    ##  [5] forcats_1.0.0     purrr_1.0.2       tibble_3.2.1      tidyverse_2.0.0  
-    ##  [9] cowplot_1.2.0     viridis_0.6.5     viridisLite_0.4.2 raster_3.6-26    
-    ## [13] sp_2.1-4          stringr_1.5.1     readr_2.1.5       polyRAD_2.0.0    
-    ## [17] dplyr_1.1.4       magrittr_2.0.3    tidyr_1.3.1       ggplot2_4.0.0    
+    ##  [1] polysat_1.7-7     LEA_3.16.0        ggh4x_0.2.8       here_1.0.1       
+    ##  [5] lubridate_1.9.3   forcats_1.0.0     purrr_1.0.2       tibble_3.2.1     
+    ##  [9] tidyverse_2.0.0   cowplot_1.2.0     viridis_0.6.5     viridisLite_0.4.2
+    ## [13] raster_3.6-26     sp_2.1-4          stringr_1.5.1     readr_2.1.5      
+    ## [17] polyRAD_2.0.0     dplyr_1.1.4       magrittr_2.0.3    tidyr_1.3.1      
+    ## [21] ggplot2_4.0.0    
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] fastmatch_1.1-4    gtable_0.3.6       xfun_0.52          lattice_0.22-6    
@@ -1608,7 +1624,7 @@ sessionInfo()
 
 # Appendix
 
-## 13.1 File Organization
+## 14.1 File Organization
 
 All data files for the Macrosystems project are permanently stored under
 Meghan Avolio’s group resources in the Johns Hopkins University Rockfish
@@ -1677,7 +1693,7 @@ following subdirectories:
     scripts and output files (i.e., from `cstacks`, `gstacks`, `stacks`,
     `tsv2bam`, and `populations`),
 
-## 13.2 Aspera Transfer File Names
+## 14.2 Aspera Transfer File Names
 
 See
 [data/aspera_transfer_file_names.csv](data/aspera_transfer_file_names.csv).
@@ -1698,7 +1714,7 @@ readLines("data/aspera_transfer_file_names.csv", 10)
     ##  [9] "/Hoffman_macrosystems/AMH_macro_1_10_8px_S10_L001_R1_001.fastq.gz"
     ## [10] "/Hoffman_macrosystems/AMH_macro_1_10_8px_S10_L001_R2_001.fastq.gz"
 
-## 13.3 `clone_filter` File Names
+## 14.3 `clone_filter` File Names
 
 See
 [data/clone_filter_file_names.csv](data/clone_filter_file_names.csv).
