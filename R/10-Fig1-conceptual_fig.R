@@ -16,7 +16,7 @@ panel1_dat <- function() {
     mutate(city = rep(c(
       "City 1", "City 2", "City 3", "City 4", "City 5"
     ), each = 6))  %>%
-    mutate(urban = rep(c("More impervious", "Less impervious"), times = 15))
+    mutate(urban = rep(c("More urban", "Less urban"), times = 15))
   
   dat <-
     dat %>% arrange(ID)
@@ -49,7 +49,7 @@ panel2_dat <- function() {
   )
   dat <-
     dat %>% arrange(city, urban) %>%
-    mutate(urban = rep(c("More impervious", "Less impervious"), times = 15))
+    mutate(urban = rep(c("More urban", "Less urban"), times = 15))
   
   dat <-
     dat %>% arrange(ID)
@@ -70,7 +70,7 @@ panel3_dat <- function() {
       sample(30:100, 15, replace = FALSE)
     ),
     city = sample(1:100, 30, replace = FALSE),
-    urban = rep(c("More impervious", "Less impervious"), each = 15)
+    urban = rep(c("More urban", "Less urban"), each = 15)
   )
   dat <-
     dat %>% arrange(urban, city) %>%
@@ -117,10 +117,10 @@ panel4_dat <- function() {
       "City 1", "City 2", "City 3", "City 4", "City 5"
     ), each = 6),
     urban = factor(rep(
-      c("More impervious", "Less impervious"),
+      c("More urban", "Less urban"),
       each = 3,
       times = 5
-    ), levels = c("More impervious", "Less impervious"))
+    ), levels = c("More urban", "Less urban"))
   ) %>%
     
     return(dat)
