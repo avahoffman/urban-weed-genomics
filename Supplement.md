@@ -42,25 +42,26 @@
 - [9 `Structure` Analysis](#structure-analysis)
   - [9.1 Running Structure on `polyRAD`
     output](#running-structure-on-polyrad-output)
-- [10 NLCD Data and Site Plots](#nlcd-data-and-site-plots)
-  - [10.1 Preparing NLCD Data](#preparing-nlcd-data)
-  - [10.2 Climate normals](#climate-normals)
-  - [10.3 Maps of sampling locations](#maps-of-sampling-locations)
-- [11 Principal components analysis &
+- [10 Conceptual Figure](#conceptual-figure)
+- [11 NLCD Data and Site Plots](#nlcd-data-and-site-plots)
+  - [11.1 Preparing NLCD Data](#preparing-nlcd-data)
+  - [11.2 Climate normals](#climate-normals)
+  - [11.3 Maps of sampling locations](#maps-of-sampling-locations)
+- [12 Principal components analysis &
   plots](#principal-components-analysis-plots)
-- [12 Genetic structure using Structure and
+- [13 Genetic structure using Structure and
   sNMF](#genetic-structure-using-structure-and-snmf)
-  - [12.1 `Structure` optimal K](#structure-optimal-k)
-  - [12.2 Plotting Structure output](#plotting-structure-output)
-  - [12.3 Validation of Structure results with
+  - [13.1 `Structure` optimal K](#structure-optimal-k)
+  - [13.2 Plotting Structure output](#plotting-structure-output)
+  - [13.3 Validation of Structure results with
     sNMF](#validation-of-structure-results-with-snmf)
-- [13 Population (city) level
+- [14 Population (city) level
   statistics](#population-city-level-statistics)
-- [14 `SessionInfo()`](#sessioninfo)
+- [15 `SessionInfo()`](#sessioninfo)
 - [Appendix](#appendix-books)
-  - [14.1 File Organization](#file-organization-bookmark_tabs)
-  - [14.2 Aspera Transfer File Names](#aspera-transfer-file-names)
-  - [14.3 `clone_filter` File Names](#clone_filter-file-names)
+  - [15.1 File Organization](#file-organization-bookmark_tabs)
+  - [15.2 Aspera Transfer File Names](#aspera-transfer-file-names)
+  - [15.3 `clone_filter` File Names](#clone_filter-file-names)
 
 <!-- To nicely format this markdown doc, I recommend using
 Sublime Text editor. Highlight the text in question and select Edit >
@@ -1236,7 +1237,20 @@ choose the optimal K using the Delta-K method (see
 optimal K was selected per species, we re-ran Structure using a greater
 number of iterations (100000) for final output and plotting.
 
-# 10 NLCD Data and Site Plots
+# 10 Conceptual Figure
+
+We made a conceptual figure to help readers understand PCA patterns we
+might expect.
+
+``` r
+source("R/10-Fig1-conceptual_fig.R")
+```
+
+``` r
+make_fig1()
+```
+
+# 11 NLCD Data and Site Plots
 
 NLCD is used in Fig. 2 and IBE analysis, described below.
 
@@ -1260,7 +1274,7 @@ From the USGS:
 > sites for each impervious pixel to allow deeper analysis of developed
 > features.
 
-## 10.1 Preparing NLCD Data
+## 11.1 Preparing NLCD Data
 
 First, we trimmed the large data. This makes a smaller `.rds` file for
 each city.
@@ -1274,14 +1288,14 @@ create_spatial_rds_files()
 create_spatial_rds_files(spp = "CD")
 ```
 
-## 10.2 Climate normals
+## 11.2 Climate normals
 
 We obtained climate normals for plotting from
 <https://www.ncei.noaa.gov/access/us-climate-normals>. We used the
 latest 30-year period (1991-2020): Most recent standard climatological
 period (2021 release); which is recommended for most purposes.
 
-## 10.3 Maps of sampling locations
+## 11.3 Maps of sampling locations
 
 Next, we made plots for each city’s sampling locations. Note that these
 only include sites that had viable polymorphic loci.
@@ -1295,7 +1309,7 @@ source("R/10-Fig2-plot_map_of_samples.R")
 make_all_urban_site_plots_with_clim_normals()
 ```
 
-# 11 Principal components analysis & plots
+# 12 Principal components analysis & plots
 
 The following creates PCA plots from polyRAD data.
 
@@ -1323,9 +1337,9 @@ alt="PCA colored by % Impervious surface." />
 surface.</figcaption>
 </figure>
 
-# 12 Genetic structure using Structure and sNMF
+# 13 Genetic structure using Structure and sNMF
 
-## 12.1 `Structure` optimal K
+## 13.1 `Structure` optimal K
 
 Within each species, we compressed the result files for all K and reps
 and submitted to [Structure
@@ -1349,7 +1363,7 @@ likelihood, but did not end up being used in the manuscript.
 source("R/12-structure_k.R")
 ```
 
-## 12.2 Plotting Structure output
+## 13.2 Plotting Structure output
 
 The code below generates plots for Structure results.
 
@@ -1361,7 +1375,7 @@ source("R/12-plot_structure.R")
 make_structure_multi_plot()
 ```
 
-## 12.3 Validation of Structure results with sNMF
+## 13.3 Validation of Structure results with sNMF
 
 We ran sNMF as an alternative to Structure to validate the results. We
 coerced all polyploid data to diploid data to make the file types
@@ -1394,7 +1408,7 @@ unique. In general, sNMF produced larger K for most species, which will
 create more sensitivity to admixture.</figcaption>
 </figure>
 
-# 13 Population (city) level statistics
+# 14 Population (city) level statistics
 
 <!-- ## Continental population structure: population statistics by species -->
 
@@ -1574,7 +1588,7 @@ read.csv("output/population_stats/CD_continental_stats.csv")
 <!-- ## Sites per city per species -->
 <!-- Use `get_unique_site_post_genotyping.R`. -->
 
-# 14 `SessionInfo()`
+# 15 `SessionInfo()`
 
 ``` r
 sessionInfo()
@@ -1600,8 +1614,8 @@ sessionInfo()
     ## other attached packages:
     ##  [1] polysat_1.7-7     LEA_3.16.0        ggh4x_0.2.8       here_1.0.1       
     ##  [5] lubridate_1.9.3   forcats_1.0.0     purrr_1.0.2       tibble_3.2.1     
-    ##  [9] tidyverse_2.0.0   cowplot_1.2.0     viridis_0.6.5     viridisLite_0.4.2
-    ## [13] raster_3.6-26     sp_2.1-4          stringr_1.5.1     readr_2.1.5      
+    ##  [9] tidyverse_2.0.0   viridis_0.6.5     viridisLite_0.4.2 raster_3.6-26    
+    ## [13] sp_2.1-4          cowplot_1.2.0     stringr_1.5.1     readr_2.1.5      
     ## [17] polyRAD_2.0.0     dplyr_1.1.4       magrittr_2.0.3    tidyr_1.3.1      
     ## [21] ggplot2_4.0.0    
     ## 
@@ -1624,7 +1638,7 @@ sessionInfo()
 
 # Appendix
 
-## 14.1 File Organization
+## 15.1 File Organization
 
 All data files for the Macrosystems project are permanently stored under
 Meghan Avolio’s group resources in the Johns Hopkins University Rockfish
@@ -1693,7 +1707,7 @@ following subdirectories:
     scripts and output files (i.e., from `cstacks`, `gstacks`, `stacks`,
     `tsv2bam`, and `populations`),
 
-## 14.2 Aspera Transfer File Names
+## 15.2 Aspera Transfer File Names
 
 See
 [data/aspera_transfer_file_names.csv](data/aspera_transfer_file_names.csv).
@@ -1714,7 +1728,7 @@ readLines("data/aspera_transfer_file_names.csv", 10)
     ##  [9] "/Hoffman_macrosystems/AMH_macro_1_10_8px_S10_L001_R1_001.fastq.gz"
     ## [10] "/Hoffman_macrosystems/AMH_macro_1_10_8px_S10_L001_R2_001.fastq.gz"
 
-## 14.3 `clone_filter` File Names
+## 15.3 `clone_filter` File Names
 
 See
 [data/clone_filter_file_names.csv](data/clone_filter_file_names.csv).
