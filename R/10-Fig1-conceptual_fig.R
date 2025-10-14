@@ -1,3 +1,7 @@
+library(magrittr)
+library(ggplot2)
+library(cowplot)
+
 panel1_dat <- function() {
   set.seed(420)
   dat <- data.frame(
@@ -12,7 +16,7 @@ panel1_dat <- function() {
     mutate(city = rep(c(
       "City 1", "City 2", "City 3", "City 4", "City 5"
     ), each = 6))  %>%
-    mutate(urban = rep(c("More urban", "Less urban"), times = 15))
+    mutate(urban = rep(c("More impervious", "Less impervious"), times = 15))
   
   dat <-
     dat %>% arrange(ID)
@@ -45,7 +49,7 @@ panel2_dat <- function() {
   )
   dat <-
     dat %>% arrange(city, urban) %>%
-    mutate(urban = rep(c("More urban", "Less urban"), times = 15))
+    mutate(urban = rep(c("More impervious", "Less impervious"), times = 15))
   
   dat <-
     dat %>% arrange(ID)
@@ -66,7 +70,7 @@ panel3_dat <- function() {
       sample(30:100, 15, replace = FALSE)
     ),
     city = sample(1:100, 30, replace = FALSE),
-    urban = rep(c("More urban", "Less urban"), each = 15)
+    urban = rep(c("More impervious", "Less impervious"), each = 15)
   )
   dat <-
     dat %>% arrange(urban, city) %>%
@@ -113,10 +117,10 @@ panel4_dat <- function() {
       "City 1", "City 2", "City 3", "City 4", "City 5"
     ), each = 6),
     urban = factor(rep(
-      c("More urban", "Less urban"),
+      c("More impervious", "Less impervious"),
       each = 3,
       times = 5
-    ), levels = c("More urban", "Less urban"))
+    ), levels = c("More impervious", "Less impervious"))
   ) %>%
     
     return(dat)
@@ -150,34 +154,35 @@ make_conceptual_plot <- function(data_) {
 
 #####
 
-
-gg1 <- make_conceptual_plot(panel1_dat())
-gg2 <- make_conceptual_plot(panel2_dat())
-gg3 <- make_conceptual_plot(panel3_dat())
-gg4 <- make_conceptual_plot(panel4_dat())
-
-plot_grid(
+make_fig1 <- function() {
+  gg1 <- make_conceptual_plot(panel1_dat())
+  gg2 <- make_conceptual_plot(panel2_dat())
+  gg3 <- make_conceptual_plot(panel3_dat())
+  gg4 <- make_conceptual_plot(panel4_dat())
+  
   plot_grid(
-    gg1 + theme(legend.position = "none") + ggtitle("\nNot distinct") + xlab(NULL) + theme(plot.margin = unit(c(-3,0,0, 5), "mm")),
-    gg2 + theme(legend.position = "none") + ggtitle("\nCities distinct") + ylab(NULL) + xlab(NULL)  + theme(plot.margin = unit(c(-3,0,0, 10), "mm")),
-    gg3 + theme(legend.position = "none") + ggtitle("Urban environment\ndistinct") + theme(plot.margin = unit(c(2,0,0, 5), "mm")),
-    gg4 + theme(legend.position = "none") + ggtitle("City and urban\nenvironment distinct") + ylab(NULL) + theme(plot.margin = unit(c(2,0,0, 10), "mm")),
-
-    #hjust = -1,
-    nrow = 2,
-    labels = c("(a)", "(b)", "(c)", "(d)"),
-    rel_heights = c(95,100),
-    rel_widths = c(93,100)
-  ),
-  get_legend(gg1),
-  nrow = 1,
-  rel_widths = c(3, 1)
-)
-
-ggsave(
-  paste0("figures/Fig1_conceptual_fig/Fig1.png"),
-  dpi = "print",
-  height = 5,
-  width = 7,
-  units = "in"
-)
+    plot_grid(
+      gg1 + theme(legend.position = "none") + ggtitle("\nNot distinct") + xlab(NULL) + theme(plot.margin = unit(c(-3, 0, 0, 5), "mm")),
+      gg2 + theme(legend.position = "none") + ggtitle("\nCities distinct") + ylab(NULL) + xlab(NULL)  + theme(plot.margin = unit(c(-3, 0, 0, 10), "mm")),
+      gg3 + theme(legend.position = "none") + ggtitle("Urban environment\ndistinct") + theme(plot.margin = unit(c(2, 0, 0, 5), "mm")),
+      gg4 + theme(legend.position = "none") + ggtitle("City and urban\nenvironment distinct") + ylab(NULL) + theme(plot.margin = unit(c(2, 0, 0, 10), "mm")),
+      
+      #hjust = -1,
+      nrow = 2,
+      labels = c("(a)", "(b)", "(c)", "(d)"),
+      rel_heights = c(95, 100),
+      rel_widths = c(93, 100)
+    ),
+    get_legend(gg1),
+    nrow = 1,
+    rel_widths = c(3, 1)
+  )
+  
+  ggsave(
+    paste0("figures/Fig1_conceptual_fig/Fig1.png"),
+    dpi = "print",
+    height = 5,
+    width = 7,
+    units = "in"
+  )
+}

@@ -819,6 +819,18 @@ to choose the optimal K using the Delta-K method
 optimal K was selected per species, we re-ran Structure using a greater number 
 of iterations (100000) for final output and plotting.
 
+# Conceptual Figure
+
+We made a conceptual figure to help readers understand PCA patterns we might expect.
+
+```{r conceptual_1, message=FALSE}
+source("R/10-Fig1-conceptual_fig.R")
+```
+
+```{r conceptual_2, eval = FALSE, message=FALSE}
+make_fig1()
+```
+
 # NLCD Data and Site Plots
 
 NLCD is used in Fig. 2 and IBE analysis, described below.
