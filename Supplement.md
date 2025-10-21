@@ -66,6 +66,7 @@
   - [14.5 Within city - $\bar{r}_d$ - Linkage
     disequilibrium](#within-city---barr_d---linkage-disequilibrium)
   - [14.6 Within city - private alleles](#within-city---private-alleles)
+  - [14.7 AMOVA](#amova)
 - [15 `SessionInfo()`](#sessioninfo)
 - [Appendix](#appendix-books)
   - [15.1 File Organization](#file-organization-bookmark_tabs)
@@ -1577,17 +1578,54 @@ source("R/13-private_alleles.R")
 get_all_private_alleles()
 ```
 
-<!-- ## AMOVA -->
-<!-- We performed hierarchical analysis of molecular variance (AMOVA; using GenoDive 3.06) based on the Rho-statistics, which is based on a Ploidy independent Infinite Allele Model. AMOVA is under the "Analysis" menu. Structure format files typically have only one level of population grouping. To ensure nestedness, we added a "City" level manually by going to "Data > Population grouping .." menu and adding "City". When running the AMOVA, we selected "Advanced" and selected Individual nested within Population nested within City. We used 999 permutations. -->
-<!-- For bluegrass (PA), Minneapolis (MN) had a small sample size (2 individuals). We re-ran the AMOVA with these samples excluded but found similar results. -->
-<!-- ```{r AMOVA_table_display, echo = FALSE, message = FALSE} -->
-<!-- table_ <- -->
-<!--   readr::read_csv("output/AMOVA/AMOVA_results.csv") %>% -->
-<!--   dplyr::select(!c(Locus, `F-stat`)) -->
-<!-- knitr::kable(table_, -->
-<!--              format = "simple", -->
-<!--              caption = "AMOVA Statistics.") -->
-<!-- ``` -->
+## 14.7 AMOVA
+
+We performed hierarchical analysis of molecular variance (AMOVA; using
+GenoDive 3.06) based on the Rho-statistics, which is based on a Ploidy
+independent Infinite Allele Model. AMOVA is under the “Analysis” menu.
+Structure format files typically have only one level of population
+grouping. To ensure nestedness, we added a “City” level manually by
+going to “Data \> Population grouping ..” menu and adding “City”. When
+running the AMOVA, we selected “Advanced” and selected Individual nested
+within Population nested within City. We used 999 permutations.
+
+For bluegrass (PA), Minneapolis (MN) had a small sample size (2
+individuals). We re-ran the AMOVA with these samples excluded but found
+similar results.
+
+| Species | Source of Variation | Nested in | SSD | d.f. | MS | Var-comp | %Var | F-value | P-value |
+|:---|:---|:---|---:|---:|---:|---:|---:|---:|:---|
+| CD | Within Population | – | 34441.923 | 136 | 253.249 | 253.249 | 0.235 | 0.765 | – |
+| CD | Among Population | City | 137243.842 | 46 | 2983.562 | 732.212 | 0.678 | 0.743 | 0.001 |
+| CD | Among City | – | 18722.905 | 2 | 9361.452 | 94.155 | 0.087 | 0.087 | 0.001 |
+| DS | Within Population | – | 39458.473 | 155 | 254.571 | 254.571 | 0.224 | 0.776 | – |
+| DS | Among Population | City | 149988.556 | 65 | 2307.516 | 638.534 | 0.561 | 0.715 | 0.001 |
+| DS | Among City | – | 47958.337 | 3 | 15986.112 | 244.451 | 0.215 | 0.215 | 0.001 |
+| EC | Within Population | – | 15832.596 | 73 | 216.885 | 216.885 | 0.302 | 0.698 | – |
+| EC | Among Population | City | 44957.413 | 31 | 1450.239 | 391.507 | 0.546 | 0.644 | 0.001 |
+| EC | Among City | – | 10368.036 | 2 | 5184.018 | 108.704 | 0.152 | 0.152 | 0.001 |
+| LS | Within Population | – | 10889.549 | 120 | 90.746 | 90.746 | 0.308 | 0.692 | – |
+| LS | Among Population | City | 32081.032 | 59 | 543.746 | 159.914 | 0.544 | 0.638 | 0.001 |
+| LS | Among City | – | 8721.721 | 4 | 2180.430 | 43.569 | 0.148 | 0.148 | 0.001 |
+| PA - no MN | Within Population | – | 9129.284 | 128 | 71.323 | 71.323 | 0.230 | 0.770 | – |
+| PA - no MN | Among Population | City | 34474.530 | 44 | 783.512 | 194.429 | 0.628 | 0.732 | 0.001 |
+| PA - no MN | Among City | – | 7968.939 | 3 | 2656.313 | 43.730 | 0.141 | 0.141 | 0.002 |
+| PA - w/ MN | Within Population | – | 10167.015 | 129 | 78.814 | 78.814 | 0.278 | 0.722 | – |
+| PA - w/ MN | Among Population | City | 30922.681 | 44 | 702.788 | 168.366 | 0.593 | 0.681 | 0.001 |
+| PA - w/ MN | Among City | – | 6999.878 | 4 | 1749.970 | 36.750 | 0.129 | 0.129 | 0.002 |
+| TO | Within Population | – | 15727.071 | 162 | 97.081 | 97.081 | 0.314 | 0.686 | – |
+| TO | Among Population | City | 51744.430 | 71 | 728.795 | 202.502 | 0.655 | 0.676 | 0.001 |
+| TO | Among City | – | 4740.183 | 4 | 1185.046 | 9.469 | 0.031 | 0.031 | 0.001 |
+
+AMOVA Statistics.
+
+The following code plots the figure in the main manuscript.
+
+``` r
+source("R/14-AMOVA.R")
+make_amova_plot()
+```
+
 <!-- ## Isolation by distance and environment -->
 <!-- We used [multiple matrix regression with randomization (MMRR)](https://doi.org/10.1111/evo.12134) to determine the relative contributions of isolation by distance (i.e., an association between genetic and geographic distances) and isolation by environment (i.e., an association between genetic and environmental distances). -->
 <!-- ### Genetic distance -->
