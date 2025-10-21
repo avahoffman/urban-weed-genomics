@@ -3,6 +3,21 @@ library(adegenet)  # CRAN v2.1.10 # as.matrix
 library(cowplot)   # CRAN v1.1.3 # plot_grid
 library(tidyverse) # CRAN v2.0.0 
 
+
+spp_labels <- function() {
+  return(
+    c(
+      CD =  "_C. dactylon_<br>(Bermuda grass)",
+      DS = "_D. sanguinalis_<br>(crabgrass)",
+      EC = "_E. canadensis_<br>(horseweed)",
+      LS = "_L. serriola_<br>(prickly lettuce)",
+      PA = "_P. annua_<br>(bluegrass)",
+      TO = "_T. officinale_<br>(dandelion)"
+    )
+  )
+}
+
+
 # First goal is to get the genetic distance matrix -- by site within city
 # Need to correct the structure file to reflect this.
 correct_structure_files <- function(spp_){
@@ -137,23 +152,30 @@ do_MMRR <- function(spp_){
 
 
 make_mmrr_plot <- function(){
-  mmrr_ <- rbind(
-    do_MMRR("CD"),
-    do_MMRR("DS"),
-    do_MMRR("EC"),
-    do_MMRR("LS"),
-    do_MMRR("PA"),
-    do_MMRR("TO")
-  )
   
-  readr::write_csv(mmrr_, "output/MMRR/MMRR_total.csv")
+  if(!file.exists("output/MMRR/MMRR_total.csv")) {
+    mmrr_ <- rbind(
+      do_MMRR("CD"),
+      do_MMRR("DS"),
+      do_MMRR("EC"),
+      do_MMRR("LS"),
+      do_MMRR("PA"),
+      do_MMRR("TO")
+    )
+    readr::write_csv(mmrr_, "output/MMRR/MMRR_total.csv")
+  } else {
+    mmrr_ <- readr::read_csv("output/MMRR/MMRR_total.csv")
+  }
   
-  p_vals_overall_models <-
-    mmrr_ %>% filter(var %in% c("R-Squared:", "F-Statistic:", "F p-value:")) %>% 
-    dplyr::select(var, estimate, spp) %>% 
-    pivot_wider(names_from = var, values_from = estimate)
-  
-  readr::write_csv(p_vals_overall_models, "output/MMRR/MMRR_total_overall_models.csv")
+  if(!file.exists("output/MMRR/MMRR_total_overall_models.csv")) {
+    p_vals_overall_models <-
+      mmrr_ %>% filter(var %in% c("R-Squared:", "F-Statistic:", "F p-value:")) %>% 
+      dplyr::select(var, estimate, spp) %>% 
+      pivot_wider(names_from = var, values_from = estimate)
+    readr::write_csv(p_vals_overall_models, "output/MMRR/MMRR_total_overall_models.csv")
+  } else {
+    p_vals_overall_models <- readr::read_csv("output/MMRR/MMRR_total_overall_models.csv")
+  }
     
   mmrr_plot_ <- 
     mmrr_ %>% filter(var != "F-Statistic:" & var != "F p-value:" & var != "Intercept") %>% 
