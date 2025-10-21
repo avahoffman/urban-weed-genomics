@@ -7,7 +7,7 @@ library(readr) # read_rds
 library(magrittr) # %>%
 
 
-do_continental_stats <- function(spp_) {
+do_popdiff_stats <- function(spp_) {
   # Read in polyrad object and genind object
   gen_ <-
     readRDS(paste0("SNP_data/", spp_, "/", spp_, "_estimatedgeno_genind.rds"))
@@ -40,7 +40,7 @@ do_continental_stats <- function(spp_) {
   }
   
   genomes <-
-    data.frame(pop = popmap) %>% dplyr::count(pop) %>% dplyr::mutate(n = n * gen_$ploidy[1])
+    data.frame(pop = popmap) %>% dplyr::count(pop) %>% dplyr::mutate(n = n * gen_@ploidy[1])
   freq_df <- data.frame(Genomes = genomes$n, freq_by_pop)
   
   # Make sure things look ok
@@ -49,7 +49,7 @@ do_continental_stats <- function(spp_) {
   # Drop BO for EC -- only one sample from Boston
   freq_df <- freq_df[-2,]
   
-  # Calc stats (continental)
+  # Calc stats (popdiff)
   statistic_ <- c("JostD", "Gst", "Fst")
   my_JostD <-
     calcPopDiff(freq_df, metric = "Jost's D", global = TRUE)
@@ -64,17 +64,17 @@ do_continental_stats <- function(spp_) {
                      value = values_)
   
   write.csv(out_,
-            paste0("output/population_stats/", spp_, "_continental_stats.csv"))
+            paste0("output/population_stats/popdiff_stats_", spp_, ".csv"))
 }
 
 
-do_all_continental_stats <- function(){
-  do_continental_stats(spp_ = "CD")
-  do_continental_stats(spp_ = "DS")
-  do_continental_stats(spp_ = "EC")
-  do_continental_stats(spp_ = "LS")
-  do_continental_stats(spp_ = "PA")
-  do_continental_stats(spp_ = "TO")  
+do_all_popdiff_stats <- function(){
+  do_popdiff_stats(spp_ = "CD")
+  do_popdiff_stats(spp_ = "DS")
+  do_popdiff_stats(spp_ = "EC")
+  do_popdiff_stats(spp_ = "LS")
+  do_popdiff_stats(spp_ = "PA")
+  do_popdiff_stats(spp_ = "TO")  
 }
 
 
