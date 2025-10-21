@@ -1204,10 +1204,6 @@ knitr::kable(
 )
 ```
 
-
-
-
-
 # `SessionInfo()`
 
 ```{r}
