@@ -56,22 +56,31 @@
   - [13.3 Validation of Structure results with
     sNMF](#validation-of-structure-results-with-snmf)
 - [14 Genetic Differentiation](#genetic-differentiation)
-  - [14.1 Among city - Jost’s D, $G_{ST}$,
+  - [14.1 Sample size, sites per city per
+    species](#sample-size-sites-per-city-per-species)
+  - [14.2 Among city - Jost’s D, $G_{ST}$,
     $F_{ST}$](#among-city---josts-d-g_st-f_st)
-  - [14.2 Among city - pairwise $\rho$](#among-city---pairwise-rho)
-  - [14.3 Within city - allelic
+  - [14.3 Among city - pairwise $\rho$](#among-city---pairwise-rho)
+  - [14.4 Within city - allelic
     richness](#within-city---allelic-richness)
-  - [14.4 Within city - $F_{IS}$ (homozygosity within
+  - [14.5 Within city - $F_{IS}$ (homozygosity within
     population)](#within-city---f_is-homozygosity-within-population)
-  - [14.5 Within city - $\bar{r}_d$ - Linkage
+  - [14.6 Within city - $\bar{r}_d$ - Linkage
     disequilibrium](#within-city---barr_d---linkage-disequilibrium)
-  - [14.6 Within city - private alleles](#within-city---private-alleles)
-  - [14.7 AMOVA](#amova)
-- [15 `SessionInfo()`](#sessioninfo)
+  - [14.7 Within city - private alleles](#within-city---private-alleles)
+  - [14.8 AMOVA](#amova)
+- [15 Isolation by distance and
+  environment](#isolation-by-distance-and-environment)
+  - [15.1 Genetic distance](#genetic-distance)
+  - [15.2 Geographic distance](#geographic-distance)
+  - [15.3 Environmental data and
+    distance](#environmental-data-and-distance)
+  - [15.4 Analysis](#analysis)
+- [16 `SessionInfo()`](#sessioninfo)
 - [Appendix](#appendix-books)
-  - [15.1 File Organization](#file-organization-bookmark_tabs)
-  - [15.2 Aspera Transfer File Names](#aspera-transfer-file-names)
-  - [15.3 `clone_filter` File Names](#clone_filter-file-names)
+  - [16.1 File Organization](#file-organization-bookmark_tabs)
+  - [16.2 Aspera Transfer File Names](#aspera-transfer-file-names)
+  - [16.3 `clone_filter` File Names](#clone_filter-file-names)
 
 <!-- To nicely format this markdown doc, I recommend using
 Sublime Text editor. Highlight the text in question and select Edit >
@@ -1386,7 +1395,12 @@ create more sensitivity to admixture.</figcaption>
 
 # 14 Genetic Differentiation
 
-## 14.1 Among city - Jost’s D, $G_{ST}$, $F_{ST}$
+## 14.1 Sample size, sites per city per species
+
+Use `13-n.R` for sample size. Use `13-get_unique_site_post_genotyping.R`
+for sites per city per species.
+
+## 14.2 Among city - Jost’s D, $G_{ST}$, $F_{ST}$
 
 We used `polyrad::calcPopDiff()` to calculate continental population
 statistics for each species.
@@ -1409,7 +1423,7 @@ read.csv("output/population_stats/popdiff_stats_CD.csv")
     ## 2 2       Gst 0.02735719
     ## 3 3       Fst 0.02812163
 
-## 14.2 Among city - pairwise $\rho$
+## 14.3 Among city - pairwise $\rho$
 
 We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to
 calculate pairise $\rho$ (rho) among cities within species. Note that
@@ -1469,7 +1483,7 @@ compile_rho_table()
 
 Rho statistics for pairwise comparison between cities.
 
-## 14.3 Within city - allelic richness
+## 14.4 Within city - allelic richness
 
 We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to
 calculate several additional statistics.
@@ -1497,7 +1511,7 @@ head(read.csv("output/population_stats/genodive_genetic_diversity.csv"))
     ## 5  DS   BO 10.588   5.230 0.612 0.778 0.214
     ## 6  DS   MN 11.696   5.233 0.623 0.771 0.192
 
-## 14.4 Within city - $F_{IS}$ (homozygosity within population)
+## 14.5 Within city - $F_{IS}$ (homozygosity within population)
 
 We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to
 calculate $F_{IS}$. This gives a good estimate of whether there are more
@@ -1521,7 +1535,7 @@ head(read.csv("output/population_stats/genodive_output_Fis.csv"))
     ## 5      DS         BA 55 0.208
     ## 6      DS         BO 52 0.252
 
-## 14.5 Within city - $\bar{r}_d$ - Linkage disequilibrium
+## 14.6 Within city - $\bar{r}_d$ - Linkage disequilibrium
 
 We used `poppr::ia()` to calculate the standardized index of association
 of loci in the dataset ($\bar{r}_d$ or `rbarD`). We use the standardized
@@ -1568,7 +1582,7 @@ head(read.csv("output/population_stats/rbarD.csv"))
     ## 5  DS   BO 52 896.0906 0.001 0.3398873 0.001
     ## 6  DS   MN 81 578.2494 0.001 0.2192197 0.001
 
-## 14.6 Within city - private alleles
+## 14.7 Within city - private alleles
 
 We used a custom script to calculate % private alleles as the percentage
 of total alleles unique to a particular city.
@@ -1578,7 +1592,7 @@ source("R/13-private_alleles.R")
 get_all_private_alleles()
 ```
 
-## 14.7 AMOVA
+## 14.8 AMOVA
 
 We performed hierarchical analysis of molecular variance (AMOVA; using
 GenoDive 3.06) based on the Rho-statistics, which is based on a Ploidy
@@ -1626,101 +1640,425 @@ source("R/14-AMOVA.R")
 make_amova_plot()
 ```
 
-<!-- ## Isolation by distance and environment -->
-<!-- We used [multiple matrix regression with randomization (MMRR)](https://doi.org/10.1111/evo.12134) to determine the relative contributions of isolation by distance (i.e., an association between genetic and geographic distances) and isolation by environment (i.e., an association between genetic and environmental distances). -->
-<!-- ### Genetic distance -->
-<!-- We calculated the genetic dissimilarity matrix (among sites) using the [Cavalli-Sforza](https://doi.org/10.2307/2406616) (Chord) distance metric in GenoDive. While this can also be done using `adegenet`, we don't want to make assumptions about ploidy. We used the "*_estimatedgeno_sitesaspops.structure" files so that sites (not cities) were treated here as populations. -->
-<!-- ### Geographic distance -->
-<!-- We took the traditional approach to creating a geographic dissimilarity matrix (based on latitude and longitude) using euclidean distance. -->
-<!-- ### Environmental data and distance -->
-<!-- Environmental variables include the monthly averages in the middle of the day for: -->
-<!-- - air temperature at 5cm above ground -->
-<!-- - air temperature at 1.2m above ground -->
-<!-- - soil temperature at 2.5cm below ground -->
-<!-- - RH (relative humidity) at 5cm above ground -->
-<!-- - RH at 1.2m above ground -->
-<!-- Variables were extracted from historic datasets and modeled using a microclimate model. More information can be found on the [NicheMapR website](https://mrke.github.io/) (how the model works, what variables can be manipulated and what you can model, vignettes for running models in R). -->
-<!-- This method was chosen because it takes data from global datasets (you can use both historic and current or pick specific years) but then accounts for site-specific variables (we can change the % shade, the slope or aspect of the landscape, and it considers elevation, average cloud cover, etc.). [Here’s the list](https://mrke.github.io/models/MicroClimate-Models) of all the different models/datasets we’re able to can pull from. It's meant for mechanistic niche modeling. -->
-<!-- Variables in the file `site_data_DUC_environvars.csv` are all for the monthly averages at noon (12pm - hottest part of the day!) and are extreme. In other words, they are maximums. -->
-<!-- Note that [this Stack Overflow post](https://stackoverflow.com/questions/69639782/installing-gfortran-on-macbook-with-apple-m1-chip-for-use-in-r) is helpful with installing `NicheMapR`. -->
-<!-- ```{r} -->
-<!-- # devtools::install_github('mrke/NicheMapR') -->
-<!-- # library(NicheMapR) -->
-<!-- # -->
-<!-- # test_site_coords <- c(sites[1,]$lat, sites[1,]$long) -->
-<!-- # test_distance_to_city_center_km <- sites[1,]$distance_to_city_center_km -->
-<!-- # micros_ <- micro_usa(loc = test_site_coords) -->
-<!-- # -->
-<!-- # loc <- c(-89.40, 43.07) -->
-<!-- # micro <- micro_global(loc = loc) -->
-<!-- ``` -->
-<!-- Environmental distance was generated the same way as geographic distance above (euclidean distance). These are the four environmental variables mentioned in the main manuscript, although more environmental variables are present in the raw data: % Urban cover, Distance to city center, April soil temperature, and July soil temperature. In the raw data these appear as `nlcd_urban_pct`, `distance_to_city_center`, `soiltemp_2.5cm_Apr_12pm`, `soiltemp_2.5cm_Jul_12pm`. -->
-<!-- ### Analysis -->
-<!-- Note that for this analysis, we treated each *sampling site* as a distinct location. There would not be enough power to do a distance matrix among 3-5 cities. Code for generating matrices, running the MMRR, and generating figures can be found in the source code below. -->
-<!-- ```{r mmrr_1, message=FALSE} -->
-<!-- source("R/IBD_IBE_MMRR.R") -->
-<!-- ``` -->
-<!-- ```{r mmrr_2, eval = FALSE, message=FALSE} -->
-<!-- make_mmrr_plot() -->
-<!-- ``` -->
-<!-- Below are the results of the MMRR, with all cities in the same model. Species are treated as independent, separate models. -->
-<!-- ```{r mmrr_3a, echo = FALSE, message=FALSE} -->
-<!-- table_ <- readr::read_csv("output/MMRR/MMRR_total_overall_models.csv") %>% -->
-<!--   mutate(p = kableExtra::cell_spec( -->
-<!--     `F p-value:`, -->
-<!--     bold = ifelse(as.numeric(`F p-value:`) < 0.05, TRUE, FALSE), -->
-<!--     underline = ifelse(as.numeric(`F p-value:`) < 0.05, TRUE, FALSE) -->
-<!--   )) -->
-<!-- knitr::kable( -->
-<!--   table_, -->
-<!--   format = "simple", -->
-<!--   caption = "Overall model p-values from MMRR." -->
-<!-- ) -->
-<!-- ``` -->
-<!-- ```{r mmrr_3b, echo = FALSE, message=FALSE} -->
-<!-- table_ <- -->
-<!--   readr::read_csv("output/MMRR/MMRR_total.csv") %>% -->
-<!--   mutate(p = kableExtra::cell_spec( -->
-<!--     p, -->
-<!--     bold = ifelse(as.numeric(p) < 0.05, TRUE, FALSE), -->
-<!--     underline = ifelse(as.numeric(p) < 0.05, TRUE, FALSE) -->
-<!--   )) -->
-<!-- knitr::kable( -->
-<!--   table_, -->
-<!--   format = "simple", -->
-<!--   caption = "Full parameter estimates and statistics by species from running 9999 permutations ('Reps') via MMRR." -->
-<!-- ) -->
-<!-- ``` -->
-<!-- We also repeated this within city. -->
-<!-- ```{r mmrr_4a, echo = FALSE, message=FALSE} -->
-<!-- table_ <- readr::read_csv("output/MMRR/MMRR_splitbycity_overall_models.csv") %>% -->
-<!--   mutate(`p adjusted` = kableExtra::cell_spec(`p adjusted`, -->
-<!--   bold = ifelse(as.numeric(`p adjusted`) < 0.05, TRUE, FALSE), -->
-<!--   underline = ifelse(as.numeric(`p adjusted`) < 0.05, TRUE, FALSE) -->
-<!-- )) -->
-<!-- knitr::kable( -->
-<!--   table_, -->
-<!--   format = "simple", -->
-<!--   caption = "Overall model p-values from MMRR, subset by each city. Adjusted p-values are corrected using the Benjamini and Hochberg method within each species' results." -->
-<!-- ) -->
-<!-- ``` -->
-<!-- ```{r mmrr_4b, echo = FALSE, message=FALSE} -->
-<!-- table_ <- readr::read_csv("output/MMRR/MMRR_splitbycity.csv") %>% -->
-<!--   mutate(p = kableExtra::cell_spec( -->
-<!--     p, -->
-<!--     bold = ifelse(as.numeric(p) < 0.05, TRUE, FALSE), -->
-<!--     underline = ifelse(as.numeric(p) < 0.05, TRUE, FALSE) -->
-<!--   )) -->
-<!-- knitr::kable( -->
-<!--   table_, -->
-<!--   format = "simple", -->
-<!--   caption = "Parameter estimates and statistics from running 9999 permutations ('Reps') via MMRR, subset by each city. Note that p-values are not adjusted for multiple testing." -->
-<!-- ) -->
-<!-- ``` -->
-<!-- ## Sites per city per species -->
-<!-- Use `get_unique_site_post_genotyping.R`. -->
+# 15 Isolation by distance and environment
 
-# 15 `SessionInfo()`
+We used [multiple matrix regression with randomization
+(MMRR)](https://doi.org/10.1111/evo.12134) to determine the relative
+contributions of isolation by distance (i.e., an association between
+genetic and geographic distances) and isolation by environment (i.e., an
+association between genetic and environmental distances).
+
+## 15.1 Genetic distance
+
+We calculated the genetic dissimilarity matrix (among sites) using the
+[Cavalli-Sforza](https://doi.org/10.2307/2406616) (Chord) distance
+metric in GenoDive. While this can also be done using `adegenet`, we
+don’t want to make assumptions about ploidy. We used the
+“\*\_estimatedgeno_sitesaspops.structure” files so that sites (not
+cities) were treated here as populations.
+
+## 15.2 Geographic distance
+
+We took the traditional approach to creating a geographic dissimilarity
+matrix (based on latitude and longitude) using euclidean distance.
+
+## 15.3 Environmental data and distance
+
+Environmental variables include the monthly averages in the middle of
+the day for:
+
+- air temperature at 5cm above ground
+- air temperature at 1.2m above ground
+- soil temperature at 2.5cm below ground
+- RH (relative humidity) at 5cm above ground
+- RH at 1.2m above ground
+
+Variables were extracted from historic datasets and modeled using a
+microclimate model. More information can be found on the [NicheMapR
+website](https://mrke.github.io/) (how the model works, what variables
+can be manipulated and what you can model, vignettes for running models
+in R).
+
+This method was chosen because it takes data from global datasets (you
+can use both historic and current or pick specific years) but then
+accounts for site-specific variables (we can change the % shade, the
+slope or aspect of the landscape, and it considers elevation, average
+cloud cover, etc.). [Here’s the
+list](https://mrke.github.io/models/MicroClimate-Models) of all the
+different models/datasets we’re able to can pull from. It’s meant for
+mechanistic niche modeling.
+
+Variables in the file `site_data_DUC_environvars.csv` are all for the
+monthly averages at noon (12pm - hottest part of the day!) and are
+extreme. In other words, they are maximums.
+
+Note that [this Stack Overflow
+post](https://stackoverflow.com/questions/69639782/installing-gfortran-on-macbook-with-apple-m1-chip-for-use-in-r)
+is helpful with installing `NicheMapR`.
+
+``` r
+# devtools::install_github('mrke/NicheMapR') library(NicheMapR)
+# test_site_coords <- c(sites[1,]$lat, sites[1,]$long)
+# test_distance_to_city_center_km <-
+# sites[1,]$distance_to_city_center_km micros_ <- micro_usa(loc =
+# test_site_coords) loc <- c(-89.40, 43.07) micro <- micro_global(loc =
+# loc)
+```
+
+Environmental distance was generated the same way as geographic distance
+above (euclidean distance). These are the four environmental variables
+mentioned in the main manuscript, although more environmental variables
+are present in the raw data: % Urban cover, Distance to city center,
+April soil temperature, and July soil temperature. In the raw data these
+appear as `nlcd_urban_pct`, `distance_to_city_center`,
+`soiltemp_2.5cm_Apr_12pm`, `soiltemp_2.5cm_Jul_12pm`.
+
+## 15.4 Analysis
+
+Note that for this analysis, we treated each *sampling site* as a
+distinct location. There would not be enough power to do a distance
+matrix among 3-5 cities. Code for generating matrices, running the MMRR,
+and generating figures can be found in the source code below.
+
+``` r
+source("R/15-IBD_IBE_MMRR.R")
+```
+
+``` r
+make_mmrr_plot()
+```
+
+Below are the results of the MMRR, with all cities in the same model.
+Species are treated as independent, separate models.
+
+| spp | R-Squared: | F-Statistic: | F p-value: | p |
+|:---|---:|---:|---:|:---|
+| CD | 0.0295554 | 7.126583 | 0.1852 | <span style="     ">0.1852</span> |
+| DS | 0.0442241 | 21.515710 | 0.0817 | <span style="     ">0.0817</span> |
+| EC | 0.2707911 | 40.996947 | 0.0001 | <span style=" font-weight: bold;   text-decoration: underline; ">1e-04</span> |
+| LS | 0.0465956 | 19.109304 | 0.0513 | <span style="     ">0.0513</span> |
+| PA | 0.0051090 | 1.200614 | 0.8889 | <span style="     ">0.8889</span> |
+| TO | 0.0283096 | 16.449250 | 0.2327 | <span style="     ">0.2327</span> |
+
+Overall model p-values from MMRR.
+
+| var | estimate | p | 95% Lower | 95% Upper | spp |
+|:---|---:|:---|---:|---:|:---|
+| distance_to_city_center | 0.1200000 | <span style="     ">0.1375</span> | 0.0694968 | 0.1664468 | CD |
+| geodist | -0.0200000 | <span style="     ">0.9155</span> | -0.2050334 | 0.1583669 | CD |
+| Intercept | 0.0000000 | <span style="     ">0.9433</span> | -0.0473892 | 0.0473892 | CD |
+| nlcd_urban_pct | -0.1100000 | <span style="     ">0.0614</span> | -0.1590538 | -0.0639585 | CD |
+| soiltemp_Apr | -0.1300000 | <span style="     ">0.7102</span> | -0.4542546 | 0.1920574 | CD |
+| soiltemp_Jul | 0.1500000 | <span style="     ">0.4652</span> | -0.0440647 | 0.3406560 | CD |
+| R-Squared: | 0.0295554 | <span style=" NA   NA ">NA</span> | NA | NA | CD |
+| F-Statistic: | 7.1265831 | <span style=" NA   NA ">NA</span> | NA | NA | CD |
+| F p-value: | 0.1852000 | <span style=" NA   NA ">NA</span> | NA | NA | CD |
+| distance_to_city_center | -0.0200000 | <span style="     ">0.7678</span> | -0.0534529 | 0.0157892 | DS |
+| geodist | 0.0400000 | <span style="     ">0.1746</span> | -0.0126394 | 0.0981550 | DS |
+| Intercept | 0.0000000 | <span style="     ">0.2102</span> | -0.0340591 | 0.0326544 | DS |
+| nlcd_urban_pct | -0.0400000 | <span style="     ">0.4238</span> | -0.0739547 | -0.0072012 | DS |
+| soiltemp_Apr | 0.1600000 | <span style="     ">0.614</span> | -0.0547196 | 0.3687584 | DS |
+| soiltemp_Jul | -0.3900000 | <span style="     ">0.2492</span> | -0.6148273 | -0.1702235 | DS |
+| R-Squared: | 0.0442241 | <span style=" NA   NA ">NA</span> | NA | NA | DS |
+| F-Statistic: | 21.5157101 | <span style=" NA   NA ">NA</span> | NA | NA | DS |
+| F p-value: | 0.0817000 | <span style=" NA   NA ">NA</span> | NA | NA | DS |
+| distance_to_city_center | -0.0100000 | <span style="     ">0.8312</span> | -0.0774980 | 0.0490001 | EC |
+| geodist | -0.2500000 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0051</span> | -0.3654204 | -0.1282000 | EC |
+| Intercept | 0.0000000 | <span style=" font-weight: bold;   text-decoration: underline; ">7e-04</span> | -0.0578968 | 0.0617663 | EC |
+| nlcd_urban_pct | 0.0400000 | <span style="     ">0.5146</span> | -0.0242274 | 0.1006413 | EC |
+| soiltemp_Apr | 0.1000000 | <span style="     ">0.3515</span> | -0.1124231 | 0.3032273 | EC |
+| soiltemp_Jul | 0.5600000 | <span style=" font-weight: bold;   text-decoration: underline; ">2e-04</span> | 0.4082284 | 0.7097679 | EC |
+| R-Squared: | 0.2707911 | <span style=" NA   NA ">NA</span> | NA | NA | EC |
+| F-Statistic: | 40.9969475 | <span style=" NA   NA ">NA</span> | NA | NA | EC |
+| F p-value: | 0.0001000 | <span style=" NA   NA ">NA</span> | NA | NA | EC |
+| distance_to_city_center | -0.1400000 | <span style="     ">0.1218</span> | -0.1757714 | -0.0999720 | LS |
+| geodist | -0.2000000 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0014</span> | -0.2598413 | -0.1496999 | LS |
+| Intercept | 0.0000000 | <span style="     ">0.0561</span> | -0.0389433 | 0.0337495 | LS |
+| nlcd_urban_pct | -0.0100000 | <span style="     ">0.8394</span> | -0.0467749 | 0.0276001 | LS |
+| soiltemp_Apr | 0.0800000 | <span style="     ">0.4509</span> | -0.0127788 | 0.1821182 | LS |
+| soiltemp_Jul | 0.0500000 | <span style="     ">0.6937</span> | -0.0276419 | 0.1341635 | LS |
+| R-Squared: | 0.0465956 | <span style=" NA   NA ">NA</span> | NA | NA | LS |
+| F-Statistic: | 19.1093037 | <span style=" NA   NA ">NA</span> | NA | NA | LS |
+| F p-value: | 0.0513000 | <span style=" NA   NA ">NA</span> | NA | NA | LS |
+| distance_to_city_center | 0.0500000 | <span style="     ">0.5062</span> | -0.0008095 | 0.0955394 | PA |
+| geodist | 0.0200000 | <span style="     ">0.8645</span> | -0.1193973 | 0.1664705 | PA |
+| Intercept | 0.0000000 | <span style="     ">0.9891</span> | -0.0480046 | 0.0480012 | PA |
+| nlcd_urban_pct | 0.0400000 | <span style="     ">0.3853</span> | -0.0061648 | 0.0899176 | PA |
+| soiltemp_Apr | -0.0700000 | <span style="     ">0.7756</span> | -0.3417075 | 0.2071037 | PA |
+| soiltemp_Jul | 0.0800000 | <span style="     ">0.7054</span> | -0.1025172 | 0.2564145 | PA |
+| R-Squared: | 0.0051090 | <span style=" NA   NA ">NA</span> | NA | NA | PA |
+| F-Statistic: | 1.2006139 | <span style=" NA   NA ">NA</span> | NA | NA | PA |
+| F p-value: | 0.8889000 | <span style=" NA   NA ">NA</span> | NA | NA | PA |
+| distance_to_city_center | 0.0100000 | <span style="     ">0.856</span> | -0.0165192 | 0.0450751 | TO |
+| geodist | -0.1100000 | <span style=" font-weight: bold;   text-decoration: underline; ">0.044</span> | -0.1579717 | -0.0673055 | TO |
+| Intercept | 0.0000000 | <span style="     ">0.6465</span> | -0.0308818 | 0.0301618 | TO |
+| nlcd_urban_pct | 0.0100000 | <span style="     ">0.7993</span> | -0.0163475 | 0.0452622 | TO |
+| soiltemp_Apr | 0.2700000 | <span style="     ">0.1202</span> | 0.1743641 | 0.3667842 | TO |
+| soiltemp_Jul | -0.3200000 | <span style="     ">0.1184</span> | -0.4043787 | -0.2342648 | TO |
+| R-Squared: | 0.0283096 | <span style=" NA   NA ">NA</span> | NA | NA | TO |
+| F-Statistic: | 16.4492496 | <span style=" NA   NA ">NA</span> | NA | NA | TO |
+| F p-value: | 0.2327000 | <span style=" NA   NA ">NA</span> | NA | NA | TO |
+
+Full parameter estimates and statistics by species from running 9999
+permutations (‘Reps’) via MMRR.
+
+We also repeated this within city.
+
+| spp | city | R-Squared: | F-Statistic: | F p-value: | p adjusted |
+|:---|:---|---:|---:|---:|:---|
+| CD | BA | 0.2161593 | 5.4602354 | 0.1124 | <span style="     ">0.1686</span> |
+| CD | LA | 0.1221912 | 1.6704036 | 0.5615 | <span style="     ">0.5615</span> |
+| CD | PX | 0.2671775 | 16.4064136 | 0.0141 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0423</span> |
+| DS | BA | 0.0730573 | 2.0491996 | 0.6366 | <span style="     ">0.9613</span> |
+| DS | BO | 0.0428518 | 1.1550721 | 0.7293 | <span style="     ">0.9613</span> |
+| DS | MN | 0.0239167 | 1.2104360 | 0.8725 | <span style="     ">0.9613</span> |
+| DS | PX | 0.0301349 | 0.3355696 | 0.9613 | <span style="     ">0.9613</span> |
+| EC | BA | 0.0801989 | 1.2555586 | 0.5154 | <span style="     ">0.5154</span> |
+| EC | LA | 0.1542581 | 1.4226717 | 0.4961 | <span style="     ">0.5154</span> |
+| EC | PX | 0.1802413 | 2.1107626 | 0.3254 | <span style="     ">0.5154</span> |
+| LS | BA | 0.6200687 | 6.8546312 | 0.1892 | <span style="     ">0.473</span> |
+| LS | BO | 0.0447270 | 0.7397752 | 0.8838 | <span style="     ">0.8838</span> |
+| LS | LA | 0.1902178 | 6.9060584 | 0.1242 | <span style="     ">0.473</span> |
+| LS | MN | 0.1245043 | 1.5358687 | 0.4772 | <span style="     ">0.7953</span> |
+| LS | PX | 0.0551478 | 0.7003986 | 0.8244 | <span style="     ">0.8838</span> |
+| PA | BA | 0.1429473 | 2.0014720 | 0.2072 | <span style="     ">0.4144</span> |
+| PA | BO | 0.0405967 | 1.1001781 | 0.7435 | <span style="     ">0.8569</span> |
+| PA | LA | 0.0752459 | 0.6346749 | 0.8569 | <span style="     ">0.8569</span> |
+| PA | PX | 0.5738665 | 8.0800948 | 0.0427 | <span style="     ">0.1708</span> |
+| TO | BA | 0.0340749 | 1.0371416 | 0.8999 | <span style="     ">0.8999</span> |
+| TO | BO | 0.0833431 | 2.3639386 | 0.4830 | <span style="     ">0.7145</span> |
+| TO | LA | 0.8796290 | 83.3072026 | 0.0003 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0015</span> |
+| TO | MN | 0.0887157 | 3.9719783 | 0.3268 | <span style="     ">0.7145</span> |
+| TO | PX | 0.2290994 | 1.1292997 | 0.5716 | <span style="     ">0.7145</span> |
+
+Overall model p-values from MMRR, subset by each city. Adjusted p-values
+are corrected using the Benjamini and Hochberg method within each
+species’ results.
+
+| var | estimate | p | 95% Lower | 95% Upper | spp | city |
+|:---|---:|:---|---:|---:|:---|:---|
+| distance_to_city_center | -0.1000000 | <span style="     ">0.4185</span> | -0.2684666 | 0.0632947 | CD | BA |
+| geodist | 0.1800000 | <span style="     ">0.2432</span> | 0.0183554 | 0.3382114 | CD | BA |
+| Intercept | 0.0000000 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0051</span> | -0.1470377 | 0.1470377 | CD | BA |
+| nlcd_urban_pct | -0.4200000 | <span style=" font-weight: bold;   text-decoration: underline; ">0.001</span> | -0.5689671 | -0.2638461 | CD | BA |
+| soiltemp_Apr | 0.0200000 | <span style="     ">0.9443</span> | -0.2536769 | 0.2879531 | CD | BA |
+| soiltemp_Jul | 0.1300000 | <span style="     ">0.5869</span> | -0.1372739 | 0.4066275 | CD | BA |
+| R-Squared: | 0.2161593 | <span style=" NA   NA ">NA</span> | NA | NA | CD | BA |
+| F-Statistic: | 5.4602354 | <span style=" NA   NA ">NA</span> | NA | NA | CD | BA |
+| F p-value: | 0.1124000 | <span style=" NA   NA ">NA</span> | NA | NA | CD | BA |
+| distance_to_city_center | 0.2900000 | <span style="     ">0.1362</span> | 0.0584736 | 0.5275481 | CD | LA |
+| geodist | -0.3300000 | <span style="     ">0.2694</span> | -0.6122966 | -0.0485802 | CD | LA |
+| Intercept | 0.0000000 | <span style="     ">0.3495</span> | -0.2005369 | 0.2005369 | CD | LA |
+| nlcd_urban_pct | -0.0300000 | <span style="     ">0.8776</span> | -0.2309849 | 0.1796022 | CD | LA |
+| soiltemp_Apr | -0.0700000 | <span style="     ">0.7776</span> | -0.3389143 | 0.2056573 | CD | LA |
+| soiltemp_Jul | 0.1000000 | <span style="     ">0.6473</span> | -0.1130946 | 0.3099422 | CD | LA |
+| R-Squared: | 0.1221912 | <span style=" NA   NA ">NA</span> | NA | NA | CD | LA |
+| F-Statistic: | 1.6704036 | <span style=" NA   NA ">NA</span> | NA | NA | CD | LA |
+| F p-value: | 0.5615000 | <span style=" NA   NA ">NA</span> | NA | NA | CD | LA |
+| distance_to_city_center | 0.5400000 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0112</span> | 0.4048935 | 0.6809183 | CD | PX |
+| geodist | 0.2400000 | <span style="     ">0.1288</span> | 0.1176737 | 0.3580622 | CD | PX |
+| Intercept | 0.0000000 | <span style="     ">0.8859</span> | -0.0940557 | 0.0940557 | CD | PX |
+| nlcd_urban_pct | -0.0200000 | <span style="     ">0.8422</span> | -0.1204062 | 0.0794245 | CD | PX |
+| soiltemp_Apr | -0.3400000 | <span style="     ">0.1006</span> | -0.5503081 | -0.1239513 | CD | PX |
+| soiltemp_Jul | -0.0700000 | <span style="     ">0.6137</span> | -0.2703666 | 0.1311920 | CD | PX |
+| R-Squared: | 0.2671775 | <span style=" NA   NA ">NA</span> | NA | NA | CD | PX |
+| F-Statistic: | 16.4064136 | <span style=" NA   NA ">NA</span> | NA | NA | CD | PX |
+| F p-value: | 0.0141000 | <span style=" NA   NA ">NA</span> | NA | NA | CD | PX |
+| distance_to_city_center | -0.0800000 | <span style="     ">0.6566</span> | -0.2519155 | 0.0908257 | DS | BA |
+| geodist | 0.2100000 | <span style="     ">0.1108</span> | 0.0335974 | 0.3810348 | DS | BA |
+| Intercept | 0.0000000 | <span style="     ">0.761</span> | -0.1393752 | 0.1393752 | DS | BA |
+| nlcd_urban_pct | -0.1500000 | <span style="     ">0.2505</span> | -0.2857403 | -0.0045114 | DS | BA |
+| soiltemp_Apr | -0.2200000 | <span style="     ">0.4722</span> | -0.4847959 | 0.0528128 | DS | BA |
+| soiltemp_Jul | 0.2900000 | <span style="     ">0.3347</span> | 0.0227011 | 0.5523010 | DS | BA |
+| R-Squared: | 0.0730573 | <span style=" NA   NA ">NA</span> | NA | NA | DS | BA |
+| F-Statistic: | 2.0491996 | <span style=" NA   NA ">NA</span> | NA | NA | DS | BA |
+| F p-value: | 0.6366000 | <span style=" NA   NA ">NA</span> | NA | NA | DS | BA |
+| distance_to_city_center | 0.4700000 | <span style="     ">0.1593</span> | 0.1137323 | 0.8172063 | DS | BO |
+| geodist | -0.4500000 | <span style="     ">0.0645</span> | -0.7938183 | -0.0989208 | DS | BO |
+| Intercept | 0.0000000 | <span style="     ">0.8498</span> | -0.1425615 | 0.1418102 | DS | BO |
+| nlcd_urban_pct | 0.0500000 | <span style="     ">0.7466</span> | -0.1048400 | 0.1967690 | DS | BO |
+| soiltemp_Apr | -0.1200000 | <span style="     ">0.6561</span> | -0.3734660 | 0.1401180 | DS | BO |
+| soiltemp_Jul | 0.1400000 | <span style="     ">0.5493</span> | -0.1201335 | 0.3927905 | DS | BO |
+| R-Squared: | 0.0428518 | <span style=" NA   NA ">NA</span> | NA | NA | DS | BO |
+| F-Statistic: | 1.1550721 | <span style=" NA   NA ">NA</span> | NA | NA | DS | BO |
+| F p-value: | 0.7293000 | <span style=" NA   NA ">NA</span> | NA | NA | DS | BO |
+| distance_to_city_center | -0.0400000 | <span style="     ">0.7746</span> | -0.1840544 | 0.1117149 | DS | MN |
+| geodist | -0.0400000 | <span style="     ">0.7876</span> | -0.1818746 | 0.1105641 | DS | MN |
+| Intercept | 0.0000000 | <span style="     ">0.4679</span> | -0.1035844 | 0.1035844 | DS | MN |
+| nlcd_urban_pct | 0.0400000 | <span style="     ">0.699</span> | -0.0727871 | 0.1502068 | DS | MN |
+| soiltemp_Apr | -0.1800000 | <span style="     ">0.4033</span> | -0.3555524 | -0.0143666 | DS | MN |
+| soiltemp_Jul | 0.0600000 | <span style="     ">0.7516</span> | -0.1097516 | 0.2385213 | DS | MN |
+| R-Squared: | 0.0239167 | <span style=" NA   NA ">NA</span> | NA | NA | DS | MN |
+| F-Statistic: | 1.2104360 | <span style=" NA   NA ">NA</span> | NA | NA | DS | MN |
+| F p-value: | 0.8725000 | <span style=" NA   NA ">NA</span> | NA | NA | DS | MN |
+| distance_to_city_center | -0.0300000 | <span style="     ">0.9108</span> | -0.3758396 | 0.3139799 | DS | PX |
+| geodist | -0.0800000 | <span style="     ">0.7542</span> | -0.3420557 | 0.1911879 | DS | PX |
+| Intercept | 0.0100000 | <span style="     ">0.6325</span> | -0.2137801 | 0.2332494 | DS | PX |
+| nlcd_urban_pct | 0.0800000 | <span style="     ">0.6269</span> | -0.1509445 | 0.3132693 | DS | PX |
+| soiltemp_Apr | -0.0800000 | <span style="     ">0.8003</span> | -0.4400966 | 0.2847726 | DS | PX |
+| soiltemp_Jul | -0.0600000 | <span style="     ">0.7774</span> | -0.3749012 | 0.2644566 | DS | PX |
+| R-Squared: | 0.0301349 | <span style=" NA   NA ">NA</span> | NA | NA | DS | PX |
+| F-Statistic: | 0.3355696 | <span style=" NA   NA ">NA</span> | NA | NA | DS | PX |
+| F p-value: | 0.9613000 | <span style=" NA   NA ">NA</span> | NA | NA | DS | PX |
+| distance_to_city_center | 0.1000000 | <span style="     ">0.5104</span> | -0.1352494 | 0.3274849 | EC | BA |
+| geodist | 0.1700000 | <span style="     ">0.2716</span> | -0.0622310 | 0.3983733 | EC | BA |
+| Intercept | 0.0000000 | <span style="     ">0.6783</span> | -0.1871244 | 0.1871244 | EC | BA |
+| nlcd_urban_pct | 0.1200000 | <span style="     ">0.3852</span> | -0.0792998 | 0.3107074 | EC | BA |
+| soiltemp_Apr | 0.0500000 | <span style="     ">0.8657</span> | -0.2985420 | 0.3896308 | EC | BA |
+| soiltemp_Jul | 0.0600000 | <span style="     ">0.8204</span> | -0.2871230 | 0.3984088 | EC | BA |
+| R-Squared: | 0.0801989 | <span style=" NA   NA ">NA</span> | NA | NA | EC | BA |
+| F-Statistic: | 1.2555586 | <span style=" NA   NA ">NA</span> | NA | NA | EC | BA |
+| F p-value: | 0.5154000 | <span style=" NA   NA ">NA</span> | NA | NA | EC | BA |
+| distance_to_city_center | -0.9800000 | <span style="     ">0.0737</span> | -1.6450191 | -0.3099034 | EC | LA |
+| geodist | 0.2400000 | <span style="     ">0.2494</span> | -0.0685768 | 0.5511398 | EC | LA |
+| Intercept | 0.0000000 | <span style="     ">0.3457</span> | -0.2453434 | 0.2453434 | EC | LA |
+| nlcd_urban_pct | 0.5500000 | <span style="     ">0.1414</span> | 0.0320693 | 1.0648316 | EC | LA |
+| soiltemp_Apr | -0.0200000 | <span style="     ">0.9446</span> | -0.2807172 | 0.2483734 | EC | LA |
+| soiltemp_Jul | 0.4200000 | <span style="     ">0.232</span> | 0.0302705 | 0.8043884 | EC | LA |
+| R-Squared: | 0.1542581 | <span style=" NA   NA ">NA</span> | NA | NA | EC | LA |
+| F-Statistic: | 1.4226717 | <span style=" NA   NA ">NA</span> | NA | NA | EC | LA |
+| F p-value: | 0.4961000 | <span style=" NA   NA ">NA</span> | NA | NA | EC | LA |
+| distance_to_city_center | 0.0100000 | <span style="     ">0.9703</span> | -0.2834277 | 0.3034585 | EC | PX |
+| geodist | -0.3900000 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0395</span> | -0.6389291 | -0.1363801 | EC | PX |
+| Intercept | 0.0100000 | <span style="     ">0.3856</span> | -0.2107459 | 0.2237152 | EC | PX |
+| nlcd_urban_pct | 0.0000000 | <span style="     ">0.9772</span> | -0.2250492 | 0.2151403 | EC | PX |
+| soiltemp_Apr | -0.0100000 | <span style="     ">0.9779</span> | -0.4668132 | 0.4495769 | EC | PX |
+| soiltemp_Jul | -0.0900000 | <span style="     ">0.7174</span> | -0.5232281 | 0.3458628 | EC | PX |
+| R-Squared: | 0.1802413 | <span style=" NA   NA ">NA</span> | NA | NA | EC | PX |
+| F-Statistic: | 2.1107626 | <span style=" NA   NA ">NA</span> | NA | NA | EC | PX |
+| F p-value: | 0.3254000 | <span style=" NA   NA ">NA</span> | NA | NA | EC | PX |
+| distance_to_city_center | 1.1900000 | <span style="     ">0.106</span> | 0.7662079 | 1.6094443 | LS | BA |
+| geodist | -1.0400000 | <span style="     ">0.1159</span> | -1.4829287 | -0.6016138 | LS | BA |
+| Intercept | -0.0300000 | <span style="     ">0.1484</span> | -0.2622639 | 0.1947604 | LS | BA |
+| nlcd_urban_pct | 0.2700000 | <span style="     ">0.2101</span> | 0.0266277 | 0.5221911 | LS | BA |
+| soiltemp_Apr | 0.6400000 | <span style="     ">0.1682</span> | 0.2034475 | 1.0693071 | LS | BA |
+| soiltemp_Jul | -0.5100000 | <span style="     ">0.1641</span> | -0.9457492 | -0.0759057 | LS | BA |
+| R-Squared: | 0.6200687 | <span style=" NA   NA ">NA</span> | NA | NA | LS | BA |
+| F-Statistic: | 6.8546312 | <span style=" NA   NA ">NA</span> | NA | NA | LS | BA |
+| F p-value: | 0.1892000 | <span style=" NA   NA ">NA</span> | NA | NA | LS | BA |
+| distance_to_city_center | -0.2600000 | <span style="     ">0.5926</span> | -0.7986157 | 0.2851344 | LS | BO |
+| geodist | 0.3500000 | <span style="     ">0.3781</span> | -0.1877151 | 0.8820930 | LS | BO |
+| Intercept | 0.0000000 | <span style="     ">0.7776</span> | -0.1855937 | 0.1791482 | LS | BO |
+| nlcd_urban_pct | -0.0500000 | <span style="     ">0.7507</span> | -0.2336700 | 0.1374681 | LS | BO |
+| soiltemp_Apr | 0.3100000 | <span style="     ">0.3858</span> | -0.0610043 | 0.6888627 | LS | BO |
+| soiltemp_Jul | -0.3500000 | <span style="     ">0.3456</span> | -0.7122678 | 0.0129835 | LS | BO |
+| R-Squared: | 0.0447270 | <span style=" NA   NA ">NA</span> | NA | NA | LS | BO |
+| F-Statistic: | 0.7397752 | <span style=" NA   NA ">NA</span> | NA | NA | LS | BO |
+| F p-value: | 0.8838000 | <span style=" NA   NA ">NA</span> | NA | NA | LS | BO |
+| distance_to_city_center | 0.0000000 | <span style="     ">0.9992</span> | -0.2315808 | 0.2320620 | LS | LA |
+| geodist | -0.3500000 | <span style="     ">0.1233</span> | -0.5764863 | -0.1159599 | LS | LA |
+| Intercept | 0.0000000 | <span style="     ">0.0865</span> | -0.1224544 | 0.1224544 | LS | LA |
+| nlcd_urban_pct | -0.0900000 | <span style="     ">0.3924</span> | -0.2277126 | 0.0497195 | LS | LA |
+| soiltemp_Apr | 0.1300000 | <span style="     ">0.2848</span> | -0.0039581 | 0.2738997 | LS | LA |
+| soiltemp_Jul | 0.3300000 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0401</span> | 0.2024289 | 0.4634342 | LS | LA |
+| R-Squared: | 0.1902178 | <span style=" NA   NA ">NA</span> | NA | NA | LS | LA |
+| F-Statistic: | 6.9060584 | <span style=" NA   NA ">NA</span> | NA | NA | LS | LA |
+| F p-value: | 0.1242000 | <span style=" NA   NA ">NA</span> | NA | NA | LS | LA |
+| distance_to_city_center | -0.2200000 | <span style="     ">0.2576</span> | -0.4522034 | 0.0138133 | LS | MN |
+| geodist | 0.2200000 | <span style="     ">0.2056</span> | -0.0135483 | 0.4484999 | LS | MN |
+| Intercept | 0.0000000 | <span style="     ">0.7834</span> | -0.2081530 | 0.2173090 | LS | MN |
+| nlcd_urban_pct | 0.2000000 | <span style="     ">0.2129</span> | -0.0369112 | 0.4346262 | LS | MN |
+| soiltemp_Apr | -0.0700000 | <span style="     ">0.828</span> | -0.4214409 | 0.2856407 | LS | MN |
+| soiltemp_Jul | 0.0500000 | <span style="     ">0.8648</span> | -0.3132217 | 0.4139720 | LS | MN |
+| R-Squared: | 0.1245043 | <span style=" NA   NA ">NA</span> | NA | NA | LS | MN |
+| F-Statistic: | 1.5358687 | <span style=" NA   NA ">NA</span> | NA | NA | LS | MN |
+| F p-value: | 0.4772000 | <span style=" NA   NA ">NA</span> | NA | NA | LS | MN |
+| distance_to_city_center | 0.0800000 | <span style="     ">0.6914</span> | -0.2026496 | 0.3675307 | LS | PX |
+| geodist | -0.1000000 | <span style="     ">0.7047</span> | -0.4513560 | 0.2458115 | LS | PX |
+| Intercept | 0.0000000 | <span style="     ">0.8133</span> | -0.2080541 | 0.2080541 | LS | PX |
+| nlcd_urban_pct | 0.1600000 | <span style="     ">0.2157</span> | -0.0485440 | 0.3744609 | LS | PX |
+| soiltemp_Apr | -0.3000000 | <span style="     ">0.664</span> | -1.1674789 | 0.5580362 | LS | PX |
+| soiltemp_Jul | 0.2100000 | <span style="     ">0.7654</span> | -0.5359827 | 0.9536103 | LS | PX |
+| R-Squared: | 0.0551478 | <span style=" NA   NA ">NA</span> | NA | NA | LS | PX |
+| F-Statistic: | 0.7003986 | <span style=" NA   NA ">NA</span> | NA | NA | LS | PX |
+| F p-value: | 0.8244000 | <span style=" NA   NA ">NA</span> | NA | NA | LS | PX |
+| distance_to_city_center | -0.2400000 | <span style="     ">0.1406</span> | -0.4569014 | -0.0211339 | PA | BA |
+| geodist | 0.0400000 | <span style="     ">0.7215</span> | -0.1864189 | 0.2760527 | PA | BA |
+| Intercept | 0.0000000 | <span style="     ">0.3402</span> | -0.1981518 | 0.1981518 | PA | BA |
+| nlcd_urban_pct | 0.3400000 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0292</span> | 0.1245412 | 0.5455189 | PA | BA |
+| soiltemp_Apr | 0.1200000 | <span style="     ">0.4757</span> | -0.1805703 | 0.4123389 | PA | BA |
+| soiltemp_Jul | -0.0900000 | <span style="     ">0.7229</span> | -0.3920738 | 0.2124508 | PA | BA |
+| R-Squared: | 0.1429473 | <span style=" NA   NA ">NA</span> | NA | NA | PA | BA |
+| F-Statistic: | 2.0014720 | <span style=" NA   NA ">NA</span> | NA | NA | PA | BA |
+| F p-value: | 0.2072000 | <span style=" NA   NA ">NA</span> | NA | NA | PA | BA |
+| distance_to_city_center | 0.3000000 | <span style="     ">0.3375</span> | -0.0653382 | 0.6739094 | PA | BO |
+| geodist | -0.2600000 | <span style="     ">0.3184</span> | -0.6268734 | 0.1128175 | PA | BO |
+| Intercept | 0.0000000 | <span style="     ">0.476</span> | -0.1417946 | 0.1417946 | PA | BO |
+| nlcd_urban_pct | 0.1100000 | <span style="     ">0.396</span> | -0.0432134 | 0.2625454 | PA | BO |
+| soiltemp_Apr | 0.0600000 | <span style="     ">0.8052</span> | -0.1923722 | 0.3159761 | PA | BO |
+| soiltemp_Jul | 0.0800000 | <span style="     ">0.7166</span> | -0.1751357 | 0.3318766 | PA | BO |
+| R-Squared: | 0.0405967 | <span style=" NA   NA ">NA</span> | NA | NA | PA | BO |
+| F-Statistic: | 1.1001781 | <span style=" NA   NA ">NA</span> | NA | NA | PA | BO |
+| F p-value: | 0.7435000 | <span style=" NA   NA ">NA</span> | NA | NA | PA | BO |
+| distance_to_city_center | 0.0500000 | <span style="     ">0.8015</span> | -0.2385409 | 0.3440297 | PA | LA |
+| geodist | -0.0100000 | <span style="     ">0.9725</span> | -0.3525149 | 0.3279088 | PA | LA |
+| Intercept | 0.0000000 | <span style="     ">0.2965</span> | -0.2565480 | 0.2565480 | PA | LA |
+| nlcd_urban_pct | -0.2300000 | <span style="     ">0.1389</span> | -0.4996017 | 0.0309663 | PA | LA |
+| soiltemp_Apr | -0.1600000 | <span style="     ">0.5729</span> | -0.4959573 | 0.1684456 | PA | LA |
+| soiltemp_Jul | -0.0200000 | <span style="     ">0.9582</span> | -0.2837329 | 0.2532441 | PA | LA |
+| R-Squared: | 0.0752459 | <span style=" NA   NA ">NA</span> | NA | NA | PA | LA |
+| F-Statistic: | 0.6346749 | <span style=" NA   NA ">NA</span> | NA | NA | PA | LA |
+| F p-value: | 0.8569000 | <span style=" NA   NA ">NA</span> | NA | NA | PA | LA |
+| distance_to_city_center | -0.3400000 | <span style="     ">0.1264</span> | -0.5736448 | -0.1102836 | PA | PX |
+| geodist | 0.3000000 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0395</span> | 0.0831452 | 0.5173315 | PA | PX |
+| Intercept | 0.0000000 | <span style="     ">0.3987</span> | -0.1994544 | 0.1994544 | PA | PX |
+| nlcd_urban_pct | 0.0800000 | <span style="     ">0.4762</span> | -0.1282009 | 0.2914797 | PA | PX |
+| soiltemp_Apr | 0.5700000 | <span style="     ">0.0869</span> | 0.1810453 | 0.9640457 | PA | PX |
+| soiltemp_Jul | 0.1800000 | <span style="     ">0.4031</span> | -0.2095945 | 0.5604381 | PA | PX |
+| R-Squared: | 0.5738665 | <span style=" NA   NA ">NA</span> | NA | NA | PA | PX |
+| F-Statistic: | 8.0800948 | <span style=" NA   NA ">NA</span> | NA | NA | PA | PX |
+| F p-value: | 0.0427000 | <span style=" NA   NA ">NA</span> | NA | NA | PA | PX |
+| distance_to_city_center | -0.0600000 | <span style="     ">0.7548</span> | -0.2527562 | 0.1278394 | TO | BA |
+| geodist | 0.1700000 | <span style="     ">0.4582</span> | -0.0175679 | 0.3484622 | TO | BA |
+| Intercept | 0.0000000 | <span style="     ">0.9428</span> | -0.1337402 | 0.1337402 | TO | BA |
+| nlcd_urban_pct | 0.0200000 | <span style="     ">0.8871</span> | -0.1201015 | 0.1545664 | TO | BA |
+| soiltemp_Apr | 0.0200000 | <span style="     ">0.925</span> | -0.2456204 | 0.2892900 | TO | BA |
+| soiltemp_Jul | -0.1200000 | <span style="     ">0.6149</span> | -0.3955572 | 0.1534940 | TO | BA |
+| R-Squared: | 0.0340749 | <span style=" NA   NA ">NA</span> | NA | NA | TO | BA |
+| F-Statistic: | 1.0371416 | <span style=" NA   NA ">NA</span> | NA | NA | TO | BA |
+| F p-value: | 0.8999000 | <span style=" NA   NA ">NA</span> | NA | NA | TO | BA |
+| distance_to_city_center | 0.2500000 | <span style="     ">0.4583</span> | -0.0866987 | 0.5906567 | TO | BO |
+| geodist | -0.3200000 | <span style="     ">0.1915</span> | -0.6505818 | 0.0188440 | TO | BO |
+| Intercept | 0.0000000 | <span style="     ">0.9424</span> | -0.1385997 | 0.1385997 | TO | BO |
+| nlcd_urban_pct | 0.2200000 | <span style="     ">0.056</span> | 0.0797738 | 0.3683782 | TO | BO |
+| soiltemp_Apr | 0.0200000 | <span style="     ">0.9385</span> | -0.2101130 | 0.2471239 | TO | BO |
+| soiltemp_Jul | -0.1400000 | <span style="     ">0.5419</span> | -0.3690613 | 0.0898358 | TO | BO |
+| R-Squared: | 0.0833431 | <span style=" NA   NA ">NA</span> | NA | NA | TO | BO |
+| F-Statistic: | 2.3639386 | <span style=" NA   NA ">NA</span> | NA | NA | TO | BO |
+| F p-value: | 0.4830000 | <span style=" NA   NA ">NA</span> | NA | NA | TO | BO |
+| distance_to_city_center | -0.0600000 | <span style="     ">0.5889</span> | -0.2085607 | 0.0944370 | TO | LA |
+| geodist | 0.0100000 | <span style="     ">0.9256</span> | -0.1584939 | 0.1794819 | TO | LA |
+| Intercept | -0.0300000 | <span style="     ">0.11</span> | -0.1062405 | 0.0465560 | TO | LA |
+| nlcd_urban_pct | -0.0300000 | <span style="     ">0.7391</span> | -0.1111975 | 0.0553448 | TO | LA |
+| soiltemp_Apr | -0.9400000 | <span style=" font-weight: bold;   text-decoration: underline; ">2e-04</span> | -1.0183148 | -0.8521554 | TO | LA |
+| soiltemp_Jul | 0.0600000 | <span style="     ">0.5799</span> | -0.0386642 | 0.1617719 | TO | LA |
+| R-Squared: | 0.8796290 | <span style=" NA   NA ">NA</span> | NA | NA | TO | LA |
+| F-Statistic: | 83.3072026 | <span style=" NA   NA ">NA</span> | NA | NA | TO | LA |
+| F p-value: | 0.0003000 | <span style=" NA   NA ">NA</span> | NA | NA | TO | LA |
+| distance_to_city_center | -0.0300000 | <span style="     ">0.8513</span> | -0.1973255 | 0.1299167 | TO | MN |
+| geodist | 0.0200000 | <span style="     ">0.9075</span> | -0.1406409 | 0.1746362 | TO | MN |
+| Intercept | 0.0000000 | <span style="     ">0.6183</span> | -0.1101741 | 0.1101741 | TO | MN |
+| nlcd_urban_pct | 0.0400000 | <span style="     ">0.7863</span> | -0.0699047 | 0.1518388 | TO | MN |
+| soiltemp_Apr | 0.4800000 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0338</span> | 0.2780902 | 0.6849983 | TO | MN |
+| soiltemp_Jul | -0.3200000 | <span style="     ">0.1707</span> | -0.5199557 | -0.1188595 | TO | MN |
+| R-Squared: | 0.0887157 | <span style=" NA   NA ">NA</span> | NA | NA | TO | MN |
+| F-Statistic: | 3.9719783 | <span style=" NA   NA ">NA</span> | NA | NA | TO | MN |
+| F p-value: | 0.3268000 | <span style=" NA   NA ">NA</span> | NA | NA | TO | MN |
+| distance_to_city_center | 0.2700000 | <span style="     ">0.3084</span> | -0.1389457 | 0.6732755 | TO | PX |
+| geodist | 0.0300000 | <span style="     ">0.9349</span> | -0.4735969 | 0.5318689 | TO | PX |
+| Intercept | -0.0100000 | <span style="     ">0.8142</span> | -0.3570472 | 0.3342439 | TO | PX |
+| nlcd_urban_pct | 0.1600000 | <span style="     ">0.5206</span> | -0.2774734 | 0.6011279 | TO | PX |
+| soiltemp_Apr | -0.5000000 | <span style="     ">0.3107</span> | -1.1136111 | 0.1065639 | TO | PX |
+| soiltemp_Jul | 0.0900000 | <span style="     ">0.8399</span> | -0.5216801 | 0.7115915 | TO | PX |
+| R-Squared: | 0.2290994 | <span style=" NA   NA ">NA</span> | NA | NA | TO | PX |
+| F-Statistic: | 1.1292997 | <span style=" NA   NA ">NA</span> | NA | NA | TO | PX |
+| F p-value: | 0.5716000 | <span style=" NA   NA ">NA</span> | NA | NA | TO | PX |
+
+Parameter estimates and statistics from running 9999 permutations
+(‘Reps’) via MMRR, subset by each city. Note that p-values are not
+adjusted for multiple testing.
+
+# 16 `SessionInfo()`
 
 ``` r
 sessionInfo()
@@ -1744,33 +2082,38 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ##  [1] polysat_1.7-7     LEA_3.16.0        ggh4x_0.2.8       here_1.0.1       
-    ##  [5] lubridate_1.9.3   forcats_1.0.0     purrr_1.0.2       tibble_3.2.1     
-    ##  [9] tidyverse_2.0.0   viridis_0.6.5     viridisLite_0.4.2 raster_3.6-26    
-    ## [13] sp_2.1-4          cowplot_1.2.0     stringr_1.5.1     readr_2.1.5      
-    ## [17] polyRAD_2.0.0     dplyr_1.1.4       magrittr_2.0.3    tidyr_1.3.1      
-    ## [21] ggplot2_4.0.0    
+    ##  [1] adegenet_2.1.10   ade4_1.7-22       algatr_1.0.0      polysat_1.7-7    
+    ##  [5] LEA_3.16.0        ggh4x_0.2.8       here_1.0.1        lubridate_1.9.3  
+    ##  [9] forcats_1.0.0     purrr_1.0.2       tibble_3.2.1      tidyverse_2.0.0  
+    ## [13] viridis_0.6.5     viridisLite_0.4.2 raster_3.6-26     sp_2.1-4         
+    ## [17] cowplot_1.2.0     stringr_1.5.1     readr_2.1.5       polyRAD_2.0.0    
+    ## [21] dplyr_1.1.4       magrittr_2.0.3    tidyr_1.3.1       ggplot2_4.0.0    
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] fastmatch_1.1-4    gtable_0.3.6       xfun_0.52          lattice_0.22-6    
-    ##  [5] tzdb_0.4.0         vctrs_0.6.5        tools_4.4.2        generics_0.1.3    
-    ##  [9] parallel_4.4.2     fansi_1.0.6        highr_0.11         pkgconfig_2.0.3   
-    ## [13] RColorBrewer_1.1-3 S7_0.2.0           lifecycle_1.0.4    compiler_4.4.2    
-    ## [17] farver_2.1.2       textshaping_0.4.0  terra_1.8-60       codetools_0.2-20  
-    ## [21] htmltools_0.5.8.1  yaml_2.3.10        pillar_1.9.0       crayon_1.5.2      
-    ## [25] commonmark_1.9.1   tidyselect_1.2.1   digest_0.6.35      stringi_1.8.4     
-    ## [29] labeling_0.4.3     rprojroot_2.0.4    fastmap_1.2.0      grid_4.4.2        
-    ## [33] cli_3.6.3          dichromat_2.0-0.1  utf8_1.2.4         withr_3.0.2       
-    ## [37] scales_1.4.0       bit64_4.0.5        timechange_0.3.0   rmarkdown_2.27    
-    ## [41] ggtext_0.1.2       bit_4.0.5          gridExtra_2.3      ragg_1.3.2        
-    ## [45] hms_1.1.3          kableExtra_1.4.0   evaluate_1.0.5     knitr_1.47        
-    ## [49] markdown_1.13      rlang_1.1.4        gridtext_0.1.5     Rcpp_1.0.12       
-    ## [53] glue_1.8.0         xml2_1.3.6         formatR_1.14       svglite_2.1.3     
-    ## [57] rstudioapi_0.16.0  vroom_1.6.5        R6_2.5.1           systemfonts_1.1.0
+    ##  [1] gridExtra_2.3      formatR_1.14       permute_0.9-7      rlang_1.1.4       
+    ##  [5] compiler_4.4.2     mgcv_1.9-1         systemfonts_1.1.0  vctrs_0.6.5       
+    ##  [9] reshape2_1.4.4     pkgconfig_2.0.3    crayon_1.5.2       fastmap_1.2.0     
+    ## [13] labeling_0.4.3     utf8_1.2.4         promises_1.3.0     rmarkdown_2.27    
+    ## [17] markdown_1.13      tzdb_0.4.0         ragg_1.3.2         bit_4.0.5         
+    ## [21] xfun_0.52          seqinr_4.2-36      highr_0.11         later_1.3.2       
+    ## [25] terra_1.8-60       parallel_4.4.2     cluster_2.1.6      R6_2.5.1          
+    ## [29] stringi_1.8.4      RColorBrewer_1.1-3 Rcpp_1.0.12        knitr_1.47        
+    ## [33] httpuv_1.6.15      Matrix_1.7-1       splines_4.4.2      igraph_2.0.3      
+    ## [37] timechange_0.3.0   tidyselect_1.2.1   rstudioapi_0.16.0  dichromat_2.0-0.1 
+    ## [41] yaml_2.3.10        vegan_2.6-6.1      ggtext_0.1.2       codetools_0.2-20  
+    ## [45] lattice_0.22-6     plyr_1.8.9         shiny_1.8.1.1      withr_3.0.2       
+    ## [49] S7_0.2.0           evaluate_1.0.5     xml2_1.3.6         pillar_1.9.0      
+    ## [53] generics_0.1.3     vroom_1.6.5        rprojroot_2.0.4    hms_1.1.3         
+    ## [57] commonmark_1.9.1   scales_1.4.0       xtable_1.8-4       glue_1.8.0        
+    ## [61] tools_4.4.2        fastmatch_1.1-4    grid_4.4.2         ape_5.8           
+    ## [65] colorspace_2.1-0   nlme_3.1-166       cli_3.6.3          kableExtra_1.4.0  
+    ## [69] textshaping_0.4.0  fansi_1.0.6        svglite_2.1.3      gtable_0.3.6      
+    ## [73] digest_0.6.35      farver_2.1.2       htmltools_0.5.8.1  lifecycle_1.0.4   
+    ## [77] mime_0.12          gridtext_0.1.5     bit64_4.0.5        MASS_7.3-61
 
 # Appendix
 
-## 15.1 File Organization
+## 16.1 File Organization
 
 All data files for the Macrosystems project are permanently stored under
 Meghan Avolio’s group resources in the Johns Hopkins University Rockfish
@@ -1839,7 +2182,7 @@ following subdirectories:
     scripts and output files (i.e., from `cstacks`, `gstacks`, `stacks`,
     `tsv2bam`, and `populations`),
 
-## 15.2 Aspera Transfer File Names
+## 16.2 Aspera Transfer File Names
 
 See
 [data/aspera_transfer_file_names.csv](data/aspera_transfer_file_names.csv).
@@ -1860,7 +2203,7 @@ readLines("data/aspera_transfer_file_names.csv", 10)
     ##  [9] "/Hoffman_macrosystems/AMH_macro_1_10_8px_S10_L001_R1_001.fastq.gz"
     ## [10] "/Hoffman_macrosystems/AMH_macro_1_10_8px_S10_L001_R2_001.fastq.gz"
 
-## 15.3 `clone_filter` File Names
+## 16.3 `clone_filter` File Names
 
 See
 [data/clone_filter_file_names.csv](data/clone_filter_file_names.csv).
