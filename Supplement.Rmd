@@ -958,6 +958,10 @@ do_all_sNMF()
 
 # Genetic Differentiation
 
+## Sample size, sites per city per species
+
+Use `13-n.R` for sample size. Use `13-get_unique_site_post_genotyping.R` for sites per city per species.
+
 ## Among city - Jost's D, $G_{ST}$, $F_{ST}$
 
 We used `polyrad::calcPopDiff()` to calculate continental population statistics for each species.
@@ -1080,134 +1084,125 @@ source("R/14-AMOVA.R")
 make_amova_plot()
 ```
 
+# Isolation by distance and environment
 
+We used [multiple matrix regression with randomization (MMRR)](https://doi.org/10.1111/evo.12134) to determine the relative contributions of isolation by distance (i.e., an association between genetic and geographic distances) and isolation by environment (i.e., an association between genetic and environmental distances).
 
+## Genetic distance
 
+We calculated the genetic dissimilarity matrix (among sites) using the [Cavalli-Sforza](https://doi.org/10.2307/2406616) (Chord) distance metric in GenoDive. While this can also be done using `adegenet`, we don't want to make assumptions about ploidy. We used the "*_estimatedgeno_sitesaspops.structure" files so that sites (not cities) were treated here as populations.
 
-<!-- ## Isolation by distance and environment -->
+## Geographic distance
 
-<!-- We used [multiple matrix regression with randomization (MMRR)](https://doi.org/10.1111/evo.12134) to determine the relative contributions of isolation by distance (i.e., an association between genetic and geographic distances) and isolation by environment (i.e., an association between genetic and environmental distances). -->
+We took the traditional approach to creating a geographic dissimilarity matrix (based on latitude and longitude) using euclidean distance.
 
-<!-- ### Genetic distance -->
+## Environmental data and distance
 
-<!-- We calculated the genetic dissimilarity matrix (among sites) using the [Cavalli-Sforza](https://doi.org/10.2307/2406616) (Chord) distance metric in GenoDive. While this can also be done using `adegenet`, we don't want to make assumptions about ploidy. We used the "*_estimatedgeno_sitesaspops.structure" files so that sites (not cities) were treated here as populations. -->
+Environmental variables include the monthly averages in the middle of the day for:
 
-<!-- ### Geographic distance -->
+- air temperature at 5cm above ground
+- air temperature at 1.2m above ground
+- soil temperature at 2.5cm below ground
+- RH (relative humidity) at 5cm above ground
+- RH at 1.2m above ground
 
-<!-- We took the traditional approach to creating a geographic dissimilarity matrix (based on latitude and longitude) using euclidean distance. -->
+Variables were extracted from historic datasets and modeled using a microclimate model. More information can be found on the [NicheMapR website](https://mrke.github.io/) (how the model works, what variables can be manipulated and what you can model, vignettes for running models in R).
 
-<!-- ### Environmental data and distance -->
+This method was chosen because it takes data from global datasets (you can use both historic and current or pick specific years) but then accounts for site-specific variables (we can change the % shade, the slope or aspect of the landscape, and it considers elevation, average cloud cover, etc.). [Here’s the list](https://mrke.github.io/models/MicroClimate-Models) of all the different models/datasets we’re able to can pull from. It's meant for mechanistic niche modeling.
 
-<!-- Environmental variables include the monthly averages in the middle of the day for: -->
+Variables in the file `site_data_DUC_environvars.csv` are all for the monthly averages at noon (12pm - hottest part of the day!) and are extreme. In other words, they are maximums.
 
-<!-- - air temperature at 5cm above ground -->
-<!-- - air temperature at 1.2m above ground -->
-<!-- - soil temperature at 2.5cm below ground -->
-<!-- - RH (relative humidity) at 5cm above ground -->
-<!-- - RH at 1.2m above ground -->
+Note that [this Stack Overflow post](https://stackoverflow.com/questions/69639782/installing-gfortran-on-macbook-with-apple-m1-chip-for-use-in-r) is helpful with installing `NicheMapR`.
 
-<!-- Variables were extracted from historic datasets and modeled using a microclimate model. More information can be found on the [NicheMapR website](https://mrke.github.io/) (how the model works, what variables can be manipulated and what you can model, vignettes for running models in R). -->
+```{r}
+# devtools::install_github('mrke/NicheMapR')
+# library(NicheMapR)
+#
+# test_site_coords <- c(sites[1,]$lat, sites[1,]$long)
+# test_distance_to_city_center_km <- sites[1,]$distance_to_city_center_km
+# micros_ <- micro_usa(loc = test_site_coords)
+#
+# loc <- c(-89.40, 43.07)
+# micro <- micro_global(loc = loc)
+```
 
-<!-- This method was chosen because it takes data from global datasets (you can use both historic and current or pick specific years) but then accounts for site-specific variables (we can change the % shade, the slope or aspect of the landscape, and it considers elevation, average cloud cover, etc.). [Here’s the list](https://mrke.github.io/models/MicroClimate-Models) of all the different models/datasets we’re able to can pull from. It's meant for mechanistic niche modeling. -->
+Environmental distance was generated the same way as geographic distance above (euclidean distance). These are the four environmental variables mentioned in the main manuscript, although more environmental variables are present in the raw data: % Urban cover, Distance to city center, April soil temperature, and July soil temperature. In the raw data these appear as `nlcd_urban_pct`, `distance_to_city_center`, `soiltemp_2.5cm_Apr_12pm`, `soiltemp_2.5cm_Jul_12pm`.
 
-<!-- Variables in the file `site_data_DUC_environvars.csv` are all for the monthly averages at noon (12pm - hottest part of the day!) and are extreme. In other words, they are maximums. -->
+## Analysis
 
-<!-- Note that [this Stack Overflow post](https://stackoverflow.com/questions/69639782/installing-gfortran-on-macbook-with-apple-m1-chip-for-use-in-r) is helpful with installing `NicheMapR`. -->
+Note that for this analysis, we treated each *sampling site* as a distinct location. There would not be enough power to do a distance matrix among 3-5 cities. Code for generating matrices, running the MMRR, and generating figures can be found in the source code below.
 
-<!-- ```{r} -->
-<!-- # devtools::install_github('mrke/NicheMapR') -->
-<!-- # library(NicheMapR) -->
-<!-- # -->
-<!-- # test_site_coords <- c(sites[1,]$lat, sites[1,]$long) -->
-<!-- # test_distance_to_city_center_km <- sites[1,]$distance_to_city_center_km -->
-<!-- # micros_ <- micro_usa(loc = test_site_coords) -->
-<!-- # -->
-<!-- # loc <- c(-89.40, 43.07) -->
-<!-- # micro <- micro_global(loc = loc) -->
-<!-- ``` -->
+```{r mmrr_1, message=FALSE}
+source("R/15-IBD_IBE_MMRR.R")
+```
 
-<!-- Environmental distance was generated the same way as geographic distance above (euclidean distance). These are the four environmental variables mentioned in the main manuscript, although more environmental variables are present in the raw data: % Urban cover, Distance to city center, April soil temperature, and July soil temperature. In the raw data these appear as `nlcd_urban_pct`, `distance_to_city_center`, `soiltemp_2.5cm_Apr_12pm`, `soiltemp_2.5cm_Jul_12pm`. -->
+```{r mmrr_2, eval = FALSE, message=FALSE}
+make_mmrr_plot()
+```
 
-<!-- ### Analysis -->
+Below are the results of the MMRR, with all cities in the same model. Species are treated as independent, separate models.
 
-<!-- Note that for this analysis, we treated each *sampling site* as a distinct location. There would not be enough power to do a distance matrix among 3-5 cities. Code for generating matrices, running the MMRR, and generating figures can be found in the source code below. -->
+```{r mmrr_3a, echo = FALSE, message=FALSE}
+table_ <- readr::read_csv("output/MMRR/MMRR_total_overall_models.csv") %>%
+  mutate(p = kableExtra::cell_spec(
+    `F p-value:`,
+    bold = ifelse(as.numeric(`F p-value:`) < 0.05, TRUE, FALSE),
+    underline = ifelse(as.numeric(`F p-value:`) < 0.05, TRUE, FALSE)
+  ))
 
-<!-- ```{r mmrr_1, message=FALSE} -->
-<!-- source("R/IBD_IBE_MMRR.R") -->
-<!-- ``` -->
+knitr::kable(
+  table_,
+  format = "simple",
+  caption = "Overall model p-values from MMRR."
+)
+```
 
-<!-- ```{r mmrr_2, eval = FALSE, message=FALSE} -->
-<!-- make_mmrr_plot() -->
-<!-- ``` -->
+```{r mmrr_3b, echo = FALSE, message=FALSE}
+table_ <-
+  readr::read_csv("output/MMRR/MMRR_total.csv") %>%
+  mutate(p = kableExtra::cell_spec(
+    p,
+    bold = ifelse(as.numeric(p) < 0.05, TRUE, FALSE),
+    underline = ifelse(as.numeric(p) < 0.05, TRUE, FALSE)
+  ))
 
-<!-- Below are the results of the MMRR, with all cities in the same model. Species are treated as independent, separate models. -->
+knitr::kable(
+  table_,
+  format = "simple",
+  caption = "Full parameter estimates and statistics by species from running 9999 permutations ('Reps') via MMRR."
+)
+```
 
-<!-- ```{r mmrr_3a, echo = FALSE, message=FALSE} -->
-<!-- table_ <- readr::read_csv("output/MMRR/MMRR_total_overall_models.csv") %>% -->
-<!--   mutate(p = kableExtra::cell_spec( -->
-<!--     `F p-value:`, -->
-<!--     bold = ifelse(as.numeric(`F p-value:`) < 0.05, TRUE, FALSE), -->
-<!--     underline = ifelse(as.numeric(`F p-value:`) < 0.05, TRUE, FALSE) -->
-<!--   )) -->
+We also repeated this within city.
 
-<!-- knitr::kable( -->
-<!--   table_, -->
-<!--   format = "simple", -->
-<!--   caption = "Overall model p-values from MMRR." -->
-<!-- ) -->
-<!-- ``` -->
+```{r mmrr_4a, echo = FALSE, message=FALSE}
+table_ <- readr::read_csv("output/MMRR/MMRR_splitbycity_overall_models.csv") %>%
+  mutate(`p adjusted` = kableExtra::cell_spec(`p adjusted`,
+  bold = ifelse(as.numeric(`p adjusted`) < 0.05, TRUE, FALSE),
+  underline = ifelse(as.numeric(`p adjusted`) < 0.05, TRUE, FALSE)
+))
 
-<!-- ```{r mmrr_3b, echo = FALSE, message=FALSE} -->
-<!-- table_ <- -->
-<!--   readr::read_csv("output/MMRR/MMRR_total.csv") %>% -->
-<!--   mutate(p = kableExtra::cell_spec( -->
-<!--     p, -->
-<!--     bold = ifelse(as.numeric(p) < 0.05, TRUE, FALSE), -->
-<!--     underline = ifelse(as.numeric(p) < 0.05, TRUE, FALSE) -->
-<!--   )) -->
+knitr::kable(
+  table_,
+  format = "simple",
+  caption = "Overall model p-values from MMRR, subset by each city. Adjusted p-values are corrected using the Benjamini and Hochberg method within each species' results."
+)
+```
 
-<!-- knitr::kable( -->
-<!--   table_, -->
-<!--   format = "simple", -->
-<!--   caption = "Full parameter estimates and statistics by species from running 9999 permutations ('Reps') via MMRR." -->
-<!-- ) -->
-<!-- ``` -->
+```{r mmrr_4b, echo = FALSE, message=FALSE}
+table_ <- readr::read_csv("output/MMRR/MMRR_splitbycity.csv") %>%
+  mutate(p = kableExtra::cell_spec(
+    p,
+    bold = ifelse(as.numeric(p) < 0.05, TRUE, FALSE),
+    underline = ifelse(as.numeric(p) < 0.05, TRUE, FALSE)
+  ))
 
-<!-- We also repeated this within city. -->
-
-<!-- ```{r mmrr_4a, echo = FALSE, message=FALSE} -->
-<!-- table_ <- readr::read_csv("output/MMRR/MMRR_splitbycity_overall_models.csv") %>% -->
-<!--   mutate(`p adjusted` = kableExtra::cell_spec(`p adjusted`, -->
-<!--   bold = ifelse(as.numeric(`p adjusted`) < 0.05, TRUE, FALSE), -->
-<!--   underline = ifelse(as.numeric(`p adjusted`) < 0.05, TRUE, FALSE) -->
-<!-- )) -->
-
-<!-- knitr::kable( -->
-<!--   table_, -->
-<!--   format = "simple", -->
-<!--   caption = "Overall model p-values from MMRR, subset by each city. Adjusted p-values are corrected using the Benjamini and Hochberg method within each species' results." -->
-<!-- ) -->
-<!-- ``` -->
-
-<!-- ```{r mmrr_4b, echo = FALSE, message=FALSE} -->
-<!-- table_ <- readr::read_csv("output/MMRR/MMRR_splitbycity.csv") %>% -->
-<!--   mutate(p = kableExtra::cell_spec( -->
-<!--     p, -->
-<!--     bold = ifelse(as.numeric(p) < 0.05, TRUE, FALSE), -->
-<!--     underline = ifelse(as.numeric(p) < 0.05, TRUE, FALSE) -->
-<!--   )) -->
-
-<!-- knitr::kable( -->
-<!--   table_, -->
-<!--   format = "simple", -->
-<!--   caption = "Parameter estimates and statistics from running 9999 permutations ('Reps') via MMRR, subset by each city. Note that p-values are not adjusted for multiple testing." -->
-<!-- ) -->
-<!-- ``` -->
-
-<!-- ## Sites per city per species -->
-
-<!-- Use `get_unique_site_post_genotyping.R`. -->
-
+knitr::kable(
+  table_,
+  format = "simple",
+  caption = "Parameter estimates and statistics from running 9999 permutations ('Reps') via MMRR, subset by each city. Note that p-values are not adjusted for multiple testing."
+)
+```
 
 
 
