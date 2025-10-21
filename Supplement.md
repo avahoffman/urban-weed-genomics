@@ -55,8 +55,17 @@
   - [13.2 Plotting Structure output](#plotting-structure-output)
   - [13.3 Validation of Structure results with
     sNMF](#validation-of-structure-results-with-snmf)
-- [14 Population (city) level
-  statistics](#population-city-level-statistics)
+- [14 Genetic Differentiation](#genetic-differentiation)
+  - [14.1 Among city - Jost’s D, $G_{ST}$,
+    $F_{ST}$](#among-city---josts-d-g_st-f_st)
+  - [14.2 Among city - pairwise $\rho$](#among-city---pairwise-rho)
+  - [14.3 Within city - allelic
+    richness](#within-city---allelic-richness)
+  - [14.4 Within city - $F_{IS}$ (homozygosity within
+    population)](#within-city---f_is-homozygosity-within-population)
+  - [14.5 Within city - $\bar{r}_d$ - Linkage
+    disequilibrium](#within-city---barr_d---linkage-disequilibrium)
+  - [14.6 Within city - private alleles](#within-city---private-alleles)
 - [15 `SessionInfo()`](#sessioninfo)
 - [Appendix](#appendix-books)
   - [15.1 File Organization](#file-organization-bookmark_tabs)
@@ -569,14 +578,6 @@ assessing the change in shared loci across parameter iterations.
 
 Based on this optimization step, we used the following parameters:
 
-    ## Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
-    ## Use 'xfun::attr2()' instead.
-    ## See help("Deprecated")
-
-    ## Warning in attr(x, "format"): 'xfun::attr()' is deprecated.
-    ## Use 'xfun::attr2()' instead.
-    ## See help("Deprecated")
-
 | Species | M (locus mismatches) | n (catalog mismatches) | m (minimum reads) |
 |:--------|---------------------:|-----------------------:|------------------:|
 | CD      |                    8 |                      8 |                 3 |
@@ -624,14 +625,6 @@ A small number of samples (13) were discarded at this stage as the
 `ustacks` tool was unable to form any primary stacks corresponding to
 loci. See
 [output/ustacks-discarded_samples.csv](output/ustacks-discarded_samples.csv).
-
-    ## Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
-    ## Use 'xfun::attr2()' instead.
-    ## See help("Deprecated")
-
-    ## Warning in attr(x, "format"): 'xfun::attr()' is deprecated.
-    ## Use 'xfun::attr2()' instead.
-    ## See help("Deprecated")
 
 | ustacks discarded | Retained reads | Proportion of sub-library |
 |:------------------|---------------:|--------------------------:|
@@ -728,16 +721,6 @@ by[`ustacks`](#step-5---ustacks):
 - `catalog.alleles.tsv.gz`
 - `catalog.snps.tsv.gz`
 - `catalog.tags.tsv.gz`
-
-<!-- -->
-
-    ## Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
-    ## Use 'xfun::attr2()' instead.
-    ## See help("Deprecated")
-
-    ## Warning in attr(x, "format"): 'xfun::attr()' is deprecated.
-    ## Use 'xfun::attr2()' instead.
-    ## See help("Deprecated")
 
 | Sample           | Species | City |
 |:-----------------|:--------|:-----|
@@ -1148,14 +1131,6 @@ versus the locus depth (see `check_coverage` inside the
 `convert_genomics.R` script). We removed the following samples from
 further analysis:
 
-    ## Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
-    ## Use 'xfun::attr2()' instead.
-    ## See help("Deprecated")
-
-    ## Warning in attr(x, "format"): 'xfun::attr()' is deprecated.
-    ## Use 'xfun::attr2()' instead.
-    ## See help("Deprecated")
-
 | Sample         |
 |:---------------|
 | CD.BA.PSP.M.1  |
@@ -1408,15 +1383,15 @@ unique. In general, sNMF produced larger K for most species, which will
 create more sensitivity to admixture.</figcaption>
 </figure>
 
-# 14 Population (city) level statistics
+# 14 Genetic Differentiation
 
-<!-- ## Continental population structure: population statistics by species -->
+## 14.1 Among city - Jost’s D, $G_{ST}$, $F_{ST}$
 
 We used `polyrad::calcPopDiff()` to calculate continental population
 statistics for each species.
 
 ``` r
-source("R/calc_continental_stats.R")
+source("R/13-calc_popdiff_stats.R")
 ```
 
 ``` r
@@ -1425,13 +1400,182 @@ do_all_continental_stats()
 
 ``` r
 # CD as an example
-read.csv("output/population_stats/CD_continental_stats.csv")
+read.csv("output/population_stats/popdiff_stats_CD.csv")
 ```
 
     ##   X statistic      value
     ## 1 1     JostD 0.30579677
     ## 2 2       Gst 0.02735719
     ## 3 3       Fst 0.02812163
+
+## 14.2 Among city - pairwise $\rho$
+
+We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to
+calculate pairise $\rho$ (rho) among cities within species. Note that
+there is a p-value correction for testing multiple cities (species are
+treated as independent, however).
+
+This can be run in GenoDive by selecting Pairwise Differentiation from
+the Analysis menu and selecting the “rho” statistic from the dropdown.
+
+We used the following script to clean up the results.
+
+``` r
+source("R/13-rho.R")
+compile_rho_table()
+```
+
+| Species | City1 | City2 | rho | p-value | adjusted p-value |
+|:---|:---|:---|---:|---:|:---|
+| CD | PX | BA | 0.050 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.001</span> |
+| CD | LA | BA | 0.046 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.001</span> |
+| CD | PX | LA | 0.015 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.001</span> |
+| DS | MN | BA | 0.031 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0015</span> |
+| DS | BO | BA | 0.018 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0015</span> |
+| DS | PX | BA | 0.012 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0015</span> |
+| DS | MN | BO | 0.007 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0015</span> |
+| DS | PX | BO | -0.002 | 0.875 | <span style="     ">0.955</span> |
+| DS | PX | MN | -0.002 | 0.955 | <span style="     ">0.955</span> |
+| EC | PX | BA | 0.098 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.001</span> |
+| EC | PX | LA | 0.087 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.001</span> |
+| EC | LA | BA | 0.038 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.001</span> |
+| LS | PX | BA | 0.077 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0011</span> |
+| LS | PX | MN | 0.069 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0011</span> |
+| LS | PX | LA | 0.061 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0011</span> |
+| LS | PX | BO | 0.056 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0011</span> |
+| LS | MN | LA | 0.039 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0011</span> |
+| LS | LA | BA | 0.038 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0011</span> |
+| LS | BO | BA | 0.032 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0011</span> |
+| LS | MN | BO | 0.021 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0011</span> |
+| LS | LA | BO | 0.010 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0011</span> |
+| LS | MN | BA | 0.009 | 0.002 | <span style=" font-weight: bold;   text-decoration: underline; ">0.002</span> |
+| PA | PX | BO | 0.028 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0015</span> |
+| PA | LA | BO | 0.024 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0015</span> |
+| PA | PX | BA | 0.015 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0015</span> |
+| PA | LA | BA | 0.011 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0015</span> |
+| PA | BO | BA | 0.008 | 0.002 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0024</span> |
+| PA | PX | LA | -0.002 | 0.972 | <span style="     ">0.972</span> |
+| TO | PX | BA | 0.023 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0014</span> |
+| TO | PX | MN | 0.015 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0014</span> |
+| TO | PX | BO | 0.013 | 0.002 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0025</span> |
+| TO | LA | BA | 0.011 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0014</span> |
+| TO | LA | BO | 0.009 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0014</span> |
+| TO | MN | LA | 0.009 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0014</span> |
+| TO | PX | LA | 0.009 | 0.027 | <span style=" font-weight: bold;   text-decoration: underline; ">0.03</span> |
+| TO | BO | BA | 0.008 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0014</span> |
+| TO | MN | BO | 0.008 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0014</span> |
+| TO | MN | BA | 0.001 | 0.098 | <span style="     ">0.098</span> |
+
+Rho statistics for pairwise comparison between cities.
+
+## 14.3 Within city - allelic richness
+
+We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to
+calculate several additional statistics.
+
+This can be run in GenoDive by selecting Analysis \> Genetic Diversity,
+and selecting “Calculate indices separately for every population” and
+selecting “Correct for unknown dosage of alleles” for the polyploid
+species.
+
+- Num: Number of alleles
+- Eff_num: Effective number of alleles
+- Ho: Observed Heterozygosity
+- Hs: Heterozygosity within populations
+- Gis: Inbreeding coefficient
+
+``` r
+head(read.csv("output/population_stats/genodive_genetic_diversity.csv"))
+```
+
+    ##   spp city    Num Eff_num    Ho    Hs   Gis
+    ## 1  CD   BA  8.242   4.530 0.627 0.748 0.163
+    ## 2  CD   LA 12.664   6.470 0.683 0.827 0.174
+    ## 3  CD   PX 14.192   6.978 0.672 0.830 0.191
+    ## 4  DS   BA 10.611   5.069 0.637 0.768 0.171
+    ## 5  DS   BO 10.588   5.230 0.612 0.778 0.214
+    ## 6  DS   MN 11.696   5.233 0.623 0.771 0.192
+
+## 14.4 Within city - $F_{IS}$ (homozygosity within population)
+
+We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to
+calculate $F_{IS}$. This gives a good estimate of whether there are more
+homozygotes than expected (positive number) or more heterozygotes than
+expected (negative number). Notably, GenoDive accommodates polyploids
+and reduces the bias on $F_{IS}$ by performing a permutation test. By
+default, there are 999 permutations.
+
+This can be run in GenoDive by selecting Analysis \> Hardy-Weinberg \>
+Heterozygosity-based (Nei) method.
+
+``` r
+head(read.csv("output/population_stats/genodive_output_Fis.csv"))
+```
+
+    ##   Species Population  n   Fis
+    ## 1      CD         BA 55 0.166
+    ## 2      CD         LA 48 0.186
+    ## 3      CD         PX 82 0.200
+    ## 4      CD    Overall NA 0.187
+    ## 5      DS         BA 55 0.208
+    ## 6      DS         BO 52 0.252
+
+## 14.5 Within city - $\bar{r}_d$ - Linkage disequilibrium
+
+We used `poppr::ia()` to calculate the standardized index of association
+of loci in the dataset ($\bar{r}_d$ or `rbarD`). We use the standardized
+index of association to avoid the influence of different sample sizes,
+as described by [Agapow and Burt
+2001](https://doi.org/10.1046/j.1471-8278.2000.00014.x).
+
+When `p.rD` is small (\<0.05) and rbarD is (relatively) higher, that is
+a sign that the population could be in linkage disequilibrium.
+
+An interesting note from the documentation:
+
+> It has been widely used as a tool to detect clonal reproduction within
+> populations. Populations whose members are undergoing sexual
+> reproduction, whether it be selfing or out-crossing, will produce
+> gametes via meiosis, and thus have a chance to shuffle alleles in the
+> next generation. Populations whose members are undergoing clonal
+> reproduction, however, generally do so via mitosis. This means that
+> the most likely mechanism for a change in genotype is via mutation.
+> The rate of mutation varies from species to species, but it is rarely
+> sufficiently high to approximate a random shuffling of alleles. The
+> index of association is a calculation based on the ratio of the
+> variance of the raw number of differences between individuals and the
+> sum of those variances over each locus. You can also think of it as
+> the observed variance over the expected variance.
+
+There is a nice description
+[here](https://grunwaldlab.github.io/Population_Genetics_in_R/Linkage_disequilibrium.html).
+
+``` r
+source("R/13-rbarD.R")
+calc_rbarD()
+```
+
+``` r
+head(read.csv("output/population_stats/rbarD.csv"))
+```
+
+    ##   spp city  n       Ia  p.Ia     rbarD  p.rD
+    ## 1  CD   BA 55 664.7655 0.001 0.2950534 0.001
+    ## 2  CD   LA 48 470.5913 0.001 0.2070064 0.001
+    ## 3  CD   PX 82 634.5787 0.001 0.2792566 0.001
+    ## 4  DS   BA 55 557.7334 0.001 0.2123881 0.001
+    ## 5  DS   BO 52 896.0906 0.001 0.3398873 0.001
+    ## 6  DS   MN 81 578.2494 0.001 0.2192197 0.001
+
+## 14.6 Within city - private alleles
+
+We used a custom script to calculate % private alleles as the percentage
+of total alleles unique to a particular city.
+
+``` r
+source("R/13-private_alleles.R")
+get_all_private_alleles()
+```
 
 <!-- ## AMOVA -->
 <!-- We performed hierarchical analysis of molecular variance (AMOVA; using GenoDive 3.06) based on the Rho-statistics, which is based on a Ploidy independent Infinite Allele Model. AMOVA is under the "Analysis" menu. Structure format files typically have only one level of population grouping. To ensure nestedness, we added a "City" level manually by going to "Data > Population grouping .." menu and adding "City". When running the AMOVA, we selected "Advanced" and selected Individual nested within Population nested within City. We used 999 permutations. -->
@@ -1443,56 +1587,6 @@ read.csv("output/population_stats/CD_continental_stats.csv")
 <!-- knitr::kable(table_, -->
 <!--              format = "simple", -->
 <!--              caption = "AMOVA Statistics.") -->
-<!-- ``` -->
-<!-- ## Local: $F_{IS}$ - Homozygosity within population -->
-<!-- We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate $F_{IS}$. This gives a good estimate of whether there are more homozygotes than expected (positive number) or more heterozygotes than expected (negative number). Notably, GenoDive accommodates polyploids and reduces the bias on $F_{IS}$ by performing a permutation test. By default, there are 999 permutations. -->
-<!-- This can be run in GenoDive by selecting Analysis > Hardy-Weinberg > Heterozygosity-based (Nei) method. -->
-<!-- ```{r Fis_table_readlines, message=FALSE} -->
-<!-- head(read.csv("output/population_stats/genodive_output_Fis.csv")) -->
-<!-- ``` -->
-<!-- ## Local: Genetic Diversity -->
-<!-- We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate several additional statistics. -->
-<!-- This can be run in GenoDive by selecting Analysis > Genetic Diversity, and selecting "Calculate indices separately for every population" and selecting "Correct for unknown dosage of alleles" for the polyploid species. -->
-<!-- * Num: Number of alleles -->
-<!-- * Eff_num: Effective number of alleles -->
-<!-- * Ho: Observed Heterozygosity -->
-<!-- * Hs: Heterozygosity within populations -->
-<!-- * Gis: Inbreeding coefficient -->
-<!-- ```{r GD_table_readlines, message=FALSE} -->
-<!-- head(read.csv("output/population_stats/genodive_genetic_diversity.csv")) -->
-<!-- ``` -->
-<!-- ## Local: $\rho$ - Pairwise comparison -->
-<!-- We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate pairise $\rho$ (rho) among cities within species. Note that there is a p-value correction for testing multiple cities (species are treated as independent, however). -->
-<!-- This can be run in GenoDive by selecting Pairwise Differentiation from the Analysis menu and selecting the "rho" statistic from the dropdown. -->
-<!-- We used the following script to clean up the results. -->
-<!-- ```{r rho_code, eval = FALSE, message=FALSE} -->
-<!-- source("R/rho.R") -->
-<!-- compile_rho_table() -->
-<!-- ``` -->
-<!-- ```{r rho_table_display, echo = FALSE, message = FALSE} -->
-<!-- table_ <- -->
-<!--   readr::read_csv("output/population_stats/rho_all.csv") %>% -->
-<!--   mutate(`adjusted p-value` = kableExtra::cell_spec( -->
-<!--     `adjusted p-value`, -->
-<!--     bold = ifelse(as.numeric(`adjusted p-value`) < 0.05, TRUE, FALSE), -->
-<!--     underline = ifelse(as.numeric(`adjusted p-value`) < 0.05, TRUE, FALSE) -->
-<!--   )) -->
-<!-- knitr::kable(table_, -->
-<!--              format = "simple", -->
-<!--              caption = "Rho statistics for pairwise comparison between cities.") -->
-<!-- ``` -->
-<!-- ## Local: $\bar{r}_d$ - Linkage disequilibrium -->
-<!-- We used `poppr::ia()` to calculate the standardized index of association of loci in the dataset ($\bar{r}_d$ or `rbarD`). We use the standardized index of association to avoid the influence of different sample sizes, as described by [Agapow and Burt 2001](https://doi.org/10.1046/j.1471-8278.2000.00014.x). -->
-<!-- When `p.rD` is small (<0.05) and rbarD is (relatively) higher, that is a sign that the population could be in linkage disequilibrium. -->
-<!-- An interesting note from the documentation: -->
-<!-- > It has been widely used as a tool to detect clonal reproduction within populations. Populations whose members are undergoing sexual reproduction, whether it be selfing or out-crossing, will produce gametes via meiosis, and thus have a chance to shuffle alleles in the next generation. Populations whose members are undergoing clonal reproduction, however, generally do so via mitosis. This means that the most likely mechanism for a change in genotype is via mutation. The rate of mutation varies from species to species, but it is rarely sufficiently high to approximate a random shuffling of alleles. The index of association is a calculation based on the ratio of the variance of the raw number of differences between individuals and the sum of those variances over each locus. You can also think of it as the observed variance over the expected variance. -->
-<!-- There is a nice description [here](https://grunwaldlab.github.io/Population_Genetics_in_R/Linkage_disequilibrium.html). -->
-<!-- ```{r rbarD_code, eval = FALSE, message=FALSE} -->
-<!-- source("R/rbarD.R") -->
-<!-- calc_rbarD() -->
-<!-- ``` -->
-<!-- ```{r rbarD_table_readlines, message=FALSE} -->
-<!-- head(read.csv("output/population_stats/rbarD.csv")) -->
 <!-- ``` -->
 <!-- ## Isolation by distance and environment -->
 <!-- We used [multiple matrix regression with randomization (MMRR)](https://doi.org/10.1111/evo.12134) to determine the relative contributions of isolation by distance (i.e., an association between genetic and geographic distances) and isolation by environment (i.e., an association between genetic and environmental distances). -->
@@ -1625,16 +1719,16 @@ sessionInfo()
     ##  [9] parallel_4.4.2     fansi_1.0.6        highr_0.11         pkgconfig_2.0.3   
     ## [13] RColorBrewer_1.1-3 S7_0.2.0           lifecycle_1.0.4    compiler_4.4.2    
     ## [17] farver_2.1.2       textshaping_0.4.0  terra_1.8-60       codetools_0.2-20  
-    ## [21] htmltools_0.5.8.1  yaml_2.3.8         pillar_1.9.0       crayon_1.5.2      
+    ## [21] htmltools_0.5.8.1  yaml_2.3.10        pillar_1.9.0       crayon_1.5.2      
     ## [25] commonmark_1.9.1   tidyselect_1.2.1   digest_0.6.35      stringi_1.8.4     
     ## [29] labeling_0.4.3     rprojroot_2.0.4    fastmap_1.2.0      grid_4.4.2        
     ## [33] cli_3.6.3          dichromat_2.0-0.1  utf8_1.2.4         withr_3.0.2       
     ## [37] scales_1.4.0       bit64_4.0.5        timechange_0.3.0   rmarkdown_2.27    
     ## [41] ggtext_0.1.2       bit_4.0.5          gridExtra_2.3      ragg_1.3.2        
-    ## [45] hms_1.1.3          evaluate_1.0.5     knitr_1.47         markdown_1.13     
-    ## [49] rlang_1.1.4        gridtext_0.1.5     Rcpp_1.0.12        glue_1.8.0        
-    ## [53] xml2_1.3.6         formatR_1.14       rstudioapi_0.16.0  vroom_1.6.5       
-    ## [57] R6_2.5.1           systemfonts_1.1.0
+    ## [45] hms_1.1.3          kableExtra_1.4.0   evaluate_1.0.5     knitr_1.47        
+    ## [49] markdown_1.13      rlang_1.1.4        gridtext_0.1.5     Rcpp_1.0.12       
+    ## [53] glue_1.8.0         xml2_1.3.6         formatR_1.14       svglite_2.1.3     
+    ## [57] rstudioapi_0.16.0  vroom_1.6.5        R6_2.5.1           systemfonts_1.1.0
 
 # Appendix
 

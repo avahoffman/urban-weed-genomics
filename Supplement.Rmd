@@ -16,7 +16,7 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE} 
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 72), tidy = TRUE)
 ```
 
@@ -956,14 +956,14 @@ The following runs sNMF and generates the figure. \textcolor{red}{Note that in t
 do_all_sNMF()
 ```
 
-# Population (city) level statistics
+# Genetic Differentiation
 
-<!-- ## Continental population structure: population statistics by species -->
+## Among city - Jost's D, $G_{ST}$, $F_{ST}$
 
 We used `polyrad::calcPopDiff()` to calculate continental population statistics for each species.
 
 ```{r continental_stats_libs, message=FALSE}
-source("R/calc_continental_stats.R")
+source("R/13-calc_popdiff_stats.R")
 ```
 
 ```{r continental_stats_code, eval = FALSE, message=FALSE}
@@ -972,8 +972,94 @@ do_all_continental_stats()
 
 ```{r continental_stats_table_readlines, message=FALSE}
 # CD as an example
-read.csv("output/population_stats/CD_continental_stats.csv")
+read.csv("output/population_stats/popdiff_stats_CD.csv")
 ```
+
+## Among city - pairwise $\rho$
+
+We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate pairise $\rho$ (rho) among cities within species. Note that there is a p-value correction for testing multiple cities (species are treated as independent, however).
+
+This can be run in GenoDive by selecting Pairwise Differentiation from the Analysis menu and selecting the "rho" statistic from the dropdown.
+
+We used the following script to clean up the results.
+
+```{r rho_code, eval = FALSE, message=FALSE}
+source("R/13-rho.R")
+compile_rho_table()
+```
+
+```{r rho_table_display, echo = FALSE, message = FALSE}
+table_ <-
+  readr::read_csv("output/population_stats/rho_all.csv") %>%
+  mutate(`adjusted p-value` = kableExtra::cell_spec(
+    `adjusted p-value`,
+    bold = ifelse(as.numeric(`adjusted p-value`) < 0.05, TRUE, FALSE),
+    underline = ifelse(as.numeric(`adjusted p-value`) < 0.05, TRUE, FALSE)
+  ))
+knitr::kable(table_,
+             format = "simple",
+             caption = "Rho statistics for pairwise comparison between cities.")
+```
+
+## Within city - allelic richness
+
+We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate several additional statistics.
+
+This can be run in GenoDive by selecting Analysis > Genetic Diversity, and selecting "Calculate indices separately for every population" and selecting "Correct for unknown dosage of alleles" for the polyploid species.
+
+* Num: Number of alleles
+* Eff_num: Effective number of alleles
+* Ho: Observed Heterozygosity
+* Hs: Heterozygosity within populations
+* Gis: Inbreeding coefficient
+
+```{r GD_table_readlines, message=FALSE}
+head(read.csv("output/population_stats/genodive_genetic_diversity.csv"))
+```
+
+## Within city - $F_{IS}$ (homozygosity within population)
+
+We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate $F_{IS}$. This gives a good estimate of whether there are more homozygotes than expected (positive number) or more heterozygotes than expected (negative number). Notably, GenoDive accommodates polyploids and reduces the bias on $F_{IS}$ by performing a permutation test. By default, there are 999 permutations.
+
+This can be run in GenoDive by selecting Analysis > Hardy-Weinberg > Heterozygosity-based (Nei) method.
+
+```{r Fis_table_readlines, message=FALSE}
+head(read.csv("output/population_stats/genodive_output_Fis.csv"))
+```
+
+## Within city - $\bar{r}_d$ - Linkage disequilibrium
+
+We used `poppr::ia()` to calculate the standardized index of association of loci in the dataset ($\bar{r}_d$ or `rbarD`). We use the standardized index of association to avoid the influence of different sample sizes, as described by [Agapow and Burt 2001](https://doi.org/10.1046/j.1471-8278.2000.00014.x).
+
+When `p.rD` is small (<0.05) and rbarD is (relatively) higher, that is a sign that the population could be in linkage disequilibrium.
+
+An interesting note from the documentation:
+
+> It has been widely used as a tool to detect clonal reproduction within populations. Populations whose members are undergoing sexual reproduction, whether it be selfing or out-crossing, will produce gametes via meiosis, and thus have a chance to shuffle alleles in the next generation. Populations whose members are undergoing clonal reproduction, however, generally do so via mitosis. This means that the most likely mechanism for a change in genotype is via mutation. The rate of mutation varies from species to species, but it is rarely sufficiently high to approximate a random shuffling of alleles. The index of association is a calculation based on the ratio of the variance of the raw number of differences between individuals and the sum of those variances over each locus. You can also think of it as the observed variance over the expected variance.
+
+There is a nice description [here](https://grunwaldlab.github.io/Population_Genetics_in_R/Linkage_disequilibrium.html).
+
+```{r rbarD_code, eval = FALSE, message=FALSE}
+source("R/13-rbarD.R")
+calc_rbarD()
+```
+
+```{r rbarD_table_readlines, message=FALSE}
+head(read.csv("output/population_stats/rbarD.csv"))
+```
+
+## Within city - private alleles
+
+We used a custom script to calculate % private alleles as the percentage of total alleles unique to a particular city.
+
+```{r private_allele_code, eval = FALSE, message=FALSE}
+source("R/13-private_alleles.R")
+get_all_private_alleles()
+```
+
+
+
+
 
 
 <!-- ## AMOVA -->
@@ -992,78 +1078,11 @@ read.csv("output/population_stats/CD_continental_stats.csv")
 <!--              caption = "AMOVA Statistics.") -->
 <!-- ``` -->
 
-<!-- ## Local: $F_{IS}$ - Homozygosity within population -->
 
-<!-- We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate $F_{IS}$. This gives a good estimate of whether there are more homozygotes than expected (positive number) or more heterozygotes than expected (negative number). Notably, GenoDive accommodates polyploids and reduces the bias on $F_{IS}$ by performing a permutation test. By default, there are 999 permutations. -->
 
-<!-- This can be run in GenoDive by selecting Analysis > Hardy-Weinberg > Heterozygosity-based (Nei) method. -->
 
-<!-- ```{r Fis_table_readlines, message=FALSE} -->
-<!-- head(read.csv("output/population_stats/genodive_output_Fis.csv")) -->
-<!-- ``` -->
 
-<!-- ## Local: Genetic Diversity -->
 
-<!-- We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate several additional statistics. -->
-
-<!-- This can be run in GenoDive by selecting Analysis > Genetic Diversity, and selecting "Calculate indices separately for every population" and selecting "Correct for unknown dosage of alleles" for the polyploid species. -->
-
-<!-- * Num: Number of alleles -->
-<!-- * Eff_num: Effective number of alleles -->
-<!-- * Ho: Observed Heterozygosity -->
-<!-- * Hs: Heterozygosity within populations -->
-<!-- * Gis: Inbreeding coefficient -->
-
-<!-- ```{r GD_table_readlines, message=FALSE} -->
-<!-- head(read.csv("output/population_stats/genodive_genetic_diversity.csv")) -->
-<!-- ``` -->
-
-<!-- ## Local: $\rho$ - Pairwise comparison -->
-
-<!-- We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to calculate pairise $\rho$ (rho) among cities within species. Note that there is a p-value correction for testing multiple cities (species are treated as independent, however). -->
-
-<!-- This can be run in GenoDive by selecting Pairwise Differentiation from the Analysis menu and selecting the "rho" statistic from the dropdown. -->
-
-<!-- We used the following script to clean up the results. -->
-
-<!-- ```{r rho_code, eval = FALSE, message=FALSE} -->
-<!-- source("R/rho.R") -->
-<!-- compile_rho_table() -->
-<!-- ``` -->
-
-<!-- ```{r rho_table_display, echo = FALSE, message = FALSE} -->
-<!-- table_ <- -->
-<!--   readr::read_csv("output/population_stats/rho_all.csv") %>% -->
-<!--   mutate(`adjusted p-value` = kableExtra::cell_spec( -->
-<!--     `adjusted p-value`, -->
-<!--     bold = ifelse(as.numeric(`adjusted p-value`) < 0.05, TRUE, FALSE), -->
-<!--     underline = ifelse(as.numeric(`adjusted p-value`) < 0.05, TRUE, FALSE) -->
-<!--   )) -->
-<!-- knitr::kable(table_, -->
-<!--              format = "simple", -->
-<!--              caption = "Rho statistics for pairwise comparison between cities.") -->
-<!-- ``` -->
-
-<!-- ## Local: $\bar{r}_d$ - Linkage disequilibrium -->
-
-<!-- We used `poppr::ia()` to calculate the standardized index of association of loci in the dataset ($\bar{r}_d$ or `rbarD`). We use the standardized index of association to avoid the influence of different sample sizes, as described by [Agapow and Burt 2001](https://doi.org/10.1046/j.1471-8278.2000.00014.x). -->
-
-<!-- When `p.rD` is small (<0.05) and rbarD is (relatively) higher, that is a sign that the population could be in linkage disequilibrium. -->
-
-<!-- An interesting note from the documentation: -->
-
-<!-- > It has been widely used as a tool to detect clonal reproduction within populations. Populations whose members are undergoing sexual reproduction, whether it be selfing or out-crossing, will produce gametes via meiosis, and thus have a chance to shuffle alleles in the next generation. Populations whose members are undergoing clonal reproduction, however, generally do so via mitosis. This means that the most likely mechanism for a change in genotype is via mutation. The rate of mutation varies from species to species, but it is rarely sufficiently high to approximate a random shuffling of alleles. The index of association is a calculation based on the ratio of the variance of the raw number of differences between individuals and the sum of those variances over each locus. You can also think of it as the observed variance over the expected variance. -->
-
-<!-- There is a nice description [here](https://grunwaldlab.github.io/Population_Genetics_in_R/Linkage_disequilibrium.html). -->
-
-<!-- ```{r rbarD_code, eval = FALSE, message=FALSE} -->
-<!-- source("R/rbarD.R") -->
-<!-- calc_rbarD() -->
-<!-- ``` -->
-
-<!-- ```{r rbarD_table_readlines, message=FALSE} -->
-<!-- head(read.csv("output/population_stats/rbarD.csv")) -->
-<!-- ``` -->
 
 <!-- ## Isolation by distance and environment -->
 
