@@ -177,38 +177,36 @@ make_mmrr_plot <- function(){
     p_vals_overall_models <- readr::read_csv("output/MMRR/MMRR_total_overall_models.csv")
   }
     
-  mmrr_plot_ <- 
-    mmrr_ %>% filter(var != "F-Statistic:" & var != "F p-value:" & var != "Intercept") %>% 
+  mmrr_plot_ <-
+    mmrr_ %>% filter(var != "F-Statistic:" &
+                       var != "F p-value:" & var != "Intercept") %>%
     mutate(
       estimate = case_when(p > 0.05 ~ NA, TRUE ~ estimate),
-      facet_ = case_when(var == "geodist" ~ "Distance", var %in% c("distance_to_city_center", "nlcd_urban_pct", "soiltemp_Apr", "soiltemp_Jul") ~ "Environment"),
+      facet_ = case_when(
+        var == "geodist" ~ "Distance",
+        var %in% c(
+          "distance_to_city_center",
+          "nlcd_urban_pct",
+          "soiltemp_Apr",
+          "soiltemp_Jul"
+        ) ~ "Environment"
+      ),
       var = case_when(var == "R-Squared:" ~ "R-Squared", TRUE ~ var),
       estimate_rounded = round(estimate, digits = 2),
-      )  %>% 
-    mutate(spp = case_when(
-      spp == "CD" ~ "Bermuda grass",
-      spp == "DS" ~ "crabgrass",
-      spp == "EC" ~ "horseweed",
-      spp == "LS" ~ "prickly lettuce",
-      spp == "PA" ~ "bluegrass",
-      spp == "TO" ~ "dandelion"
-    ))
-  mmrr_plot_$spp <- factor(
-    mmrr_plot_$spp,
-    levels = c("Bermuda grass", "crabgrass", "horseweed", "prickly lettuce", "bluegrass", "dandelion")
-  )
+    ) %>%
+    mutate(Species = spp_labels()[as.character(spp)])
   
   heat_plot <- function(in_dat, params = T) {
     plot_ <-
       ggplot() +
       geom_tile(
         data = in_dat ,
-        aes(x = spp, y = var, fill = estimate)
+        aes(x = Species, y = var, fill = estimate)
       ) +
       geom_text(
         data = in_dat ,
         size = 2,
-        aes(x = spp, y = var, label = estimate_rounded)
+        aes(x = Species, y = var, label = estimate_rounded)
       ) +
       theme_bw() +
       theme(axis.text.x = element_text(angle = 45, hjust = 1),
@@ -236,11 +234,11 @@ make_mmrr_plot <- function(){
     plot_ <-
       plot_ +
       ggnewscale::new_scale_fill() +
-      geom_tile(data = in_dat %>% filter(spp != "horseweed"), aes(x = spp, y = var, fill = estimate)) +
+      geom_tile(data = in_dat %>% filter(spp != "EC"), aes(x = Species, y = var, fill = estimate)) +
       geom_text(
-        data = in_dat %>% filter(spp != "horseweed"),
+        data = in_dat %>% filter(spp != "EC"),
         size = 2,
-        aes(x = spp, y = var, label = estimate_rounded)
+        aes(x = Species, y = var, label = estimate_rounded)
       ) +
       scale_fill_gradient2(
         limit = c(-2, 1.5),
@@ -268,7 +266,8 @@ make_mmrr_plot <- function(){
   r2_plot_ <- 
     heat_plot(mmrr_plot_ %>% filter(var == "R-Squared"), params = F) +
     guides(fill = FALSE) +
-    theme(legend.title = element_blank())
+    theme(legend.title = element_blank(), 
+          axis.text.x = ggtext::element_markdown())
     
   
   gg <- cowplot::plot_grid(
@@ -283,7 +282,7 @@ make_mmrr_plot <- function(){
   gg
   
   # Prepare figures such that, after reduction to fit across one column, two-thirds page width, or two columns (80 mm, 112 mm, or 169 mm, respectively) as required, all lettering and symbols will be clear and easy to read,
-  ggsave(paste0("figures/MMRR/MMRR_total.png"),
+  ggsave(paste0("figures/Fig7_MMRR/MMRR_total.png"),
          dpi = "print",
          height = 80,
          width = 112,
@@ -419,7 +418,7 @@ make_mmrr_plot_bycity_ <- function(){
   
   gg
   
-  ggsave(paste0("figures/MMRR/MMRR_splitbycity.png"),
+  ggsave(paste0("figures/Fig7_MMRR/MMRR_splitbycity.png"),
          dpi = "print",
          height = 4,
          width = 12,
