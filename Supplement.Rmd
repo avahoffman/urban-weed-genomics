@@ -2,12 +2,12 @@
 title: "Supplementary Information" 
 author: "Ava Hoffman, Jenny Cocciardi" 
 output: 
+  pdf_document: 
+    toc: true 
+    number_sections: true
   md_document: 
     variant: gfm
     toc: true
-    number_sections: true
-  pdf_document: 
-    toc: true 
     number_sections: true
 urlcolor: blue 
 editor_options: 
@@ -1128,7 +1128,7 @@ Note that [this Stack Overflow post](https://stackoverflow.com/questions/6963978
 
 Environmental distance was generated the same way as geographic distance above (euclidean distance). These are the four environmental variables mentioned in the main manuscript, although more environmental variables are present in the raw data: % Urban cover, Distance to city center, April soil temperature, and July soil temperature. In the raw data these appear as `nlcd_urban_pct`, `distance_to_city_center`, `soiltemp_2.5cm_Apr_12pm`, `soiltemp_2.5cm_Jul_12pm`.
 
-## Analysis
+## Overall MMRR models
 
 Note that for this analysis, we treated each *sampling site* as a distinct location. There would not be enough power to do a distance matrix among 3-5 cities. Code for generating matrices, running the MMRR, and generating figures can be found in the source code below.
 
@@ -1172,6 +1172,8 @@ knitr::kable(
   caption = "Full parameter estimates and statistics by species from running 9999 permutations ('Reps') via MMRR."
 )
 ```
+
+## MMRR models within city
 
 We also repeated this within city.
 

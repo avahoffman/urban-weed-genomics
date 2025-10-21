@@ -75,7 +75,8 @@
   - [15.2 Geographic distance](#geographic-distance)
   - [15.3 Environmental data and
     distance](#environmental-data-and-distance)
-  - [15.4 Analysis](#analysis)
+  - [15.4 Overall MMRR models](#overall-mmrr-models)
+  - [15.5 MMRR models within city](#mmrr-models-within-city)
 - [16 `SessionInfo()`](#sessioninfo)
 - [Appendix](#appendix-books)
   - [16.1 File Organization](#file-organization-bookmark_tabs)
@@ -1713,7 +1714,7 @@ April soil temperature, and July soil temperature. In the raw data these
 appear as `nlcd_urban_pct`, `distance_to_city_center`,
 `soiltemp_2.5cm_Apr_12pm`, `soiltemp_2.5cm_Jul_12pm`.
 
-## 15.4 Analysis
+## 15.4 Overall MMRR models
 
 Note that for this analysis, we treated each *sampling site* as a
 distinct location. There would not be enough power to do a distance
@@ -1801,6 +1802,8 @@ Overall model p-values from MMRR.
 
 Full parameter estimates and statistics by species from running 9999
 permutations (‘Reps’) via MMRR.
+
+## 15.5 MMRR models within city
 
 We also repeated this within city.
 
