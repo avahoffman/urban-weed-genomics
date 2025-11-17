@@ -115,7 +115,7 @@ Rockfish. Scripts below, with the exception of file transfer from the
 Aspera server, should reflect the new filesystem, though you will have
 to adjust the file paths accordingly.
 
-![File transfer schematic](figures/file_transfer.jpg)\
+![File transfer schematic](extra/figures/file_transfer.jpg)\
 
 ## A Note on Species Names
 
