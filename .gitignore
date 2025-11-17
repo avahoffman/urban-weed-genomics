@@ -48,7 +48,3 @@ Supplement.log
 
 # Large and/or personal files
 *.pptx
-
-# Archetypal Analysis software
-/archetypal-analysis/*
-archetypal-analysis/
