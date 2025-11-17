@@ -47,12 +47,6 @@ Supplement_files/*
 Supplement.log
 
 # Large and/or personal files
-spatial_data/*
-output_large/*
-SNP_data/*
-figures/*.pdf
-Notes.Rmd
-archive/*
 *.pptx
 
 # Archetypal Analysis software
