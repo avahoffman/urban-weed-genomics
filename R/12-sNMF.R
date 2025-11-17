@@ -115,11 +115,11 @@ do_sNMF_plot <- function(indata){
 
 
 do_all_sNMF <- function(width = 12, height = 12){
-  base_dir <- paste0(here::here(), "/SNP_data/")
+  base_dir <- paste0("../urban-weed-genomics-local/polyRAD_output_for_sNMF/")
   
   # Do sNMF
   do_sNMF <- function(K_, infile_base) {
-    base_dir <- paste0(here::here(), "/SNP_data/")
+    base_dir <- paste0("../urban-weed-genomics-local/polyRAD_output_for_sNMF/")
     reps_ <- 1
     outfile <- paste0(base_dir,
                       gsub("\\.structure", "", infile_base),
@@ -184,22 +184,22 @@ do_all_sNMF <- function(width = 12, height = 12){
   
   # Using the same K that were determined by Structure
   # EC
-  sNMF_EC_K2 <- do_sNMF(K_ = 4, infile_base = "EC/EC_estimatedgeno_noheader.structure")
+  sNMF_EC_K2 <- do_sNMF(K_ = 4, infile_base = "EC_estimatedgeno_noheader.structure")
   p1 <- do_sNMF_plot(sNMF_EC_K2)
   # LS
-  sNMF_LS_K3 <- do_sNMF(K_ = 3, infile_base = "LS/LS_estimatedgeno_noheader.structure")
+  sNMF_LS_K3 <- do_sNMF(K_ = 3, infile_base = "LS_estimatedgeno_noheader.structure")
   p2 <- do_sNMF_plot(sNMF_LS_K3)
   # CD
-  sNMF_CD_K3 <- do_sNMF(K_ = 3, infile_base = "CD/CD_estimatedgeno_noheader_genodivefix.structure")
+  sNMF_CD_K3 <- do_sNMF(K_ = 3, infile_base = "CD_estimatedgeno_noheader_genodivefix.structure")
   p3 <- do_sNMF_plot(sNMF_CD_K3)
   # DS
-  sNMF_DS_K3 <- do_sNMF(K_ = 3, infile_base = "DS/DS_estimatedgeno_noheader_genodivefix.structure")
+  sNMF_DS_K3 <- do_sNMF(K_ = 3, infile_base = "DS_estimatedgeno_noheader_genodivefix.structure")
   p4 <- do_sNMF_plot(sNMF_DS_K3)
   # PA
-  sNMF_PA_K4 <- do_sNMF(K_ = 4, infile_base = "PA/PA_estimatedgeno_noheader_genodivefix.structure")
+  sNMF_PA_K4 <- do_sNMF(K_ = 4, infile_base = "PA_estimatedgeno_noheader_genodivefix.structure")
   p5 <- do_sNMF_plot(sNMF_PA_K4)
   # TO
-  sNMF_TO_K3 <- do_sNMF(K_ = 4, infile_base = "TO/TO_estimatedgeno_noheader_genodivefix.structure")
+  sNMF_TO_K3 <- do_sNMF(K_ = 4, infile_base = "TO_estimatedgeno_noheader_genodivefix.structure")
   p6 <- do_sNMF_plot(sNMF_TO_K3)
   
   mega_plot <- plot_grid(
