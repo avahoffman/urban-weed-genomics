@@ -378,6 +378,12 @@ source("04_demux_filter/04c-radtags_filter_summary.R")
 make_filterplot() 
 ```
 
+## Raw data availability
+
+This is the point at which raw data are available, since it is where they are demultiplexed. Originally, our inventory had 1736 envelopes/samples indexed. Four envelopes/samples had no leaves in them, and 5 samples were the wrong species (*Taraxacum erythrospermum*), and were excluded. We also had one sample that failed to yield any reads (LS.LA.MAR.U.1); it's unclear what happened with this sample (DNA concentration, amplification looked fine - perhaps accidentally given the wrong barcodes). This gives **1726 samples available on SRA**. Note that many of these are excluded due to low coverage, etc., in subsequent steps.
+
+Raw data is available here: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1359434
+
 ## Identify low-coverage and low-quality samples from {#step-4d---identify-low-coverage-and-low-quality-samples-from}
 
 _Step 4d_. Using the same output log and the above statistics, we removed
@@ -777,6 +783,10 @@ source("08_polyRAD/convert_genomics.R")
 ```{r convert_2, eval = FALSE, message=FALSE}
 convert_all()
 ```
+
+## Data availability
+
+PolyRAD output data is available via Figshare: 10.6084/m9.figshare.30640199
 
 # `Structure` Analysis
 

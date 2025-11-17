@@ -60,10 +60,10 @@ get_var_explained <- function(object){
   return(pc@R2[1:2])
 }
 
-CD_varexplained <- readRDS("SNP_data/CD/CD_estimatedgeno_RADdata.rds") %>% get_var_explained()
-DS_varexplained <- readRDS("SNP_data/DS/DS_estimatedgeno_RADdata.rds") %>% get_var_explained()
-EC_varexplained <- readRDS("SNP_data/EC/EC_estimatedgeno_RADdata.rds") %>% get_var_explained()
-LS_varexplained <- readRDS("SNP_data/LS/LS_estimatedgeno_RADdata.rds") %>% get_var_explained()
-PA_varexplained <- readRDS("SNP_data/PA/PA_estimatedgeno_RADdata.rds") %>% get_var_explained()
-TO_varexplained <- readRDS("SNP_data/TO/TO_estimatedgeno_RADdata.rds") %>% get_var_explained()
+CD_varexplained <- readRDS("../urban-weed-genomics-local/polyRAD_output/CD_estimatedgeno_RADdata.rds") %>% get_var_explained()
+DS_varexplained <- readRDS("../urban-weed-genomics-local/polyRAD_output/DS_estimatedgeno_RADdata.rds") %>% get_var_explained()
+EC_varexplained <- readRDS("../urban-weed-genomics-local/polyRAD_output/EC_estimatedgeno_RADdata.rds") %>% get_var_explained()
+LS_varexplained <- readRDS("../urban-weed-genomics-local/polyRAD_output/LS_estimatedgeno_RADdata.rds") %>% get_var_explained()
+PA_varexplained <- readRDS("../urban-weed-genomics-local/polyRAD_output/PA_estimatedgeno_RADdata.rds") %>% get_var_explained()
+TO_varexplained <- readRDS("../urban-weed-genomics-local/polyRAD_output/TO_estimatedgeno_RADdata.rds") %>% get_var_explained()
 
