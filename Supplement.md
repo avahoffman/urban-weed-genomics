@@ -10,9 +10,8 @@
   - [2.1 Concatenate Files for each
     Sublibrary](#221-concatenate-files-for-each-sublibrary)
   - [2.2 Download and Install Stacks](#222-download-and-install-stacks)
-- [3 PCR Clone Removal](#23-remove-pcr-clones)
-  - [3.1 Run PCR Clone Removal
-    Script](#231-run-pcr-clone-removal-script)
+- [3 PCR Clone Removal](#remove-pcr-clones)
+  - [3.1 Run PCR Clone Removal Script](#run-pcr-clone-removal-script)
   - [3.2 Parse PCR Clone Removal
     Results](#232-parse-pcr-clone-removal-results)
 - [4 Sample Demultiplexing and
@@ -21,11 +20,12 @@
   - [4.2 Organize files](#step-4b---organize-files)
   - [4.3 Assess the raw, processed, and cleaned
     data](#step-4c---assess-the-raw-processed-and-cleaned-data)
-  - [4.4 Identify low-coverage and low-quality samples
-    from](#step-4d---identify-low-coverage-and-low-quality-samples-from)
+  - [4.4 Raw data availability](#raw-data-availability)
+  - [4.5 Identify low-coverage and low-quality
+    samples](#step-4d---identify-low-coverage-and-low-quality-samples-from)
 - [5 Stacks: Metapopulation Catalog Building and Parameter
   Search](#step-5---metapopulation-catalog-building-and-parameter-search)
-  - [5.1 Run `denovo_map.sh`](#run-denovo_map.sh)
+  - [5.1 Run `denovo_map`](#step-5a---denovo_map)
   - [5.2 Run `ustacks`](#step-5b---run-ustacks)
   - [5.3 Correct File Names](#step-5c---correct-file-names)
   - [5.4 Choose catalog
@@ -39,6 +39,7 @@
   - [8.2 Calculate overdispersion](#calculate-overdispersion)
   - [8.3 Estimate genotypes](#estimate-genotypes)
   - [8.4 Final filter and file cleanup](#final-filter-and-file-cleanup)
+  - [8.5 Data availability](#data-availability)
 - [9 `Structure` Analysis](#structure-analysis)
   - [9.1 Running Structure on `polyRAD`
     output](#running-structure-on-polyrad-output)
@@ -167,8 +168,6 @@ Rockfish. Scripts below, with the exception of file transfer from the
 Aspera server, should reflect the new filesystem, though you will have
 to adjust the file paths accordingly.
 
-![File transfer schematic](figures/file_transfer.jpg)  
-
 ## 0.3 A Note on Species Names
 
 Throughout this study, we examined 6 species. Sometimes we used
@@ -208,13 +207,17 @@ starting, make sure you are in a data transfer node. Then, load the
 aspera module. Alternatively, you can install the Aspera transfer
 software and use that.
 
-    module load aspera
+``` bash
+module load aspera
+```
 
 Initiate the transfer from within your scratch directory:
 
-    ascp -T -l8G -i /software/apps/aspera/3.9.1/etc/asperaweb_id_dsa.openssh
-    --file-list=01-aspera_transfer_n.txt
-    --mode=recv --user=<aspera-user> --host=<aspera-IP> /scratch/users/<me>@jhu.edu
+``` bash
+ascp -T -l8G -i /software/apps/aspera/3.9.1/etc/asperaweb_id_dsa.openssh
+--file-list=01-aspera_transfer_n.txt
+--mode=recv --user=<aspera-user> --host=<aspera-IP> /scratch/users/<me>@jhu.edu
+```
 
 # 2 File Concatenation and Stacks Installation
 
@@ -237,7 +240,7 @@ following 8 files:
     AMH_macro_1_1_12px_S1_L004_R1_001.fastq.gz
     AMH_macro_1_1_12px_S1_L004_R2_001.fastq.gz
 
-The `02_concatendate_and_check/02-concat_files_across4lanes.sh` script
+The `02_concatenate_and_check/02-concat_files_across4lanes.sh` script
 finds all files in the working directory with the name pattern
 `*_L001_*.fastq.gz` and then concatenates across lanes 001, 002, 003,
 and 004 so they can be managed further. The “L001” part of the filename
@@ -249,7 +252,9 @@ is then eliminated. For example the 8 files above would become:
 Rockfish uses [slurm](https://slurm.schedmd.com/overview.html) to manage
 jobs. To run the script, use the `sbatch` command. For example:
 
-    sbatch ~/code/02-concat_files_across4lanes.sh
+``` bash
+sbatch ~/code/02-concat_files_across4lanes.sh
+```
 
 This command will run the script from within the current directory, but
 will look for and pull the script from the code directory. This will
@@ -264,20 +269,26 @@ downloaded to each user’s code directory. Stacks, and software in
 general, should be compiled in an interactive mode or loaded via module.
 For more information on interactive mode, see `interact --usage`.
 
-    interact -p debug -g 1 -n 1 -c 1
-    module load gcc
+``` bash
+interact -p debug -g 1 -n 1 -c 1
+module load gcc
+```
 
 Now download Stacks. We used version 2.60.
 
-    wget http://catchenlab.life.illinois.edu/stacks/source/stacks-2.60.tar.gz
-    tar xfvz stacks-2.60.tar.gz
+``` bash
+wget http://catchenlab.life.illinois.edu/stacks/source/stacks-2.60.tar.gz
+tar xfvz stacks-2.60.tar.gz
+```
 
 Next, go into the stacks-2.60 directory and run the following commands:
 
-    ./configure --prefix=/home/<your_username>/code4-<PI_username>
-    make
-    make install
-    export PATH=$PATH:/home/<your_username>/code4-<PI_username>/stacks-2.60
+``` bash
+./configure --prefix=/home/<your_username>/code4-<PI_username>
+make
+make install
+export PATH=$PATH:/home/<your_username>/code4-<PI_username>/stacks-2.60
+```
 
 The filesystem patterns on your cluster might be different, and you
 should change these file paths accordingly.
@@ -290,10 +301,13 @@ Referred to through files as “Step 3”. Files can be found in the
 ## 3.1 Run PCR Clone Removal Script
 
 **Step 3a**. The `03-clone_filter.sh` script runs `clone_filter` from
-[Stacks](https://catchenlab.life.illinois.edu/stacks/). The program was
-run with options `--inline_inline --oligo_len_1 4 --oligo_len_2 4`. The
-`--oligo_len_x 4` options indicate the 4-base pair degenerate sequence
-was included on the outside of the barcodes for detecting PCR
+[Stacks](https://catchenlab.life.illinois.edu/stacks/).
+
+The program was run with options
+`--inline_inline --oligo_len_1 4 --oligo_len_2 4`.
+
+The `--oligo_len_x 4` options indicate the 4-base pair degenerate
+sequence was included on the outside of the barcodes for detecting PCR
 duplicates. The script uses the file name prefixes listed for each
 single sub-pooled library in `03-clone_filter_file_names.txt` and loops
 to run `clone_filter` on all of them. Possible file names shown in
@@ -323,22 +337,23 @@ Files can be found in the `04_demux_filter/` directory.
 
 ## 4.1 Demultiplex and Filter
 
-*Step 4a*. The `04-process_radtags.sh` script runs `process_radtags`
+**Step 4a**. The `04-process_radtags.sh` script runs `process_radtags`
 from [Stacks](https://catchenlab.life.illinois.edu/stacks/). The program
 was run with options
 `-c -q --inline_inline --renz_1 pstI --renz_2 mspI --rescue --disable_rad_check`.
 The script uses the same file prefixes as [Step 3 -
-`03-clone_filter.sh`](#step-3---remove-pcr-clones). Each sub-pooled
+`03-clone_filter.sh`](#run-pcr-clone-removal-script). Each sub-pooled
 library has a forward and reverse read file that was filtered in the
-previous step. Like the [above section](#step-3---03-clone_filtersh),
+previous step. Like the [above section](#run-pcr-clone-removal-script),
 the script uses the file name prefixes listed for each single sub-pooled
 library in `04-process_radtags_file_names.txt` and loops to run
 `process_radtags` on all of them. Possible file names shown in
 [`clone_filter` File Names](#clone_filter-file-names).
 
 Each sub-pooled library also has a demultiplexing file (`04-demux/`
-directory) that contains the sample names and inner(i5 and i7) barcodes.
-For example, the sublibrary 1_1, we’d see the following barcode file:
+directory) that contains the sample names and inner (i5 and i7)
+barcodes. For example, the sublibrary 1_1, we’d see the following
+barcode file:
 
     ATCACG  AGTCAA  DS.BA.PIK.U.1
     CGATGT  AGTTCC  DS.BA.PIK.U.2
@@ -353,14 +368,14 @@ For example, the sublibrary 1_1, we’d see the following barcode file:
     GGCTAC  ACTGAT  DS.BA.GA.U.1
     CTTGTA  ATTCCT  DS.BA.GA.U.2
 
-The ‘process_radtags’ command will demultiplex the data by separating
+The `process_radtags` command will demultiplex the data by separating
 out each sublibrary into the individual samples. It will then clean the
 data, and will remove low quality reads and discard reads where a
 barcode was not found.
 
 ## 4.2 Organize files
 
-*Step 4b*. In a new directory, make sure the files are organized by
+**Step 4b**. In a new directory, make sure the files are organized by
 species. In the `process_radtags` script, we specified that files be
 sent to `~/scratch/demux/*sublibrary_name*` (reasoning for this is in
 [Step 4c](#step-4c---assess-the-raw-processed-and-cleaned-data)), but
@@ -374,22 +389,23 @@ automate the file moving process so it’s not forgotten at this point.
 
 ## 4.3 Assess the raw, processed, and cleaned data
 
-*Step 4c*. In the script for [Step 4](#step-4---demultiplex-and-filter),
-we have specified that a new output folder be created for each
-sublibrary. The output folder is where all sample files and the log file
-will be dumped for each sublibrary. It is important to specify a
-different output folder if you have multiple sublibraries because we
-will be assessing the output log for each sublibrary individually (and
-otherwise, the log is overwritten when the script loops to a new
-sublibrary).
+**Step 4c**. In the script for [Step
+4a](#step-4a---demultiplex-and-filter), we have specified that a new
+output folder be created for each sublibrary. The output folder is where
+all sample files and the log file will be dumped for each sublibrary. It
+is important to specify a different output folder if you have multiple
+sublibraries because we will be assessing the output log for each
+sublibrary individually (and otherwise, the log is overwritten when the
+script loops to a new sublibrary).
 
 The utility `stacks-dist-extract` can be used to extract data from the
 log file. First, we examined the library-wide statistics to identify
 sublibraries where barcodes may have been misentered or where sequencing
 error may have occurred. We used:
 
-     stacks-dist-extract process_radtags.log total_raw_read_counts
-     
+``` bash
+stacks-dist-extract process_radtags.log total_raw_read_counts
+```
 
 to pull out data on the total number of sequences, the number of
 low-quality reads, whether barcodes were found or not, and the total
@@ -398,8 +414,9 @@ there are no outliers or sublibraries that need to be checked and rerun.
 
 Next, we used:
 
-     stacks-dist-extract process_radtags.log per_barcode_raw_read_counts
-     
+``` bash
+stacks-dist-extract process_radtags.log per_barcode_raw_read_counts
+```
 
 to analyze how well each sample performed. There are three important
 statistics to consider for each sample.
@@ -446,9 +463,25 @@ alt="RAD tag processing statistics" />
 statistics</figcaption>
 </figure>
 
-## 4.4 Identify low-coverage and low-quality samples from
+## 4.4 Raw data availability
 
-*Step 4d*. Using the same output log and the above statistics, we
+This is the point at which raw data are available, since it is where
+they were demultiplexed. Originally, our inventory had 1736
+envelopes/samples indexed. Four envelopes/samples had no leaves in them,
+and 5 samples were the wrong species (*Taraxacum erythrospermum*), and
+were excluded. We also had one sample that failed to yield any reads
+(LS.LA.MAR.U.1); it’s unclear what happened with this sample (DNA
+concentration, amplification looked fine - perhaps accidentally given
+the wrong barcodes). This gives **1726 samples available on SRA**. Note
+that many of these are excluded due to low coverage, etc., in subsequent
+steps.
+
+Raw data is available here:
+<https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1359434>
+
+## 4.5 Identify low-coverage and low-quality samples
+
+**Step 4d**. Using the same output log and the above statistics, we
 removed low-coverage and low-quality samples that may skew downstream
 analyses.
 
@@ -495,21 +528,21 @@ the species was present.
 
 It is important to conduct preliminary analyses that will identify an
 optimal set of parameters for the dataset (see [Step
-5a](#step-5a---denovo_mapsh)). Following the parameter optimization, the
+5a](#step-5a---denovo_map)). Following the parameter optimization, the
 program `ustacks` can be run to generate a catalog of loci.
 
-## 5.1 Run `denovo_map.sh`
+## 5.1 Run `denovo_map`
 
-*Step 5a*. Stack assembly will differ based on several different aspects
-of the dataset(such as the study species, the RAD-seq method used,
-and/or the quality and quantity of DNA used). So it is important to use
-parameters that will maximize the amount of biological data obtained
-from stacks.
+**Step 5a**. Stack assembly will differ based on several different
+aspects of the dataset (such as the study species, the RAD-seq method
+used, and/or the quality and quantity of DNA used). So it is important
+to use parameters that will maximize the amount of biological data
+obtained from stacks.
 
 There are three main parameters to consider when doing this:
 
 1.  *m* = controls the minimum number of raw reads required to form a
-    stack(implemented in `ustacks`)
+    stack (implemented in `ustacks`)
 
 2.  *M* = controls the number of mismatches between stacks to to merge
     them into a putative locus (implemented in `ustacks`)
@@ -524,9 +557,9 @@ There are two main ways to optimize parameterization:
     2017*), or
 
 2.  an iterative method were you sequentially change the values of *M*
-    and *n*(keeping *M* = *n*) while fixing *m* = 3, and then test *m* =
-    2, 4 once the optimal *M* = *n* is determined(described in *Rochette
-    and Catchen 2017*, *Catchen 2020*).
+    and *n* (keeping *M* = *n*) while fixing *m* = 3, and then test *m*
+    = 2, 4 once the optimal *M* = *n* is determined (described in
+    *Rochette and Catchen 2017*, *Catchen 2020*).
 
 We performed the second method and used the `denovo_map.sh` script to
 run the `denovo_map.pl` command to perform iterations. This script
@@ -572,17 +605,26 @@ iteration:
 
 2.  the number of assembled loci shared by 80% of samples: This can be
     found in the `haplotypes.tsv` by counting the number of loci:
-    `cat populations.haplotypes.tsv | grep -v ^"#" | wc -l`
+
+    ``` bash
+    cat populations.haplotypes.tsv | grep -v ^"#" | wc -l
+    ```
 
 3.  the number of polymorphic loci shared by 80% of samples: This can be
     found in `populations.sumstats.tsv` or by counting
     `populations.hapstats.tsv`:
-    `cat populations.hapstats.tsv | grep -v "^#" | wc -l`
+
+    ``` bash
+    cat populations.hapstats.tsv | grep -v "^#" | wc -l
+    ```
 
 4.  the number of SNPs per locus shared by 80% of samples: found in
     `denovo_map.log` or by counting the number of SNPs in
     `populations.sumstats.tsv`:
-    `populations.sumstats.tsv | grep -v ^"#" | wc -l`
+
+    ``` bash
+    cat populations.sumstats.tsv | grep -v ^"#" | wc -l
+    ```
 
 The script `05a-param_opt-figures_script.R` was used to create plots for
 assessing the change in shared loci across parameter iterations.
@@ -602,8 +644,8 @@ Final parameter optimization values for the Stacks pipeline.
 
 ## 5.2 Run `ustacks`
 
-*Step 5b*. `ustacks` builds *de novo* loci in each individual sample. We
-have designed the `ustacks` script so that the process requires three
+**Step 5b**. `ustacks` builds *de novo* loci in each individual sample.
+We have designed the `ustacks` script so that the process requires three
 files:
 
 - `05-ustacks_n.sh` : the shell script that executes `ustacks`
@@ -611,14 +653,16 @@ files:
 - `05-ustacks_samples_n.txt` : the sample names that correspond to the
   sample IDs
 
-The sample ID should be derived from the `order_id` column(first column)
-on the master spreadsheet. It is unique (1-1736) across all of the
-samples.
+The sample ID should be derived from the `order_id` column (first
+column) on the [master sample
+spreadsheet](https://github.com/avahoffman/urban-weed-genomics/blob/main/data/macrosystems_urban_leaf_samples_FINAL.csv).
+It is unique (1-1736) across all of the samples.
 
 The sample name is the corresponding name for each sample ID in the
 spreadsheet. E.g., sample ID “9” corresponds to sample name
-“DS.BA.DHI.U.4”. Sample naming convention is
-species.city.site.management_type.replicate_plant.
+“DS.BA.DHI.U.4”. Sample naming convention is:
+
+`species.city.site.management_type.replicate_plant`
 
 `05-ustacks_n.sh` should have an out_directory (`-o` option) that will
 be used for all samples (e.g., `stacks/ustacks`). Files can be processed
@@ -643,13 +687,14 @@ loci. See
 | yes               |        7490510 |                 0.1230658 |
 
 Summary of samples discarded at the ustacks step of the Stacks pipeline.
+Numbers reflect the mean per sample.
 
 ## 5.3 Correct File Names
 
-*Step 5c*. This step contains a script `05b-fix_filenames.sh` which uses
-some simple regex to fix filenames that are output in previous steps.
-Stacks adds an extra “1” at some point at the end of the sample name
-which is not meaningful. The following files:
+**Step 5c**. This step contains a script `05b-fix_filenames.sh` which
+uses some simple regex to fix filenames that are output in previous
+steps. Stacks adds an extra “1” at some point at the end of the sample
+name which is not meaningful. For example, the following files:
 
 - DS.MN.L02-DS.M.3.1.alleles.tsv.gz
 - DS.MN.L03-DS.U.2.1.tags.tsv.gz
@@ -668,8 +713,8 @@ be changed.
 
 ## 5.4 Choose catalog samples/files
 
-*Step 5d*. In the next step, we will choose the files we want to go into
-the catalog. This involves a few steps:
+**Step 5d**. In the next step, we will choose the files we want to go
+into the catalog. This involves a few steps:
 
 1.  Create a meaningful directory name. This could be the date (e.g.,
     `stacks_22_01_25`).
@@ -681,9 +726,9 @@ the catalog. This involves a few steps:
     meaningful directory name. The three files per sample should follow
     this convention:
 
-- `<samplename>.alleles.tsv.gz`
-- `<samplename>.snps.tsv.gz`
-- `<samplename>.tags.tsv.gz`
+    - `<samplename>.alleles.tsv.gz`
+    - `<samplename>.snps.tsv.gz`
+    - `<samplename>.tags.tsv.gz`
 
 3.  Remember the meaningful directory name. You will need it in Step 6.
 
@@ -696,7 +741,9 @@ accompanying script, `cstacks_SPECIES.sh` is relatively simple since it
 points to the directory containing all the sample files. It follows this
 format to point to that directory:
 
-    cstacks -P ~/directory ...
+``` bash
+cstacks -P ~/directory ...
+```
 
 Make sure that you use the meaningful directory from Step 5c and that
 you have copied all the relevant files over. Otherwise this causes
@@ -705,7 +752,9 @@ downstream](https://groups.google.com/g/stacks-users/c/q3YYPprmYnU/m/cH5RB5KwBQA
 For example, you might edit the code to point to
 `~/scratch/stacks/stacks_22_01_25`.
 
-    cstacks -P ~/scratch/stacks/stacks_22_01_25 ...
+``` bash
+cstacks -P ~/scratch/stacks/stacks_22_01_25 ...
+```
 
 The tricky thing is ensuring enough compute memory to run the entire
 process successfully. There is probably space to optimize this process.
@@ -726,8 +775,8 @@ Make sure the samples in this file correspond to the input files located
 in e.g., `~/scratch/stacks/stacks_22_01_25`.
 
 `cstacks` builds three files for use in all your samples (in this
-pipeline run), mirroring the sample files output
-by[`ustacks`](#step-5---ustacks):
+pipeline run), mirroring the sample files output by
+[`ustacks`](#step-5b---run-ustacks):
 
 - `catalog.alleles.tsv.gz`
 - `catalog.snps.tsv.gz`
@@ -1020,9 +1069,10 @@ Files can be found in the `07_sstacks/` directory.
 
 All samples in the population (or all samples you want to include in the
 analysis) are matched against the catalog produced in
-[`cstacks`](#step-6---cstacks) with `sstacks`, run in script
-`stacks_SPECIES.sh` and `stacks_SPECIES_additional.sh`. It runs off of
-the samples based in the output directory *and* the listed samples in
+[`cstacks`](#step-6---metapopulation-catalog-with-cstacks) with
+`sstacks`, run in script `stacks_SPECIES.sh` and
+`stacks_SPECIES_additional.sh`. It runs off of the samples based in the
+output directory *and* the listed samples in
 `sstacks_samples_SPECIES.txt` and
 `sstacks_samples_SPECIES_additional.txt` (respectively), so make sure
 all your files (sample and catalog, etc.) are there and match.
@@ -1059,10 +1109,10 @@ historical genome duplication. PolyRAD takes the catalog output
 species with diploidy and/or polyploidy.
 
 We used the catalog and match files to create a RADdata object class in
-R for each species. We ran this on the Rockfish compute cluster at Johns
-Hopkins University, with the `make_polyRAD_<spp>.R` script doing the
-brunt of the work. The R script was wrapped by `polyrad_make_<spp>.sh`
-to submit the script to the SLURM scheduler.
+R for each species. We ran this on the Rockfish HPC at Johns Hopkins
+University, with the `make_polyRAD_<spp>.R` script doing the brunt of
+the work. The R script was wrapped by `polyrad_make_<spp>.sh` to submit
+the script to the SLURM scheduler.
 
 *Relevant Parameters:*
 
@@ -1088,13 +1138,13 @@ Next, we calculated overdispersion using the
 `polyRAD_overdispersion_<spp>.R` script, wrapped by
 `polyrad_overd_<spp>.sh` to submit the script to the SLURM scheduler.
 
-Requires:
+*Requires:*
 
 - `popmap_<spp>_polyrad.txt`, a list of samples and population
 - `<spp>_polyRADdata.rds`, RDS object (the RADdata object) output from
   the previous step
 
-Outputs:
+*Outputs:*
 
 - `<spp>_overdispersion.rds`, RDS object (the overdispersion test
   output)
@@ -1112,7 +1162,7 @@ which estimated an inbreeding based on the ploidy, optimal
 overdispersion value, and mean Hind/He. These values are hardcoded in
 `polyRAD_filter_<spp>.R`.
 
-Requires:
+*Requires:*
 
 - `popmap_<spp>_polyrad.txt`, a list of samples and population
 - `<spp>_polyRADdata.rds`, RDS object (the RADdata object) output from
@@ -1120,7 +1170,7 @@ Requires:
 - `<spp>_overdispersion.rds`, RDS object (the overdispersion test
   output) output from the previous step
 
-Outputs:
+*Outputs:*
 
 - `<spp>_filtered_RADdata.rds`, RDS object (RADdata object filtered for
   appropriate Hind/He)
@@ -1173,11 +1223,14 @@ Subset of samples discarded after genotype estimation using polyRAD.
 
 ``` r
 source("08_polyRAD/convert_genomics.R")
-```
-
-``` r
 convert_all()
 ```
+
+## 8.5 Data availability
+
+PolyRAD output data is available via Figshare:
+10.6084/m9.figshare.30640199, in polyRAD `.rds`, genind `.rds`, and
+Structure formats.
 
 # 9 `Structure` Analysis
 
@@ -1218,10 +1271,10 @@ and retained 20000 iterations. These runs created files that look like:
 Within each species, we compressed the result files for all K and reps
 and submitted to [Structure
 Harvester](https://taylor0.biology.ucla.edu/structureHarvester/) to
-choose the optimal K using the Delta-K method (see
-<https://link.springer.com/article/10.1007/s12686-011-9548-7>). Once the
-optimal K was selected per species, we re-ran Structure using a greater
-number of iterations (100000) for final output and plotting.
+choose the optimal K using the Delta-K method (see [this
+article](https://link.springer.com/article/10.1007/s12686-011-9548-7)).
+Once the optimal K was selected per species, we re-ran Structure using a
+greater number of iterations (100000) for final output and plotting.
 
 # 10 Conceptual Figure
 
@@ -1230,10 +1283,7 @@ might expect.
 
 ``` r
 source("R/10-Fig1-conceptual_fig.R")
-```
-
-``` r
-make_fig1()
+make_fig1()  # Plot Fig 1
 ```
 
 # 11 NLCD Data and Site Plots
@@ -1267,16 +1317,13 @@ each city.
 
 ``` r
 source("R/10-trim_NLCD_spatial_data.R")
-```
-
-``` r
 create_spatial_rds_files()
 create_spatial_rds_files(spp = "CD")
 ```
 
 ## 11.2 Climate normals
 
-We obtained climate normals for plotting from
+We obtained climate normals data for plotting from
 <https://www.ncei.noaa.gov/access/us-climate-normals>. We used the
 latest 30-year period (1991-2020): Most recent standard climatological
 period (2021 release); which is recommended for most purposes.
@@ -1288,11 +1335,7 @@ only include sites that had viable polymorphic loci.
 
 ``` r
 source("R/10-Fig2-plot_map_of_samples.R")
-```
-
-``` r
-# Plot Fig 2
-make_all_urban_site_plots_with_clim_normals()
+make_all_urban_site_plots_with_clim_normals()  # Plot Fig 2
 ```
 
 # 12 Principal components analysis & plots
@@ -1308,9 +1351,11 @@ source("R/11-plot_pca.R")
 make_pca_city_and_pctimp_all()
 ```
 
-In addition to coloring points by city, we also colored points by NLCD
-Urban Cover %. Note that in the pdf version of this document, the figure
-might appear on the next pages.
+In addition to coloring points by city in the main manuscript, we also
+colored points by % impervious surface, derived from the [NLCD
+data](#preparing-nlcd-data).
+
+.
 
 ``` r
 make_pca_pctimp_only_all()
@@ -1330,12 +1375,16 @@ surface.</figcaption>
 Within each species, we compressed the result files for all K and reps
 and submitted to [Structure
 Harvester](https://taylor0.biology.ucla.edu/structureHarvester/) to
-choose the optimal K using the Delta-K method (see
-<https://link.springer.com/article/10.1007/s12686-011-9548-7>).
+choose the optimal K using the Delta-K method.
 
 The results were:
 
-CD: K=3 DS: K=3 EC: K=2 LS: K=3 PA: K=4 TO: K=3
+- CD: K=3
+- DS: K=3
+- EC: K=2
+- LS: K=3
+- PA: K=4
+- TO: K=3
 
 ``` r
 # This file contains output from various K from Structure..
@@ -1355,10 +1404,7 @@ The code below generates plots for Structure results.
 
 ``` r
 source("R/12-plot_structure.R")
-```
-
-``` r
-make_structure_multi_plot()
+make_structure_multi_plot()  # Plot Fig 5
 ```
 
 ## 13.3 Validation of Structure results with sNMF
@@ -1370,13 +1416,15 @@ entropy criterion that evaluates the quality of fit of the statistical
 model to the data by using a cross-validation technique. We plotted the
 cross-entropy criterion for K=\[2:10\] for all species. Using the best
 K, we then selected the best of 10 runs in each K using the
-`which.min()` function.
+`which.min ()` function.
 
 ``` r
 source("R/12-sNMF.R")
 ```
 
-The following runs sNMF and generates the figure. .
+The following runs sNMF and generates the figure.
+
+.
 
 ``` r
 do_all_sNMF()
@@ -1398,13 +1446,18 @@ create more sensitivity to admixture.</figcaption>
 
 ## 14.1 Sample size, sites per city per species
 
-Use `13-n.R` for sample size. Use `13-get_unique_site_post_genotyping.R`
-for sites per city per species.
+We used the following scripts for sample size and sites per city per
+species.
+
+``` r
+source("R/13-n.R")  # sample size
+source("R/13-get_unique_site_post_genotyping.R")  # sites per city per species
+```
 
 ## 14.2 Among city - Jost’s D, $G_{ST}$, $F_{ST}$
 
-We used `polyrad::calcPopDiff()` to calculate continental population
-statistics for each species.
+We used `polyrad::calcPopDiff()` to calculate population statistics for
+each species.
 
 ``` r
 source("R/13-calc_popdiff_stats.R")
@@ -1426,13 +1479,13 @@ read.csv("output/population_stats/popdiff_stats_CD.csv")
 
 ## 14.3 Among city - pairwise $\rho$
 
-We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to
+We used [GenoDive v.3.0.6](https://doi.org/10.1111/1755-0998.13145) to
 calculate pairise $\rho$ (rho) among cities within species. Note that
 there is a p-value correction for testing multiple cities (species are
 treated as independent, however).
 
-This can be run in GenoDive by selecting Pairwise Differentiation from
-the Analysis menu and selecting the “rho” statistic from the dropdown.
+This can be run in GenoDive by selecting Analysis \> Pairwise
+Differentiation and selecting the “rho” statistic from the dropdown.
 
 We used the following script to clean up the results.
 
@@ -1482,11 +1535,12 @@ compile_rho_table()
 | TO | MN | BO | 0.008 | 0.001 | <span style=" font-weight: bold;   text-decoration: underline; ">0.0014</span> |
 | TO | MN | BA | 0.001 | 0.098 | <span style="     ">0.098</span> |
 
-Rho statistics for pairwise comparison between cities.
+Rho statistics for pairwise comparison between cities. Bold+underlined
+adjusted p-values are significant at the p\<0.05 threshold.
 
 ## 14.4 Within city - allelic richness
 
-We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to
+We used [GenoDive v.3.0.6](https://doi.org/10.1111/1755-0998.13145) to
 calculate several additional statistics.
 
 This can be run in GenoDive by selecting Analysis \> Genetic Diversity,
@@ -1514,7 +1568,7 @@ head(read.csv("output/population_stats/genodive_genetic_diversity.csv"))
 
 ## 14.5 Within city - $F_{IS}$ (homozygosity within population)
 
-We used [GenoDive v. 3.0.6](https://doi.org/10.1111/1755-0998.13145) to
+We used [GenoDive v.3.0.6](https://doi.org/10.1111/1755-0998.13145) to
 calculate $F_{IS}$. This gives a good estimate of whether there are more
 homozygotes than expected (positive number) or more heterozygotes than
 expected (negative number). Notably, GenoDive accommodates polyploids
@@ -1596,7 +1650,7 @@ get_all_private_alleles()
 ## 14.8 AMOVA
 
 We performed hierarchical analysis of molecular variance (AMOVA; using
-GenoDive 3.06) based on the Rho-statistics, which is based on a Ploidy
+GenoDive 3.0.6) based on the Rho-statistics, which is based on a Ploidy
 independent Infinite Allele Model. AMOVA is under the “Analysis” menu.
 Structure format files typically have only one level of population
 grouping. To ensure nestedness, we added a “City” level manually by
@@ -1605,8 +1659,8 @@ running the AMOVA, we selected “Advanced” and selected Individual nested
 within Population nested within City. We used 999 permutations.
 
 For bluegrass (PA), Minneapolis (MN) had a small sample size (2
-individuals). We re-ran the AMOVA with these samples excluded but found
-similar results.
+individuals). We re-ran the AMOVA excluding these, but found similar
+results.
 
 | Species | Source of Variation | Nested in | SSD | d.f. | MS | Var-comp | %Var | F-value | P-value |
 |:---|:---|:---|---:|---:|---:|---:|---:|---:|:---|
@@ -1638,7 +1692,7 @@ The following code plots the figure in the main manuscript.
 
 ``` r
 source("R/14-AMOVA.R")
-make_amova_plot()
+make_amova_plot()  # Plot Fig 6
 ```
 
 # 15 Isolation by distance and environment
@@ -1684,7 +1738,7 @@ This method was chosen because it takes data from global datasets (you
 can use both historic and current or pick specific years) but then
 accounts for site-specific variables (we can change the % shade, the
 slope or aspect of the landscape, and it considers elevation, average
-cloud cover, etc.). [Here’s the
+cloud cover, etc.). [This is the
 list](https://mrke.github.io/models/MicroClimate-Models) of all the
 different models/datasets we’re able to can pull from. It’s meant for
 mechanistic niche modeling.
@@ -1698,12 +1752,15 @@ post](https://stackoverflow.com/questions/69639782/installing-gfortran-on-macboo
 is helpful with installing `NicheMapR`.
 
 ``` r
-# devtools::install_github('mrke/NicheMapR') library(NicheMapR)
-# test_site_coords <- c(sites[1,]$lat, sites[1,]$long)
-# test_distance_to_city_center_km <-
-# sites[1,]$distance_to_city_center_km micros_ <- micro_usa(loc =
-# test_site_coords) loc <- c(-89.40, 43.07) micro <- micro_global(loc =
-# loc)
+devtools::install_github("mrke/NicheMapR")
+library(NicheMapR)
+
+test_site_coords <- c(sites[1, ]$lat, sites[1, ]$long)
+test_distance_to_city_center_km <- sites[1, ]$distance_to_city_center_km
+micros_ <- micro_usa(loc = test_site_coords)
+
+loc <- c(-89.4, 43.07)
+micro <- micro_global(loc = loc)
 ```
 
 Environmental distance was generated the same way as geographic distance
@@ -1711,8 +1768,12 @@ above (euclidean distance). These are the four environmental variables
 mentioned in the main manuscript, although more environmental variables
 are present in the raw data: % Urban cover, Distance to city center,
 April soil temperature, and July soil temperature. In the raw data these
-appear as `nlcd_urban_pct`, `distance_to_city_center`,
-`soiltemp_2.5cm_Apr_12pm`, `soiltemp_2.5cm_Jul_12pm`.
+appear as:
+
+- `nlcd_urban_pct`
+- `distance_to_city_center`
+- `soiltemp_2.5cm_Apr_12pm`
+- `soiltemp_2.5cm_Jul_12pm`
 
 ## 15.4 Overall MMRR models
 
@@ -1723,10 +1784,7 @@ and generating figures can be found in the source code below.
 
 ``` r
 source("R/15-IBD_IBE_MMRR.R")
-```
-
-``` r
-make_mmrr_plot()
+make_mmrr_plot()  # Plot Fig 7
 ```
 
 Below are the results of the MMRR, with all cities in the same model.
@@ -2085,34 +2143,28 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ##  [1] adegenet_2.1.10   ade4_1.7-22       algatr_1.0.0      polysat_1.7-7    
-    ##  [5] LEA_3.16.0        ggh4x_0.2.8       here_1.0.1        lubridate_1.9.3  
-    ##  [9] forcats_1.0.0     purrr_1.0.2       tibble_3.2.1      tidyverse_2.0.0  
-    ## [13] viridis_0.6.5     viridisLite_0.4.2 raster_3.6-26     sp_2.1-4         
-    ## [17] cowplot_1.2.0     stringr_1.5.1     readr_2.1.5       polyRAD_2.0.0    
-    ## [21] dplyr_1.1.4       magrittr_2.0.3    tidyr_1.3.1       ggplot2_4.0.0    
+    ##  [1] polyRAD_2.0.0   polysat_1.7-7   ggh4x_0.2.8     LEA_3.16.0     
+    ##  [5] lubridate_1.9.3 forcats_1.0.0   stringr_1.5.1   purrr_1.0.2    
+    ##  [9] tibble_3.2.1    tidyverse_2.0.0 cowplot_1.2.0   readr_2.1.5    
+    ## [13] here_1.0.1      dplyr_1.1.4     magrittr_2.0.3  tidyr_1.3.1    
+    ## [17] ggplot2_4.0.0  
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] gridExtra_2.3      formatR_1.14       permute_0.9-7      rlang_1.1.4       
-    ##  [5] compiler_4.4.2     mgcv_1.9-1         systemfonts_1.1.0  vctrs_0.6.5       
-    ##  [9] reshape2_1.4.4     pkgconfig_2.0.3    crayon_1.5.2       fastmap_1.2.0     
-    ## [13] labeling_0.4.3     utf8_1.2.4         promises_1.3.0     rmarkdown_2.27    
-    ## [17] markdown_1.13      tzdb_0.4.0         ragg_1.3.2         bit_4.0.5         
-    ## [21] xfun_0.52          seqinr_4.2-36      highr_0.11         later_1.3.2       
-    ## [25] terra_1.8-60       parallel_4.4.2     cluster_2.1.6      R6_2.5.1          
-    ## [29] stringi_1.8.4      RColorBrewer_1.1-3 Rcpp_1.0.12        knitr_1.47        
-    ## [33] httpuv_1.6.15      Matrix_1.7-1       splines_4.4.2      igraph_2.0.3      
-    ## [37] timechange_0.3.0   tidyselect_1.2.1   rstudioapi_0.16.0  dichromat_2.0-0.1 
-    ## [41] yaml_2.3.10        vegan_2.6-6.1      ggtext_0.1.2       codetools_0.2-20  
-    ## [45] lattice_0.22-6     plyr_1.8.9         shiny_1.8.1.1      withr_3.0.2       
-    ## [49] S7_0.2.0           evaluate_1.0.5     xml2_1.3.6         pillar_1.9.0      
-    ## [53] generics_0.1.3     vroom_1.6.5        rprojroot_2.0.4    hms_1.1.3         
-    ## [57] commonmark_1.9.1   scales_1.4.0       xtable_1.8-4       glue_1.8.0        
-    ## [61] tools_4.4.2        fastmatch_1.1-4    grid_4.4.2         ape_5.8           
-    ## [65] colorspace_2.1-0   nlme_3.1-166       cli_3.6.3          kableExtra_1.4.0  
-    ## [69] textshaping_0.4.0  fansi_1.0.6        svglite_2.1.3      gtable_0.3.6      
-    ## [73] digest_0.6.35      farver_2.1.2       htmltools_0.5.8.1  lifecycle_1.0.4   
-    ## [77] mime_0.12          gridtext_0.1.5     bit64_4.0.5        MASS_7.3-61
+    ##  [1] fastmatch_1.1-4    gtable_0.3.6       xfun_0.52          tzdb_0.4.0        
+    ##  [5] vctrs_0.6.5        tools_4.4.2        generics_0.1.3     parallel_4.4.2    
+    ##  [9] fansi_1.0.6        highr_0.11         pkgconfig_2.0.3    RColorBrewer_1.1-3
+    ## [13] S7_0.2.0           lifecycle_1.0.4    compiler_4.4.2     farver_2.1.2      
+    ## [17] textshaping_0.4.0  htmltools_0.5.8.1  yaml_2.3.10        pillar_1.9.0      
+    ## [21] crayon_1.5.2       viridis_0.6.5      commonmark_1.9.1   tidyselect_1.2.1  
+    ## [25] digest_0.6.35      stringi_1.8.4      labeling_0.4.3     rprojroot_2.0.4   
+    ## [29] fastmap_1.2.0      grid_4.4.2         cli_3.6.3          dichromat_2.0-0.1 
+    ## [33] utf8_1.2.4         withr_3.0.2        scales_1.4.0       bit64_4.0.5       
+    ## [37] timechange_0.3.0   rmarkdown_2.27     bit_4.0.5          ggtext_0.1.2      
+    ## [41] gridExtra_2.3      ragg_1.3.2         hms_1.1.3          kableExtra_1.4.0  
+    ## [45] evaluate_1.0.5     knitr_1.47         viridisLite_0.4.2  markdown_1.13     
+    ## [49] rlang_1.1.4        gridtext_0.1.5     Rcpp_1.0.12        glue_1.8.0        
+    ## [53] formatR_1.14       xml2_1.3.6         svglite_2.1.3      rstudioapi_0.16.0 
+    ## [57] vroom_1.6.5        R6_2.5.1           systemfonts_1.1.0
 
 # Appendix
 
@@ -2144,8 +2196,8 @@ following subdirectories:
   files used to identify barcodes and separate out the individual
   samples from each sublibrary. The resulting data files from the
   `process-radtags` program are separated by individual and can be found
-  in the relevant species folder(i.e., CD, DS, EC, LS, PA, TE, TO). Each
-  individual sample has four data files; `sampleID.1.fq.gz` and
+  in the relevant species folder (i.e., CD, DS, EC, LS, PA, TE, TO).
+  Each individual sample has four data files; `sampleID.1.fq.gz` and
   `sampleID.2.fq.gz` correspond to the forward and reverse reads for
   each sample and `sampleID.rem,1/2.fq.gz` contain the remainder reads
   that were cleaned and removed from the data sequence.
@@ -2187,9 +2239,8 @@ following subdirectories:
 
 ## 16.2 Aspera Transfer File Names
 
-See
-[data/aspera_transfer_file_names.csv](data/aspera_transfer_file_names.csv).
-Preview:
+See \[data/aspera_transfer_file_names.csv\]
+(data/aspera_transfer_file_names.csv). Preview:
 
 ``` r
 readLines("data/aspera_transfer_file_names.csv", 10)
@@ -2208,9 +2259,8 @@ readLines("data/aspera_transfer_file_names.csv", 10)
 
 ## 16.3 `clone_filter` File Names
 
-See
-[data/clone_filter_file_names.csv](data/clone_filter_file_names.csv).
-Preview:
+See \[data/clone_filter_file_names.csv\]
+(data/clone_filter_file_names.csv). Preview:
 
 ``` r
 readLines("data/clone_filter_file_names.csv", 10)
