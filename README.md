@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18343119.svg)](https://doi.org/10.5281/zenodo.18343119)
 
-This repository is meant to house code and supplementary material. There are both [pdf rendered](Supplement.pdf) and [markdown](Supplement.md) rendered versions of this supplement.
+This repository is meant to house code and supplementary material for the publication "Genetic diversity and population structure in cities is not consistent among cosmopolitan plant species" in _Molecular Ecology_ (download link coming soon). There are both [pdf rendered](Supplement.pdf) and [markdown](Supplement.md) rendered versions of this supplement.
 
 Additional Resources:
 
