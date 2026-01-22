@@ -1,7 +1,7 @@
 ---
 title: "Genetic diversity and population structure in cities is not consistent among cosmopolitan plant species"
 subtitle: "Supplementary Information"
-author: "Ava Hoffman, Jenny Cocciardi" 
+author: "Hoffman et al." 
 output: 
   md_document: 
     variant: gfm
